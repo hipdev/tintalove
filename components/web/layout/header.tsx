@@ -9,7 +9,7 @@ const Header = () => {
             <a className='flex items-center'>
               <div className='w-10 h-10 bg-red-600 rounded-full'></div>
               <h1 className='text-white text-3xl font-bold font-raleway absolute ml-2'>
-                Tintalovers
+                Tintalove
               </h1>
             </a>
           </Link>
