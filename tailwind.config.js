@@ -2,6 +2,7 @@ module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
   },
+  darkMode: false, // or 'media' or 'class'
   purge: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
