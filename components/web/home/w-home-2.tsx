@@ -13,7 +13,7 @@ const Home2 = () => {
         <div className='w-full flex flex-wrap justify-center lg:justify-between items-center'>
           <div className='flex flex-wrap justify-center items-center'>
             <div className='w-176 mb-1'>
-              <Link href=''>
+              <Link href='/'>
                 <a className='relative flex items-center'>
                   <div className='absolute top-0 left-0 mt-3125 ml-73 w-10 h-10 bg-red-600 rounded-full z-0'></div>
                   <h1 className='text-white text-3xl font-bold font-raleway ml-2 z-10'>
@@ -23,13 +23,13 @@ const Home2 = () => {
               </Link>
             </div>
             <div className='w-full md:w-96 flex flex-wrap justify-evenly mb-2 lg:mb-0 py-4 md:py-0'>
-              <Link href=''>
+              <Link href='/'>
                 <a className='text-white'>Tatuajes</a>
               </Link>
-              <Link href=''>
+              <Link href='/'>
                 <a className='text-white'>Artistas</a>
               </Link>
-              <Link href=''>
+              <Link href='/'>
                 <a className='text-white'>Soy un artista</a>
               </Link>
             </div>

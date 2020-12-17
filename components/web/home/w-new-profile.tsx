@@ -12,7 +12,7 @@ const NewProfile = () => {
         <div className='w-full flex flex-wrap xl:flex-no-wrap justify-center xl:justify-between items-center'>
           <div className='flex flex-col md:flex-row flex-wrap items-center mb-0 md:mb-5 xl:mb-0'>
             <div className='w-48 lg:w-240 mb-1'>
-              <Link href=''>
+              <Link href='/'>
                 <a className='flex items-center'>
                   <div className='w-10 h-10 bg-red-600 rounded-full'></div>
                   <h1 className='block text-white text-3xl font-bold font-raleway absolute ml-2'>
