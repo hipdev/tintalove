@@ -22,7 +22,7 @@ const Header = () => {
             <a className='text-white'>Artistas</a>
           </Link>
           <Link href='/'>
-            <a className='text-white'>Nosotros</a>
+            <a className='text-white'>Blog</a>
           </Link>
           <Link href='/'>
             <a className='text-white'>Soy un artista</a>
