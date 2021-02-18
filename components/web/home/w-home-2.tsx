@@ -9,48 +9,12 @@ import { RiHeartLine } from 'react-icons/ri';
 const Home2 = () => {
   return (
     <div className='w-full h-auto bg-black'>
-      <nav className='flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-dark-700'>
-        <div className='w-full flex flex-wrap justify-center lg:justify-between items-center'>
-          <div className='flex flex-wrap justify-center items-center'>
-            <div className='w-176 mb-1'>
-              <Link href='/'>
-                <a className='relative flex items-center'>
-                  <div className='absolute top-0 left-0 mt-3125 ml-73 w-10 h-10 bg-red-600 rounded-full z-0'></div>
-                  <h1 className='text-white text-3xl font-bold font-raleway ml-2 z-10'>
-                    Tintalovers
-                  </h1>
-                </a>
-              </Link>
-            </div>
-            <div className='w-full md:w-96 flex flex-wrap justify-evenly mb-2 lg:mb-0 py-4 md:py-0'>
-              <Link href='/'>
-                <a className='text-white'>Tatuajes</a>
-              </Link>
-              <Link href='/'>
-                <a className='text-white'>Artistas</a>
-              </Link>
-              <Link href='/'>
-                <a className='text-white'>Soy un artista</a>
-              </Link>
-            </div>
-          </div>
-          <div className='flex items-center'>
-            <span className='text-lg text-white'>
-              <GoSearch />
-            </span>
-            <button className='w-1/2 sm:w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none'>
-              Ingresar
-            </button>
-            <button className='btn-red px-5 py-3'>Registrate</button>
-          </div>
-        </div>
-      </nav>
-      <div className='h-512 flex flex-col justify-center items-center'>
-        <h1 className='w-full sm:w-4/5 xl:w-35 text-white text-center text-4xl sm:text-5xl font-bold font-raleway leading-tight mb-10'>
+      <div className='h-1/4 flex flex-col justify-center items-center'>
+        <h1 className='w-11/12 xl:w-2/5 text-white text-center text-4xl sm:text-5xl font-bold font-raleway leading-tight mt-20 sm:mt-24 mb-10'>
           Artistas altamente creativos y profesionales
         </h1>
-        <div className='relative sm:w-97 md:w-98 lg:w-99 flex justify-center items-center mb-6'>
-          <div className='absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none'>
+        <div className='relative w-full md:w-2/4 lg:w-2/5 xl:w-2/6 flex justify-center items-center mb-6 px-3'>
+          <div className='absolute left-3 flex items-center pointer-events-none p-3'>
             <span className='text-black text-xl sm:text-2xl'>
               <GoSearch />
             </span>
@@ -58,7 +22,7 @@ const Home2 = () => {
           <input
             type='text'
             placeholder='Busca tatuajes o artistas'
-            className='block w-224 sm:w-97 md:w-98 lg:w-99 py-3 pl-8 sm:pl-12 rounded-l-lg focus:outline-none placeholder-black'
+            className='w-full py-3 pl-12 md:pl-14 rounded-l-lg focus:outline-none placeholder-black'
           />
           <button
             type='submit'
@@ -67,7 +31,7 @@ const Home2 = () => {
             Buscar
           </button>
         </div>
-        <div className='w-full flex flex-wrap justify-center items-center'>
+        <div className='w-full flex flex-wrap justify-center items-center mb-16 sm:mb-24'>
           <Link href='/'>
             <a className='inline-block text-white bg-dark-700 px-4 py-2 mr-3 rounded-full mb-2'>
               Estilos
@@ -159,7 +123,7 @@ const Home2 = () => {
               <div className='flex items-center space-x-2'>
                 <div className='w-8 h-8 bg-red-600 rounded-full'></div>
                 <p className='text-white text-sm font-raleway'>Opio Studio</p>
-                <button className='text-white text-xs font-raleway font-thin tracking-wide bg-light-900 px-2 rounded-md focus:outline-none'>
+                <button className='text-white text-xs font-raleway font-thin tracking-wide bg-light-900 px-2 py-1 rounded-md focus:outline-none'>
                   ESTUDIO
                 </button>
               </div>
@@ -457,6 +421,19 @@ const Home2 = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className='flex flex-col justify-center items-center h-72 sm:h-80 mt-16'>
+        <div className='flex flex-col items-center text-center px-3 sm:px-0'>
+          <h1 className='text-4xl sm:text-5xl text-white font-bold font-raleway mb-2'>
+            ¿Eres un artista?
+          </h1>
+          <p className='text-light-700 text-center mb-5'>
+            Únete a nuestra plataforma y se encontrado por clientes potenciales
+          </p>
+          <button className='text-white bg-red-600 font-raleway px-4 py-2 rounded-lg'>
+            Regístrate
+          </button>
         </div>
       </div>
     </div>

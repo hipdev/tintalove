@@ -4,15 +4,15 @@ import { FaFacebookSquare } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className='flex w-full h-auto xl:h-24 py-5 bg-dark-700'>
+    <footer className='flex w-full h-auto xl:h-24 py-5 bg-black'>
       <div className='flex flex-col lg:flex-row w-full justify-between items-center px-8 sm:px-20 md:px-40'>
-        <div className='w-48 lg:w-60 mb-1 lg:mb-0'>
+        <div className='w-48 lg:w-60 mb-3 lg:mb-0'>
           <Link href='/'>
-            <a className='flex items-center'>
-              <div className='w-10 h-10 bg-red-600 rounded-full'></div>
-              <h1 className='block text-white text-3xl font-bold font-raleway absolute ml-2'>
-                Tintalovers
-              </h1>
+            <a className='relative flex items-center'>
+              <div className='absolute top-0 left-0 w-10 h-10 bg-red-600 rounded-full z-0'></div>
+                <h1 className='text-white text-3xl font-bold font-raleway ml-2 z-10'>
+                  Tintalovers
+                </h1>
             </a>
           </Link>
         </div>
