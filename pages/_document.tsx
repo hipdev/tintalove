@@ -12,8 +12,8 @@ class MyDocument extends Document {
             type="font/woff2"
             crossOrigin="anonymous"
           />
-          <link href="/static/favicons/favicon.ico" rel="shortcut icon" />
-          <link href="/static/favicons/site.webmanifest" rel="manifest" />
+          {/* <link href="/static/favicons/favicon.ico" rel="shortcut icon" />
+          <link href="/static/favicons/site.webmanifest" rel="manifest" /> */}
         </Head>
         <body>
           <Main />

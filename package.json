@@ -7,10 +7,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "firebase": "^0.900.12",
     "imagekit": "^3.1.1",
+    "little-state-machine": "^4.0.2",
+    "lodash.debounce": "^4.0.8",
+    "lodash.kebabcase": "^4.1.1",
     "next": "^10.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-hot-toast": "^1.0.2",
     "react-icons": "^4.2.0",
     "reactjs-popup": "^2.0.4",
     "uuid": "^8.3.2"
