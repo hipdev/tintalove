@@ -1,8 +1,7 @@
 import { GoSearch } from "react-icons/go";
 import Link from "next/link";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useContext } from "react";
-import { UserContext } from "lib/context";
+
 import { signOut } from "firebase/auth";
 import { auth } from "lib/firebase";
 import { createUser } from "lib/db";
