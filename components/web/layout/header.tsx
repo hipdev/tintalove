@@ -17,12 +17,13 @@ const Header = () => {
   const { state: loginState, actions } = useStateMachine({
     login,
   });
-  console.log(state, "el user");
+
+  const { user } = state;
+  console.log(user, "el user");
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("Cerrado sesión correctamente");
         actions.login(null);
       })
       .catch((error) => console.log(error, "error cerrando sesión"));
@@ -72,7 +73,7 @@ const Header = () => {
           <span className="text-lg text-white">
             <GoSearch />
           </span>
-          {!state.user && (
+          {!user && (
             <>
               <button
                 onClick={handleLogin}
@@ -83,13 +84,16 @@ const Header = () => {
               <button className="btn-red px-5 py-3">Registrate</button>
             </>
           )}
-          {state.user && (
-            <button
-              className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
-              onClick={handleLogout}
-            >
-              Salir
-            </button>
+          {user && (
+            <>
+              <a>Perfil</a>
+              <button
+                className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
+                onClick={handleLogout}
+              >
+                Salir
+              </button>
+            </>
           )}
         </div>
       </div>

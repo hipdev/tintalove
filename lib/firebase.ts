@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { Auth, getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAU64dBRZUAf0aS3g8aq_xwM2_Co9bNUv4",
@@ -11,16 +11,21 @@ const firebaseConfig = {
   measurementId: "G-65SGLH60C4",
 };
 
-let firebaseApp;
-if (!getApps().length) {
-  firebaseApp = initializeApp(firebaseConfig);
-}
+const firebaseApp: any = !getApps().length
+  ? initializeApp(firebaseConfig)
+  : getApp();
 
-firebaseApp = getApp();
+const authProvider = firebaseApp.container.getProvider("auth-exp");
+let auth: Auth;
+if (authProvider.isInitialized()) {
+  auth = authProvider.getImmediate();
+} else {
+  auth = getAuth(firebaseApp);
+}
+//Do whatever with this
+export { auth };
 
 export default firebaseApp;
-
-export const auth = getAuth(firebaseApp);
 
 /**`
  * Gets a users/{uid} document with username
