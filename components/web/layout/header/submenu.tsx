@@ -1,30 +1,16 @@
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 
-import { signOut } from "firebase/auth";
-import { auth } from "lib/firebase";
-
 import { useStateMachine } from "little-state-machine";
 import { getUser, login } from "lib/actions";
-import { logIn, logOut } from "lib/auth";
 
 const HeaderSubMenu = () => {
   const { state }: any = useStateMachine({
     getUser,
   });
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  });
 
   const { user } = state;
   console.log(user, "el user");
-
-  const handleLogout = () => {
-    logOut();
-  };
-  const handleLogin = () => {
-    logIn();
-  };
 
   return (
     <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-dark-700">
@@ -54,15 +40,9 @@ const HeaderSubMenu = () => {
         </div>
 
         <div className="flex items-center">
-          <span className="text-lg text-white">
-            <GoSearch />
-          </span>
           {!user && (
             <>
-              <button
-                onClick={handleLogin}
-                className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
-              >
+              <button className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none">
                 Ingresar
               </button>
               <button className="btn-red px-5 py-3">Registrate</button>
@@ -186,10 +166,7 @@ const HeaderSubMenu = () => {
                 </Menu>
               </div>
               <a>Perfil</a>
-              <button
-                className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
-                onClick={handleLogout}
-              >
+              <button className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none">
                 Salir
               </button>
             </>
