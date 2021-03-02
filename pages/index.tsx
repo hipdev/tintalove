@@ -1,10 +1,10 @@
-import Home from "../components/web/home/home";
+import Home2 from "../components/web/home/w-home-2";
 import Layout from "../components/web/layout/layout";
 
 export default function IndexPage() {
   return (
     <Layout>
-      <Home />
+      <Home2 />
     </Layout>
   );
 }
