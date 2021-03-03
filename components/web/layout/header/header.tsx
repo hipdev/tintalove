@@ -1,4 +1,4 @@
-import { GoSearch } from "react-icons/go";
+import { TiLocationOutline } from 'react-icons/ti';
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -57,7 +57,7 @@ const Header = () => {
               </a>
             </Link>
           </div>
-          <div className="w-full md:w-96 flex flex-wrap justify-evenly mb-2 lg:mb-0 py-4 md:py-0">
+          <div className="w-full md:w-96 flex flex-wrap justify-evenly mb-0 md:mb-2 lg:mb-0 py-4 md:py-0">
             <Link href="/">
               <a className="text-white">Tatuajes</a>
             </Link>
@@ -70,19 +70,29 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center">
-          <span className="text-lg text-white">
-            <GoSearch />
-          </span>
+        <div className="flex flex-col md:flex-row items-center">
           {!user && (
             <>
+              <div className='flex flex-wrap justify-evenly py-4 md:py-0 mr-0 md:mr-7'>
+              <div className='flex items-center space-x-2'>
+                <span className='text-3xl text-red-600'>
+                  <TiLocationOutline />
+                </span>
+                <select
+                  name=''
+                  id=''
+                  className='bg-transparent text-white font-raleway underline focus:outline-none mr-3'
+                >
+                  <option value=''>Todo Colombia</option>
+                </select>
+              </div>
+            </div>
               <button
                 onClick={handleLogin}
-                className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
+                className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
               >
-                Ingresar
+                Acceder
               </button>
-              <button className="btn-red px-5 py-3">Registrate</button>
             </>
           )}
           {user && (

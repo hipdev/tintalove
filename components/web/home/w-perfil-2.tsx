@@ -6,19 +6,19 @@ import { RiRoadMapLine } from "react-icons/ri";
 import { FiClock } from "react-icons/fi";
 import { BsBookmarkPlus } from "react-icons/bs";
 import { BsArrowDown } from "react-icons/bs";
-import { GoSearch } from 'react-icons/go';
 import { TiLocationOutline } from 'react-icons/ti';
 import { AiOutlineInstagram } from 'react-icons/ai';
 import { FaFacebookSquare } from 'react-icons/fa';
+import { GoSearch } from 'react-icons/go';
 import Link from "next/link";
 
 const Profile2 = () => {
   return (
     <div className='w-full h-auto bg-gradient-to-r from-black via-red-900 to-black'>
       <nav className='flex flex-col lg:flex-row px-2 sm:px-20 py-4'>
-        <div className='w-full flex flex-wrap justify-center lg:justify-between items-center'>
+        <div className='w-full flex flex-wrap justify-center xl:justify-between items-center'>
           <div className='flex flex-wrap justify-center items-center'>
-            <div className='w-full lg:w-44 mb-1 flex justify-center'>
+            <div className='w-full lg:w-44 mb-5 lg:mb-1 flex justify-center'>
               <Link href='/'>
                 <a className='relative flex items-center'>
                   <div className='absolute top-0 left-16 w-10 h-10 bg-red-600 rounded-full z-0'></div>
@@ -28,21 +28,13 @@ const Profile2 = () => {
                 </a>
               </Link>
             </div>
-            <div className='flex flex-wrap justify-evenly mb-2 lg:mb-0 py-4 md:py-0 ml-0 lg:ml-7'>
-              <div className='flex items-center space-x-2'>
-                <span className='text-3xl text-red-600'>
-                  <TiLocationOutline />
-                </span>
-                <select
-                  name=''
-                  id=''
-                  className='bg-transparent text-white font-raleway underline focus:outline-none mr-3'
-                >
-                  <option value=''>Medellín, Antioquia</option>
-                </select>
-              </div>
+            <div className="relative ml-0 lg:ml-10">
+              <form action="">
+                <input type="text" placeholder="Buscar" className="w-full lg:w-56 bg-transparent border border-white rounded-xl pl-4 pr-12 py-3 placeholder-white outline-none"/>
+                <span className="absolute top-3.5 right-5 text-white text-2xl"><GoSearch /></span>
+              </form>
             </div>
-            <div className='w-full md:w-96 flex flex-wrap justify-evenly mb-2 lg:mb-0 py-4 md:py-0'>
+            <div className='w-full md:w-96 xl:w-80 flex flex-wrap justify-evenly py-4 lg:py-0'>
               <Link href='/'>
                 <a className='text-white'>Tatuajes</a>
               </Link>
@@ -54,14 +46,24 @@ const Profile2 = () => {
               </Link>
             </div>
           </div>
-          <div className='flex flex-grow-0 md:flex-grow items-center justify-center xl:justify-end'>
-            <span className='text-lg text-white'>
-              <GoSearch />
-            </span>
-            <button className='w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none'>
-              Ingresar
+          <div className="flex flex-col md:flex-row justify-center xl:justify-end items-center flex-grow mt-2 lg:mt-5 xl:mt-0">
+            <div className='flex flex-wrap justify-evenly py-4 md:py-0 mr-0 md:mr-7'>
+              <div className='flex items-center space-x-2'>
+                <span className='text-3xl text-red-600'>
+                  <TiLocationOutline />
+                </span>
+                <select
+                  name=''
+                  id=''
+                  className='bg-transparent text-white font-raleway underline focus:outline-none mr-3'>
+                  <option value=''>Medellín, Antioquia</option>
+                </select>
+              </div>
+            </div>
+            <button
+              className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none">
+              Acceder
             </button>
-            <button className='btn-red px-5 py-3'>Registrate</button>
           </div>
         </div>
       </nav>
