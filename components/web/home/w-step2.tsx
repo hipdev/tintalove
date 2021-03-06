@@ -144,7 +144,7 @@ const Step2 = () => {
                     <label htmlFor="" className="block text-white text-sm uppercase tracking-wide">Horarios</label>
                     <span className="text-white">0/100</span>
                   </div>
-                  <textarea name="" id="" rows="6" placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm" className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"></textarea>
+                  <textarea name="" id="" rows={6} placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm" className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"></textarea>
                 </div>
               </div>
             </form>
