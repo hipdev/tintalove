@@ -142,7 +142,7 @@ const Step1 = () => {
                     <label htmlFor="" className="block text-white text-sm uppercase tracking-wide">biografia</label>
                     <span className="text-white">0/500</span>
                   </div>
-                  <textarea name="" id="" rows="6" placeholder="Cuentale a tus clientes un poco sobre ti" className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"></textarea>
+                  <textarea name="" id="" rows={6} placeholder="Cuentale a tus clientes un poco sobre ti" className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"></textarea>
                 </div>
               </div>
             </form>

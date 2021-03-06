@@ -44,16 +44,13 @@ const Header = () => {
   };
 
   return (
-    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-dark-700">
+    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-700   to-black">
       <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
         <div className="flex flex-wrap justify-center items-center">
           <div className="mb-1">
             <Link href="/">
               <a className="relative flex items-center">
-                <div className="absolute top-0 left-16 w-10 h-10 bg-red-600 rounded-full z-0"></div>
-                <h1 className="text-white text-3xl font-bold font-raleway ml-2 z-10">
-                  Tintalovers
-                </h1>
+                <img className="w-48 relative top-4" src="/logo2.jpg" />
               </a>
             </Link>
           </div>

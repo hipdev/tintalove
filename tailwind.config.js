@@ -9,7 +9,7 @@ module.exports = {
       },
       colors: {
         dark: {
-          700: "#111319",
+          700: "#0c0c0c",
         },
         light: {
           500: "#D8D8D8",
