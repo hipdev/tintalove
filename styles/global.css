@@ -25,3 +25,9 @@
 /* Stop purging. */
 
 /* Your own custom utilities */
+*:focus {
+  outline: none;
+}
+input:focus {
+  outline:none;
+}

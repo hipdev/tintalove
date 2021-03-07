@@ -1,4 +1,5 @@
 import { TiLocationOutline } from 'react-icons/ti';
+import { VscChevronDown } from "react-icons/vsc";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -8,6 +9,7 @@ import { auth } from "lib/firebase";
 import { createUser } from "lib/db";
 import { useStateMachine } from "little-state-machine";
 import { getUser, login } from "lib/actions";
+import React from 'react';
 
 const provider = new GoogleAuthProvider();
 
@@ -94,26 +96,19 @@ const Header = () => {
           )}
           {user && (
             <>
-              <div className="relative inline-block text-left">
+              <div className="relative text-left">
                 <Menu>
                   {({ open }) => (
                     <>
-                      <span className="rounded-md shadow-sm">
-                        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
-                          <span>Options</span>
-                          <svg
-                            className="w-5 h-5 ml-2 -mr-1"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+        
+                        <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
+
+                          <VscChevronDown className="text-2xl mr-1" />
+                          <span>{user.displayName}</span>
+                          <img className="w-12 rounded-full ml-3" src={user.photo} />
+
                         </Menu.Button>
-                      </span>
+               
 
                       <Transition
                         show={open}
@@ -194,14 +189,14 @@ const Header = () => {
                     </>
                   )}
                 </Menu>
-              </div>
-
-              <button
+              
+                </div>
+              {/* <button
                 className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
                 onClick={handleLogout}
               >
                 Salir
-              </button>
+              </button> */}
             </>
           )}
         </div>
