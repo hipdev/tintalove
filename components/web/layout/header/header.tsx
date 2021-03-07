@@ -1,4 +1,4 @@
-import { TiLocationOutline } from 'react-icons/ti';
+import { TiLocationOutline } from "react-icons/ti";
 import { VscChevronDown } from "react-icons/vsc";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { auth } from "lib/firebase";
 import { createUser } from "lib/db";
 import { useStateMachine } from "little-state-machine";
 import { getUser, login } from "lib/actions";
-import React from 'react';
+import React from "react";
 
 const provider = new GoogleAuthProvider();
 
@@ -70,22 +70,22 @@ const Header = () => {
         </div>
 
         <div className="flex flex-col md:flex-row items-center">
+          <div className="flex flex-wrap justify-evenly py-4 md:py-0 mr-0 md:mr-7">
+            <div className="flex items-center space-x-2">
+              <span className="text-3xl text-red-600">
+                <TiLocationOutline />
+              </span>
+              <select
+                name=""
+                id=""
+                className="bg-transparent text-white font-raleway underline focus:outline-none mr-3"
+              >
+                <option value="">Todo Colombia</option>
+              </select>
+            </div>
+          </div>
           {!user && (
             <>
-              <div className='flex flex-wrap justify-evenly py-4 md:py-0 mr-0 md:mr-7'>
-              <div className='flex items-center space-x-2'>
-                <span className='text-3xl text-red-600'>
-                  <TiLocationOutline />
-                </span>
-                <select
-                  name=''
-                  id=''
-                  className='bg-transparent text-white font-raleway underline focus:outline-none mr-3'
-                >
-                  <option value=''>Todo Colombia</option>
-                </select>
-              </div>
-            </div>
               <button
                 onClick={handleLogin}
                 className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
@@ -100,15 +100,14 @@ const Header = () => {
                 <Menu>
                   {({ open }) => (
                     <>
-        
-                        <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
-
-                          <VscChevronDown className="text-2xl mr-1" />
-                          <span>{user.displayName}</span>
-                          <img className="w-12 rounded-full ml-3" src={user.photo} />
-
-                        </Menu.Button>
-               
+                      <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
+                        <VscChevronDown className="text-2xl mr-1" />
+                        <span>{user.displayName}</span>
+                        <img
+                          className="w-12 rounded-full ml-3"
+                          src={user.photo}
+                        />
+                      </Menu.Button>
 
                       <Transition
                         show={open}
@@ -189,8 +188,7 @@ const Header = () => {
                     </>
                   )}
                 </Menu>
-              
-                </div>
+              </div>
               {/* <button
                 className="w-1/2 sm:w-auto text-white px-6 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
                 onClick={handleLogout}
