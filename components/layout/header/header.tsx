@@ -63,9 +63,17 @@ const Header = () => {
             <Link href="/">
               <a className="text-white">Artistas</a>
             </Link>
-            <Link href="/">
-              <a className="text-white">Soy un artista</a>
-            </Link>
+            {user && (
+                          <Link href='/artist/new'>
+                          <a className="text-white">{user.displayName.split(" ")[0]}, eres artista?</a>
+                        </Link>
+            )}
+            {!user && (
+                          <Link href='/'>
+                          <a className="text-white">Soy un artista</a>
+                        </Link>
+            )}
+
           </div>
         </div>
 

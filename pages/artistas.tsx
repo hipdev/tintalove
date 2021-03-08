@@ -1,4 +1,4 @@
-import Artistas from "../components/web/home/art";
+import Artistas from "../components/home/art";
 
 export default function IndexPage() {
   return <Artistas />;
