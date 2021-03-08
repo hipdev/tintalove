@@ -1,49 +1,49 @@
-import { TiLocationOutline } from "react-icons/ti";
-import { VscChevronDown } from "react-icons/vsc";
-import { Menu, Transition } from "@headlessui/react";
-import Link from "next/link";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { TiLocationOutline } from 'react-icons/ti'
+import { VscChevronDown } from 'react-icons/vsc'
+import { Menu, Transition } from '@headlessui/react'
+import Link from 'next/link'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
-import { signOut } from "firebase/auth";
-import { auth } from "lib/firebase";
-import { createUser } from "lib/db";
-import { useStateMachine } from "little-state-machine";
-import { getUser, login } from "lib/actions";
-import React from "react";
+import { signOut } from 'firebase/auth'
+import { auth } from 'lib/firebase'
+import { createUser } from 'lib/db'
+import { useStateMachine } from 'little-state-machine'
+import { getUser, login } from 'lib/actions'
+import React from 'react'
 
-const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider()
 
 const Header = () => {
   const { state }: any = useStateMachine({
     getUser,
-  });
+  })
   const { state: loginState, actions } = useStateMachine({
     login,
-  });
+  })
 
-  const { user } = state;
-  console.log(user, "el user");
+  const { user } = state
+  console.log(user, 'el user')
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        actions.login(null);
+        actions.login(null)
       })
-      .catch((error) => console.log(error, "error cerrando sesión"));
-  };
+      .catch((error) => console.log(error, 'error cerrando sesión'))
+  }
   const handleLogin = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        actions.login(true);
-        const user = result.user;
-        createUser(user);
+        actions.login(true)
+        const user = result.user
+        createUser(user)
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        console.log(errorCode);
-      });
-  };
+        const errorCode = error.code
+        console.log(errorCode)
+      })
+  }
 
   return (
     <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-700   to-black">
@@ -64,16 +64,17 @@ const Header = () => {
               <a className="text-white">Artistas</a>
             </Link>
             {user && (
-                          <Link href='/artist/new'>
-                          <a className="text-white">{user.displayName.split(" ")[0]}, eres artista?</a>
-                        </Link>
+              <Link href="/artist/new/main-info">
+                <a className="text-white">
+                  {user.displayName.split(' ')[0]}, eres artista?
+                </a>
+              </Link>
             )}
             {!user && (
-                          <Link href='/'>
-                          <a className="text-white">Soy un artista</a>
-                        </Link>
+              <Link href="/">
+                <a className="text-white">Soy un artista</a>
+              </Link>
             )}
-
           </div>
         </div>
 
@@ -144,8 +145,8 @@ const Header = () => {
                                   href="#account-settings"
                                   className={`${
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700'
                                   } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                 >
                                   Mi cuenta
@@ -158,8 +159,8 @@ const Header = () => {
                                   href="#support"
                                   className={`${
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700'
                                   } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                 >
                                   Ayuda
@@ -182,8 +183,8 @@ const Header = () => {
                                   onClick={handleLogout}
                                   className={`${
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700'
                                   } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                 >
                                   Salir
@@ -208,7 +209,7 @@ const Header = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
