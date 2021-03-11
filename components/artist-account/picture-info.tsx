@@ -1,14 +1,8 @@
-import { useRouter } from 'next/router'
 import { FaRegUserCircle } from 'react-icons/fa'
 
 import SideMenu from './side-menu'
 
 const PictureInfo = () => {
-  const router = useRouter()
-
-  const [path] = router.route.split('/').slice(-1) // get last item from pathName
-
-  console.log(path, 'el router')
   return (
     <div className="w-full h-auto lg:h-screen bg-gradient-to-r from-dark-700   to-black">
       <div className="h-full flex flex-col">

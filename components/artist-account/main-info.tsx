@@ -19,12 +19,12 @@ const MainInfo = () => {
                       htmlFor=""
                       className="block text-white text-sm uppercase mb-3 tracking-wide"
                     >
-                      Nombre completo
+                      Nombre artístico
                     </label>
                     <input
                       type="text"
-                      placeholder="Nombre público"
-                      className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
+                      placeholder="..."
+                      className="text-gray-400 w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
                     />
                   </div>
                   <div className="col-span-6 md:col-span-3">
@@ -32,12 +32,12 @@ const MainInfo = () => {
                       htmlFor=""
                       className="block text-white text-sm uppercase mb-3 tracking-wide"
                     >
-                      Ubicación
+                      Ciudad
                     </label>
                     <select
                       name=""
                       id=""
-                      className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
+                      className="block w-full text-gray-400 bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
                     >
                       <option value="" selected>
                         Selecciona
@@ -59,7 +59,7 @@ const MainInfo = () => {
                       id=""
                       rows={6}
                       placeholder="Cuentale a tus clientes un poco sobre ti"
-                      className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
+                      className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
                     ></textarea>
                   </div>
                 </div>
