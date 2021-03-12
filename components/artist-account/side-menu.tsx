@@ -122,7 +122,7 @@ const SideMenu = () => {
                     : 'text-light-900 ' + textWhite
                 }
               >
-                Información laboral
+                Información de Contacto
               </span>
             </span>
           </div>

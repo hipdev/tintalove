@@ -1,9 +1,18 @@
 import SideMenu from './side-menu'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import useUser from 'hooks/use-user'
 
 const MainInfo = () => {
   const [value, setValue] = useState(null)
+  const { register, handleSubmit, watch, errors } = useForm()
+
+  const { state } = useUser()
+
+  console.log(state, 'esto que ')
+
+  const onSubmit = (data) => console.log(data)
 
   const handleCity = (e) => {
     console.log(e, 'okey')
@@ -20,7 +29,7 @@ const MainInfo = () => {
               <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-10">
                 Información personal
               </h1>
-              <form action="">
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 md:col-span-3">
                     <label
@@ -30,9 +39,11 @@ const MainInfo = () => {
                       Nombre artístico
                     </label>
                     <input
-                      type="text"
+                      name="name"
                       placeholder="..."
                       className="text-gray-400 w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
+                      ref={register({ required: true })}
+                      required
                     />
                   </div>
                   <div className="col-span-6 md:col-span-3">
@@ -73,18 +84,22 @@ const MainInfo = () => {
                       {/* <span className="text-white">0/500</span> */}
                     </div>
                     <textarea
-                      name=""
-                      id=""
+                      name="bio"
+                      ref={register({ required: true })}
+                      required
                       rows={6}
                       placeholder="Cuentale a tus clientes un poco sobre ti"
                       className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
                     ></textarea>
                   </div>
                 </div>
+                <button
+                  type="submit"
+                  className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
+                >
+                  Siguiente
+                </button>
               </form>
-              <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
-                Siguiente
-              </button>
             </div>
           </div>
         </div>
