@@ -1,6 +1,14 @@
 import SideMenu from './side-menu'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import { useState } from 'react'
 
 const MainInfo = () => {
+  const [value, setValue] = useState(null)
+
+  const handleCity = (e) => {
+    console.log(e, 'okey')
+    setValue(e)
+  }
   return (
     <div className="w-full h-auto lg:h-screen  bg-gradient-to-r from-dark-700   to-black">
       <div className="h-full flex flex-col">
@@ -34,15 +42,25 @@ const MainInfo = () => {
                     >
                       Ciudad
                     </label>
-                    <select
-                      name=""
-                      id=""
-                      className="block w-full text-gray-400 bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-                    >
-                      <option value="" selected>
-                        Selecciona
-                      </option>
-                    </select>
+                    <GooglePlacesAutocomplete
+                      apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
+                      debounce={500}
+                      apiOptions={{ region: 'CO', language: 'es' }}
+                      autocompletionRequest={{
+                        componentRestrictions: { country: ['CO'] },
+                        types: ['(cities)'],
+                      }}
+                      selectProps={{
+                        value,
+                        onChange: handleCity,
+                        placeholder: 'Seleccionar ciudad...',
+                        noOptionsMessage: () => <span>Sin opciones</span>,
+                        // defaultMenuIsOpen: true,
+                        // menuIsOpen: true,
+                        classNamePrefix: 'create_artist',
+                        // autoFocus: true,
+                      }}
+                    />
                   </div>
                   <div className="col-span-6 mb-6">
                     <div className="flex justify-between items-center mb-3">
@@ -52,7 +70,7 @@ const MainInfo = () => {
                       >
                         biografia
                       </label>
-                      <span className="text-white">0/500</span>
+                      {/* <span className="text-white">0/500</span> */}
                     </div>
                     <textarea
                       name=""

@@ -1,0 +1,38 @@
+.juan__control {
+  background: black;
+}
+
+.create_artist__control {
+  background: #090909 !important;
+  padding: 3px 1px;
+  border-radius: 12px !important;
+  border: 2px solid #707484 !important;
+  outline: none imp !important;
+}
+.create_artist__control--is-focused {
+  box-shadow: none !important;
+}
+.create_artist__control--menu-is-open {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.create_artist__single-value,
+.create_artist__option,
+.create_artist__input,
+.create_artist__placeholder {
+  color: #9ca3af !important;
+}
+.create_artist__option--is-selected {
+  background: #000 !important;
+}
+
+.create_artist__option--is-focused {
+  background: #0c0c0c !important;
+  color: #9ca3af !important;
+}
+
+.create_artist__menu {
+  background-color: #191919 !important;
+  border-radius: 0px !important;
+}
