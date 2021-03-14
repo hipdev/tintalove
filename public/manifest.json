@@ -1,5 +1,10 @@
 {
   "name": "Tinta Love",
+  "short_name": "Tinta Love",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "We love tattoo",
   "icons": [
     {
       "src": "/favicon/android-icon-36x36.png",
