@@ -52,7 +52,7 @@ const Header = () => {
           <div className="mb-1">
             <Link href="/">
               <a className="relative flex items-center">
-                <img className="w-48 relative top-4" src="/logo2.jpg" />
+                <img className="w-48 relative top-4" src="/newlogo.png" />
               </a>
             </Link>
           </div>

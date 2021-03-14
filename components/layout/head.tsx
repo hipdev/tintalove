@@ -8,7 +8,7 @@ const HeadContainer = () => {
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="/favicon/favicon-16x16.png"
+            href="/favicon.png"
         />
     </Head>
   );
