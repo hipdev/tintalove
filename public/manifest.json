@@ -3,7 +3,6 @@
   "short_name": "Tinta Love",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
   "description": "We love tattoo",
   "icons": [
     {
