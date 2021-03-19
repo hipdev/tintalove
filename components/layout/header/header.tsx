@@ -48,31 +48,33 @@ const Header = () => {
   return (
     <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-700   to-black">
       <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
-        <div className="flex flex-wrap justify-center items-center">
-          <div className="mb-1">
+        <div className="flex justify-center items-center">
+          <Link href="/">
+            <a className="mr-12 w-60">
+              <img className="w-52" src="/short-logo.png" />
+            </a>
+          </Link>
+
+          <div className="w-full  flex flex-wrap justify-evenly ml-24 font-light uppercase">
             <Link href="/">
-              <a className="relative flex items-center">
-                <img className="w-48 relative top-4" src="/newlogo.png" />
-              </a>
+              <a className="text-white mr-5">TATUAJES</a>
             </Link>
-          </div>
-          <div className="w-full md:w-96 flex flex-wrap justify-evenly mb-0 md:mb-2 lg:mb-0 py-4 md:py-0">
             <Link href="/">
-              <a className="text-white">Tatuajes</a>
+              <a className="text-white mr-5">ARTISTAS</a>
             </Link>
             <Link href="/">
-              <a className="text-white">Artistas</a>
+              <a className="text-white mr-5">ESTUDIOS</a>
             </Link>
             {user && (
               <Link href="/artist/new/main-info">
-                <a className="text-white">
-                  {user.displayName.split(' ')[0]}, eres artista?
+                <a className="text-white mr-5">
+                  {user.displayName.split(' ')[0]}, ERES ARTISTA?
                 </a>
               </Link>
             )}
             {!user && (
               <Link href="/">
-                <a className="text-white">Soy un artista</a>
+                <a className="text-white">SOY UN ARTISTA</a>
               </Link>
             )}
           </div>
@@ -87,9 +89,9 @@ const Header = () => {
               <select
                 name=""
                 id=""
-                className="bg-transparent text-white font-raleway underline focus:outline-none mr-3"
+                className="bg-transparent text-white font-light font-raleway underline focus:outline-none mr-3"
               >
-                <option value="">Todo Colombia</option>
+                <option value="">TODO COLOMBIA</option>
               </select>
             </div>
           </div>
@@ -105,7 +107,7 @@ const Header = () => {
           )}
           {user && (
             <>
-              <div className="relative text-left">
+              <div className="relative text-left z-10">
                 <Menu>
                   {({ open }) => (
                     <>
