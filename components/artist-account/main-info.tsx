@@ -1,20 +1,38 @@
+import debounce from 'lodash.debounce'
 import SideMenu from './side-menu'
 import toast, { Toaster } from 'react-hot-toast'
 import GooglePlacesAutocomplete, {
   getLatLng,
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useUser from 'hooks/use-user'
 
 const MainInfo = () => {
-  const [value, setValue] = useState(null)
+  const [name, setName] = useState(null)
+  const [city, setCity] = useState(null)
+  const [userName, setUserName] = useState('')
   const { register, handleSubmit, watch, errors } = useForm()
+
+  const watchName: string = watch('name')
 
   const { state } = useUser()
 
   console.log(state, 'esto que ')
+
+  // useEffect(() => {
+  //   console.log(watchName, 'watch')
+  //   if (watchName != '') {
+  //     console.log(watchName, 'this')
+  //     const slug = watchName
+  //       .normalize('NFD')
+  //       .replace(/[\u0300-\u036f]/g, '')
+  //       .replace(' ', '')
+
+  //     setUserName(slug)
+  //   }
+  // }, [watchName])
 
   const onSubmit = (data) => console.log(data)
 
@@ -24,10 +42,38 @@ const MainInfo = () => {
     const latLng = await getLatLng(results[0])
 
     console.log(results, latLng)
-    setValue(e)
+    setCity(e)
 
     toast('Ciudad actualizada')
   }
+
+  const checkUsername = useCallback(
+    debounce(async (username) => {
+      if (username.length >= 3) {
+        const ref = firestore.doc(`usernames/${username}`)
+        const { exists } = await ref.get()
+        console.log('Firestore read executed!')
+        setIsValid(!exists)
+        setLoading(false)
+      }
+    }, 500),
+    []
+  )
+
+  const handleUserName = (e) => {
+    const name: string = e.target.value
+    if (name != '') {
+      console.log(name, 'this')
+      const slug = name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[ ,]+/g, '')
+        .toLowerCase()
+
+      setUserName(slug)
+    }
+  }
+
   return (
     <div className="w-full h-auto lg:h-screen  bg-gradient-to-r from-dark-700   to-black">
       <Toaster
@@ -68,7 +114,8 @@ const MainInfo = () => {
                         autoComplete="off"
                         placeholder="..."
                         className="text-gray-400 w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-                        ref={register({ required: true })}
+                        value={name}
+                        onChange={handleUserName}
                         required
                       />
                     </label>
@@ -76,19 +123,20 @@ const MainInfo = () => {
                     <div className="text-white flex">
                       <div>
                         tintalove.com/
-                        <span className="text-red-500">dann-coly</span>
+                        <span className="text-red-500">{userName}</span>
                       </div>
                       <div className="ml-5">
                         {/* <span>Esta disponible!</span> */}
-                        <span>Fk, no disponible</span>
+                        <span>Usuario no disponible</span>
                       </div>
                     </div>
-                    <div>
+
+                    <div className="mt-3">
                       <input
                         className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
                         type="text"
                         autoComplete="off"
-                        value="dann-coly"
+                        value={userName}
                       />
                     </div>
                   </div>
@@ -105,7 +153,7 @@ const MainInfo = () => {
                           types: ['(cities)'],
                         }}
                         selectProps={{
-                          value,
+                          value: city,
                           onChange: handleCity,
                           placeholder: 'Seleccionar ciudad...',
                           noOptionsMessage: () => <span>Sin opciones</span>,
