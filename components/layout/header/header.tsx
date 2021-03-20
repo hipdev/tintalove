@@ -22,7 +22,6 @@ const Header = () => {
   })
 
   const { user } = state
-  console.log(user, 'el user')
 
   const handleLogout = () => {
     signOut(auth)

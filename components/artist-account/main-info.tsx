@@ -7,25 +7,24 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import useUser from 'hooks/use-user'
 import { FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
+import { userNameAvailable } from 'lib/db'
 
 const MainInfo = () => {
   const [name, setName] = useState('')
   const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
+
+  const [availableUserName, setAvailableUserName] = useState(false)
+  const [validUserName, setValidUserName] = useState(false)
+
   const [city, setCity] = useState(null)
   const [userName, setUserName] = useState('')
-  const { register, handleSubmit, errors } = useForm()
 
   const { state } = useUser()
-
-  console.log(state, 'esto que ')
-
-  const onSubmit = (data) => console.log(data)
 
   const handleCity = async (e) => {
     console.log(e, 'okey')
@@ -38,18 +37,21 @@ const MainInfo = () => {
     toast('Ciudad actualizada')
   }
 
-  // const checkUsername = useCallback(
-  //   debounce(async (username) => {
-  //     if (username.length >= 3) {
-  //       const ref = firestore.doc(`usernames/${username}`)
-  //       const { exists } = await ref.get()
-  //       console.log('Firestore read executed!')
-  //       setIsValid(!exists)
-  //       setLoading(false)
-  //     }
-  //   }, 500),
-  //   []
-  // )
+  const checkUsername = useCallback(
+    debounce(async (username) => {
+      if (username != '') {
+        const available = await userNameAvailable(username)
+        setAvailableUserName(available)
+
+        // Falta validar cuando el username esta disponible agregar el estado para guardar
+
+        // setLoading(false)
+      } else {
+        setAvailableUserName(false)
+      }
+    }, 500),
+    []
+  )
 
   const handleName = (e) => {
     const name: string = e.target.value
@@ -62,19 +64,33 @@ const MainInfo = () => {
         .replace(/[ ,]+/g, '')
         .toLowerCase()
 
-      // checkUsername(username)
+      checkUsername(username)
 
       setUserName(username)
+      setValidUserName(true)
       setShow(true)
     }
     if (name == '') setShow(false)
   }
 
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e, 'que es e')
+    setValidUserName(false)
+    setAvailableUserName(false)
 
-    const nick = e.target.value
-    console.log(nick, 'el username')
+    const nick = e.target.value.toLowerCase()
+    const re = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
+
+    if (re.test(nick)) {
+      // checkUsername(nick)
+      setValidUserName(true)
+
+      console.log('es valido')
+    } else {
+      setValidUserName(false)
+      setAvailableUserName(false)
+    }
+
+    // console.log(nick, 'el username')
     setUserName(nick)
     setCustomNick(true)
   }
@@ -82,6 +98,8 @@ const MainInfo = () => {
   const saveUserName = () => {
     console.log(userName, 'el username')
   }
+
+  const onSubmit = (data) => console.log(data)
 
   const boxClass =
     'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-480'
@@ -115,10 +133,10 @@ const MainInfo = () => {
               >
                 Información personal
               </h1>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={onSubmit}>
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 md:col-span-3">
-                    <label className="block text-white text-sm uppercase mb-3 tracking-wide">
+                    <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                       <span className="mb-3 block">Nombre artístico</span>
                       <input
                         name="name"
@@ -132,7 +150,7 @@ const MainInfo = () => {
                     </label>
                   </div>
                   <div className="col-span-6 md:col-span-3">
-                    <label className="block text-white text-sm uppercase mb-3 tracking-wide">
+                    <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                       <span
                         onClick={() => setShow(!show)}
                         className="mb-3 block"
@@ -164,7 +182,7 @@ const MainInfo = () => {
 
                   <div className="col-span-full ">
                     <Transition
-                      show={show}
+                      show={show || customNick}
                       enter="transition-opacity duration-500"
                       enterFrom="opacity-0"
                       enterTo="opacity-100"
@@ -179,23 +197,47 @@ const MainInfo = () => {
                             <span className="text-red-500">{userName}</span>
                           </div>
                           <div className="ml-5">
-                            {/* <span>Esta disponible!</span> */}
-                            <span>Usuario no disponible</span>
+                            {validUserName ? (
+                              <div>
+                                {availableUserName ? (
+                                  <div className="flex items-center">
+                                    <span>Esta disponible!</span>
+                                    <Popup
+                                      trigger={
+                                        <span>
+                                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                                        </span>
+                                      }
+                                      on={['hover', 'focus']}
+                                      position="right center"
+                                    >
+                                      <div className="text-sm">
+                                        Así te encontrarán en TintaLove
+                                      </div>
+                                    </Popup>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center">
+                                    <span>No disponible</span>
+                                    <Popup
+                                      trigger={
+                                        <span>
+                                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                                        </span>
+                                      }
+                                      on={['hover', 'focus']}
+                                      position="right center"
+                                    >
+                                      <div className="text-sm">
+                                        Intenta con otro usuario en el cuadro de
+                                        abajo.
+                                      </div>
+                                    </Popup>
+                                  </div>
+                                )}
+                              </div>
+                            ) : null}
                           </div>
-
-                          <Popup
-                            trigger={
-                              <span>
-                                <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                              </span>
-                            }
-                            on={['hover', 'focus']}
-                            position="right center"
-                          >
-                            <div className="text-sm">
-                              Así te encontrarán en TintaLove
-                            </div>
-                          </Popup>
                         </div>
 
                         <div className="mt-3">
@@ -229,7 +271,6 @@ const MainInfo = () => {
                     </div>
                     <textarea
                       name="bio"
-                      ref={register({ required: true })}
                       required
                       rows={6}
                       placeholder="Cuentale al mundo sobre ti"
@@ -239,6 +280,7 @@ const MainInfo = () => {
                 </div>
                 <button
                   type="submit"
+                  disabled={true}
                   className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
                 >
                   Guardar
