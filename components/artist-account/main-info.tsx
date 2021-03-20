@@ -16,28 +16,14 @@ import 'reactjs-popup/dist/index.css'
 const MainInfo = () => {
   const [name, setName] = useState('')
   const [show, setShow] = useState(false)
+  const [customNick, setCustomNick] = useState(false)
   const [city, setCity] = useState(null)
   const [userName, setUserName] = useState('')
-  const { register, handleSubmit, watch, errors } = useForm()
-
-  const watchName: string = watch('name')
+  const { register, handleSubmit, errors } = useForm()
 
   const { state } = useUser()
 
   console.log(state, 'esto que ')
-
-  // useEffect(() => {
-  //   console.log(watchName, 'watch')
-  //   if (watchName != '') {
-  //     console.log(watchName, 'this')
-  //     const slug = watchName
-  //       .normalize('NFD')
-  //       .replace(/[\u0300-\u036f]/g, '')
-  //       .replace(' ', '')
-
-  //     setUserName(slug)
-  //   }
-  // }, [watchName])
 
   const onSubmit = (data) => console.log(data)
 
@@ -52,36 +38,36 @@ const MainInfo = () => {
     toast('Ciudad actualizada')
   }
 
-  const checkUsername = useCallback(
-    debounce(async (username) => {
-      if (username.length >= 3) {
-        const ref = firestore.doc(`usernames/${username}`)
-        const { exists } = await ref.get()
-        console.log('Firestore read executed!')
-        setIsValid(!exists)
-        setLoading(false)
-      }
-    }, 500),
-    []
-  )
+  // const checkUsername = useCallback(
+  //   debounce(async (username) => {
+  //     if (username.length >= 3) {
+  //       const ref = firestore.doc(`usernames/${username}`)
+  //       const { exists } = await ref.get()
+  //       console.log('Firestore read executed!')
+  //       setIsValid(!exists)
+  //       setLoading(false)
+  //     }
+  //   }, 500),
+  //   []
+  // )
 
   const handleName = (e) => {
     const name: string = e.target.value
     setName(name)
 
-    if (name != '') {
-      console.log(name, 'this')
-      const slug = name
+    if (name != '' && !customNick) {
+      const username = name
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[ ,]+/g, '')
         .toLowerCase()
 
-      setUserName(slug)
+      // checkUsername(username)
+
+      setUserName(username)
       setShow(true)
-    } else {
-      setShow(false)
     }
+    if (name == '') setShow(false)
   }
 
   const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +76,7 @@ const MainInfo = () => {
     const nick = e.target.value
     console.log(nick, 'el username')
     setUserName(nick)
+    setCustomNick(true)
   }
 
   const saveUserName = () => {
@@ -119,7 +106,7 @@ const MainInfo = () => {
 
           <div
             style={{ boxShadow: '1px 0px 5px #000' }}
-            className={name ? boxClass + ' sm:h-560' : boxClass}
+            className={name ? boxClass + ' sm:h-576' : boxClass}
           >
             <div>
               <h1
