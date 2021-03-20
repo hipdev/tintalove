@@ -1,3 +1,4 @@
+import { Transition } from '@headlessui/react'
 import debounce from 'lodash.debounce'
 import SideMenu from './side-menu'
 import toast, { Toaster } from 'react-hot-toast'
@@ -14,6 +15,7 @@ import 'reactjs-popup/dist/index.css'
 
 const MainInfo = () => {
   const [name, setName] = useState('')
+  const [show, setShow] = useState(false)
   const [city, setCity] = useState(null)
   const [userName, setUserName] = useState('')
   const { register, handleSubmit, watch, errors } = useForm()
@@ -76,6 +78,9 @@ const MainInfo = () => {
         .toLowerCase()
 
       setUserName(slug)
+      setShow(true)
+    } else {
+      setShow(false)
     }
   }
 
@@ -92,7 +97,7 @@ const MainInfo = () => {
   }
 
   const boxClass =
-    'relative w-10/12 sm:w-2/3 h-auto bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0'
+    'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-480'
   return (
     <div className="w-full h-auto lg:h-screen  bg-gradient-to-r from-dark-700   to-black">
       <Toaster
@@ -113,8 +118,8 @@ const MainInfo = () => {
           <SideMenu />
 
           <div
-            style={{ boxShadow: '1px 0px 5px #000', transition: 'height .5s' }}
-            className="relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0"
+            style={{ boxShadow: '1px 0px 5px #000' }}
+            className={name ? boxClass + ' sm:h-560' : boxClass}
           >
             <div>
               <h1
@@ -132,14 +137,54 @@ const MainInfo = () => {
                         name="name"
                         autoComplete="off"
                         placeholder="..."
-                        className="text-gray-400 w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
+                        className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
                         value={name}
                         onChange={handleName}
                         required
                       />
                     </label>
+                  </div>
+                  <div className="col-span-6 md:col-span-3">
+                    <label className="block text-white text-sm uppercase mb-3 tracking-wide">
+                      <span
+                        onClick={() => setShow(!show)}
+                        className="mb-3 block"
+                      >
+                        Ciudad
+                      </span>
 
-                    {name != '' && (
+                      <GooglePlacesAutocomplete
+                        apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
+                        debounce={500}
+                        apiOptions={{ region: 'CO', language: 'es' }}
+                        autocompletionRequest={{
+                          componentRestrictions: { country: ['CO'] },
+                          types: ['(cities)'],
+                        }}
+                        selectProps={{
+                          value: city,
+                          onChange: handleCity,
+                          placeholder: 'Seleccionar ciudad...',
+                          noOptionsMessage: () => <span>Sin opciones</span>,
+                          // defaultMenuIsOpen: true,
+                          // menuIsOpen: true,
+                          classNamePrefix: 'create_artist',
+                          // autoFocus: true,
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="col-span-full ">
+                    <Transition
+                      show={show}
+                      enter="transition-opacity duration-500"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="transition-opacity duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
                       <div>
                         <div className="text-white flex items-center">
                           <div>
@@ -183,32 +228,7 @@ const MainInfo = () => {
                           </button>
                         </div>
                       </div>
-                    )}
-                  </div>
-                  <div className="col-span-6 md:col-span-3">
-                    <label className="block text-white text-sm uppercase mb-3 tracking-wide">
-                      <span className="mb-3 block">Ciudad</span>
-
-                      <GooglePlacesAutocomplete
-                        apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                        debounce={500}
-                        apiOptions={{ region: 'CO', language: 'es' }}
-                        autocompletionRequest={{
-                          componentRestrictions: { country: ['CO'] },
-                          types: ['(cities)'],
-                        }}
-                        selectProps={{
-                          value: city,
-                          onChange: handleCity,
-                          placeholder: 'Seleccionar ciudad...',
-                          noOptionsMessage: () => <span>Sin opciones</span>,
-                          // defaultMenuIsOpen: true,
-                          // menuIsOpen: true,
-                          classNamePrefix: 'create_artist',
-                          // autoFocus: true,
-                        }}
-                      />
-                    </label>
+                    </Transition>
                   </div>
                   <div className="col-span-6 mb-6">
                     <div className="flex justify-between items-center mb-3">
