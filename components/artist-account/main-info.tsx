@@ -5,12 +5,15 @@ import GooglePlacesAutocomplete, {
   getLatLng,
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
-import { useCallback, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import useUser from 'hooks/use-user'
+import { FiHelpCircle } from 'react-icons/fi'
+import Popup from 'reactjs-popup'
+import 'reactjs-popup/dist/index.css'
 
 const MainInfo = () => {
-  const [name, setName] = useState(null)
+  const [name, setName] = useState('')
   const [city, setCity] = useState(null)
   const [userName, setUserName] = useState('')
   const { register, handleSubmit, watch, errors } = useForm()
@@ -60,8 +63,10 @@ const MainInfo = () => {
     []
   )
 
-  const handleUserName = (e) => {
+  const handleName = (e) => {
     const name: string = e.target.value
+    setName(name)
+
     if (name != '') {
       console.log(name, 'this')
       const slug = name
@@ -74,6 +79,20 @@ const MainInfo = () => {
     }
   }
 
+  const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e, 'que es e')
+
+    const nick = e.target.value
+    console.log(nick, 'el username')
+    setUserName(nick)
+  }
+
+  const saveUserName = () => {
+    console.log(userName, 'el username')
+  }
+
+  const boxClass =
+    'relative w-10/12 sm:w-2/3 h-auto bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0'
   return (
     <div className="w-full h-auto lg:h-screen  bg-gradient-to-r from-dark-700   to-black">
       <Toaster
@@ -94,8 +113,8 @@ const MainInfo = () => {
           <SideMenu />
 
           <div
-            style={{ boxShadow: '1px 0px 5px #000' }}
-            className="relative w-10/12 sm:w-2/3 h-auto bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0"
+            style={{ boxShadow: '1px 0px 5px #000', transition: 'height .5s' }}
+            className="relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0"
           >
             <div>
               <h1
@@ -115,30 +134,56 @@ const MainInfo = () => {
                         placeholder="..."
                         className="text-gray-400 w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
                         value={name}
-                        onChange={handleUserName}
+                        onChange={handleName}
                         required
                       />
                     </label>
 
-                    <div className="text-white flex">
+                    {name != '' && (
                       <div>
-                        tintalove.com/
-                        <span className="text-red-500">{userName}</span>
-                      </div>
-                      <div className="ml-5">
-                        {/* <span>Esta disponible!</span> */}
-                        <span>Usuario no disponible</span>
-                      </div>
-                    </div>
+                        <div className="text-white flex items-center">
+                          <div>
+                            tintalove.com/
+                            <span className="text-red-500">{userName}</span>
+                          </div>
+                          <div className="ml-5">
+                            {/* <span>Esta disponible!</span> */}
+                            <span>Usuario no disponible</span>
+                          </div>
 
-                    <div className="mt-3">
-                      <input
-                        className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
-                        type="text"
-                        autoComplete="off"
-                        value={userName}
-                      />
-                    </div>
+                          <Popup
+                            trigger={
+                              <span>
+                                <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                              </span>
+                            }
+                            on={['hover', 'focus']}
+                            position="right center"
+                          >
+                            <div className="text-sm">
+                              Así te encontrarán en TintaLove
+                            </div>
+                          </Popup>
+                        </div>
+
+                        <div className="mt-3">
+                          <input
+                            className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
+                            type="text"
+                            autoComplete="off"
+                            value={userName}
+                            onChange={changeUserName}
+                          />
+                          <button
+                            onClick={saveUserName}
+                            className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
+                            type="button"
+                          >
+                            Cambiar usuario
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="col-span-6 md:col-span-3">
                     <label className="block text-white text-sm uppercase mb-3 tracking-wide">
