@@ -6,36 +6,79 @@ import GooglePlacesAutocomplete, {
   getLatLng,
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
-import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import useUser from 'hooks/use-user'
 import { FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
 import { userNameAvailable } from 'lib/db'
+import { capitalize } from 'lib/utils'
+import { useForm } from 'react-hook-form'
+
+const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfo = () => {
-  const [name, setName] = useState('')
-  const [show, setShow] = useState(false)
-  const [customNick, setCustomNick] = useState(false)
+  const {
+    register,
+    setValue,
+    getValues,
+    errors,
+    handleSubmit,
+    formState,
+    reset,
+    watch,
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      show: false,
+      customNick: false,
+      availableUsername: false,
+      validUserName: false,
+      name: '',
+      username: '',
+    },
+  })
+
+  const watchUserName = watch('username')
+
+  const [city, setCity] = useState(null)
+  const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
   const [validUserName, setValidUserName] = useState(false)
 
-  const [city, setCity] = useState(null)
-  const [userName, setUserName] = useState('')
+  const [show, setShow] = useState(false)
+  const [customNick, setCustomNick] = useState(false)
 
   const { state } = useUser()
 
+  // console.log(state, 'user info')
+
   const handleCity = async (e) => {
-    console.log(e, 'okey')
     const results = await geocodeByAddress(e.value.description)
     const latLng = await getLatLng(results[0])
 
-    console.log(results, latLng)
-    setCity(e)
+    console.log(results)
+    console.log(latLng)
+    const fullAddress = results[0].formatted_address.split(',')
+    const city_name = fullAddress[0]
+    const province = fullAddress[1].trim()
+    const country = fullAddress[2].trim()
+
+    console.log(e, 'input')
+
+    setPlaceInfo({
+      place_id: results[0].place_id,
+      formatted_address: results[0].formatted_address,
+      city_name,
+      province,
+      country,
+    })
 
     toast('Ciudad actualizada')
   }
+
+  console.log(placeInfo, 'la ciudad')
 
   const checkUsername = useCallback(
     debounce(async (username) => {
@@ -55,54 +98,65 @@ const MainInfo = () => {
 
   const handleName = (e) => {
     const name: string = e.target.value
-    setName(name)
+
+    // setName(capitalize(name))
+    setValue('name', capitalize(name))
 
     if (name != '' && !customNick) {
+      setAvailableUserName(false)
+
       const username = name
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[ ,]+/g, '')
         .toLowerCase()
 
-      checkUsername(username)
+      if (regexUsername.test(username)) {
+        console.log('estamos probando')
+        checkUsername(username)
+        setValidUserName(true)
 
-      setUserName(username)
-      setValidUserName(true)
+        // setUserName(username)
+        setValue('username', username)
+      }
+
+      setValue('username', username)
+
       setShow(true)
     }
     if (name == '') setShow(false)
   }
 
-  const changeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValidUserName(false)
     setAvailableUserName(false)
 
     const nick = e.target.value.toLowerCase()
-    const re = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-    if (re.test(nick)) {
-      // checkUsername(nick)
+    if (regexUsername.test(nick)) {
+      checkUsername(nick)
       setValidUserName(true)
-
-      console.log('es valido')
     } else {
       setValidUserName(false)
       setAvailableUserName(false)
     }
+    setValue('username', nick)
 
     // console.log(nick, 'el username')
-    setUserName(nick)
+
+    // setUserName(nick)
+
     setCustomNick(true)
   }
 
-  const saveUserName = () => {
-    console.log(userName, 'el username')
+  const saveUserName = (data) => {
+    console.log(data, 'el username')
   }
 
   const onSubmit = (data) => console.log(data)
 
   const boxClass =
-    'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-480'
+    'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-516'
   return (
     <div className="w-full h-auto lg:h-screen  bg-gradient-to-r from-dark-700   to-black">
       <Toaster
@@ -124,26 +178,30 @@ const MainInfo = () => {
 
           <div
             style={{ boxShadow: '1px 0px 5px #000' }}
-            className={name ? boxClass + ' sm:h-576' : boxClass}
+            className={getValues('name') ? boxClass + ' sm:h-608' : boxClass}
           >
             <div>
               <h1
                 onClick={() => toast('Ciudad actualizada')}
-                className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-10"
+                className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-2"
               >
                 Información personal
               </h1>
-              <form onSubmit={onSubmit}>
-                <div className="grid grid-cols-6 gap-6">
+              <p className="text-white mb-5 sm:mb-6 lg:mb-8">
+                Gracias por ser parte de la familia Tinta Love, cuando llenes
+                todos los pasos aparecerá un botón mágico para activar tu perfil
+              </p>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="grid grid-cols-6 gap-6 tooltipBox">
                   <div className="col-span-6 md:col-span-3">
                     <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                       <span className="mb-3 block">Nombre artístico</span>
                       <input
+                        ref={register}
                         name="name"
                         autoComplete="off"
                         placeholder="..."
                         className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-                        value={name}
                         onChange={handleName}
                         required
                       />
@@ -151,12 +209,7 @@ const MainInfo = () => {
                   </div>
                   <div className="col-span-6 md:col-span-3">
                     <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-                      <span
-                        onClick={() => setShow(!show)}
-                        className="mb-3 block"
-                      >
-                        Ciudad
-                      </span>
+                      <span className="mb-3 block">Ciudad</span>
 
                       <GooglePlacesAutocomplete
                         apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
@@ -194,7 +247,9 @@ const MainInfo = () => {
                         <div className="text-white flex items-center">
                           <div>
                             tintalove.com/
-                            <span className="text-red-500">{userName}</span>
+                            <span className="text-red-500">
+                              {watchUserName}
+                            </span>
                           </div>
                           <div className="ml-5">
                             {validUserName ? (
@@ -236,25 +291,47 @@ const MainInfo = () => {
                                   </div>
                                 )}
                               </div>
-                            ) : null}
+                            ) : (
+                              <div className="flex items-center">
+                                <span>Formato inválido</span>
+                                <Popup
+                                  trigger={
+                                    <span>
+                                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                                    </span>
+                                  }
+                                  on={['hover', 'focus']}
+                                  position="right center"
+                                  keepTooltipInside=".tooltipBox"
+                                >
+                                  <div className="text-sm">
+                                    Intenta con otro nombre de usuario, puedes
+                                    usar letras, números. También _ y . pero no
+                                    seguidos o al final del usuario
+                                  </div>
+                                </Popup>
+                              </div>
+                            )}
                           </div>
                         </div>
 
                         <div className="mt-3">
                           <input
+                            name="username"
                             className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
                             type="text"
                             autoComplete="off"
-                            value={userName}
-                            onChange={changeUserName}
+                            ref={register}
+                            onChange={handleUserName}
                           />
-                          <button
+
+                          {/* <button
                             onClick={saveUserName}
                             className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
                             type="button"
                           >
                             Cambiar usuario
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </Transition>
@@ -272,15 +349,17 @@ const MainInfo = () => {
                     <textarea
                       name="bio"
                       required
+                      ref={register}
                       rows={6}
                       placeholder="Cuentale al mundo sobre ti"
                       className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
                     ></textarea>
                   </div>
                 </div>
+
                 <button
                   type="submit"
-                  disabled={true}
+                  // disabled={true}
                   className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
                 >
                   Guardar
