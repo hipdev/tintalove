@@ -54,7 +54,7 @@ const Header = () => {
             </a>
           </Link>
 
-          <div className="w-full  flex flex-wrap justify-evenly ml-24 font-light uppercase">
+          <div className="w-full  flex flex-wrap justify-evenly ml-10 sm:ml-0 2xl:ml-24 font-light uppercase">
             <Link href="/">
               <a className="text-white mr-5">TATUAJES</a>
             </Link>
