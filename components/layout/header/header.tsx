@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { TiLocationOutline } from 'react-icons/ti'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
@@ -50,7 +51,16 @@ const Header = () => {
         <div className="flex justify-center items-center">
           <Link href="/">
             <a className="mr-12 w-60">
-              <img className="w-52" src="/short-logo.png" />
+              {/* <img className="w-52" src="/short-logo.png" /> */}
+              <div className="w-52 relative h-11">
+                <Image
+                  // layout="fill"
+                  width={180}
+                  height={35}
+                  src="/short-logo.png"
+                  alt="Picture of the author"
+                />
+              </div>
             </a>
           </Link>
 

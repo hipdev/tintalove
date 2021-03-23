@@ -158,7 +158,7 @@ const MainInfo = () => {
   const boxClass =
     'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-516'
   return (
-    <div className="w-full h-auto bg-gradient-to-r from-dark-700   to-black">
+    <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
