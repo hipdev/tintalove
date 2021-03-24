@@ -60,6 +60,7 @@ const MainInfo = () => {
 
     console.log(results)
     console.log(latLng)
+
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
     const province = fullAddress[1].trim()
@@ -74,6 +75,8 @@ const MainInfo = () => {
       province,
       country,
     })
+
+    setCity({ label: e.label })
 
     toast('Ciudad actualizada')
   }
