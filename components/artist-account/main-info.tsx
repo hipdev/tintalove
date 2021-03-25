@@ -1,4 +1,6 @@
 import { Transition } from '@headlessui/react'
+import { useStateMachine } from 'little-state-machine'
+
 import debounce from 'lodash.debounce'
 import SideMenu from './side-menu'
 import toast, { Toaster } from 'react-hot-toast'
@@ -15,10 +17,11 @@ import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { login } from 'lib/actions'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfo = () => {
+const MainInfo = ({ uid }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -29,6 +32,10 @@ const MainInfo = () => {
       displayName: '',
       username: '',
     },
+  })
+
+  const { state: loginState, actions } = useStateMachine({
+    login,
   })
 
   const watchUserName = watch('username')
@@ -166,10 +173,11 @@ const MainInfo = () => {
 
     const formData = { ...data, ...placeInfo }
 
-    toast.promise(createArtist(state.user.uid, formData), {
+    toast.promise(createArtist(uid, formData), {
       loading: 'Guardando...',
       success: (data) => {
         setLoading(false)
+        actions.login(true) // reload global user state data
         router.push('/artist/new/working-info')
         return 'Artista creado 😉'
       },

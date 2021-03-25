@@ -93,6 +93,7 @@ export async function createArtist(uid, data) {
     )
 
     await batch.commit()
+
     return true
   }
 }
