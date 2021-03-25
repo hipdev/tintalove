@@ -7,7 +7,7 @@ import GooglePlacesAutocomplete, {
   getLatLng,
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
@@ -54,6 +54,10 @@ const MainInfoForm = ({ uid, artist }) => {
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
+
+  useEffect(() => {
+    setCity({ label: artist.formatted_address, value: 0 })
+  }, [])
 
   const handleCounter = useCallback(
     (e) => {
