@@ -9,13 +9,13 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import Popup from 'reactjs-popup'
-import 'reactjs-popup/dist/index.css'
+
 import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { login } from 'lib/actions'
+import MainInfoAvailable from './main-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -47,8 +47,8 @@ const MainInfoForm = ({ uid, artist }) => {
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
-  const [availableUserName, setAvailableUserName] = useState(false)
-  const [validUserName, setValidUserName] = useState(false)
+  const [availableUserName, setAvailableUserName] = useState(true)
+  const [validUserName, setValidUserName] = useState(true)
 
   const [show, setShow] = useState(true)
   const [customNick, setCustomNick] = useState(false)
@@ -239,77 +239,25 @@ const MainInfoForm = ({ uid, artist }) => {
                     tintalove.com/
                     <span
                       className={
-                        availableUserName ? 'text-green-500' : 'text-red-500'
+                        availableUserName || watchUserName == artist.username
+                          ? 'text-green-500'
+                          : 'text-red-500'
                       }
                     >
                       {watchUserName}
                     </span>
                   </div>
                   <div className="ml-5">
-                    {validUserName ? (
-                      <div>
-                        {availableUserName ? (
-                          <div className="flex items-center">
-                            <span className="flex items-center">
-                              Esta disponible!
-                              <FiCheckCircle className="ml-1 text-2xl text-green-500" />
-                            </span>
-                            <Popup
-                              trigger={
-                                <span>
-                                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                </span>
-                              }
-                              on={['hover', 'focus']}
-                              position="right center"
-                            >
-                              <div className="text-sm">
-                                Así te encontrarán en TintaLove
-                              </div>
-                            </Popup>
-                          </div>
-                        ) : (
-                          <div className="flex items-center">
-                            <span className="flex items-center">
-                              No disponible
-                              <FiAlertCircle className="ml-1 text-2xl text-red-500" />
-                            </span>
-                            <Popup
-                              trigger={
-                                <span>
-                                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                </span>
-                              }
-                              on={['hover', 'focus']}
-                              position="right center"
-                            >
-                              <div className="text-sm">
-                                Intenta con otro usuario en el cuadro de abajo.
-                              </div>
-                            </Popup>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="flex items-center">
-                        <span>Formato inválido</span>
-                        <Popup
-                          trigger={
-                            <span>
-                              <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                            </span>
-                          }
-                          on={['hover', 'focus']}
-                          position="right center"
-                          keepTooltipInside=".tooltipBox"
-                        >
-                          <div className="text-sm">
-                            Intenta con otro nombre de usuario, puedes usar
-                            letras, números. También _ y . pero no seguidos o al
-                            final del usuario
-                          </div>
-                        </Popup>
-                      </div>
+                    {watchUserName == artist.username && (
+                      <span className="flex items-center">
+                        Este es tu usuario actual
+                      </span>
+                    )}
+                    {watchUserName != artist.username && (
+                      <MainInfoAvailable
+                        validUserName={validUserName}
+                        availableUserName={availableUserName}
+                      />
                     )}
                   </div>
                 </div>
@@ -324,13 +272,15 @@ const MainInfoForm = ({ uid, artist }) => {
                     onChange={handleUserName}
                   />
 
-                  {/* <button
-                            onClick={saveUserName}
-                            className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
-                            type="button"
-                          >
-                            Cambiar usuario
-                          </button> */}
+                  {watchUserName != artist.username && availableUserName && (
+                    <button
+                      // onClick={saveUserName}
+                      className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
+                      type="button"
+                    >
+                      Cambiar usuario
+                    </button>
+                  )}
                 </div>
               </div>
             </Transition>
