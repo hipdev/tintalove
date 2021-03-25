@@ -19,6 +19,7 @@ export async function createUser(user: User) {
 
   if (docSnap.exists()) {
     console.log('Document data:', docSnap.data())
+    return
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
     await setDoc(userRef, {
@@ -28,6 +29,7 @@ export async function createUser(user: User) {
       created_at: serverTimestamp(),
     })
     console.log('No such document!')
+    return true
   }
 }
 
@@ -50,7 +52,7 @@ export async function getUserInfo(uid) {
     console.log('Document data:', docSnap.data())
     return docSnap.data()
   } else {
-    throw new Error('El usuario no existe')
+    return null
   }
 }
 
