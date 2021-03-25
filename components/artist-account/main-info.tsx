@@ -169,9 +169,7 @@ const MainInfo = () => {
     const formData = { ...data, ...placeInfo }
 
     toast.promise(createArtist(state.user.uid, formData), {
-      loading: () => {
-        return 'Guardando...'
-      },
+      loading: 'Guardando...',
       success: (data) => {
         setLoading(false)
         router.push('/artist/new/working-info')
