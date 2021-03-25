@@ -7,7 +7,7 @@ import {
   setDoc,
   serverTimestamp,
   writeBatch,
-} from 'firebase/firestore'
+} from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import toast, { Toaster } from 'react-hot-toast'
 
@@ -61,8 +61,6 @@ export async function getArtistInfo(uid) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    console.log('existe el artista')
-    console.log('Document data:', docSnap.data())
     return { artist: docSnap.data() }
   } else {
     return { artist: null }
