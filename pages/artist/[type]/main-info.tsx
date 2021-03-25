@@ -14,9 +14,9 @@ export default function MainInfoPage() {
     <Layout>
       <IsAuth>
         {isArtist ? (
-          <MainInfoEdit uid={state && state?.user?.uid} />
+          <MainInfoEdit uid={state?.user?.uid || null} />
         ) : (
-          <MainInfo uid={state && state?.user?.uid} />
+          <MainInfo uid={state?.user?.uid || null} />
         )}
       </IsAuth>
     </Layout>

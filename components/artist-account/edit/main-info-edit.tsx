@@ -18,10 +18,15 @@ import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { login } from 'lib/actions'
+import useArtist from 'hooks/use-artist'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoEdit = ({ uid }) => {
+  const { artist } = useArtist(uid)
+
+  console.log(artist, 'artistInfo')
+
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {

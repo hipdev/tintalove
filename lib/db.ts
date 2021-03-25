@@ -56,6 +56,19 @@ export async function getUserInfo(uid) {
   }
 }
 
+export async function getArtistInfo(uid) {
+  const docRef = doc(collection(db, 'artists'), uid)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    console.log('existe el artista')
+    console.log('Document data:', docSnap.data())
+    return { artist: docSnap.data() }
+  } else {
+    return { artist: null }
+  }
+}
+
 export async function createArtist(uid, data) {
   const usernameRef = doc(collection(db, 'usernames'), data.username)
   const artistRef = doc(collection(db, 'artists'), uid)

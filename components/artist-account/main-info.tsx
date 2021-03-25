@@ -9,7 +9,6 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
 import React, { useCallback, useRef, useState } from 'react'
-import useUser from 'hooks/use-user'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
@@ -51,8 +50,6 @@ const MainInfo = ({ uid }) => {
 
   const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
-
-  const { state } = useUser()
 
   const router = useRouter()
 
