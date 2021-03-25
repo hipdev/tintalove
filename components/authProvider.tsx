@@ -1,9 +1,9 @@
-import { useUserData } from "../lib/hooks";
+import { useUserData } from 'hooks/use-user-data'
 
 const AuthProvider = ({ children }) => {
-  const userData: any = useUserData();
+  useUserData()
 
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default AuthProvider;
+export default AuthProvider

@@ -6,6 +6,7 @@ import {
   getFirestore,
   setDoc,
   serverTimestamp,
+  writeBatch,
 } from 'firebase/firestore'
 import firebaseApp from 'lib/firebase'
 
@@ -36,6 +37,54 @@ export async function userNameAvailable(username) {
   if (queryRef.exists()) {
     return false
   } else {
+    return true
+  }
+}
+
+export async function getUserInfo(uid) {
+  const docRef = doc(collection(db, 'users'), uid)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    console.log('Document data:', docSnap.data())
+    return docSnap.data()
+  } else {
+    throw new Error('El usuario no existe')
+  }
+}
+
+export async function createArtist(uid, data) {
+  const usernameRef = doc(collection(db, 'usernames'), data.username)
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const userRef = doc(collection(db, 'users'), uid)
+
+  const usernameSnap = await getDoc(usernameRef)
+  const docSnap = await getDoc(artistRef)
+
+  if (usernameSnap.exists()) {
+    console.log('Document data:', docSnap.data())
+    throw new Error('El nombre de usuario ya existe')
+  }
+
+  if (docSnap.exists()) {
+    console.log('Document data:', docSnap.data())
+    throw new Error('El artista ya existe')
+  } else {
+    const batch = writeBatch(db)
+
+    batch.set(usernameRef, {
+      uid,
+    })
+
+    batch.set(artistRef, {
+      createdAt: serverTimestamp(),
+      ...data,
+    })
+
+    batch.set(userRef, { displayName: data.displayName }, { merge: true })
+
+    await batch.commit()
     return true
   }
 }

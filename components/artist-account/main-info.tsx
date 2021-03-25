@@ -6,42 +6,36 @@ import GooglePlacesAutocomplete, {
   getLatLng,
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import useUser from 'hooks/use-user'
 import { FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
-import { userNameAvailable } from 'lib/db'
-import { capitalize } from 'lib/utils'
+import { createArtist, userNameAvailable } from 'lib/db'
+import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfo = () => {
-  const {
-    register,
-    setValue,
-    getValues,
-    errors,
-    handleSubmit,
-    formState,
-    reset,
-    watch,
-  } = useForm({
+  const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
       show: false,
       customNick: false,
       availableUsername: false,
       validUserName: false,
-      name: '',
+      displayName: '',
       username: '',
     },
   })
 
   const watchUserName = watch('username')
+  const cityRef = useRef(null)
 
+  const [loading, setLoading] = useState(false)
   const [city, setCity] = useState(null)
+  const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
@@ -52,33 +46,39 @@ const MainInfo = () => {
 
   const { state } = useUser()
 
-  // console.log(state, 'user info')
+  const handleCounter = useCallback(
+    (e) => {
+      const text = e.target.value
+      setCounter(text.length)
+    },
+    [counter]
+  )
 
   const handleCity = async (e) => {
     const results = await geocodeByAddress(e.value.description)
-    const latLng = await getLatLng(results[0])
 
-    console.log(results)
-    console.log(latLng)
+    if (results) {
+      const latLng = await getLatLng(results[0])
 
-    const fullAddress = results[0].formatted_address.split(',')
-    const city_name = fullAddress[0]
-    const province = fullAddress[1].trim()
-    const country = fullAddress[2].trim()
+      console.log(results)
+      console.log(latLng)
 
-    console.log(e, 'input')
+      const fullAddress = results[0].formatted_address.split(',')
+      const city_name = fullAddress[0]
+      const province = fullAddress[1].trim() || ''
+      const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
-    setPlaceInfo({
-      place_id: results[0].place_id,
-      formatted_address: results[0].formatted_address,
-      city_name,
-      province,
-      country,
-    })
+      // guardaré la lat y long para futuras opciones con geolocalización
+      setPlaceInfo({
+        place_id: results[0].place_id,
+        formatted_address: results[0].formatted_address,
+        city_name,
+        province,
+        country,
+      })
 
-    setCity({ label: e.label })
-
-    toast('Ciudad actualizada')
+      setCity({ label: e.label, value: 0 })
+    }
   }
 
   console.log(placeInfo, 'la ciudad')
@@ -102,8 +102,7 @@ const MainInfo = () => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    // setName(capitalize(name))
-    setValue('name', capitalize(name))
+    setValue('displayName', capitalizeAllWords(name))
 
     if (name != '' && !customNick) {
       setAvailableUserName(false)
@@ -115,11 +114,9 @@ const MainInfo = () => {
         .toLowerCase()
 
       if (regexUsername.test(username)) {
-        console.log('estamos probando')
         checkUsername(username)
         setValidUserName(true)
 
-        // setUserName(username)
         setValue('username', username)
       }
 
@@ -145,18 +142,35 @@ const MainInfo = () => {
     }
     setValue('username', nick)
 
-    // console.log(nick, 'el username')
-
-    // setUserName(nick)
-
     setCustomNick(true)
   }
 
-  const saveUserName = (data) => {
-    console.log(data, 'el username')
-  }
+  const onSubmit = async (data) => {
+    setLoading(true)
+    if (!placeInfo) {
+      cityRef.current.focus()
+      setLoading(false)
+      toast('😓 Debes indicar una ciudad')
+      return
+    }
 
-  const onSubmit = (data) => console.log(data)
+    if (!validUserName || !availableUserName) {
+      setLoading(false)
+      toast('Usuario no disponible o es inválido 😓')
+      return
+    }
+
+    const formData = { ...data, ...placeInfo }
+
+    try {
+      const res = createArtist(state.user.uid, formData)
+    } catch (error) {
+      console.log('error con la consulta')
+      setLoading(false)
+    }
+
+    console.log(data, 'form data')
+  }
 
   const boxClass =
     'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-516'
@@ -171,7 +185,7 @@ const MainInfo = () => {
             borderRadius: '3px',
             color: '#fff',
           },
-          duration: 4000,
+          duration: 5000,
         }}
         position="bottom-right"
       />
@@ -184,10 +198,7 @@ const MainInfo = () => {
             className={getValues('name') ? boxClass + ' sm:h-608' : boxClass}
           >
             <div>
-              <h1
-                onClick={() => toast('Ciudad actualizada')}
-                className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-2"
-              >
+              <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-2">
                 Información personal
               </h1>
               <p className="text-white mb-5 sm:mb-6 lg:mb-8">
@@ -201,7 +212,7 @@ const MainInfo = () => {
                       <span className="mb-3 block">Nombre artístico</span>
                       <input
                         ref={register}
-                        name="name"
+                        name="displayName"
                         autoComplete="off"
                         placeholder="..."
                         className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
@@ -231,6 +242,7 @@ const MainInfo = () => {
                           // menuIsOpen: true,
                           classNamePrefix: 'create_artist',
                           // autoFocus: true,
+                          ref: cityRef,
                         }}
                       />
                     </label>
@@ -347,10 +359,12 @@ const MainInfo = () => {
                       >
                         biografia
                       </label>
-                      {/* <span className="text-white">0/500</span> */}
+                      <span className="text-white">{counter}/500</span>
                     </div>
                     <textarea
                       name="bio"
+                      onChange={handleCounter}
+                      maxLength={500}
                       required
                       ref={register}
                       rows={6}
@@ -362,7 +376,7 @@ const MainInfo = () => {
 
                 <button
                   type="submit"
-                  // disabled={true}
+                  disabled={loading}
                   className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
                 >
                   Guardar

@@ -1,4 +1,9 @@
-export const capitalize = (s: string) => {
+export const capitalizeAllWords = (s: string) => {
   if (typeof s !== 'string') return ''
-  return s.charAt(0).toUpperCase() + s.slice(1)
+
+  const words = s.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+    letter.toUpperCase()
+  )
+
+  return words
 }
