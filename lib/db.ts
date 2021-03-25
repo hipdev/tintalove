@@ -9,6 +9,7 @@ import {
   writeBatch,
 } from 'firebase/firestore'
 import firebaseApp from 'lib/firebase'
+import toast, { Toaster } from 'react-hot-toast'
 
 const db = getFirestore(firebaseApp)
 
@@ -63,13 +64,11 @@ export async function createArtist(uid, data) {
   const docSnap = await getDoc(artistRef)
 
   if (usernameSnap.exists()) {
-    console.log('Document data:', docSnap.data())
     throw new Error('El nombre de usuario ya existe')
   }
 
   if (docSnap.exists()) {
-    console.log('Document data:', docSnap.data())
-    throw new Error('El artista ya existe')
+    throw new Error('Ya estas registrado como artista')
   } else {
     const batch = writeBatch(db)
 

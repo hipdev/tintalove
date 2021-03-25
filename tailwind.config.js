@@ -18,13 +18,8 @@ module.exports = {
         },
       },
       spacing: {
-        516: '32rem',
-        608: '38rem',
         609: '38rem',
         672: '42rem',
-      },
-      transitionProperty: {
-        height: 'height',
       },
     },
   },

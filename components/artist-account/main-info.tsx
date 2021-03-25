@@ -8,12 +8,15 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete'
 import React, { useCallback, useRef, useState } from 'react'
 import useUser from 'hooks/use-user'
-import { FiHelpCircle } from 'react-icons/fi'
+import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
 import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { HiOutlineBadgeCheck, HiOutlineCheck } from 'react-icons/hi'
+import { BsCheckCircle } from 'react-icons/bs'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -45,6 +48,8 @@ const MainInfo = () => {
   const [customNick, setCustomNick] = useState(false)
 
   const { state } = useUser()
+
+  const router = useRouter()
 
   const handleCounter = useCallback(
     (e) => {
@@ -154,7 +159,8 @@ const MainInfo = () => {
       return
     }
 
-    if (!validUserName || !availableUserName) {
+    if (!validUserName && !availableUserName) {
+      console.log(validUserName, availableUserName, 'estados')
       setLoading(false)
       toast('Usuario no disponible o es inválido 😓')
       return
@@ -162,18 +168,26 @@ const MainInfo = () => {
 
     const formData = { ...data, ...placeInfo }
 
-    try {
-      const res = createArtist(state.user.uid, formData)
-    } catch (error) {
-      console.log('error con la consulta')
-      setLoading(false)
-    }
+    toast.promise(createArtist(state.user.uid, formData), {
+      loading: () => {
+        return 'Guardando...'
+      },
+      success: (data) => {
+        setLoading(false)
+        router.push('/artist/new/working-info')
+        return 'Artista creado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
+
+    // setLoading(false)
 
     console.log(data, 'form data')
   }
 
-  const boxClass =
-    'relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 transition-height duration-500 h-auto sm:h-516'
   return (
     <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
       <Toaster
@@ -195,7 +209,7 @@ const MainInfo = () => {
 
           <div
             style={{ boxShadow: '1px 0px 5px #000' }}
-            className={getValues('name') ? boxClass + ' sm:h-608' : boxClass}
+            className="relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 h-auto"
           >
             <div>
               <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-2">
@@ -236,7 +250,7 @@ const MainInfo = () => {
                         selectProps={{
                           value: city,
                           onChange: handleCity,
-                          placeholder: 'Seleccionar ciudad...',
+                          placeholder: 'Escribe tu ciudad...',
                           noOptionsMessage: () => <span>Sin opciones</span>,
                           // defaultMenuIsOpen: true,
                           // menuIsOpen: true,
@@ -262,7 +276,13 @@ const MainInfo = () => {
                         <div className="text-white flex items-center">
                           <div>
                             tintalove.com/
-                            <span className="text-red-500">
+                            <span
+                              className={
+                                availableUserName
+                                  ? 'text-green-500'
+                                  : 'text-red-500'
+                              }
+                            >
                               {watchUserName}
                             </span>
                           </div>
@@ -271,7 +291,10 @@ const MainInfo = () => {
                               <div>
                                 {availableUserName ? (
                                   <div className="flex items-center">
-                                    <span>Esta disponible!</span>
+                                    <span className="flex items-center">
+                                      Esta disponible!
+                                      <FiCheckCircle className="ml-1 text-2xl text-green-500" />
+                                    </span>
                                     <Popup
                                       trigger={
                                         <span>
@@ -288,7 +311,10 @@ const MainInfo = () => {
                                   </div>
                                 ) : (
                                   <div className="flex items-center">
-                                    <span>No disponible</span>
+                                    <span className="flex items-center">
+                                      No disponible
+                                      <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                                    </span>
                                     <Popup
                                       trigger={
                                         <span>
