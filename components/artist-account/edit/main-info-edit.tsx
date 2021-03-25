@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react'
 import debounce from 'lodash.debounce'
-import SideMenu from './side-menu'
+import SideMenu from '../side-menu'
 import toast, { Toaster } from 'react-hot-toast'
 import GooglePlacesAutocomplete, {
   getLatLng,
@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfo = () => {
+const MainInfoEdit = () => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -412,4 +412,4 @@ const MainInfo = () => {
   )
 }
 
-export default MainInfo
+export default MainInfoEdit

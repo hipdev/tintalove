@@ -25,7 +25,7 @@ export async function createUser(user: User) {
       email: user.email,
       displayName: user.displayName,
       photoUrl: user.photoURL,
-      createdAt: serverTimestamp(),
+      created_at: serverTimestamp(),
     })
     console.log('No such document!')
   }
@@ -77,11 +77,20 @@ export async function createArtist(uid, data) {
     })
 
     batch.set(artistRef, {
-      createdAt: serverTimestamp(),
+      created_at: serverTimestamp(),
+      step_one: true,
       ...data,
     })
 
-    batch.set(userRef, { displayName: data.displayName }, { merge: true })
+    batch.set(
+      userRef,
+      {
+        displayName: data.displayName,
+        is_artist: true,
+        updated_at: serverTimestamp(),
+      },
+      { merge: true }
+    )
 
     await batch.commit()
     return true
