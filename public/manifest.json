@@ -1,7 +1,7 @@
 {
   "name": "Tinta Love",
   "short_name": "Tinta Love",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "description": "We love tattoo",
   "icons": [

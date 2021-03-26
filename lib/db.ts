@@ -9,7 +9,6 @@ import {
   writeBatch,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
-import toast, { Toaster } from 'react-hot-toast'
 
 const db = getFirestore(firebaseApp)
 
@@ -19,7 +18,7 @@ export async function createUser(user: User) {
 
   if (docSnap.exists()) {
     console.log('Document data:', docSnap.data())
-    return
+    return true
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
     await setDoc(userRef, {
@@ -29,6 +28,7 @@ export async function createUser(user: User) {
       created_at: serverTimestamp(),
     })
     console.log('No such document!')
+    return true
   }
 }
 

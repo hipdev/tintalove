@@ -33,10 +33,11 @@ const Header = () => {
   }
   const handleLogin = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {
-        actions.login(true)
+      .then(async (result) => {
         const user = result.user
-        createUser(user)
+        const res = await createUser(user)
+
+        if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.

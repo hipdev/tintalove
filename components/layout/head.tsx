@@ -25,7 +25,7 @@ const HeadContainer = () => {
       />
       <meta name="theme-color" content="#ffffff" />
 
-      <link rel="icon" type="image/png" sizes="16x16" href="/T.png" /> 
+      <link rel="icon" type="image/png" sizes="16x16" href="/T.png" />
     </Head>
   )
 }
