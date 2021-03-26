@@ -18,7 +18,7 @@ export function useUserData() {
     const authSubs = onAuthStateChanged(auth, (user: User) => {
       if (user) {
         ;(async function getUser() {
-          const userData = await await getUserInfo(user.uid)
+          const userData = await getUserInfo(user.uid)
           if (userData) {
             user
               .getIdTokenResult()
