@@ -29,7 +29,6 @@ export async function createUser(user: User) {
       created_at: serverTimestamp(),
     })
     console.log('No such document!')
-    return true
   }
 }
 
