@@ -170,19 +170,22 @@ const MainInfo = ({ uid }) => {
 
     const formData = { ...data, ...placeInfo }
 
-    toast.promise(createArtist(uid, formData), {
-      loading: 'Guardando...',
-      success: (data) => {
-        setLoading(false)
-        actions.login(true) // reload global user state data
-        router.push('/artist/new/working-info')
-        return 'Artista creado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    toast
+      .promise(createArtist(uid, formData), {
+        loading: 'Guardando...',
+        success: (data) => {
+          setLoading(false)
+          actions.login(true) // reload global user state data
+          // router.push('/artist/new/working-info')
+
+          return 'Artista creado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+      .then((res) => (res ? router.push('/artist/new/working-info') : null))
 
     // setLoading(false)
 
