@@ -99,6 +99,7 @@ export async function createArtist(uid, data) {
       {
         displayName: data.displayName,
         is_artist: true,
+        username: data.username,
         updated_at: serverTimestamp(),
       },
       { merge: true }
@@ -108,4 +109,51 @@ export async function createArtist(uid, data) {
 
     return true
   }
+}
+
+export async function updateArtistUsername(uid, oldUsername, newUsername) {
+  const usernameRefOld = doc(collection(db, 'usernames'), oldUsername)
+  const usernameRefNew = doc(collection(db, 'usernames'), newUsername)
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const userRef = doc(collection(db, 'users'), uid)
+
+  const usernameSnap = await getDoc(usernameRefNew)
+  const userSnap = await getDoc(userRef)
+  const docSnap = await getDoc(artistRef)
+
+  if (usernameSnap.exists()) {
+    throw new Error('El nombre de usuario ya existe')
+  }
+
+  if (!userSnap.exists()) {
+    throw new Error('Este usuario no existe')
+  }
+
+    const batch = writeBatch(db)
+
+    batch.delete(usernameRefOld)
+
+    batch.set(usernameRefNew, {
+      uid,
+    })
+
+    batch.set(artistRef, {
+      updated_at: serverTimestamp(),
+      username: newUsername
+    },{merge: true})
+
+    batch.set(
+      userRef,
+      {
+        username: newUsername,
+        updated_at: serverTimestamp(),
+      },
+      { merge: true }
+    )
+
+    await batch.commit()
+
+    return true
+  
 }

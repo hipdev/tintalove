@@ -10,7 +10,7 @@ import GooglePlacesAutocomplete, {
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
-import { createArtist, userNameAvailable } from 'lib/db'
+import { createArtist, updateArtistUsername, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -42,6 +42,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const watchUserName = watch('username')
   const cityRef = useRef(null)
 
+  const [artistUsername, setArtistUserName] = useState(artist.username)
   const [loading, setLoading] = useState(false)
   const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
@@ -161,9 +162,27 @@ const MainInfoForm = ({ uid, artist }) => {
         return `${err.toString()}`
       },
     })
-
     // setLoading(false)
   }
+
+  const saveUsername = async () => {
+    setLoading(true)
+    console.log(getValues('username'), 'me diste click')
+    const newUsername = getValues('username')
+    toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
+      loading: 'Actualizando usuario...',
+      success: (data) => {
+        setLoading(false)
+        setArtistUserName(newUsername)
+        return 'Usuario actualizado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
+  }
+  console.log(artistUsername, 'que es artist info')
 
   return (
     <>
@@ -239,7 +258,7 @@ const MainInfoForm = ({ uid, artist }) => {
                     tintalove.com/
                     <span
                       className={
-                        availableUserName || watchUserName == artist.username
+                        availableUserName || watchUserName == artistUsername
                           ? 'text-green-500'
                           : 'text-red-500'
                       }
@@ -248,12 +267,12 @@ const MainInfoForm = ({ uid, artist }) => {
                     </span>
                   </div>
                   <div className="ml-5">
-                    {watchUserName == artist.username && (
+                    {watchUserName == artistUsername && (
                       <span className="flex items-center">
                         Este es tu usuario actual
                       </span>
                     )}
-                    {watchUserName != artist.username && (
+                    {watchUserName != artistUsername && (
                       <MainInfoAvailable
                         validUserName={validUserName}
                         availableUserName={availableUserName}
@@ -272,9 +291,10 @@ const MainInfoForm = ({ uid, artist }) => {
                     onChange={handleUserName}
                   />
 
-                  {watchUserName != artist.username && availableUserName && (
+                  {watchUserName != artistUsername && availableUserName && (
                     <button
-                      // onClick={saveUserName}
+                      disabled={loading}
+                      onClick={saveUsername}
                       className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
                       type="button"
                     >

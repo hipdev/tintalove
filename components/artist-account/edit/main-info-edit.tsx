@@ -8,10 +8,6 @@ import MainInfoForm from './main-info-form'
 const MainInfoEdit = ({ uid }) => {
   const { artist } = useArtist(uid)
 
-  console.log(artist, 'artistInfo')
-
-  console.log(artist?.displayName, 'displyName')
-
   return (
     <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
       <div className="h-full flex flex-col">

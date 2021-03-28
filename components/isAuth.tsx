@@ -33,8 +33,8 @@ export default function IsAuth({ children }) {
         children
       ) : (
         <div className="h-screen bg-gradient-to-r from-dark-700 to-black flex items-center justify-center">
-          <div className="text-white text-center">
-            <p className="mb-5 text-4xl font-semibold">
+          <div className="text-white flex flex-col  items-center">
+            <p className="mb-5 text-4xl font-semibold ">
               Para acceder aquí debes loguearte
             </p>
             <button
