@@ -71,6 +71,7 @@ const MainInfoForm = ({ uid, artist }) => {
   )
 
   const handleCity = async (e) => {
+    console.log(e, 'la city')
     const results = await geocodeByAddress(e.value.description)
 
     if (results) {
@@ -90,7 +91,7 @@ const MainInfoForm = ({ uid, artist }) => {
         country,
       })
 
-      setCity({ label: e.label, value: 0 })
+      setCity({ label: results[0].formatted_address, value: 0 })
     }
   }
 
@@ -110,8 +111,26 @@ const MainInfoForm = ({ uid, artist }) => {
     []
   )
 
+  const updateName = useCallback(
+    debounce((name) => {
+      if (name != '') {
+        console.log('se ejecuta el debounce')
+        setValue('displayName', name)
+      }
+    }, 3000),
+    []
+  )
+
   const handleName = (e) => {
     const name: string = e.target.value
+
+    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+
+    setValue('displayName', capitalName)
+
+    const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
+
+    updateName(formattedName)
 
     setValue('displayName', capitalizeAllWords(name))
   }
@@ -185,6 +204,7 @@ const MainInfoForm = ({ uid, artist }) => {
     })
   }
   console.log(
+    artist,
     artist.displayName,
     watchMultiple.displayName,
     'que es artist info'
@@ -334,7 +354,9 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
         </div>
 
-        {artist.displayName != watchMultiple.displayName ? (
+        {artist.displayName != watchMultiple.displayName ||
+        artist.formatted_address != city?.label ||
+        artist.bio != watchMultiple.bio ? (
           <button
             type="submit"
             disabled={loading}

@@ -108,6 +108,7 @@ const MainInfo = ({ uid }) => {
     }, 500),
     []
   )
+
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
