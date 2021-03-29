@@ -82,16 +82,6 @@ export async function createArtist(uid, data) {
   if (docSnap.exists()) {
     throw new Error('Ya estas registrado como artista')
   } else {
-    const formatData = {
-      displayName: data.displayName.trim(),
-      bio: data.bio.trim(),
-      place_id: data.place_id,
-      formatted_address: data.formatted_address,
-      city_name: data.city_name,
-      province: data.province,
-      country: data.country,
-      username: data.username,
-    }
     const batch = writeBatch(db)
 
     batch.set(usernameRef, {
@@ -101,7 +91,7 @@ export async function createArtist(uid, data) {
     batch.set(artistRef, {
       created_at: serverTimestamp(),
       step_one: true,
-      ...formatData,
+      ...data,
     })
 
     batch.set(

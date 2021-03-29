@@ -171,7 +171,15 @@ const MainInfo = ({ uid }) => {
       return
     }
 
-    const formData = { ...data, ...placeInfo }
+    const formData = {
+      displayName: data.displayName
+        .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
+        .replace(/\s\s+/g, ' ')
+        .trim(),
+      bio: data.bio.replace(/\s\s+/g, ' ').trim(),
+      username: data.username,
+      ...placeInfo,
+    }
 
     toast
       .promise(createArtist(uid, formData), {
@@ -197,7 +205,8 @@ const MainInfo = ({ uid }) => {
 
     // setLoading(false)
 
-    console.log(data, 'form data')
+    // console.log(data, 'form data')
+    // console.log(formData, 'formatted data')
   }
 
   return (
