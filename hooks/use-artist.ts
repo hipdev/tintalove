@@ -6,6 +6,7 @@ const useArtist = (uid) => {
 
   useEffect(() => {
     const fetch = async () => {
+      console.log('buscando info del artista')
       const { artist } = await getArtistInfo(uid)
       setArtist(artist)
     }

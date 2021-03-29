@@ -20,6 +20,7 @@ import MainInfoAvailable from './main-info-available'
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
+  console.log(artist, 'esto que es')
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -40,6 +41,7 @@ const MainInfoForm = ({ uid, artist }) => {
   })
 
   const watchUserName = watch('username')
+  const watchMultiple = watch(['displayName', 'bio'])
   const cityRef = useRef(null)
 
   const [artistUsername, setArtistUserName] = useState(artist.username)
@@ -182,7 +184,11 @@ const MainInfoForm = ({ uid, artist }) => {
       },
     })
   }
-  console.log(artistUsername, 'que es artist info')
+  console.log(
+    artist.displayName,
+    watchMultiple.displayName,
+    'que es artist info'
+  )
 
   return (
     <>
@@ -328,13 +334,15 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
-        >
-          Guardar
-        </button>
+        {artist.displayName != watchMultiple.displayName ? (
+          <button
+            type="submit"
+            disabled={loading}
+            className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
+          >
+            Actualizar
+          </button>
+        ) : null}
       </form>
     </>
   )

@@ -17,6 +17,7 @@ import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { login } from 'lib/actions'
+import { useUserData } from 'hooks/use-user-data'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -36,6 +37,8 @@ const MainInfo = ({ uid }) => {
   const { state: loginState, actions } = useStateMachine({
     login,
   })
+
+  const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
   const cityRef = useRef(null)
@@ -175,7 +178,7 @@ const MainInfo = ({ uid }) => {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
-          actions.login(true) // reload global user state data
+          setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
           return 'Artista creado 😉'
@@ -185,7 +188,12 @@ const MainInfo = ({ uid }) => {
           return `${err.toString()}`
         },
       })
-      .then((res) => (res ? router.push('/artist/new/working-info') : null))
+      .then((res) => {
+        if (res) {
+          setTriggerAuth(Math.random())
+          router.push('/artist/new/working-info')
+        }
+      })
 
     // setLoading(false)
 

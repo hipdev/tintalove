@@ -7,6 +7,7 @@ import { getUserInfo } from 'lib/db'
 
 export function useUserData() {
   const [userInfo, setUserInfo] = useState(null)
+  const [triggerAuth, setTriggerAuth] = useState(null)
   const { state }: any = useStateMachine({
     login,
   })
@@ -17,7 +18,7 @@ export function useUserData() {
   useEffect(() => {
     const authSubs = onAuthStateChanged(auth, (user: User) => {
       if (user) {
-        ;(async function getUser() {
+        const fetchUser = async function () {
           const userData = await getUserInfo(user.uid)
           if (userData) {
             user
@@ -37,15 +38,17 @@ export function useUserData() {
           } else {
             actions.getUser(null)
           }
-        })()
+        }
+
+        fetchUser()
       } else {
         actions.getUser(null)
         // console.log(user, "sin user");
       }
     })
     return authSubs()
-  }, [state.login])
+  }, [state.login, triggerAuth])
 
   // console.log(userInfo, "data");
-  return { user: userState }
+  return { user: userState, setTriggerAuth }
 }

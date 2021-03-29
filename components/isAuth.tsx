@@ -15,10 +15,13 @@ export default function IsAuth({ children }) {
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {
-        actions.login(true)
+      .then(async (result) => {
         const user = result.user
-        createUser(user)
+        const res = await createUser(user)
+
+        console.log(res, 'res no esta dando true hpta')
+
+        if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.

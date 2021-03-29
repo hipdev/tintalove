@@ -82,6 +82,16 @@ export async function createArtist(uid, data) {
   if (docSnap.exists()) {
     throw new Error('Ya estas registrado como artista')
   } else {
+    const formatData = {
+      displayName: data.displayName.trim(),
+      bio: data.bio.trim(),
+      place_id: data.place_id,
+      formatted_address: data.formatted_address,
+      city_name: data.city_name,
+      province: data.province,
+      country: data.country,
+      username: data.username,
+    }
     const batch = writeBatch(db)
 
     batch.set(usernameRef, {
@@ -91,13 +101,13 @@ export async function createArtist(uid, data) {
     batch.set(artistRef, {
       created_at: serverTimestamp(),
       step_one: true,
-      ...data,
+      ...formatData,
     })
 
     batch.set(
       userRef,
       {
-        displayName: data.displayName,
+        displayName: data.displayName.trim(),
         is_artist: true,
         username: data.username,
         updated_at: serverTimestamp(),
@@ -130,30 +140,33 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
     throw new Error('Este usuario no existe')
   }
 
-    const batch = writeBatch(db)
+  const batch = writeBatch(db)
 
-    batch.delete(usernameRefOld)
+  batch.delete(usernameRefOld)
 
-    batch.set(usernameRefNew, {
-      uid,
-    })
+  batch.set(usernameRefNew, {
+    uid,
+  })
 
-    batch.set(artistRef, {
+  batch.set(
+    artistRef,
+    {
       updated_at: serverTimestamp(),
-      username: newUsername
-    },{merge: true})
+      username: newUsername,
+    },
+    { merge: true }
+  )
 
-    batch.set(
-      userRef,
-      {
-        username: newUsername,
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
+  batch.set(
+    userRef,
+    {
+      username: newUsername,
+      updated_at: serverTimestamp(),
+    },
+    { merge: true }
+  )
 
-    await batch.commit()
+  await batch.commit()
 
-    return true
-  
+  return true
 }
