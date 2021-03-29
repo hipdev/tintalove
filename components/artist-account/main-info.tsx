@@ -108,11 +108,26 @@ const MainInfo = ({ uid }) => {
     }, 500),
     []
   )
+  const updateName = useCallback(
+    debounce((name) => {
+      if (name != '') {
+        console.log('se ejecuta el debounce')
+        setValue('displayName', name)
+      }
+    }, 3000),
+    []
+  )
 
   const handleName = (e) => {
     const name: string = e.target.value
 
-    setValue('displayName', capitalizeAllWords(name))
+    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+
+    setValue('displayName', capitalName)
+
+    const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
+
+    updateName(formattedName)
 
     if (name != '' && !customNick) {
       setAvailableUserName(false)
@@ -198,8 +213,8 @@ const MainInfo = ({ uid }) => {
       })
       .then((res) => {
         if (res) {
-          setTriggerAuth(Math.random())
           router.push('/artist/new/working-info')
+          setTriggerAuth(Math.random())
         }
       })
 
