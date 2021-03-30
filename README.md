@@ -2,4 +2,4 @@
 
 [tintalove.com](https://tintalove.com).
 
-### Este va a ser el mejor proyecto de tatuades del mundo!
+### Este va a ser el mejor proyecto de tatuadores del mundo!
