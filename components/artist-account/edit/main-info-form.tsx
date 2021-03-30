@@ -154,11 +154,14 @@ const MainInfoForm = ({ uid, artist }) => {
   }
 
   const onSubmit = async (data) => {
+
+
     setLoading(true)
-    if (!placeInfo) {
+
+    if (!placeInfo && data.displayName == artist.displayName && data.bio == artist.bio) {
       cityRef.current.focus()
       setLoading(false)
-      toast('😓 Debes indicar una ciudad')
+      toast('😓 Debes indicar al menos una ciudad, nombre o biografía')
       return
     }
 
