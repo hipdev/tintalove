@@ -154,24 +154,26 @@ const MainInfoForm = ({ uid, artist }) => {
   }
 
   const onSubmit = async (data) => {
-
-
     setLoading(true)
+    if (data.displayName == '' || data.bio == '') {
+      setLoading(false)
+      toast('Debes ingresar el nombre y la bio 😓')
+      return
+    }
 
-    if (!placeInfo && data.displayName == artist.displayName && data.bio == artist.bio) {
+    if (
+      !placeInfo &&
+      data.displayName == artist.displayName &&
+      data.bio == artist.bio
+    ) {
       cityRef.current.focus()
       setLoading(false)
       toast('😓 Debes indicar al menos una ciudad, nombre o biografía')
       return
     }
 
-    if (!validUserName && !availableUserName) {
-      setLoading(false)
-      toast('Usuario no disponible o es inválido 😓')
-      return
-    }
-
-    const formData = { ...data, ...placeInfo }
+    let formData = { bio: data.bio, displayName: data.displayName }
+    if (placeInfo) formData = { ...placeInfo, ...formData }
 
     toast.promise(createArtist(uid, formData), {
       loading: 'Guardando...',
