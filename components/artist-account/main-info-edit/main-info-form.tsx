@@ -18,6 +18,7 @@ import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import MainInfoAvailable from './main-info-available'
+import { geohashForLocation } from 'geofire-common'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -73,6 +74,11 @@ const MainInfoForm = ({ uid, artist }) => {
 
     if (results) {
       const latLng = await getLatLng(results[0])
+
+      const cityHash = geohashForLocation([latLng.lat, latLng.lng])
+      //this needs more documention, could be a great PR into the google firebase docs!
+
+      console.log(cityHash, 'hash working :D')
 
       const fullAddress = results[0].formatted_address.split(',')
       const city_name = fullAddress[0]

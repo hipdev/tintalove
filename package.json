@@ -9,6 +9,7 @@
   "dependencies": {
     "@headlessui/react": "^0.3.1",
     "firebase": "^0.900.19",
+    "geofire-common": "^5.2.0",
     "imagekit": "^3.1.2",
     "little-state-machine": "^4.1.0",
     "lodash.debounce": "^4.0.8",
