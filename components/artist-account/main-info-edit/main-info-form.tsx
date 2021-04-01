@@ -1,5 +1,4 @@
 import { Transition } from '@headlessui/react'
-import { useStateMachine } from 'little-state-machine'
 
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
@@ -8,19 +7,21 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from 'react-google-places-autocomplete'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
+import { useUserData } from 'hooks/use-user-data'
 
-import { createArtist, updateArtistUsername, userNameAvailable } from 'lib/db'
+import {
+  updateArtistMainInfo,
+  updateArtistUsername,
+  userNameAvailable,
+} from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { login } from 'lib/actions'
 import MainInfoAvailable from './main-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
-  console.log(artist, 'esto que es')
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -34,11 +35,7 @@ const MainInfoForm = ({ uid, artist }) => {
     },
   })
 
-  console.log(artist?.displayName, 'displyName')
-
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  })
+  const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
   const watchMultiple = watch(['displayName', 'bio'])
@@ -175,11 +172,11 @@ const MainInfoForm = ({ uid, artist }) => {
     let formData = { bio: data.bio, displayName: data.displayName }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(createArtist(uid, formData), {
+    toast.promise(updateArtistMainInfo(uid, formData), {
       loading: 'Guardando...',
       success: (data) => {
         setLoading(false)
-        actions.login(true) // reload global user state data
+        setTriggerAuth(Math.random()) // reload global user state data
         router.push('/artist/new/working-info')
         return 'Artista creado 😉'
       },
@@ -208,12 +205,6 @@ const MainInfoForm = ({ uid, artist }) => {
       },
     })
   }
-  console.log(
-    artist,
-    artist.displayName,
-    watchMultiple.displayName,
-    'que es artist info'
-  )
 
   return (
     <>
