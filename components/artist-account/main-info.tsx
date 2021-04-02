@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { login } from 'lib/actions'
 import { useUserData } from 'hooks/use-user-data'
+import { geohashForLocation } from 'geofire-common'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -70,6 +71,10 @@ const MainInfo = ({ uid }) => {
     if (results) {
       const latLng = await getLatLng(results[0])
 
+      const cityHash = geohashForLocation([latLng.lat, latLng.lng])
+      //this needs more documention, could be a great PR into the google firebase docs!
+
+      console.log(cityHash, 'hash working :D')
       console.log(results)
       console.log(latLng)
 
@@ -83,6 +88,7 @@ const MainInfo = ({ uid }) => {
         place_id: results[0].place_id,
         formatted_address: results[0].formatted_address,
         city_name,
+        city_hash: cityHash,
         province,
         country,
       })

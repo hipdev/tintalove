@@ -90,6 +90,7 @@ const MainInfoForm = ({ uid, artist }) => {
         place_id: results[0].place_id,
         formatted_address: results[0].formatted_address,
         city_name,
+        city_hash: cityHash,
         province,
         country,
       })
@@ -156,6 +157,24 @@ const MainInfoForm = ({ uid, artist }) => {
     setCustomNick(true)
   }
 
+  const saveUsername = async () => {
+    setLoading(true)
+    console.log(getValues('username'), 'me diste click')
+    const newUsername = getValues('username')
+    toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
+      loading: 'Actualizando usuario...',
+      success: (data) => {
+        setLoading(false)
+        setArtistUserName(newUsername)
+        return 'Usuario actualizado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
+  }
+
   const onSubmit = async (data) => {
     setLoading(true)
     if (data.displayName == '' || data.bio == '') {
@@ -192,24 +211,6 @@ const MainInfoForm = ({ uid, artist }) => {
       },
     })
     // setLoading(false)
-  }
-
-  const saveUsername = async () => {
-    setLoading(true)
-    console.log(getValues('username'), 'me diste click')
-    const newUsername = getValues('username')
-    toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
-      loading: 'Actualizando usuario...',
-      success: (data) => {
-        setLoading(false)
-        setArtistUserName(newUsername)
-        return 'Usuario actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
   }
 
   return (
