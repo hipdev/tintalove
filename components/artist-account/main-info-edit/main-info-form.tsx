@@ -198,18 +198,19 @@ const MainInfoForm = ({ uid, artist }) => {
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
     toast.promise(updateArtistMainInfo(uid, formData), {
-      loading: 'Guardando...',
+      loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
         setTriggerAuth(Math.random()) // reload global user state data
         router.push('/artist/new/working-info')
-        return 'Artista creado 😉'
+        return 'Artista actualizado 😉'
       },
       error: (err) => {
         setLoading(false)
         return `${err.toString()}`
       },
     })
+    console.log(formData, 'data form')
     // setLoading(false)
   }
 

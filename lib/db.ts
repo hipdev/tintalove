@@ -121,10 +121,14 @@ export async function updateArtistMainInfo(uid, data) {
   if (docSnap.exists()) {
     const batch = writeBatch(db)
 
-    batch.set(artistRef, {
-      updated_at: serverTimestamp(),
-      ...data,
-    })
+    batch.set(
+      artistRef,
+      {
+        updated_at: serverTimestamp(),
+        ...data,
+      },
+      { merge: true }
+    )
 
     batch.set(
       userRef,
