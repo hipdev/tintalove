@@ -13,3 +13,9 @@ A largo plazo es importante evaluar Italia como posible mercado, es el pais a ni
 porcentaje mas alto de tatuajes per capita, un 48% de su poblacion tiene tatuajes y esta pensando en hacerse mas.
 
 Tener como meta llegar en un año a los 800 tatuadores registrados.
+Porque?
+Al lograr monetizar con una suscripcion mensual de al menos 10 dolares son 28 millones mensuales, un promedio interesante para sostenimiento.
+
+Y si agregamos un sistema de disponibilidad y citas con al menos 5 citas por mes y un promedio valor/cita de 50.000 con una comision por venta del 10% mas gastos de transaccion da un equivalente de otros 20 millones mensuales.
+
+Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala estas cifras sean mejores
