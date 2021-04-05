@@ -21,3 +21,4 @@ Y si agregamos un sistema de disponibilidad y citas con al menos 5 citas por mes
 Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala estas cifras sean mejores
 
 Hoy mi hermano se quebró una mano con el oso.
+Mucha pelota jajajajajajaj
