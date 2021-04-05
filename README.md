@@ -19,3 +19,5 @@ Al lograr monetizar con una suscripcion mensual de al menos 10 dolares son 28 mi
 Y si agregamos un sistema de disponibilidad y citas con al menos 5 citas por mes y un promedio valor/cita de 50.000 con una comision por venta del 10% mas gastos de transaccion da un equivalente de otros 20 millones mensuales.
 
 Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala estas cifras sean mejores
+
+Hoy mi hermano se quebró una mano con el oso.
