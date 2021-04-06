@@ -39,7 +39,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
-  const watchMultiple = watch(['displayName', 'bio'])
+  const watchMultiple: any = watch(['displayName', 'bio'])
   const cityRef = useRef(null)
 
   const [artistUsername, setArtistUserName] = useState(artist.username)
@@ -235,8 +235,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm uppercase mb-2 tracking-wide">
               <span className="mb-3 block">Nombre artístico</span>
               <input
-                ref={register}
-                name="displayName"
+                {...register('displayName')}
                 autoComplete="off"
                 placeholder="..."
                 className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
@@ -313,11 +312,10 @@ const MainInfoForm = ({ uid, artist }) => {
 
                 <div className="mt-3">
                   <input
-                    name="username"
                     className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
                     type="text"
                     autoComplete="off"
-                    ref={register}
+                    {...register('username')}
                     onChange={handleUserName}
                   />
 
@@ -346,11 +344,10 @@ const MainInfoForm = ({ uid, artist }) => {
               <span className="text-white">{counter}/500</span>
             </div>
             <textarea
-              name="bio"
               onChange={handleCounter}
               maxLength={500}
               required
-              ref={register}
+              {...register('bio')}
               rows={6}
               placeholder="Cuentale al mundo sobre ti"
               className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
