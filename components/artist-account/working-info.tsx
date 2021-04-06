@@ -36,7 +36,7 @@ const WorkingInfo = () => {
                       htmlFor=""
                       className="block text-white text-sm uppercase mb-3 tracking-wide"
                     >
-                      Disponibilidad
+                      Estudio donde trabajas
                     </label>
                     <select
                       name=""
@@ -44,7 +44,7 @@ const WorkingInfo = () => {
                       className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
                     >
                       <option value="" selected>
-                        ¿En cuanto tiempo estaras disponible?
+                        Buscar estudio...
                       </option>
                     </select>
                   </div>
