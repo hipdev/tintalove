@@ -21,7 +21,7 @@ const SideMenu = () => {
         </h1>
       </div>
 
-      <Link href="/artist/new/main-info">
+      <Link href="/artist/main-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
@@ -57,7 +57,7 @@ const SideMenu = () => {
         </a>
       </Link>
 
-      <Link href="/artist/new/working-info">
+      <Link href="/artist/working-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
@@ -93,7 +93,7 @@ const SideMenu = () => {
         </a>
       </Link>
 
-      <Link href="/artist/new/contact-info">
+      <Link href="/artist/contact-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
@@ -129,7 +129,7 @@ const SideMenu = () => {
         </a>
       </Link>
 
-      <Link href="/artist/new/picture-info">
+      <Link href="/artist/picture-info">
         <a className="block relative">
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
