@@ -7,7 +7,7 @@ const AdminUsers = () => {
 
   return (
     <div>
-      {users &&
+      {/* {users &&
         users.map((user) => {
           return (
             <div>
@@ -16,7 +16,7 @@ const AdminUsers = () => {
               <div>{user.username}</div>
             </div>
           )
-        })}
+        })} */}
     </div>
   )
 }
