@@ -1,6 +1,12 @@
 import SideMenu from './side-menu'
+import Link from 'next/link'
 
-const WorkingInfo = () => {
+type Props = {
+  isArtist: boolean
+}
+
+const WorkingInfo = ({ isArtist }: Props) => {
+  console.log(isArtist, 'es un artista')
   return (
     <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
       <div className="h-full flex flex-col">
@@ -71,9 +77,24 @@ const WorkingInfo = () => {
                   </div>
                 </div>
               </form>
-              <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
-                Siguiente
-              </button>
+
+              {!isArtist && (
+                <p className="text-white">
+                  Para poder completar este paso debes completar la Información
+                  personal
+                </p>
+              )}
+              {isArtist ? (
+                <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
+                  Siguiente
+                </button>
+              ) : (
+                <Link href="/artist/main-info">
+                  <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
+                    Ir al paso 1
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
