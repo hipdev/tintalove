@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import MainInfoAvailable from './main-info-available'
 import { geohashForLocation } from 'geofire-common'
-import { FiHelpCircle } from 'react-icons/fi'
+import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -293,39 +293,47 @@ const MainInfoForm = ({ uid, artist }) => {
               </div>
               <div className="relative">
                 <input
-                  className="input-primary w-full pl-[109px]"
+                  className={
+                    availableUserName || watchUserName == artistUsername
+                      ? 'input-primary w-full pl-[109px] text-green-500'
+                      : 'input-primary w-full pl-[109px] text-red-500'
+                  }
                   type="text"
                   autoComplete="off"
+                  spellCheck="false"
                   {...register('username')}
                   onChange={handleUserName}
                 />
                 <span className="absolute top-[13px] left-[10px]">
                   tintalove.com/
                 </span>
+
+                <div className="absolute right-2 top-3">
+                  {validUserName ? (
+                    <>
+                      {availableUserName ? (
+                        <FiCheckCircle className="ml-1 text-2xl text-green-500" />
+                      ) : (
+                        <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                      )}
+                    </>
+                  ) : (
+                    <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                  )}
+                </div>
               </div>
+
+              {watchUserName == artistUsername && (
+                <span className="flex items-center">
+                  Este es tu usuario actual
+                </span>
+              )}
             </label>
           </div>
 
-          <div>
+          <div className="col-span-6 md:col-span-3">
             <div className="text-white flex items-center">
-              <div>
-                tintalove.com/
-                <span
-                  className={
-                    availableUserName || watchUserName == artistUsername
-                      ? 'text-green-500'
-                      : 'text-red-500'
-                  }
-                >
-                  {watchUserName}
-                </span>
-              </div>
               <div className="ml-5">
-                {watchUserName == artistUsername && (
-                  <span className="flex items-center">
-                    Este es tu usuario actual
-                  </span>
-                )}
                 {watchUserName != artistUsername && (
                   <MainInfoAvailable
                     validUserName={validUserName}
@@ -334,8 +342,6 @@ const MainInfoForm = ({ uid, artist }) => {
                 )}
               </div>
             </div>
-
-            <div className="col-span-6 md:col-span-3">ok</div>
 
             {watchUserName != artistUsername && availableUserName && (
               <button
