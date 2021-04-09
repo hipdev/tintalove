@@ -311,7 +311,7 @@ const MainInfoForm = ({ uid, artist }) => {
                 <div className="absolute right-2 top-3">
                   {validUserName ? (
                     <>
-                      {availableUserName ? (
+                      {availableUserName || watchUserName == artistUsername ? (
                         <FiCheckCircle className="ml-1 text-2xl text-green-500" />
                       ) : (
                         <FiAlertCircle className="ml-1 text-2xl text-red-500" />
@@ -324,35 +324,33 @@ const MainInfoForm = ({ uid, artist }) => {
               </div>
 
               {watchUserName == artistUsername && (
-                <span className="flex items-center">
-                  Este es tu usuario actual
-                </span>
+                <span className="mt-2 block">Este es tu usuario actual</span>
               )}
             </label>
           </div>
 
           <div className="col-span-6 md:col-span-3">
             <div className="text-white flex items-center">
-              <div className="ml-5">
-                {watchUserName != artistUsername && (
-                  <MainInfoAvailable
-                    validUserName={validUserName}
-                    availableUserName={availableUserName}
-                  />
-                )}
-              </div>
+              {watchUserName != artistUsername && (
+                <MainInfoAvailable
+                  validUserName={validUserName}
+                  availableUserName={availableUserName}
+                />
+              )}
             </div>
 
-            {watchUserName != artistUsername && availableUserName && (
-              <button
-                disabled={loading}
-                onClick={saveUsername}
-                className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
-                type="button"
-              >
-                Cambiar usuario
-              </button>
-            )}
+            {validUserName &&
+              watchUserName != artistUsername &&
+              availableUserName && (
+                <button
+                  disabled={loading}
+                  onClick={saveUsername}
+                  className="text-white bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm mt-4"
+                  type="button"
+                >
+                  Cambiar usuario
+                </button>
+              )}
           </div>
 
           <div className="col-span-6 mb-6">
