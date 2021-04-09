@@ -12,8 +12,6 @@ const MainInfoEdit = ({ uid }) => {
     <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
       <div className="h-full flex flex-col">
         <div className="h-full flex flex-col lg:flex-row justify-evenly items-center">
-          <SideMenu />
-
           <div
             style={{ boxShadow: '1px 0px 5px #000' }}
             className="relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 h-auto"

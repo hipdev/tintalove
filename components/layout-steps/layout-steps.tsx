@@ -2,10 +2,10 @@ import SideMenu from 'components/artist-account/side-menu'
 import Image from 'next/image'
 import StepNav from './step-nav'
 
-const Layout = ({ children }) => {
+const LayoutSteps = ({ children }) => {
   return (
-    <div>
-      <div>
+    <div className="flex">
+      <div className="w-1/4 bg-dark-800">
         <div className="w-52 relative h-11">
           <Image
             // layout="fill"
@@ -17,8 +17,8 @@ const Layout = ({ children }) => {
         </div>
         <SideMenu />
       </div>
-      <div>
-        <header>
+      <div className="w-3/4 bg-dark-500">
+        <header className="flex justify-between">
           <div>Volver al inicio</div>
           <div>
             <StepNav />
@@ -30,4 +30,4 @@ const Layout = ({ children }) => {
   )
 }
 
-export default Layout
+export default LayoutSteps
