@@ -5,8 +5,8 @@
 /* Stop purging. */
 
 /* Write you own custom component styles here */
-.btn-red {
-  @apply text-white bg-red-600 py-3 rounded-lg;
+.input-primary {
+  @apply text-gray-400 bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none;
 }
 
 @tailwind utilities;
