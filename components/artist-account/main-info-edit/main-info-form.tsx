@@ -238,7 +238,7 @@ const MainInfoForm = ({ uid, artist }) => {
                 {...register('displayName')}
                 autoComplete="off"
                 placeholder="..."
-                className="text-gray-400 d w-full bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none"
+                className="input-primary w-full"
                 onChange={handleName}
                 required
               />
@@ -312,7 +312,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
                 <div className="mt-3">
                   <input
-                    className="text-gray-400  bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900"
+                    className="input-primary"
                     type="text"
                     autoComplete="off"
                     {...register('username')}
@@ -350,7 +350,7 @@ const MainInfoForm = ({ uid, artist }) => {
               {...register('bio')}
               rows={6}
               placeholder="Cuentale al mundo sobre ti"
-              className="w-full text-gray-400  bg-transparent border border-light-900 p-2 rounded-md placeholder-light-900 outline-none resize-none"
+              className="w-full input-primary resize-none"
             ></textarea>
           </div>
         </div>
@@ -361,7 +361,7 @@ const MainInfoForm = ({ uid, artist }) => {
           <button
             type="submit"
             disabled={loading}
-            className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
+            className="block btn-red py-3 px-5"
           >
             Actualizar
           </button>
