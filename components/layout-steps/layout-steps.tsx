@@ -1,11 +1,12 @@
 import SideMenu from 'components/artist-account/side-menu'
 import Image from 'next/image'
+import Link from 'next/link'
 import StepNav from './step-nav'
 
 const LayoutSteps = ({ children }) => {
   return (
-    <div className="flex">
-      <div className="w-1/4 bg-dark-800 pl-12 pt-8 h-screen">
+    <div className="grid grid-cols-10 h-screen">
+      <div className="col-span-2 bg-dark-800 pl-12 pt-8 row-span-full">
         <div className="w-52 relative h-11 mb-20">
           <Image
             // layout="fill"
@@ -17,9 +18,11 @@ const LayoutSteps = ({ children }) => {
         </div>
         <SideMenu />
       </div>
-      <div className="w-3/4 bg-dark-500">
-        <header className="flex justify-between">
-          <div>Volver al inicio</div>
+      <div className="col-span-8 bg-dark-500 text-white">
+        <header className="flex justify-between ml-10 mt-5">
+          <Link href="/">
+            <a>Volver al inicio</a>
+          </Link>
           <div>
             <StepNav />
           </div>
