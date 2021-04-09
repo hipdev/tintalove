@@ -44,7 +44,7 @@ const StepNav = () => {
   }
 
   return (
-    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-700   to-black">
+    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 ">
       <div className="flex flex-col md:flex-row items-center">
         {!user && (
           <>
