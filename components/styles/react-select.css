@@ -3,11 +3,12 @@
 }
 
 .create_artist__control {
-  background: #090909 !important;
-  padding: 0 !important;
-  border-radius: 12px !important;
-  border: 2px solid #707484 !important;
+  background: #111319 !important;
+  padding: 4px !important;
+  border-radius: 6px !important;
+  border: 1px solid #707484 !important;
   outline: none imp !important;
+  text-transform: none !important;
 }
 .create_artist__control--is-focused {
   box-shadow: none !important;
