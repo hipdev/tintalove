@@ -9,6 +9,7 @@ module.exports = {
         sans: ['Inter', ...fontFamily.sans],
       },
       colors: {
+        primary: '#EC373A',
         dark: {
           500: '#111319', // new layout design
           700: '#0c0c0c',

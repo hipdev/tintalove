@@ -14,16 +14,16 @@ export default function MainInfoPage() {
     <>
       {state?.user ? (
         <LayoutSteps>
-          <IsAuth>
-            {isArtist ? (
-              <MainInfoEdit uid={state?.user?.uid || null} />
-            ) : (
-              <MainInfo uid={state?.user?.uid || null} />
-            )}
-          </IsAuth>
+          {state && state.user && isArtist ? (
+            <MainInfoEdit uid={state?.user?.uid || null} />
+          ) : (
+            <MainInfo uid={state?.user?.uid || null} />
+          )}
         </LayoutSteps>
       ) : (
-        <span>Cargando...</span>
+        <LayoutSteps>
+          <IsAuth>Cargando...</IsAuth>
+        </LayoutSteps>
       )}
     </>
   )
