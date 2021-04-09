@@ -5,12 +5,12 @@ import StepNav from './step-nav'
 const LayoutSteps = ({ children }) => {
   return (
     <div className="flex">
-      <div className="w-1/4 bg-dark-800">
-        <div className="w-52 relative h-11">
+      <div className="w-1/4 bg-dark-800 pl-12 pt-8 h-screen">
+        <div className="w-52 relative h-11 mb-20">
           <Image
             // layout="fill"
-            width={180}
-            height={35}
+            width={252}
+            height={49}
             src="/short-logo.png"
             alt="Picture of the author"
           />
@@ -24,7 +24,7 @@ const LayoutSteps = ({ children }) => {
             <StepNav />
           </div>
         </header>
-        <main className="bg-white">{children}</main>
+        <main>{children}</main>
       </div>
     </div>
   )
