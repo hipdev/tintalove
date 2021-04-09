@@ -44,13 +44,13 @@ const StepNav = () => {
   }
 
   return (
-    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 ">
+    <nav className="flex flex-col lg:flex-row">
       <div className="flex flex-col md:flex-row items-center">
         {!user && (
           <>
             <button
               onClick={handleLogin}
-              className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
+              className="btn-red w-auto text-white mx-auto sm:mx-0 rounded-lg focus:outline-none"
             >
               Acceder
             </button>
