@@ -1,31 +1,31 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp } from 'firebase/app'
+import { Auth, getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAU64dBRZUAf0aS3g8aq_xwM2_Co9bNUv4",
-  authDomain: "tinta-love.firebaseapp.com",
-  projectId: "tinta-love",
-  storageBucket: "tinta-love.appspot.com",
-  messagingSenderId: "715168088259",
-  appId: "1:715168088259:web:20c93279633a54b563a276",
-  measurementId: "G-65SGLH60C4",
-};
+  apiKey: 'AIzaSyAU64dBRZUAf0aS3g8aq_xwM2_Co9bNUv4',
+  authDomain: 'tinta-love.firebaseapp.com',
+  projectId: 'tinta-love',
+  storageBucket: 'tinta-love.appspot.com',
+  messagingSenderId: '715168088259',
+  appId: '1:715168088259:web:20c93279633a54b563a276',
+  measurementId: 'G-65SGLH60C4',
+}
 
 const firebaseApp: any = !getApps().length
   ? initializeApp(firebaseConfig)
-  : getApp();
+  : getApp()
 
-const authProvider = firebaseApp.container.getProvider("auth-exp");
-let auth: Auth;
+const authProvider = firebaseApp.container.getProvider('auth-exp')
+let auth: Auth
 if (authProvider.isInitialized()) {
-  auth = authProvider.getImmediate();
+  auth = authProvider.getImmediate()
 } else {
-  auth = getAuth(firebaseApp);
+  auth = getAuth(firebaseApp)
 }
 //Do whatever with this
-export { auth };
+export { auth }
 
-export default firebaseApp;
+export default firebaseApp
 
 /**`
  * Gets a users/{uid} document with username
@@ -43,11 +43,11 @@ export default firebaseApp;
  * @param  {DocumentSnapshot} doc
  */
 export function postToJSON(doc) {
-  const data = doc.data();
+  const data = doc.data()
   return {
     ...data,
     // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
     createdAt: data?.createdAt.toMillis() || 0,
     updatedAt: data?.updatedAt.toMillis() || 0,
-  };
+  }
 }
