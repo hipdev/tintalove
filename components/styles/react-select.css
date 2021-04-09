@@ -8,7 +8,6 @@
   border-radius: 6px !important;
   border: 1px solid #707484 !important;
   outline: none imp !important;
-  text-transform: none !important;
 }
 .create_artist__control--is-focused {
   box-shadow: none !important;
