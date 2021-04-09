@@ -11,14 +11,20 @@ export default function MainInfoPage() {
   console.log(isArtist, 'es artista?')
 
   return (
-    <LayoutSteps>
-      <IsAuth>
-        {isArtist ? (
-          <MainInfoEdit uid={state?.user?.uid || null} />
-        ) : (
-          <MainInfo uid={state?.user?.uid || null} />
-        )}
-      </IsAuth>
-    </LayoutSteps>
+    <>
+      {state?.user ? (
+        <LayoutSteps>
+          <IsAuth>
+            {isArtist ? (
+              <MainInfoEdit uid={state?.user?.uid || null} />
+            ) : (
+              <MainInfo uid={state?.user?.uid || null} />
+            )}
+          </IsAuth>
+        </LayoutSteps>
+      ) : (
+        <span>Cargando...</span>
+      )}
+    </>
   )
 }
