@@ -10,7 +10,9 @@ module.exports = {
       },
       colors: {
         dark: {
+          500: '#111319', // new layout design
           700: '#0c0c0c',
+          800: '#080A12', // new layout design
         },
         light: {
           500: '#D8D8D8',

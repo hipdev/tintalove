@@ -1,7 +1,7 @@
 import MainInfo from 'components/artist-account/main-info'
 import MainInfoEdit from 'components/artist-account/main-info-edit/main-info-edit'
 import IsAuth from 'components/isAuth'
-import Layout from 'components/layout/layout'
+import LayoutSteps from 'components/layout-steps/layout-steps'
 import useUser from 'hooks/use-user'
 
 export default function MainInfoPage() {
@@ -11,7 +11,7 @@ export default function MainInfoPage() {
   console.log(isArtist, 'es artista?')
 
   return (
-    <Layout>
+    <LayoutSteps>
       <IsAuth>
         {isArtist ? (
           <MainInfoEdit uid={state?.user?.uid || null} />
@@ -19,6 +19,6 @@ export default function MainInfoPage() {
           <MainInfo uid={state?.user?.uid || null} />
         )}
       </IsAuth>
-    </Layout>
+    </LayoutSteps>
   )
 }
