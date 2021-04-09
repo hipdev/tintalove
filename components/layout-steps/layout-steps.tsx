@@ -2,6 +2,7 @@ import SideMenu from 'components/artist-account/side-menu'
 import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './step-nav'
+import { RiArrowGoBackFill } from 'react-icons/ri'
 
 const LayoutSteps = ({ children }) => {
   return (
@@ -19,9 +20,11 @@ const LayoutSteps = ({ children }) => {
         <SideMenu />
       </div>
       <div className="col-span-8 bg-dark-500 text-white">
-        <header className="flex justify-between mt-5 pl-20">
+        <header className="flex justify-between pt-6 pl-20 pr-10">
           <Link href="/">
-            <a>Volver al inicio</a>
+            <a className="flex items-center">
+              <RiArrowGoBackFill className="mr-5" /> Volver al inicio
+            </a>
           </Link>
           <div>
             <StepNav />
