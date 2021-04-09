@@ -13,17 +13,6 @@ const MainInfoAvailable = ({ validUserName, availableUserName }) => {
                 Esta disponible!
                 <FiCheckCircle className="ml-1 text-2xl text-green-500" />
               </span>
-              <Popup
-                trigger={
-                  <span>
-                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                  </span>
-                }
-                on={['hover', 'focus']}
-                position="right center"
-              >
-                <div className="text-sm">Así te encontrarán en TintaLove</div>
-              </Popup>
             </div>
           ) : (
             <div className="flex items-center">
