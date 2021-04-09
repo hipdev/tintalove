@@ -378,13 +378,15 @@ const MainInfoForm = ({ uid, artist }) => {
         {artist.displayName != watchMultiple.displayName ||
         artist.formatted_address != city?.label ||
         artist.bio != watchMultiple.bio ? (
-          <button
-            type="submit"
-            disabled={loading}
-            className="block btn-red py-3 px-5"
-          >
-            Actualizar
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={loading}
+              className="block btn-red py-3 px-5"
+            >
+              Actualizar
+            </button>
+          </div>
         ) : null}
       </form>
     </>
