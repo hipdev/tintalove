@@ -19,7 +19,7 @@ const LayoutSteps = ({ children }) => {
         <SideMenu />
       </div>
       <div className="col-span-8 bg-dark-500 text-white">
-        <header className="flex justify-between ml-10 mt-5">
+        <header className="flex justify-between mt-5 pl-20">
           <Link href="/">
             <a>Volver al inicio</a>
           </Link>
@@ -27,7 +27,7 @@ const LayoutSteps = ({ children }) => {
             <StepNav />
           </div>
         </header>
-        <main>{children}</main>
+        <main className="pl-20">{children}</main>
       </div>
     </div>
   )

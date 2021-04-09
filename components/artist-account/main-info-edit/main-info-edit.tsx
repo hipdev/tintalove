@@ -10,7 +10,7 @@ const MainInfoEdit = ({ uid }) => {
 
   return (
     <div className="pt-10 2xl:pt-0">
-      <div className="w-4/5 ml-10 mt-20">
+      <div className="w-4/5 mt-20">
         <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
           Información personal
         </h1>
