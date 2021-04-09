@@ -1,4 +1,4 @@
-import { Transition } from '@headlessui/react'
+import Popup from 'reactjs-popup'
 
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import MainInfoAvailable from './main-info-available'
 import { geohashForLocation } from 'geofire-common'
+import { FiHelpCircle } from 'react-icons/fi'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -245,8 +246,8 @@ const MainInfoForm = ({ uid, artist }) => {
             </label>
           </div>
           <div className="col-span-6 md:col-span-3">
-            <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-              <span className="mb-3 block">Ciudad</span>
+            <label className="block text-white text-sm mb-2 tracking-wide">
+              <span className="mb-3 block uppercase">Ciudad</span>
 
               <GooglePlacesAutocomplete
                 apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
@@ -271,77 +272,92 @@ const MainInfoForm = ({ uid, artist }) => {
             </label>
           </div>
 
-          <div className="col-span-full ">
-            <Transition
-              show={show || customNick}
-              enter="transition-opacity duration-500"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div>
-                <div className="text-white flex items-center">
-                  <div>
-                    tintalove.com/
-                    <span
-                      className={
-                        availableUserName || watchUserName == artistUsername
-                          ? 'text-green-500'
-                          : 'text-red-500'
-                      }
-                    >
-                      {watchUserName}
+          <div className="col-span-6 md:col-span-3">
+            <label className="block text-white text-sm  mb-2 tracking-wide">
+              <div className="flex">
+                <span className="mb-3 block uppercase">
+                  SELECCIONA TU DOMINIO
+                </span>
+
+                <Popup
+                  trigger={
+                    <span>
+                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
                     </span>
-                  </div>
-                  <div className="ml-5">
-                    {watchUserName == artistUsername && (
-                      <span className="flex items-center">
-                        Este es tu usuario actual
-                      </span>
-                    )}
-                    {watchUserName != artistUsername && (
-                      <MainInfoAvailable
-                        validUserName={validUserName}
-                        availableUserName={availableUserName}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-3">
-                  <input
-                    className="input-primary"
-                    type="text"
-                    autoComplete="off"
-                    {...register('username')}
-                    onChange={handleUserName}
-                  />
-
-                  {watchUserName != artistUsername && availableUserName && (
-                    <button
-                      disabled={loading}
-                      onClick={saveUsername}
-                      className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
-                      type="button"
-                    >
-                      Cambiar usuario
-                    </button>
-                  )}
-                </div>
+                  }
+                  on={['hover', 'focus']}
+                  position="right center"
+                >
+                  <div className="text-sm">Así te encontrarán en TintaLove</div>
+                </Popup>
               </div>
-            </Transition>
+              <div className="relative">
+                <input
+                  className="input-primary w-full pl-[109px]"
+                  type="text"
+                  autoComplete="off"
+                  {...register('username')}
+                  onChange={handleUserName}
+                />
+                <span className="absolute top-[13px] left-[10px]">
+                  tintalove.com/
+                </span>
+              </div>
+            </label>
           </div>
+
+          <div>
+            <div className="text-white flex items-center">
+              <div>
+                tintalove.com/
+                <span
+                  className={
+                    availableUserName || watchUserName == artistUsername
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  }
+                >
+                  {watchUserName}
+                </span>
+              </div>
+              <div className="ml-5">
+                {watchUserName == artistUsername && (
+                  <span className="flex items-center">
+                    Este es tu usuario actual
+                  </span>
+                )}
+                {watchUserName != artistUsername && (
+                  <MainInfoAvailable
+                    validUserName={validUserName}
+                    availableUserName={availableUserName}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="col-span-6 md:col-span-3">ok</div>
+
+            {watchUserName != artistUsername && availableUserName && (
+              <button
+                disabled={loading}
+                onClick={saveUsername}
+                className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
+                type="button"
+              >
+                Cambiar usuario
+              </button>
+            )}
+          </div>
+
           <div className="col-span-6 mb-6">
             <div className="flex justify-between items-center mb-3">
               <label
                 htmlFor=""
-                className="block text-white text-sm uppercase tracking-wide"
+                className="block text-white text-sm tracking-wide"
               >
-                biografia
+                <span className="uppercase">Biografía</span>
               </label>
-              <span className="text-white">{counter}/500</span>
+              <span className="text-white ">{counter}/500</span>
             </div>
             <textarea
               onChange={handleCounter}
