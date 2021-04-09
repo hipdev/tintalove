@@ -9,13 +9,17 @@ const LayoutSteps = ({ children }) => {
     <div className="grid grid-cols-10 h-screen">
       <div className="col-span-2 bg-dark-800 pl-12 pt-8 row-span-full">
         <div className="w-52 relative h-11 mb-20">
-          <Image
-            // layout="fill"
-            width={252}
-            height={49}
-            src="/short-logo.png"
-            alt="Picture of the author"
-          />
+          <Link href="/">
+            <a>
+              <Image
+                // layout="fill"
+                width={252}
+                height={49}
+                src="/short-logo.png"
+                alt="Picture of the author"
+              />
+            </a>
+          </Link>
         </div>
         <SideMenu />
       </div>
