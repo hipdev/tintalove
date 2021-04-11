@@ -1,7 +1,4 @@
-import SideMenu from '../side-menu'
-
 import 'reactjs-popup/dist/index.css'
-
 import useArtist from 'hooks/use-artist'
 import MainInfoForm from './main-info-form'
 

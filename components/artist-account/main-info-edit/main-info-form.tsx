@@ -27,7 +27,6 @@ const MainInfoForm = ({ uid, artist }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
-      show: true,
       customNick: false,
       availableUsername: true,
       validUserName: true,
@@ -52,7 +51,6 @@ const MainInfoForm = ({ uid, artist }) => {
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
 
-  const [show, setShow] = useState(true)
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
@@ -212,6 +210,13 @@ const MainInfoForm = ({ uid, artist }) => {
       },
     })
     console.log(formData, 'data form')
+
+    console.log(
+      artist.displayName != watchMultiple.displayName ||
+        artist.formatted_address != city?.label ||
+        artist.bio != watchMultiple.bio,
+      'comparaciones'
+    )
     // setLoading(false)
   }
 

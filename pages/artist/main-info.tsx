@@ -8,8 +8,6 @@ export default function MainInfoPage() {
   const { state } = useUser()
   const isArtist = state?.user?.is_artist
 
-  console.log(isArtist, 'es artista?')
-
   return (
     <>
       {state?.user ? (

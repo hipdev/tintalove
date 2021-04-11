@@ -21,12 +21,11 @@ export function useUserData() {
         const fetchUser = async function () {
           const userData = await getUserInfo(user.uid)
           if (userData) {
-            user
-              .getIdTokenResult()
-              .then(({ claims }) => console.log(claims, 'los tokens'))
+            user.getIdTokenResult()
+            // .then(({ claims }) => console.log(claims, 'los tokens'))
 
             setUserInfo(user.providerData[0])
-            console.log(userData, 'datafromuser')
+            // console.log(userData, 'datafromuser')
 
             actions.getUser({
               email: user.email,
