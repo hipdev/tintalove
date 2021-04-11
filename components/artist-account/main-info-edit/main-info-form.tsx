@@ -210,15 +210,10 @@ const MainInfoForm = ({ uid, artist }) => {
       },
     })
     console.log(formData, 'data form')
-
-    console.log(
-      artist.displayName != watchMultiple.displayName ||
-        artist.formatted_address != city?.label ||
-        artist.bio != watchMultiple.bio,
-      'comparaciones'
-    )
     // setLoading(false)
   }
+
+  console.log(watchMultiple, 'comparaciones')
 
   return (
     <>
