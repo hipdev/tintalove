@@ -1,6 +1,7 @@
 import WorkingInfo from 'components/artist-account/working-info'
 import IsAuth from 'components/isAuth'
-import Layout from 'components/layout/layout'
+import LayoutSteps from 'components/layout-steps/layout-steps'
+
 import useUser from 'hooks/use-user'
 
 export default function WorkingInfopage() {
@@ -8,10 +9,18 @@ export default function WorkingInfopage() {
   const isArtist = state?.user?.is_artist
 
   return (
-    <Layout>
-      <IsAuth>
-        <WorkingInfo isArtist={isArtist} />
-      </IsAuth>
-    </Layout>
+    <>
+      {state?.user ? (
+        <LayoutSteps uid={state?.user?.uid}>
+          {state && state.user && isArtist && (
+            <WorkingInfo uid={state?.user?.uid || null} isArtist={isArtist} />
+          )}
+        </LayoutSteps>
+      ) : (
+        <LayoutSteps>
+          <IsAuth>Cargando...</IsAuth>
+        </LayoutSteps>
+      )}
+    </>
   )
 }
