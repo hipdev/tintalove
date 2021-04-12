@@ -2,7 +2,6 @@ import { Transition } from '@headlessui/react'
 import { useStateMachine } from 'little-state-machine'
 
 import debounce from 'lodash.debounce'
-import SideMenu from './side-menu'
 import toast, { Toaster } from 'react-hot-toast'
 import GooglePlacesAutocomplete, {
   getLatLng,
