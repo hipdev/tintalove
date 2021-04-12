@@ -1,11 +1,16 @@
-import SideMenu from 'components/artist-account/side-menu-artist'
+import SideMenuArtist from 'components/artist-account/side-menu-artist'
 import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './step-nav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 
-const LayoutSteps = ({ children }) => {
+type Props = {
+  uid?: string
+  children
+}
+
+const LayoutSteps = ({ children, uid }: Props) => {
   return (
     <div className="grid grid-cols-10 h-screen">
       <HeadContainer />
@@ -24,7 +29,7 @@ const LayoutSteps = ({ children }) => {
             </a>
           </Link>
         </div>
-        <SideMenu />
+        <SideMenuArtist uid={uid} />
       </div>
       <div className="col-span-7 2xl:col-span-8 pl-14 2xl:pl-20 bg-dark-500 text-white">
         <header className="flex justify-between pt-6  pr-10">
