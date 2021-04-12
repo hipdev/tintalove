@@ -8,8 +8,7 @@ import GooglePlacesAutocomplete, {
 } from 'react-google-places-autocomplete'
 import React, { useCallback, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import Popup from 'reactjs-popup'
-import 'reactjs-popup/dist/index.css'
+
 import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
@@ -18,6 +17,8 @@ import { useRouter } from 'next/router'
 import { useUserData } from 'hooks/use-user-data'
 import { geohashForLocation } from 'geofire-common'
 import MainInfoAvailable from './main-info-edit/main-info-available'
+
+import 'microtip/microtip.css'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -299,19 +300,13 @@ const MainInfo = ({ uid }) => {
                     SELECCIONA TU DOMINIO
                   </span>
 
-                  <Popup
-                    trigger={
-                      <span>
-                        <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                      </span>
-                    }
-                    on={['hover', 'focus']}
-                    position="right center"
+                  <span
+                    aria-label="Asi te encontrarán en Tinta Love"
+                    data-microtip-position="top"
+                    role="tooltip"
                   >
-                    <div className="text-sm">
-                      Así te encontrarán en TintaLove
-                    </div>
-                  </Popup>
+                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                  </span>
                 </div>
                 <div className="relative">
                   <input
