@@ -1,5 +1,4 @@
 import { Transition } from '@headlessui/react'
-import { useStateMachine } from 'little-state-machine'
 
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
@@ -15,7 +14,7 @@ import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { login } from 'lib/actions'
+
 import { useUserData } from 'hooks/use-user-data'
 import { geohashForLocation } from 'geofire-common'
 
@@ -33,10 +32,6 @@ const MainInfo = ({ uid }) => {
       username: '',
       bio: '',
     },
-  })
-
-  const { state: loginState, actions } = useStateMachine({
-    login,
   })
 
   const { setTriggerAuth } = useUserData()
