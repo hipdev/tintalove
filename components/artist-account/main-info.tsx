@@ -347,7 +347,7 @@ const MainInfo = ({ uid }) => {
               </label>
             </div>
 
-            <div className="col-span-6 md:col-span-3">
+            <div className="col-span-6 md:col-span-3 self-center">
               <div className="text-white flex items-center">
                 <MainInfoAvailable
                   validUserName={validUserName}
