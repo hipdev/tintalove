@@ -3,10 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './step-nav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
+import HeadContainer from 'components/layout/head'
 
 const LayoutSteps = ({ children }) => {
   return (
     <div className="grid grid-cols-10 h-screen">
+      <HeadContainer />
+
       <div className="col-span-3 2xl:col-span-2 bg-dark-800 pl-10 2xl:pl-12 pt-8 row-span-full">
         <div className="w-52 relative h-11 mb-20">
           <Link href="/">
