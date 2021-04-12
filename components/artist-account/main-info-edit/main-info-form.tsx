@@ -1,5 +1,3 @@
-import Popup from 'reactjs-popup'
-
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
 import GooglePlacesAutocomplete, {
@@ -20,6 +18,8 @@ import { useRouter } from 'next/router'
 import MainInfoAvailable from './main-info-available'
 import { geohashForLocation } from 'geofire-common'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
+
+import 'microtip/microtip.css'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -279,17 +279,13 @@ const MainInfoForm = ({ uid, artist }) => {
                   SELECCIONA TU DOMINIO
                 </span>
 
-                <Popup
-                  trigger={
-                    <span>
-                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                    </span>
-                  }
-                  on={['hover', 'focus']}
-                  position="right center"
+                <span
+                  aria-label="Asi te encontrarán en Tinta Love"
+                  data-microtip-position="top"
+                  role="tooltip"
                 >
-                  <div className="text-sm">Así te encontrarán en TintaLove</div>
-                </Popup>
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
               </div>
               <div className="relative">
                 <input
