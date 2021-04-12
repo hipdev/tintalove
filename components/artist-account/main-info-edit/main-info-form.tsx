@@ -39,7 +39,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
-  const watchMultiple: any = watch(['displayName', 'bio'])
+  const watchMultiple: any = watch()
   const cityRef = useRef(null)
 
   const [artistUsername, setArtistUserName] = useState(artist.username)
