@@ -2,7 +2,11 @@ import useArtistRealtime from 'hooks/realtime/use-artist-realtime'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const SideMenuArtist = ({ uid }) => {
+type Props = {
+  uid?: string
+}
+
+const SideMenuArtist = ({ uid }: Props) => {
   const { artist } = useArtistRealtime(uid)
 
   const router = useRouter()
