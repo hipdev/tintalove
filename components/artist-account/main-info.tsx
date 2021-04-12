@@ -258,7 +258,7 @@ const MainInfo = ({ uid }) => {
                   {...register('displayName')}
                   autoComplete="off"
                   placeholder="..."
-                  className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
+                  className="input-primary w-full"
                   onChange={handleName}
                   required
                 />
@@ -288,6 +288,61 @@ const MainInfo = ({ uid }) => {
                     ref: cityRef,
                   }}
                 />
+              </label>
+            </div>
+
+            <div className="col-span-6 md:col-span-3">
+              <label className="block text-white text-sm  mb-2 tracking-wide">
+                <div className="flex">
+                  <span className="mb-3 block uppercase">
+                    SELECCIONA TU DOMINIO
+                  </span>
+
+                  <Popup
+                    trigger={
+                      <span>
+                        <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                      </span>
+                    }
+                    on={['hover', 'focus']}
+                    position="right center"
+                  >
+                    <div className="text-sm">
+                      Así te encontrarán en TintaLove
+                    </div>
+                  </Popup>
+                </div>
+                <div className="relative">
+                  <input
+                    className={
+                      availableUserName
+                        ? 'input-primary w-full pl-[109px] text-green-500'
+                        : 'input-primary w-full pl-[109px] text-red-500'
+                    }
+                    type="text"
+                    autoComplete="off"
+                    spellCheck="false"
+                    {...register('username')}
+                    onChange={handleUserName}
+                  />
+                  <span className="absolute top-[13px] left-[10px]">
+                    tintalove.com/
+                  </span>
+
+                  <div className="absolute right-2 top-3">
+                    {validUserName ? (
+                      <>
+                        {availableUserName ? (
+                          <FiCheckCircle className="ml-1 text-2xl text-green-500" />
+                        ) : (
+                          <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                        )}
+                      </>
+                    ) : (
+                      <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                    )}
+                  </div>
+                </div>
               </label>
             </div>
 
