@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 
 import { useUserData } from 'hooks/use-user-data'
 import { geohashForLocation } from 'geofire-common'
+import MainInfoAvailable from './main-info-edit/main-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -346,118 +347,15 @@ const MainInfo = ({ uid }) => {
               </label>
             </div>
 
-            <div className="col-span-full ">
-              <Transition
-                show={show || customNick}
-                enter="transition-opacity duration-500"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div>
-                  <div className="text-white flex items-center">
-                    <div>
-                      tintalove.com/
-                      <span
-                        className={
-                          availableUserName ? 'text-green-500' : 'text-red-500'
-                        }
-                      >
-                        {watchUserName}
-                      </span>
-                    </div>
-                    <div className="ml-5">
-                      {validUserName ? (
-                        <div>
-                          {availableUserName ? (
-                            <div className="flex items-center">
-                              <span className="flex items-center">
-                                Esta disponible!
-                                <FiCheckCircle className="ml-1 text-2xl text-green-500" />
-                              </span>
-                              <Popup
-                                trigger={
-                                  <span>
-                                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                  </span>
-                                }
-                                on={['hover', 'focus']}
-                                position="right center"
-                              >
-                                <div className="text-sm">
-                                  Así te encontrarán en TintaLove
-                                </div>
-                              </Popup>
-                            </div>
-                          ) : (
-                            <div className="flex items-center">
-                              <span className="flex items-center">
-                                No disponible
-                                <FiAlertCircle className="ml-1 text-2xl text-red-500" />
-                              </span>
-                              <Popup
-                                trigger={
-                                  <span>
-                                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                  </span>
-                                }
-                                on={['hover', 'focus']}
-                                position="right center"
-                              >
-                                <div className="text-sm">
-                                  Intenta con otro usuario en el cuadro de
-                                  abajo.
-                                </div>
-                              </Popup>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="flex items-center">
-                          <span>Formato inválido</span>
-                          <Popup
-                            trigger={
-                              <span>
-                                <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                              </span>
-                            }
-                            on={['hover', 'focus']}
-                            position="right center"
-                            keepTooltipInside=".tooltipBox"
-                          >
-                            <div className="text-sm">
-                              Intenta con otro nombre de usuario, puedes usar
-                              letras, números. También _ y . pero no seguidos o
-                              al final del usuario
-                            </div>
-                          </Popup>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-3">
-                    <input
-                      className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
-                      type="text"
-                      autoComplete="off"
-                      {...register('username')}
-                      onChange={handleUserName}
-                    />
-
-                    {/* <button
-                            onClick={saveUserName}
-                            className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
-                            type="button"
-                          >
-                            Cambiar usuario
-                          </button> */}
-                  </div>
-                </div>
-              </Transition>
+            <div className="col-span-6 md:col-span-3">
+              <div className="text-white flex items-center">
+                <MainInfoAvailable
+                  validUserName={validUserName}
+                  availableUserName={availableUserName}
+                />
+              </div>
             </div>
+
             <div className="col-span-6 mb-6">
               <div className="flex justify-between items-center mb-3">
                 <label
