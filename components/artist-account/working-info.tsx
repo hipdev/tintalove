@@ -1,4 +1,4 @@
-import SideMenu from './side-menu'
+import SideMenu from './side-menu-artist'
 import Link from 'next/link'
 
 type Props = {

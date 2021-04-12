@@ -1,6 +1,6 @@
 import { FaRegUserCircle } from 'react-icons/fa'
 
-import SideMenu from './side-menu'
+import SideMenu from './side-menu-artist'
 
 const PictureInfo = () => {
   return (
