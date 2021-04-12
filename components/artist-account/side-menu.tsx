@@ -21,6 +21,13 @@ const SideMenu = () => {
         </h1>
       </div>
 
+      <div className="mb-10">
+        <div className="h-3 w-64 bg-gray-800 rounded-xl relative">
+          <div className="h-3 w-1/4 bg-primary rounded-xl"></div>
+        </div>
+        <span className="text-white text-sm block mt-2">25% Completado</span>
+      </div>
+
       <Link href="/artist/main-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
