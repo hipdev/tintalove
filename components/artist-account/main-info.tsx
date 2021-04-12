@@ -216,7 +216,7 @@ const MainInfo = ({ uid }) => {
       })
       .then((res) => {
         if (res) {
-          router.push('/artist/new/working-info')
+          router.push('/artist/working-info')
           setTriggerAuth(Math.random())
         }
       })
