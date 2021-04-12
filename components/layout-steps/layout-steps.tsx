@@ -1,4 +1,4 @@
-import SideMenu from 'components/artist-account/side-menu'
+import SideMenu from 'components/artist-account/side-menu-artist'
 import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './step-nav'

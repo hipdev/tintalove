@@ -1,4 +1,4 @@
-import SideMenu from './side-menu'
+import SideMenu from './side-menu-artist'
 
 const ContactInfo = () => {
   return (
