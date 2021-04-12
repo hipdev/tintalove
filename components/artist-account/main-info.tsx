@@ -227,7 +227,7 @@ const MainInfo = ({ uid }) => {
   }
 
   return (
-    <div className="w-full h-auto bg-gradient-to-r from-dark-700 to-black 2xl:h-screen pt-10 2xl:pt-0">
+    <>
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -241,211 +241,202 @@ const MainInfo = ({ uid }) => {
         }}
         position="bottom-right"
       />
-      <div className="h-full flex flex-col">
-        <div className="h-full flex flex-col lg:flex-row justify-evenly items-center">
-          <div
-            style={{ boxShadow: '1px 0px 5px #000' }}
-            className="relative w-10/12 sm:w-2/3  bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0 h-auto"
-          >
-            <div>
-              <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-2">
-                Información personal
-              </h1>
-              <p className="text-white mb-5 sm:mb-6 lg:mb-8">
-                Gracias por ser parte de la familia Tinta Love, cuando llenes
-                todos los pasos aparecerá un botón mágico para activar tu perfil
-              </p>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid grid-cols-6 gap-6 tooltipBox">
-                  <div className="col-span-6 md:col-span-3">
-                    <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-                      <span className="mb-3 block">Nombre artístico</span>
-                      <input
-                        {...register('displayName')}
-                        autoComplete="off"
-                        placeholder="..."
-                        className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-                        onChange={handleName}
-                        required
-                      />
-                    </label>
-                  </div>
-                  <div className="col-span-6 md:col-span-3">
-                    <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-                      <span className="mb-3 block">Ciudad</span>
+      <div className="w-4/5 mt-10">
+        <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+          Información personal
+        </h1>
+        <p className="text-white mb-5 sm:mb-6 lg:mb-8">
+          Gracias por ser parte de la familia Tinta Love, cuando llenes todos
+          los pasos aparecerá un botón mágico para activar tu perfil
+        </p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-6 gap-6 tooltipBox">
+            <div className="col-span-6 md:col-span-3">
+              <label className="block text-white text-sm uppercase mb-2 tracking-wide">
+                <span className="mb-3 block">Nombre artístico</span>
+                <input
+                  {...register('displayName')}
+                  autoComplete="off"
+                  placeholder="..."
+                  className="text-gray-400 d w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
+                  onChange={handleName}
+                  required
+                />
+              </label>
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <label className="block text-white text-sm uppercase mb-2 tracking-wide">
+                <span className="mb-3 block">Ciudad</span>
 
-                      <GooglePlacesAutocomplete
-                        apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                        debounce={500}
-                        apiOptions={{ region: 'CO', language: 'es' }}
-                        autocompletionRequest={{
-                          componentRestrictions: { country: ['CO'] },
-                          types: ['(cities)'],
-                        }}
-                        selectProps={{
-                          value: city,
-                          onChange: handleCity,
-                          placeholder: 'Escribe tu ciudad...',
-                          noOptionsMessage: () => <span>Sin opciones</span>,
-                          // defaultMenuIsOpen: true,
-                          // menuIsOpen: true,
-                          classNamePrefix: 'create_artist',
-                          // autoFocus: true,
-                          ref: cityRef,
-                        }}
-                      />
-                    </label>
-                  </div>
+                <GooglePlacesAutocomplete
+                  apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
+                  debounce={500}
+                  apiOptions={{ region: 'CO', language: 'es' }}
+                  autocompletionRequest={{
+                    componentRestrictions: { country: ['CO'] },
+                    types: ['(cities)'],
+                  }}
+                  selectProps={{
+                    value: city,
+                    onChange: handleCity,
+                    placeholder: 'Escribe tu ciudad...',
+                    noOptionsMessage: () => <span>Sin opciones</span>,
+                    // defaultMenuIsOpen: true,
+                    // menuIsOpen: true,
+                    classNamePrefix: 'create_artist',
+                    // autoFocus: true,
+                    ref: cityRef,
+                  }}
+                />
+              </label>
+            </div>
 
-                  <div className="col-span-full ">
-                    <Transition
-                      show={show || customNick}
-                      enter="transition-opacity duration-500"
-                      enterFrom="opacity-0"
-                      enterTo="opacity-100"
-                      leave="transition-opacity duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                    >
-                      <div>
-                        <div className="text-white flex items-center">
-                          <div>
-                            tintalove.com/
-                            <span
-                              className={
-                                availableUserName
-                                  ? 'text-green-500'
-                                  : 'text-red-500'
-                              }
-                            >
-                              {watchUserName}
-                            </span>
-                          </div>
-                          <div className="ml-5">
-                            {validUserName ? (
-                              <div>
-                                {availableUserName ? (
-                                  <div className="flex items-center">
-                                    <span className="flex items-center">
-                                      Esta disponible!
-                                      <FiCheckCircle className="ml-1 text-2xl text-green-500" />
-                                    </span>
-                                    <Popup
-                                      trigger={
-                                        <span>
-                                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                        </span>
-                                      }
-                                      on={['hover', 'focus']}
-                                      position="right center"
-                                    >
-                                      <div className="text-sm">
-                                        Así te encontrarán en TintaLove
-                                      </div>
-                                    </Popup>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center">
-                                    <span className="flex items-center">
-                                      No disponible
-                                      <FiAlertCircle className="ml-1 text-2xl text-red-500" />
-                                    </span>
-                                    <Popup
-                                      trigger={
-                                        <span>
-                                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                        </span>
-                                      }
-                                      on={['hover', 'focus']}
-                                      position="right center"
-                                    >
-                                      <div className="text-sm">
-                                        Intenta con otro usuario en el cuadro de
-                                        abajo.
-                                      </div>
-                                    </Popup>
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              <div className="flex items-center">
-                                <span>Formato inválido</span>
-                                <Popup
-                                  trigger={
-                                    <span>
-                                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                                    </span>
-                                  }
-                                  on={['hover', 'focus']}
-                                  position="right center"
-                                  keepTooltipInside=".tooltipBox"
-                                >
-                                  <div className="text-sm">
-                                    Intenta con otro nombre de usuario, puedes
-                                    usar letras, números. También _ y . pero no
-                                    seguidos o al final del usuario
-                                  </div>
-                                </Popup>
-                              </div>
-                            )}
-                          </div>
+            <div className="col-span-full ">
+              <Transition
+                show={show || customNick}
+                enter="transition-opacity duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div>
+                  <div className="text-white flex items-center">
+                    <div>
+                      tintalove.com/
+                      <span
+                        className={
+                          availableUserName ? 'text-green-500' : 'text-red-500'
+                        }
+                      >
+                        {watchUserName}
+                      </span>
+                    </div>
+                    <div className="ml-5">
+                      {validUserName ? (
+                        <div>
+                          {availableUserName ? (
+                            <div className="flex items-center">
+                              <span className="flex items-center">
+                                Esta disponible!
+                                <FiCheckCircle className="ml-1 text-2xl text-green-500" />
+                              </span>
+                              <Popup
+                                trigger={
+                                  <span>
+                                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                                  </span>
+                                }
+                                on={['hover', 'focus']}
+                                position="right center"
+                              >
+                                <div className="text-sm">
+                                  Así te encontrarán en TintaLove
+                                </div>
+                              </Popup>
+                            </div>
+                          ) : (
+                            <div className="flex items-center">
+                              <span className="flex items-center">
+                                No disponible
+                                <FiAlertCircle className="ml-1 text-2xl text-red-500" />
+                              </span>
+                              <Popup
+                                trigger={
+                                  <span>
+                                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                                  </span>
+                                }
+                                on={['hover', 'focus']}
+                                position="right center"
+                              >
+                                <div className="text-sm">
+                                  Intenta con otro usuario en el cuadro de
+                                  abajo.
+                                </div>
+                              </Popup>
+                            </div>
+                          )}
                         </div>
+                      ) : (
+                        <div className="flex items-center">
+                          <span>Formato inválido</span>
+                          <Popup
+                            trigger={
+                              <span>
+                                <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                              </span>
+                            }
+                            on={['hover', 'focus']}
+                            position="right center"
+                            keepTooltipInside=".tooltipBox"
+                          >
+                            <div className="text-sm">
+                              Intenta con otro nombre de usuario, puedes usar
+                              letras, números. También _ y . pero no seguidos o
+                              al final del usuario
+                            </div>
+                          </Popup>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                        <div className="mt-3">
-                          <input
-                            className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
-                            type="text"
-                            autoComplete="off"
-                            {...register('username')}
-                            onChange={handleUserName}
-                          />
+                  <div className="mt-3">
+                    <input
+                      className="text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900"
+                      type="text"
+                      autoComplete="off"
+                      {...register('username')}
+                      onChange={handleUserName}
+                    />
 
-                          {/* <button
+                    {/* <button
                             onClick={saveUserName}
                             className="text-white ml-4 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-sm"
                             type="button"
                           >
                             Cambiar usuario
                           </button> */}
-                        </div>
-                      </div>
-                    </Transition>
-                  </div>
-                  <div className="col-span-6 mb-6">
-                    <div className="flex justify-between items-center mb-3">
-                      <label
-                        htmlFor=""
-                        className="block text-white text-sm uppercase tracking-wide"
-                      >
-                        biografia
-                      </label>
-                      <span className="text-white">{counter}/500</span>
-                    </div>
-                    <textarea
-                      onChange={handleCounter}
-                      maxLength={500}
-                      required
-                      {...register('bio')}
-                      rows={6}
-                      placeholder="Cuentale al mundo sobre ti"
-                      className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
-                    ></textarea>
                   </div>
                 </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
+              </Transition>
+            </div>
+            <div className="col-span-6 mb-6">
+              <div className="flex justify-between items-center mb-3">
+                <label
+                  htmlFor=""
+                  className="block text-white text-sm uppercase tracking-wide"
                 >
-                  Guardar
-                </button>
-              </form>
+                  biografia
+                </label>
+                <span className="text-white">{counter}/500</span>
+              </div>
+              <textarea
+                onChange={handleCounter}
+                maxLength={500}
+                required
+                {...register('bio')}
+                rows={6}
+                placeholder="Cuentale al mundo sobre ti"
+                className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
+              ></textarea>
             </div>
           </div>
-        </div>
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={loading}
+              className="block  btn-red py-3 px-5"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
       </div>
-    </div>
+    </>
   )
 }
 
