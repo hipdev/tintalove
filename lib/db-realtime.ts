@@ -1,25 +1,18 @@
-import {
-  collection,
-  getFirestore,
-  getDocs,
-  onSnapshot,
-} from 'firebase/firestore'
+import { collection, getFirestore, doc, onSnapshot } from 'firebase/firestore'
+
 import firebaseApp from 'lib/firebase'
 
 const db = getFirestore(firebaseApp)
 
-export async function getUsers() {
-  const querySnapshot = await getDocs(collection(db, 'users'))
-  let users = []
-  querySnapshot.forEach((doc) => {
-    console.log('algo cambio aquí')
-    console.log(`${doc.id} => ${doc.data()}`, 'cada user')
-    console.log(doc.data(), 'la data')
-    users.push(doc.data())
+export function listenArtistById(uid, setArtist) {
+  const unsub = onSnapshot(doc(collection(db, 'artists'), uid), (doc) => {
+    console.log('Artist data realtime: ', doc.data())
+    setArtist(doc.data())
   })
 
-  return { users }
+  return unsub
 }
+
 export async function getUsersRealtime() {
   console.log('entrando aqui')
   const unsubscribe = onSnapshot(
