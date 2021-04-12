@@ -12,9 +12,9 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
         Información personal
       </h1>
 
-      <form action="">
+      <form className="mt-10" action="">
         <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-6 lg:col-span-5 xl:col-span-3">
+          <div className="col-span-6">
             <label
               htmlFor=""
               className="block text-white text-sm uppercase mb-3 tracking-wide"
@@ -27,7 +27,7 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
               className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
             >
               <option value="" selected>
-                Selecciona tus especializaciones
+                Selecciona tus estilos
               </option>
             </select>
           </div>
