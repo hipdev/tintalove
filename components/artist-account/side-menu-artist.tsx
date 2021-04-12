@@ -33,7 +33,9 @@ const SideMenuArtist = ({ uid }) => {
 
       <div className="mb-10">
         <div className="h-3 w-64 bg-gray-800 rounded-xl relative">
-          <div className={`h-3 ${step} bg-primary rounded-xl`}></div>
+          <div
+            className={`h-3 ${step} transition-width bg-primary rounded-xl`}
+          ></div>
         </div>
         <span className="text-white text-sm block mt-2">
           {stepValue}% Completado

@@ -25,6 +25,9 @@ module.exports = {
         609: '38rem',
         672: '42rem',
       },
+      transitionProperty: {
+        width: 'width',
+      },
     },
   },
   variants: {
