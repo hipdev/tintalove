@@ -206,7 +206,7 @@ const MainInfoForm = ({ uid, artist }) => {
       success: (data) => {
         setLoading(false)
         setTriggerAuth(Math.random()) // reload global user state data
-        router.push('/artist/new/working-info')
+        router.push('/artist/working-info')
         return 'Artista actualizado 😉'
       },
       error: (err) => {
