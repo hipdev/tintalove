@@ -1,24 +1,18 @@
-import { Transition } from '@headlessui/react'
-
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-// import GooglePlacesAutocomplete, {
-//   getLatLng,
-//   geocodeByAddress,
-// } from 'react-google-places-autocomplete'
+
 import React, { useCallback, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-
 import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
 import { useUserData } from 'hooks/use-user-data'
-import { geohashForLocation } from 'geofire-common'
 import MainInfoAvailable from './main-info-edit/main-info-available'
 
 import 'microtip/microtip.css'
+import MainInfoCity from './main-info-edit/main-info-city'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -38,7 +32,6 @@ const MainInfo = ({ uid }) => {
 
   const { setTriggerAuth } = useUserData()
 
-  const watchUserName = watch('username')
   const cityRef = useRef(null)
 
   const [loading, setLoading] = useState(false)
@@ -61,38 +54,6 @@ const MainInfo = ({ uid }) => {
     },
     [counter]
   )
-
-  // const handleCity = async (e) => {
-  //   const results = await geocodeByAddress(e.value.description)
-
-  //   if (results) {
-  //     const latLng = await getLatLng(results[0])
-
-  //     const cityHash = geohashForLocation([latLng.lat, latLng.lng])
-  //     //this needs more documention, could be a great PR into the google firebase docs!
-
-  //     console.log(cityHash, 'hash working :D')
-  //     console.log(results)
-  //     console.log(latLng)
-
-  //     const fullAddress = results[0].formatted_address.split(',')
-  //     const city_name = fullAddress[0]
-  //     const province = fullAddress[1].trim() || ''
-  //     const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
-
-  //     // guardaré la lat y long para futuras opciones con geolocalización
-  //     setPlaceInfo({
-  //       place_id: results[0].place_id,
-  //       formatted_address: results[0].formatted_address,
-  //       city_name,
-  //       city_hash: cityHash,
-  //       province,
-  //       country,
-  //     })
-
-  //     setCity({ label: e.label, value: 0 })
-  //   }
-  // }
 
   console.log(placeInfo, 'la ciudad')
 
@@ -177,7 +138,6 @@ const MainInfo = ({ uid }) => {
   const onSubmit = async (data) => {
     setLoading(true)
     if (!placeInfo) {
-      cityRef.current.focus()
       setLoading(false)
       toast('😓 Debes indicar una ciudad')
       return
@@ -290,6 +250,8 @@ const MainInfo = ({ uid }) => {
                     ref: cityRef,
                   }}
                 /> */}
+
+                <MainInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
               </label>
             </div>
 
