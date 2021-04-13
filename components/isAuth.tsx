@@ -4,19 +4,18 @@ import { login } from 'lib/actions'
 import { auth } from 'lib/firebase'
 import useUser from 'hooks/use-user'
 import { createUser } from 'lib/db'
-import { GoogleAuthProvider } from 'firebase/auth'
 import { useEffect, useState } from 'react'
+import { provider } from './layout/header/header'
 
 export default function IsAuth({ children }) {
   const [isAuth, setAuth] = useState(true)
   const { state } = useUser()
-  const provider = new GoogleAuthProvider()
+
   const { state: loginState, actions } = useStateMachine({
     login,
   })
 
   useEffect(() => {
-    console.log(state, 'el estado de auth')
     setAuth(state.user)
   }, [state])
 
@@ -26,8 +25,6 @@ export default function IsAuth({ children }) {
         const user = result.user
         const res = await createUser(user)
 
-        console.log(res, 'res no esta dando true hpta')
-
         if (res) actions.login(true)
       })
       .catch((error) => {
@@ -36,8 +33,6 @@ export default function IsAuth({ children }) {
         console.log(errorCode)
       })
   }
-
-  console.log(auth, 'el auth en user')
 
   if (isAuth) {
     return children

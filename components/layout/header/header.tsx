@@ -224,4 +224,6 @@ const Header = () => {
   )
 }
 
+export { provider }
+
 export default Header
