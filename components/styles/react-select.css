@@ -36,3 +36,42 @@
   background-color: #191919 !important;
   border-radius: 0px !important;
 }
+
+/* MultiValue */
+
+.create_artist__multi-value {
+  background: #2b2b2b !important;
+  margin-right: 5px !important;
+  box-shadow: 0px 2px 3px #080808 !important;
+  margin-bottom: 8px !important;
+}
+.create_artist__multi-value__label {
+  color: #fff !important;
+}
+.create_artist__multi-value__remove:hover {
+  background-color: #080a12 !important;
+  border-radius: 0 !important;
+  color: #ec373a !important;
+}
+
+/* Scroll */
+
+/* width */
+.create_artist__menu-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.create_artist__menu-list::-webkit-scrollbar-track {
+  background: #080a12;
+}
+
+/* Handle */
+.create_artist__menu-list::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+/* Handle on hover */
+.create_artist__menu-list::-webkit-scrollbar-thumb:hover {
+  background: #dcdcdc;
+}

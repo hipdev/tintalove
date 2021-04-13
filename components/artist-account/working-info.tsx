@@ -1,9 +1,15 @@
 import Link from 'next/link'
+import Select from 'react-select'
+import tattooStyles from 'lib/tattoo-styles'
 
 type Props = {
   uid: string
   isArtist: boolean
 }
+
+const options = tattooStyles.map((style) => {
+  return { value: style, label: style }
+})
 
 const WorkingInfo = ({ uid, isArtist }: Props) => {
   return (
@@ -21,15 +27,14 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
             >
               Estilos
             </label>
-            <select
-              name=""
-              id=""
-              className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
-            >
-              <option value="" selected>
-                Selecciona tus estilos
-              </option>
-            </select>
+
+            <Select
+              options={options}
+              isMulti
+              classNamePrefix="create_artist"
+              placeholder="Seleccionar estilos"
+              closeMenuOnSelect={false}
+            />
           </div>
           <div className="col-span-6 lg:col-span-5 xl:col-span-3">
             <label
@@ -38,11 +43,8 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
             >
               Estudio donde trabajas
             </label>
-            <select
-              name=""
-              id=""
-              className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
-            >
+
+            <select className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none">
               <option value="" selected>
                 Buscar estudio...
               </option>

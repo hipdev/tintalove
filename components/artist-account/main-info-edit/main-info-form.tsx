@@ -261,7 +261,7 @@ const MainInfoForm = ({ uid, artist }) => {
                   value: city,
                   onChange: handleCity,
                   placeholder: 'Escribe tu ciudad...',
-                  noOptionsMessage: () => <span>Sin opciones</span>,
+                  noOptionsMessage: () => 'Sin opciones',
                   // defaultMenuIsOpen: true,
                   // menuIsOpen: true,
                   classNamePrefix: 'create_artist',
