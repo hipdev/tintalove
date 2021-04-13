@@ -3,7 +3,6 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
-import Head from 'next/head'
 import useScript from 'hooks/use-script'
 
 const MainInfoCity = () => {
