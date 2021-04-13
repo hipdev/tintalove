@@ -2,10 +2,10 @@ import { Transition } from '@headlessui/react'
 
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-import GooglePlacesAutocomplete, {
-  getLatLng,
-  geocodeByAddress,
-} from 'react-google-places-autocomplete'
+// import GooglePlacesAutocomplete, {
+//   getLatLng,
+//   geocodeByAddress,
+// } from 'react-google-places-autocomplete'
 import React, { useCallback, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
@@ -62,37 +62,37 @@ const MainInfo = ({ uid }) => {
     [counter]
   )
 
-  const handleCity = async (e) => {
-    const results = await geocodeByAddress(e.value.description)
+  // const handleCity = async (e) => {
+  //   const results = await geocodeByAddress(e.value.description)
 
-    if (results) {
-      const latLng = await getLatLng(results[0])
+  //   if (results) {
+  //     const latLng = await getLatLng(results[0])
 
-      const cityHash = geohashForLocation([latLng.lat, latLng.lng])
-      //this needs more documention, could be a great PR into the google firebase docs!
+  //     const cityHash = geohashForLocation([latLng.lat, latLng.lng])
+  //     //this needs more documention, could be a great PR into the google firebase docs!
 
-      console.log(cityHash, 'hash working :D')
-      console.log(results)
-      console.log(latLng)
+  //     console.log(cityHash, 'hash working :D')
+  //     console.log(results)
+  //     console.log(latLng)
 
-      const fullAddress = results[0].formatted_address.split(',')
-      const city_name = fullAddress[0]
-      const province = fullAddress[1].trim() || ''
-      const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
+  //     const fullAddress = results[0].formatted_address.split(',')
+  //     const city_name = fullAddress[0]
+  //     const province = fullAddress[1].trim() || ''
+  //     const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
-      // guardaré la lat y long para futuras opciones con geolocalización
-      setPlaceInfo({
-        place_id: results[0].place_id,
-        formatted_address: results[0].formatted_address,
-        city_name,
-        city_hash: cityHash,
-        province,
-        country,
-      })
+  //     // guardaré la lat y long para futuras opciones con geolocalización
+  //     setPlaceInfo({
+  //       place_id: results[0].place_id,
+  //       formatted_address: results[0].formatted_address,
+  //       city_name,
+  //       city_hash: cityHash,
+  //       province,
+  //       country,
+  //     })
 
-      setCity({ label: e.label, value: 0 })
-    }
-  }
+  //     setCity({ label: e.label, value: 0 })
+  //   }
+  // }
 
   console.log(placeInfo, 'la ciudad')
 
@@ -270,7 +270,7 @@ const MainInfo = ({ uid }) => {
               <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                 <span className="mb-3 block">Ciudad</span>
 
-                <GooglePlacesAutocomplete
+                {/* <GooglePlacesAutocomplete
                   apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
                   debounce={500}
                   apiOptions={{ region: 'CO', language: 'es' }}
@@ -289,7 +289,7 @@ const MainInfo = ({ uid }) => {
                     // autoFocus: true,
                     ref: cityRef,
                   }}
-                />
+                /> */}
               </label>
             </div>
 

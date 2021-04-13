@@ -1,9 +1,10 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-import GooglePlacesAutocomplete, {
-  getLatLng,
-  geocodeByAddress,
-} from 'react-google-places-autocomplete'
+// import GooglePlacesAutocomplete, {
+//   getLatLng,
+//   geocodeByAddress,
+// } from 'react-google-places-autocomplete'
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
@@ -20,6 +21,8 @@ import { geohashForLocation } from 'geofire-common'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 import 'microtip/microtip.css'
+import Head from 'next/head'
+import MainInfoCity from './main-info-city'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -67,36 +70,36 @@ const MainInfoForm = ({ uid, artist }) => {
     [counter]
   )
 
-  const handleCity = async (e) => {
-    console.log(e, 'la city')
-    const results = await geocodeByAddress(e.value.description)
+  // const handleCity = async (e) => {
+  //   console.log(e, 'la city')
+  //   const results = await geocodeByAddress(e.value.description)
 
-    if (results) {
-      const latLng = await getLatLng(results[0])
+  //   if (results) {
+  //     const latLng = await getLatLng(results[0])
 
-      const cityHash = geohashForLocation([latLng.lat, latLng.lng])
-      //this needs more documention, could be a great PR into the google firebase docs!
+  //     const cityHash = geohashForLocation([latLng.lat, latLng.lng])
+  //     //this needs more documention, could be a great PR into the google firebase docs!
 
-      console.log(cityHash, 'hash working :D')
+  //     console.log(cityHash, 'hash working :D')
 
-      const fullAddress = results[0].formatted_address.split(',')
-      const city_name = fullAddress[0]
-      const province = fullAddress[1].trim() || ''
-      const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
+  //     const fullAddress = results[0].formatted_address.split(',')
+  //     const city_name = fullAddress[0]
+  //     const province = fullAddress[1].trim() || ''
+  //     const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
-      // guardaré la lat y long para futuras opciones con geolocalización
-      setPlaceInfo({
-        place_id: results[0].place_id,
-        formatted_address: results[0].formatted_address,
-        city_name,
-        city_hash: cityHash,
-        province,
-        country,
-      })
+  //     // guardaré la lat y long para futuras opciones con geolocalización
+  //     setPlaceInfo({
+  //       place_id: results[0].place_id,
+  //       formatted_address: results[0].formatted_address,
+  //       city_name,
+  //       city_hash: cityHash,
+  //       province,
+  //       country,
+  //     })
 
-      setCity({ label: results[0].formatted_address, value: 0 })
-    }
-  }
+  //     setCity({ label: results[0].formatted_address, value: 0 })
+  //   }
+  // }
 
   const checkUsername = useCallback(
     debounce(async (username) => {
@@ -249,7 +252,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Ciudad</span>
 
-              <GooglePlacesAutocomplete
+              {/* <GooglePlacesAutocomplete
                 apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
                 debounce={500}
                 apiOptions={{ region: 'CO', language: 'es' }}
@@ -268,7 +271,8 @@ const MainInfoForm = ({ uid, artist }) => {
                   // autoFocus: true,
                   ref: cityRef,
                 }}
-              />
+              /> */}
+              <MainInfoCity />
             </label>
           </div>
 
