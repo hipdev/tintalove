@@ -1,10 +1,5 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-// import GooglePlacesAutocomplete, {
-//   getLatLng,
-//   geocodeByAddress,
-// } from 'react-google-places-autocomplete'
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
@@ -17,11 +12,10 @@ import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import MainInfoAvailable from './main-info-available'
-import { geohashForLocation } from 'geofire-common'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 import 'microtip/microtip.css'
-import Head from 'next/head'
+
 import MainInfoCity from './main-info-city'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
@@ -47,7 +41,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const [artistUsername, setArtistUserName] = useState(artist.username)
   const [loading, setLoading] = useState(false)
-  const [city, setCity] = useState(null)
+
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: artist.formatted_address || '',
@@ -60,10 +54,6 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const router = useRouter()
 
-  useEffect(() => {
-    setCity({ label: artist.formatted_address, value: 0 })
-  }, [])
-
   const handleCounter = useCallback(
     (e) => {
       const text = e.target.value
@@ -71,37 +61,6 @@ const MainInfoForm = ({ uid, artist }) => {
     },
     [counter]
   )
-
-  // const handleCity = async (e) => {
-  //   console.log(e, 'la city')
-  //   const results = await geocodeByAddress(e.value.description)
-
-  //   if (results) {
-  //     const latLng = await getLatLng(results[0])
-
-  //     const cityHash = geohashForLocation([latLng.lat, latLng.lng])
-  //     //this needs more documention, could be a great PR into the google firebase docs!
-
-  //     console.log(cityHash, 'hash working :D')
-
-  //     const fullAddress = results[0].formatted_address.split(',')
-  //     const city_name = fullAddress[0]
-  //     const province = fullAddress[1].trim() || ''
-  //     const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
-
-  //     // guardaré la lat y long para futuras opciones con geolocalización
-  //     setPlaceInfo({
-  //       place_id: results[0].place_id,
-  //       formatted_address: results[0].formatted_address,
-  //       city_name,
-  //       city_hash: cityHash,
-  //       province,
-  //       country,
-  //     })
-
-  //     setCity({ label: results[0].formatted_address, value: 0 })
-  //   }
-  // }
 
   const checkUsername = useCallback(
     debounce(async (username) => {
@@ -254,26 +213,6 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Ciudad</span>
 
-              {/* <GooglePlacesAutocomplete
-                apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                debounce={500}
-                apiOptions={{ region: 'CO', language: 'es' }}
-                autocompletionRequest={{
-                  componentRestrictions: { country: ['CO'] },
-                  types: ['(cities)'],
-                }}
-                selectProps={{
-                  value: city,
-                  onChange: handleCity,
-                  placeholder: 'Escribe tu ciudad...',
-                  noOptionsMessage: () => 'Sin opciones',
-                  // defaultMenuIsOpen: true,
-                  // menuIsOpen: true,
-                  classNamePrefix: 'create_artist',
-                  // autoFocus: true,
-                  ref: cityRef,
-                }}
-              /> */}
               <MainInfoCity
                 defaultValue={artist.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
