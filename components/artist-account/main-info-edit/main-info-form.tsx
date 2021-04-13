@@ -49,7 +49,9 @@ const MainInfoForm = ({ uid, artist }) => {
   const [loading, setLoading] = useState(false)
   const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
-  const [placeInfo, setPlaceInfo] = useState(null)
+  const [placeInfo, setPlaceInfo] = useState({
+    formatted_address: artist.formatted_address || '',
+  })
 
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
@@ -272,7 +274,10 @@ const MainInfoForm = ({ uid, artist }) => {
                   ref: cityRef,
                 }}
               /> */}
-              <MainInfoCity />
+              <MainInfoCity
+                defaultValue={artist.formatted_address || ''}
+                setPlaceInfo={setPlaceInfo}
+              />
             </label>
           </div>
 
@@ -376,7 +381,7 @@ const MainInfoForm = ({ uid, artist }) => {
         </div>
 
         {artist.displayName != watchMultiple.displayName ||
-        artist.formatted_address != city?.label ||
+        artist.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button
