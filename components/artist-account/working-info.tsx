@@ -12,7 +12,7 @@ const options = tattooStyles.map((style) => {
 })
 
 const WorkingInfo = ({ uid, isArtist }: Props) => {
-  return (
+  return uid ? (
     <div className="w-4/5 mt-10">
       <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información personal
@@ -44,10 +44,11 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
               Estudio donde trabajas
             </label>
 
-            <select className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none">
-              <option value="" selected>
-                Buscar estudio...
-              </option>
+            <select
+              className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
+              defaultValue=""
+            >
+              <option value="">Buscar estudio...</option>
             </select>
           </div>
           <div className="col-span-6 mb-6">
@@ -84,7 +85,7 @@ const WorkingInfo = ({ uid, isArtist }: Props) => {
         </Link>
       )}
     </div>
-  )
+  ) : null
 }
 
 export default WorkingInfo
