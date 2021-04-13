@@ -25,11 +25,11 @@ const MainInfoCity = () => {
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places&callback=initMap'
   )
 
-  const ref = useOnclickOutside(() => {
-    // When user clicks outside of the component, we can dismiss
-    // the searched suggestions by calling this method
-    clearSuggestions()
-  })
+  // const ref = useOnclickOutside(() => {
+  //   // When user clicks outside of the component, we can dismiss
+  //   // the searched suggestions by calling this method
+  //   clearSuggestions()
+  // })
 
   const handleInput = (e) => {
     // Update the keyword of the input element
@@ -61,24 +61,31 @@ const MainInfoCity = () => {
       } = suggestion
 
       return (
-        <li key={place_id} onClick={handleSelect(suggestion)}>
+        <li
+          className="px-2 py-2 hover:bg-dark-700 cursor-pointer"
+          key={place_id}
+          onClick={handleSelect(suggestion)}
+        >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
         </li>
       )
     })
 
-  console.log(ready, 'esto que es')
   return (
-    <div ref={ref}>
+    // <div ref={ref}>
+    <div className="relative">
       <input
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder="Where are you going?"
+        placeholder="Busca tu ciudad"
         className="input-primary w-full"
+        spellCheck="false"
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
-      {status === 'OK' && <ul>{renderSuggestions()}</ul>}
+      {status === 'OK' && (
+        <ul className="bg-dark-800 absolute w-full">{renderSuggestions()}</ul>
+      )}
     </div>
   )
 }

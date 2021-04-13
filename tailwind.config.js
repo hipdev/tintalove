@@ -12,7 +12,7 @@ module.exports = {
         primary: '#EC373A',
         dark: {
           500: '#111319', // new layout design
-          700: '#0c0c0c',
+          700: '#1f1f1f',
           800: '#080A12', // new layout design
         },
         light: {
