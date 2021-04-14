@@ -98,7 +98,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
               {errors.styles && <p>Esta campo es requerido</p>}
             </label>
           </div>
-          <div className="col-span-6">
+          <div className="col-span-6 text-sm mb-3 tracking-wide">
             <span className="mb-3 block"> CÓMO TRABAJAS</span>
 
             <div className="mb-4">
@@ -126,14 +126,29 @@ const WorkingInfo = ({ uid, isArtist }) => {
             </div>
 
             {watchWorkAs == 'company' && (
-              <label className="text-sm mb-3 tracking-wide">
-                <span className="mb-3 block">
-                  SELECCIONA EL ESTUDIO DONDE TRABAJAS
-                </span>
-                <select className="input-primary w-full" defaultValue="">
-                  <option value="">Buscar estudio...</option>
-                </select>
-              </label>
+              <div className="mt-7">
+                <label className="text-sm mb-3 tracking-wide">
+                  <span className="mb-3 block">
+                    SELECCIONA EL ESTUDIO DONDE TRABAJAS
+                  </span>
+                  <select
+                    className="input-primary w-full text-sm mb-3 tracking-wide"
+                    defaultValue=""
+                  >
+                    <option value="">Buscar estudio...</option>
+                  </select>
+                </label>
+                <div>
+                  <p>
+                    ¿No encuentras tu estudio?
+                    <Link href="#">
+                      <a className="ml-2 text-primary underline">
+                        Regístralo aquí
+                      </a>
+                    </Link>
+                  </p>
+                </div>
+              </div>
             )}
           </div>
           <div className="col-span-6 mb-6">
