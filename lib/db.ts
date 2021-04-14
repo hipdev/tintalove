@@ -147,6 +147,31 @@ export async function updateArtistMainInfo(uid, data) {
   }
 }
 
+export async function updateArtistWorkingInfo(uid, data) {
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    const batch = writeBatch(db)
+
+    batch.set(
+      artistRef,
+      {
+        updated_at: serverTimestamp(),
+        ...data,
+      },
+      { merge: true }
+    )
+
+    await batch.commit()
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
   const usernameRefOld = doc(collection(db, 'usernames'), oldUsername)
   const usernameRefNew = doc(collection(db, 'usernames'), newUsername)
