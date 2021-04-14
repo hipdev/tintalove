@@ -38,10 +38,13 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
   useEffect(() => {
     if (artist) {
-      const styles = artist.styles.map((style) => ({
-        label: style,
-        value: style,
-      }))
+      let styles = []
+      if (artist.styles) {
+        styles = artist.styles.map((style) => ({
+          label: style,
+          value: style,
+        }))
+      }
 
       setValue('times', artist.times)
       setValue('work_as', artist.work_as)
