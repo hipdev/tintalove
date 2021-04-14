@@ -20,6 +20,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
     defaultValues: {
       styles: [],
       times: '',
+      workAs: '',
     },
   })
 
@@ -94,13 +95,30 @@ const WorkingInfo = ({ uid, isArtist }) => {
               {errors.styles && <p>Esta campo es requerido</p>}
             </label>
           </div>
-          <div className="col-span-6 lg:col-span-5 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
-            >
-              <span className="mb-3 block"> CÓMO TRABAJAS</span>
-            </label>
+          <div className="col-span-6 lg:col-span-5 xl:col-span-3 mb-3">
+            <span className="mb-3 block"> CÓMO TRABAJAS</span>
+
+            <div className="mb-2">
+              <label>
+                <input
+                  className="form-radio rounded-full text-primary"
+                  type="radio"
+                  value="independent"
+                  {...register('workAs')}
+                />
+                <span>Soy independiente</span>
+              </label>
+
+              <label>
+                <input
+                  className="form-radio rounded-full text-primary"
+                  type="radio"
+                  value="company"
+                  {...register('workAs')}
+                />
+                <span>Trabajo con un estudio</span>
+              </label>
+            </div>
 
             <select
               className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
