@@ -95,7 +95,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   />
                 )}
               />
-              {errors.styles && <p>Esta campo es requerido</p>}
+              {errors.styles && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 text-sm mb-3 tracking-wide">
@@ -151,20 +151,18 @@ const WorkingInfo = ({ uid, isArtist }) => {
               </div>
             )}
           </div>
-          <div className="col-span-6 mb-6">
-            <div className="flex justify-between items-center mb-3">
-              <label htmlFor="" className="text-sm uppercase tracking-wide">
-                Horarios
-              </label>
-              <span className="text-white">0/100</span>
-            </div>
-            <textarea
-              {...register('times', { required: true })}
-              rows={6}
-              placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm"
-              className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
-            ></textarea>
-            {errors.times && <p>Esta campo es requerido</p>}
+          <div className="col-span-6 mb-6 ">
+            <label htmlFor="" className="text-sm tracking-wide">
+              <span className="mb-3 block">HORARIOS</span>
+
+              <textarea
+                {...register('times', { required: true })}
+                rows={6}
+                placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm"
+                className="w-full input-primary resize-none"
+              ></textarea>
+              {errors.times && <p>Esta campo es requerido</p>}
+            </label>
           </div>
         </div>
 

@@ -47,7 +47,7 @@ const Header = () => {
   }
 
   return (
-    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-700   to-black">
+    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-800   to-black">
       <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
         <div className="flex justify-center items-center">
           <Link href="/">
