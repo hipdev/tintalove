@@ -98,25 +98,25 @@ const WorkingInfo = ({ uid, isArtist }) => {
           <div className="col-span-6 lg:col-span-5 xl:col-span-3 mb-3">
             <span className="mb-3 block"> CÓMO TRABAJAS</span>
 
-            <div className="mb-2">
-              <label>
+            <div className="mb-4">
+              <label className="cursor-pointer">
                 <input
-                  className="form-radio rounded-full text-primary"
+                  className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
                   value="independent"
                   {...register('workAs')}
                 />
-                <span>Soy independiente</span>
+                <span className="ml-2 mr-4">Soy independiente</span>
               </label>
 
-              <label>
+              <label className="cursor-pointer">
                 <input
-                  className="form-radio rounded-full text-primary"
+                  className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
                   value="company"
                   {...register('workAs')}
                 />
-                <span>Trabajo con un estudio</span>
+                <span className="ml-2">Trabajo con un estudio</span>
               </label>
             </div>
 
