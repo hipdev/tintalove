@@ -62,20 +62,19 @@ const WorkingInfo = ({ uid, isArtist }) => {
       return
     }
 
-    toast
-      .promise(updateArtistWorkingInfo(uid, data), {
-        loading: 'Actualizando...',
-        success: () => {
-          setLoading(false)
+    toast.promise(updateArtistWorkingInfo(uid, data), {
+      loading: 'Actualizando...',
+      success: () => {
+        setLoading(false)
 
-          return 'Artista actualizado 😉'
-        },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
-      .then(() => router.push('/artist/contact-info'))
+        router.push('/artist/contact-info')
+        return 'Artista actualizado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
 
     setLoading(false)
   }
