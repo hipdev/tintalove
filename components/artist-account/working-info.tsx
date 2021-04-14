@@ -2,15 +2,25 @@ import { Controller, useForm } from 'react-hook-form'
 import Link from 'next/link'
 import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
+import { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { updateArtistWorkingInfo } from 'lib/db'
+import { useRouter } from 'next/router'
+import useArtist from 'hooks/use-artist'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
 const WorkingInfo = ({ uid, isArtist }) => {
+  const [loading, setLoading] = useState(false)
+  const { artist } = useArtist(uid)
+  const router = useRouter()
+
   const {
     register,
     setError,
+    setValue,
     getValues,
     watch,
     handleSubmit,
@@ -20,58 +30,71 @@ const WorkingInfo = ({ uid, isArtist }) => {
     mode: 'onChange',
     defaultValues: {
       styles: [],
-      times: '',
-      workAs: '',
+      times: artist?.times || '',
+      work_as: artist?.work_as || '',
     },
   })
 
-  console.log(uid, 'el user id ')
+  useEffect(() => {
+    if (artist) {
+      const styles = artist.styles.map((style) => ({
+        label: style,
+        value: style,
+      }))
 
-  const watchWorkAs = watch('workAs')
+      setValue('times', artist.times)
+      setValue('work_as', artist.work_as)
+      setValue('styles', styles)
+    }
+  }, [artist])
+
+  console.log(artist, 'artist Info')
+
+  const watchWorkAs = watch('work_as')
 
   const onSubmit = (data) => {
     console.log(data, 'data form')
 
-    // setLoading(true)
-    // if (data.displayName == '' || data.bio == '') {
-    //   setLoading(false)
-    //   toast('Debes ingresar el nombre y la bio 😓')
-    //   return
-    // }
+    setLoading(true)
+    if (data.displayName == '' || data.bio == '') {
+      setLoading(false)
+      toast('Debes ingresar el nombre y la bio 😓')
+      return
+    }
 
-    // if (
-    //   !placeInfo &&
-    //   data.displayName == artist.displayName &&
-    //   data.bio == artist.bio
-    // ) {
-    //   cityRef.current.focus()
-    //   setLoading(false)
-    //   toast('😓 Debes indicar al menos una ciudad, nombre o biografía')
-    //   return
-    // }
+    toast
+      .promise(updateArtistWorkingInfo(uid, data), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
 
-    // let formData = { bio: data.bio, displayName: data.displayName }
-    // if (placeInfo) formData = { ...placeInfo, ...formData }
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+      .then(() => router.push('/artist/contact-info'))
 
-    // toast.promise(updateArtistMainInfo(uid, formData), {
-    //   loading: 'Actualizando...',
-    //   success: (data) => {
-    //     setLoading(false)
-    //     setTriggerAuth(Math.random()) // reload global user state data
-    //     router.push('/artist/working-info')
-    //     return 'Artista actualizado 😉'
-    //   },
-    //   error: (err) => {
-    //     setLoading(false)
-    //     return `${err.toString()}`
-    //   },
-    // })
-
-    // setLoading(false)
+    setLoading(false)
   }
 
   return uid ? (
     <div className="w-4/5 mt-10">
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600',
+          style: {
+            background: '#ef3e30',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 5000,
+        }}
+        position="bottom-right"
+      />
       <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información personal
       </h1>
@@ -109,7 +132,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
                   value="independent"
-                  {...register('workAs')}
+                  {...register('work_as')}
                 />
                 <span className="ml-2 mr-4">Soy independiente</span>
               </label>
@@ -119,12 +142,12 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
                   value="company"
-                  {...register('workAs')}
+                  {...register('work_as')}
                 />
                 <span className="ml-2">Trabajo con un estudio</span>
               </label>
 
-              {errors.workAs && <p>Esta campo es requerido</p>}
+              {errors.work_as && <p>Esta campo es requerido</p>}
             </div>
 
             {watchWorkAs == 'company' && (
@@ -133,14 +156,12 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   <span className="mb-3 block">
                     SELECCIONA EL ESTUDIO DONDE TRABAJAS
                   </span>
-                  <select
-                    className="input-primary w-full text-sm mb-3 tracking-wide"
-                    defaultValue=""
-                  >
-                    <option value="">Buscar estudio...</option>
-                  </select>
+                  <input
+                    className="input-primary w-full"
+                    placeholder="Buscar estudio"
+                  />
                 </label>
-                <div>
+                <div className="mt-1">
                   <p>
                     ¿No encuentras tu estudio?
                     <Link href="#">
@@ -175,7 +196,11 @@ const WorkingInfo = ({ uid, isArtist }) => {
             </p>
           )}
           {isArtist ? (
-            <button type="submit" className="block  btn-red py-3 px-5">
+            <button
+              type="submit"
+              className="block  btn-red py-3 px-5"
+              disabled={loading}
+            >
               Siguiente
             </button>
           ) : (

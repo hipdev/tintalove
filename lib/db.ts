@@ -6,6 +6,7 @@ import {
   getFirestore,
   setDoc,
   serverTimestamp,
+  updateDoc,
   writeBatch,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
@@ -150,21 +151,19 @@ export async function updateArtistMainInfo(uid, data) {
 export async function updateArtistWorkingInfo(uid, data) {
   const artistRef = doc(collection(db, 'artists'), uid)
 
+  const styles = data.styles.map((style) => style.value)
+
+  const dataForm = {
+    times: data.times,
+    work_as: data.work_as,
+    styles,
+    updated_at: serverTimestamp(),
+  }
+
   const docSnap = await getDoc(artistRef)
 
   if (docSnap.exists()) {
-    const batch = writeBatch(db)
-
-    batch.set(
-      artistRef,
-      {
-        updated_at: serverTimestamp(),
-        ...data,
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
+    await updateDoc(artistRef, dataForm)
 
     return true
   } else {
