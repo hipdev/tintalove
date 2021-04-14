@@ -14,6 +14,7 @@ const options = tattooStyles.map((style) => {
 
 const WorkingInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const { artist } = useArtist(uid)
   const router = useRouter()
 
@@ -48,6 +49,13 @@ const WorkingInfo = ({ uid, isArtist }) => {
     }
   }, [artist])
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => router.push('/artist/contact-info'), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   console.log(artist, 'artist Info')
 
   const watchWorkAs = watch('work_as')
@@ -66,8 +74,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
+        setSuccess(true)
 
-        router.push('/artist/contact-info')
         return 'Artista actualizado 😉'
       },
       error: (err) => {
