@@ -25,6 +25,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
     },
   })
 
+  console.log(uid, 'el user id ')
+
   const watchWorkAs = watch('workAs')
 
   const onSubmit = (data) => {
@@ -166,21 +168,24 @@ const WorkingInfo = ({ uid, isArtist }) => {
           </div>
         </div>
 
-        {!isArtist && (
-          <p className="text-white">
-            Para poder completar este paso debes completar la Información
-            personal
-          </p>
-        )}
-        {isArtist ? (
-          <button type="submit" className="block  btn-red py-3 px-5">
-            Siguiente
-          </button>
-        ) : (
-          <Link href="/artist/main-info">
-            <button className="block   btn-red py-3 px-5">Ir al paso 1</button>
-          </Link>
-        )}
+        <div className="flex justify-between">
+          {!isArtist && (
+            <p className="text-white">
+              Primero debes guardar el Paso 1, Información Personal.
+            </p>
+          )}
+          {isArtist ? (
+            <button type="submit" className="block  btn-red py-3 px-5">
+              Siguiente
+            </button>
+          ) : (
+            <Link href="/artist/main-info">
+              <button className="block   btn-red py-3 px-5">
+                Ir al paso 1
+              </button>
+            </Link>
+          )}
+        </div>
       </form>
     </div>
   ) : null
