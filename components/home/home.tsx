@@ -9,7 +9,7 @@ import { RiHeartLine } from 'react-icons/ri'
 const Home = () => {
   return (
     <div className="w-full h-auto bg-black">
-      <div className="h-1/4 flex flex-col justify-center items-center bg-gradient-to-r from-dark-700  to-black">
+      <div className="h-1/4 flex flex-col justify-center items-center bg-gradient-to-r from-dark-800  to-black">
         <h1 className="w-11/12 xl:w-2/5 text-white text-center text-4xl sm:text-5xl font-bold font-raleway leading-tight mt-20 sm:mt-24 mb-10">
           Artistas altamente creativos y profesionales
         </h1>
