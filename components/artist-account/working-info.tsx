@@ -12,6 +12,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
     register,
     setError,
     getValues,
+    watch,
     handleSubmit,
     formState: { errors },
     control,
@@ -23,6 +24,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
       workAs: '',
     },
   })
+
+  const watchWorkAs = watch('workAs')
 
   const onSubmit = (data) => {
     console.log(data, 'data form')
@@ -67,14 +70,14 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
   return uid ? (
     <div className="w-4/5 mt-10">
-      <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información personal
       </h1>
 
       <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
-            <label className="block text-white text-sm mb-3 tracking-wide">
+            <label className="text-sm mb-3 tracking-wide">
               <span className="mb-3 block"> ESTILOS</span>
 
               <Controller
@@ -95,7 +98,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
               {errors.styles && <p>Esta campo es requerido</p>}
             </label>
           </div>
-          <div className="col-span-6 lg:col-span-5 xl:col-span-3 mb-3">
+          <div className="col-span-6">
             <span className="mb-3 block"> CÓMO TRABAJAS</span>
 
             <div className="mb-4">
@@ -118,21 +121,24 @@ const WorkingInfo = ({ uid, isArtist }) => {
                 />
                 <span className="ml-2">Trabajo con un estudio</span>
               </label>
+
+              {errors.workAs && <p>Esta campo es requerido</p>}
             </div>
 
-            <select
-              className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
-              defaultValue=""
-            >
-              <option value="">Buscar estudio...</option>
-            </select>
+            {watchWorkAs == 'company' && (
+              <label className="text-sm mb-3 tracking-wide">
+                <span className="mb-3 block">
+                  SELECCIONA EL ESTUDIO DONDE TRABAJAS
+                </span>
+                <select className="input-primary w-full" defaultValue="">
+                  <option value="">Buscar estudio...</option>
+                </select>
+              </label>
+            )}
           </div>
           <div className="col-span-6 mb-6">
             <div className="flex justify-between items-center mb-3">
-              <label
-                htmlFor=""
-                className="block text-white text-sm uppercase tracking-wide"
-              >
+              <label htmlFor="" className="text-sm uppercase tracking-wide">
                 Horarios
               </label>
               <span className="text-white">0/100</span>
