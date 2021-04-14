@@ -75,3 +75,7 @@
 .create_artist__menu-list::-webkit-scrollbar-thumb:hover {
   background: #dcdcdc;
 }
+.create_artist__control {
+  border-color: none !important;
+  box-shadow: none !important;
+}
