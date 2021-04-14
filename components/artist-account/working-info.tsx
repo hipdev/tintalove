@@ -106,14 +106,14 @@ const WorkingInfo = ({ uid, isArtist }) => {
         position="bottom-right"
       />
       <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
-        Información personal
+        Información laboral
       </h1>
 
       <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
             <label className="text-sm mb-3 tracking-wide">
-              <span className="mb-3 block"> ESTILOS</span>
+              <span className="mb-3 block"> ESTILOS </span>
 
               <Controller
                 rules={{ required: true }}
