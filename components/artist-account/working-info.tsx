@@ -73,36 +73,33 @@ const WorkingInfo = ({ uid, isArtist }) => {
       <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
-            <label
-              htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
-            >
-              Estilos
-            </label>
+            <label className="block text-white text-sm mb-3 tracking-wide">
+              <span className="mb-3 block"> ESTILOS</span>
 
-            <Controller
-              rules={{ required: true }}
-              control={control}
-              name="styles"
-              render={({ field }) => (
-                <Select
-                  options={options}
-                  isMulti
-                  classNamePrefix="create_artist"
-                  placeholder="Seleccionar estilos"
-                  closeMenuOnSelect={false}
-                  {...field}
-                />
-              )}
-            />
-            {errors.styles && <p>Esta campo es requerido</p>}
+              <Controller
+                rules={{ required: true }}
+                control={control}
+                name="styles"
+                render={({ field }) => (
+                  <Select
+                    options={options}
+                    isMulti
+                    classNamePrefix="create_artist"
+                    placeholder="Seleccionar estilos"
+                    closeMenuOnSelect={false}
+                    {...field}
+                  />
+                )}
+              />
+              {errors.styles && <p>Esta campo es requerido</p>}
+            </label>
           </div>
           <div className="col-span-6 lg:col-span-5 xl:col-span-3">
             <label
               htmlFor=""
               className="block text-white text-sm uppercase mb-3 tracking-wide"
             >
-              Estudio donde trabajas
+              <span className="mb-3 block"> CÓMO TRABAJAS</span>
             </label>
 
             <select

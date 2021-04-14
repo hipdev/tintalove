@@ -197,8 +197,8 @@ const MainInfoForm = ({ uid, artist }) => {
       <form className="relative" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6 tooltipBox">
           <div className="col-span-6 md:col-span-3">
-            <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-              <span className="mb-3 block">Nombre artístico</span>
+            <label className="block text-white text-sm mb-2 tracking-wide">
+              <span className="mb-3 block uppercase">Nombre artístico</span>
               <input
                 {...register('displayName')}
                 autoComplete="off"
