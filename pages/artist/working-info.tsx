@@ -1,6 +1,7 @@
 import WorkingInfo from 'components/artist-account/working-info'
 import IsAuth from 'components/isAuth'
 import LayoutSteps from 'components/layout-steps/layout-steps'
+import useArtist from 'hooks/use-artist'
 
 import useUser from 'hooks/use-user'
 
