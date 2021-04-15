@@ -38,5 +38,9 @@ module.exports = {
     boxShadow: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
     position: ['responsive', 'hover', 'focus'],
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
+  ],
 }
