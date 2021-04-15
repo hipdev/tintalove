@@ -26,71 +26,83 @@ const ContactInfo = ({ uid, isArtist }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
+              className="block text-white text-sm  mb-3 tracking-wide"
             >
-              Por dónde quieres que te contacten
+              <span className="mb-3 block">
+                POR DÓNDE QUIERES QUE TE CONTACTEN
+              </span>
+
+              <select className="w-full input-primary">
+                <option value="" selected>
+                  Llamada directa
+                </option>
+                <option value="" selected>
+                  WhatsApp
+                </option>
+                <option value="" selected>
+                  Telegram
+                </option>
+                <option value="" selected>
+                  Chat de Instagram
+                </option>
+              </select>
             </label>
-            <select
-              name=""
-              id=""
-              className="block w-full bg-transparent border-2 border-light-900 text-white p-2 rounded-xl placeholder-light-900 outline-none"
-            >
-              <option value="" selected>
-                Whatsapp
-              </option>
-            </select>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
+              className="block text-white text-sm mb-3 tracking-wide"
             >
-              Número
+              <span className="mb-3 block">NÚMERO</span>
+
+              <input
+                type="tel"
+                placeholder="+57 123 456 7899"
+                className="w-full input-primary"
+              />
             </label>
-            <input
-              type="tel"
-              placeholder="+57 123 456 7899"
-              className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-            />
           </div>
           <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
             <label
               htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
+              className="block text-white text-sm  mb-3 tracking-wide"
             >
-              instagram
+              <span className="mb-3 block">INSTAGRAM</span>
+
+              <input
+                type="text"
+                placeholder="Pega la URL de tu perfil"
+                className="w-full input-primary"
+              />
             </label>
-            <input
-              type="text"
-              placeholder="Pega la URL de tu perfil"
-              className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-            />
           </div>
           <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
             <label
               htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
+              className="block text-white text-sm  mb-3 tracking-wide"
             >
-              facebook
+              <span className="mb-3 block">FACEBOOK</span>
+
+              <input
+                type="text"
+                placeholder="Pega la URL de tu perfil"
+                className="w-full input-primary"
+              />
             </label>
-            <input
-              type="text"
-              placeholder="Pega la URL de tu perfil"
-              className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-            />
           </div>
-          <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-8 xl:mb-24">
+          <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
             <label
               htmlFor=""
-              className="block text-white text-sm uppercase mb-3 tracking-wide"
+              className="block text-white text-sm  mb-3 tracking-wide"
             >
-              twitter
+              <span className="mb-3 block">TWITTER</span>
+
+              <input
+                type="text"
+                placeholder="Pega la URL de tu perfil"
+                className="w-full input-primary"
+              />
             </label>
-            <input
-              type="text"
-              placeholder="Pega la URL de tu perfil"
-              className="w-full bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none"
-            />
           </div>
         </div>
         <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
