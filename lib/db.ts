@@ -157,6 +157,7 @@ export async function updateArtistWorkingInfo(uid, data) {
     times: data.times,
     work_as: data.work_as,
     styles,
+    step_two: true,
     updated_at: serverTimestamp(),
   }
 

@@ -25,6 +25,10 @@ const SideMenuArtist = ({ uid }: Props) => {
     step = ' w-1/4'
     stepValue = '25'
   }
+  if (artist?.step_two) {
+    step = ' w-2/4'
+    stepValue = '50'
+  }
 
   return (
     <div className="mb-10 lg:mb-0">
