@@ -1,9 +1,10 @@
 import useArtist from 'hooks/use-artist'
+import { updateArtistContactInfo } from 'lib/db'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
@@ -56,28 +57,23 @@ const ContactInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     console.log(data, 'data form')
 
-    // setLoading(true)
-    // if (data.displayName == '' || data.bio == '') {
-    //   setLoading(false)
-    //   toast('Debes ingresar el nombre y la bio 😓')
-    //   return
-    // }
+    setLoading(true)
 
-    // toast.promise(updateArtistWorkingInfo(uid, data), {
-    //   loading: 'Actualizando...',
-    //   success: () => {
-    //     setLoading(false)
-    //     setSuccess(true)
+    toast.promise(updateArtistContactInfo(uid, data), {
+      loading: 'Actualizando...',
+      success: () => {
+        setLoading(false)
+        setSuccess(true)
 
-    //     return 'Artista actualizado 😉'
-    //   },
-    //   error: (err) => {
-    //     setLoading(false)
-    //     return `${err.toString()}`
-    //   },
-    // })
+        return 'Artista actualizado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
 
-    // setLoading(false)
+    setLoading(false)
   }
 
   return (
