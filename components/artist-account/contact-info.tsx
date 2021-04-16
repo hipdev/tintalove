@@ -1,7 +1,7 @@
 import useArtist from 'hooks/use-artist'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
@@ -32,6 +32,24 @@ const ContactInfo = ({ uid, isArtist }) => {
       twitter: '',
     },
   })
+
+  useEffect(() => {
+    if (artist) {
+      let styles = []
+      if (artist.styles) {
+        styles = artist.styles.map((style) => ({
+          label: style,
+          value: style,
+        }))
+      }
+
+      setValue('contact_way', artist.contact_way)
+      setValue('phone', artist.phone)
+      setValue('instagram', artist.instagram)
+      setValue('facebook', artist.facebook)
+      setValue('twitter', artist.twitter)
+    }
+  }, [artist])
 
   const watchContactWay = watch('contact_way')
 
