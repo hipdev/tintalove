@@ -14,7 +14,7 @@ const Footer = () => {
             </Link>
         </div>
         <div className="w-full flex flex-wrap justify-center leading-7">
-          <Link href="/">
+          <Link href="/editor">
             <a className="text-sm sm:text-base text-white mx-3">
               Política de privacidad
             </a>
