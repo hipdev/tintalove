@@ -1,7 +1,64 @@
+import useArtist from 'hooks/use-artist'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { Toaster } from 'react-hot-toast'
-import SideMenu from './side-menu-artist'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const ContactInfo = ({ uid, isArtist }) => {
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const { artist } = useArtist(uid)
+  const router = useRouter()
+
+  const {
+    register,
+    setError,
+    setValue,
+    getValues,
+    watch,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      contact_way: '',
+      phone: '',
+      instagram: '',
+      facebook: '',
+      twitter: '',
+    },
+  })
+
+  const onSubmit = (data) => {
+    console.log(data, 'data form')
+
+    // setLoading(true)
+    // if (data.displayName == '' || data.bio == '') {
+    //   setLoading(false)
+    //   toast('Debes ingresar el nombre y la bio 😓')
+    //   return
+    // }
+
+    // toast.promise(updateArtistWorkingInfo(uid, data), {
+    //   loading: 'Actualizando...',
+    //   success: () => {
+    //     setLoading(false)
+    //     setSuccess(true)
+
+    //     return 'Artista actualizado 😉'
+    //   },
+    //   error: (err) => {
+    //     setLoading(false)
+    //     return `${err.toString()}`
+    //   },
+    // })
+
+    // setLoading(false)
+  }
+
   return (
     <div className="w-4/5 mt-10">
       <Toaster
@@ -21,7 +78,7 @@ const ContactInfo = ({ uid, isArtist }) => {
         Información de Contacto
       </h1>
 
-      <form className="mt-10">
+      <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
@@ -32,17 +89,23 @@ const ContactInfo = ({ uid, isArtist }) => {
                 POR DÓNDE QUIERES QUE TE CONTACTEN
               </span>
 
-              <select className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800">
+              <select
+                className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800"
+                {...register('contact_way')}
+              >
                 <option value="" selected>
+                  Selecciona por favor
+                </option>
+                <option value="direct-call" selected>
                   Llamada directa
                 </option>
-                <option value="" selected>
+                <option value="whatsapp" selected>
                   WhatsApp
                 </option>
-                <option value="" selected>
+                <option value="telegram" selected>
                   Telegram
                 </option>
-                <option value="" selected>
+                <option value="chat-instagram" selected>
                   Chat de Instagram
                 </option>
               </select>
@@ -55,10 +118,38 @@ const ContactInfo = ({ uid, isArtist }) => {
             >
               <span className="mb-3 block">NÚMERO</span>
 
-              <input
-                type="tel"
-                placeholder="+57 123 456 7899"
-                className="w-full input-primary"
+              <Controller
+                rules={{ required: true }}
+                control={control}
+                name="phone"
+                render={({ field }) => (
+                  <PhoneInput
+                    country={'co'}
+                    onlyCountries={[
+                      'co',
+                      'ar',
+                      'it',
+                      'ec',
+                      'br',
+                      'pe',
+                      'us',
+                      'ur',
+                      'mx',
+                    ]}
+                    containerClass="input-primary p-1"
+                    searchStyle={{ background: 'red' }}
+                    inputStyle={{
+                      background: '#111319',
+                      border: 'none',
+                      color: '#fff',
+                    }}
+                    buttonStyle={{
+                      background: '#111319',
+                      border: 'none',
+                    }}
+                    {...field}
+                  />
+                )}
               />
             </label>
           </div>
@@ -73,6 +164,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
+                {...register('instagram')}
               />
             </label>
           </div>
@@ -87,6 +179,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
+                {...register('facebook')}
               />
             </label>
           </div>
@@ -101,11 +194,14 @@ const ContactInfo = ({ uid, isArtist }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
+                {...register('twitter')}
               />
             </label>
           </div>
         </div>
-        <button className="block btn-red py-3 px-5">Siguiente</button>
+        <button type="submit" className="block btn-red py-3 px-5">
+          Siguiente
+        </button>
       </form>
     </div>
   )
