@@ -1,4 +1,5 @@
 import useArtist from 'hooks/use-artist'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -203,9 +204,28 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
         </div>
-        <button type="submit" className="block btn-red py-3 px-5">
-          Siguiente
-        </button>
+        <div className="flex justify-between">
+          {!isArtist && (
+            <p className="text-white">
+              Primero debes guardar el Paso 1, Información Personal.
+            </p>
+          )}
+          {isArtist ? (
+            <button
+              type="submit"
+              className="block  btn-red py-3 px-5"
+              disabled={loading}
+            >
+              Siguiente
+            </button>
+          ) : (
+            <Link href="/artist/main-info">
+              <button className="block   btn-red py-3 px-5">
+                Ir al paso 1
+              </button>
+            </Link>
+          )}
+        </div>
       </form>
     </div>
   )
