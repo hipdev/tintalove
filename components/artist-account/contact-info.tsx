@@ -52,6 +52,13 @@ const ContactInfo = ({ uid, isArtist }) => {
     }
   }, [artist])
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   const watchContactWay = watch('contact_way')
 
   const onSubmit = (data) => {

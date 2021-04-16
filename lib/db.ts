@@ -178,6 +178,7 @@ export async function updateArtistContactInfo(uid, data) {
   const dataForm = {
     ...data,
     updated_at: serverTimestamp(),
+    step_three: true,
   }
 
   const docSnap = await getDoc(artistRef)
