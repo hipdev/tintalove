@@ -32,6 +32,8 @@ const ContactInfo = ({ uid, isArtist }) => {
     },
   })
 
+  const watchContactWay = watch('contact_way')
+
   const onSubmit = (data) => {
     console.log(data, 'data form')
 
@@ -91,7 +93,7 @@ const ContactInfo = ({ uid, isArtist }) => {
 
               <select
                 className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800"
-                {...register('contact_way')}
+                {...register('contact_way', { required: true })}
               >
                 <option value="" selected>
                   Selecciona por favor
@@ -164,7 +166,9 @@ const ContactInfo = ({ uid, isArtist }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
-                {...register('instagram')}
+                {...register('instagram', {
+                  required: watchContactWay == 'chat-instagram' ? true : false,
+                })}
               />
             </label>
           </div>
