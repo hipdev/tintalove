@@ -32,7 +32,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                 POR DÓNDE QUIERES QUE TE CONTACTEN
               </span>
 
-              <select className="w-full input-primary">
+              <select className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800">
                 <option value="" selected>
                   Llamada directa
                 </option>
@@ -105,9 +105,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
         </div>
-        <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
-          Siguiente
-        </button>
+        <button className="block btn-red py-3 px-5">Siguiente</button>
       </form>
     </div>
   )
