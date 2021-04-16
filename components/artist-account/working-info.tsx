@@ -67,11 +67,6 @@ const WorkingInfo = ({ uid, isArtist }) => {
     console.log(data, 'data form')
 
     setLoading(true)
-    if (data.displayName == '' || data.bio == '') {
-      setLoading(false)
-      toast('Debes ingresar el nombre y la bio 😓')
-      return
-    }
 
     toast.promise(updateArtistWorkingInfo(uid, data), {
       loading: 'Actualizando...',
