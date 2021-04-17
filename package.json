@@ -15,6 +15,7 @@
     "firebase": "^9.0.0-beta.1",
     "geofire-common": "^5.2.0",
     "imagekit": "^3.1.2",
+    "isomorphic-unfetch": "^3.1.0",
     "little-state-machine": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
