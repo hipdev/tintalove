@@ -15,6 +15,8 @@ const PictureCrop = ({ picture, clearPicture }) => {
     revalidateOnFocus: false,
   })
 
+  console.log(data, 'the imagekit data')
+
   const getCropData = async () => {
     mutate('/api/imagekit/auth')
     if (typeof cropper !== 'undefined') {
