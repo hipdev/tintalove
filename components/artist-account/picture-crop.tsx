@@ -3,12 +3,14 @@ import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
 import { useState } from 'react'
 import { Cropper } from 'react-cropper'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import 'cropperjs/dist/cropper.css'
+import { updateArtistMainProfilePicture } from 'lib/db'
 
-const PictureCrop = ({ picture, clearPicture }) => {
+const PictureCrop = ({ picture, clearPicture, uid }) => {
   const [cropper, setCropper] = useState<any>()
+  const [loading, setLoading] = useState(false)
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,
@@ -30,7 +32,7 @@ const PictureCrop = ({ picture, clearPicture }) => {
 
       dataFile.append('fileName', (file && file.name) || 'cropped')
       dataFile.append('file', file)
-      dataFile.append('publicKey', 'public_ErRILqyPLPmjLV+o78P2VWkWI58=')
+      dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
       dataFile.append('signature', data.signature)
       dataFile.append('expire', data.expire)
       dataFile.append('token', data.token)
@@ -49,17 +51,32 @@ const PictureCrop = ({ picture, clearPicture }) => {
             },
           }
           try {
-            const response: any = await axios.put(
-              `api/profile/update-picture`,
-              content
-            )
+            console.log(content, 'la foto en imagekit')
 
-            if (response.status !== 200) {
-              throw new Error(response.data)
-            }
-            mutate('profile')
-            cropper.reset()
-            cropper.destroy()
+            toast.promise(updateArtistMainProfilePicture(uid, content), {
+              loading: 'Actualizando...',
+              success: () => {
+                setLoading(false)
+
+                return 'Artista actualizado 😉'
+              },
+              error: (err) => {
+                setLoading(false)
+                return `${err.toString()}`
+              },
+            })
+
+            // const response: any = await axios.put(
+            //   `api/profile/update-picture`,
+            //   content
+            // )
+
+            // if (response.status !== 200) {
+            //   throw new Error(response.data)
+            // }
+            // mutate('profile')
+            // cropper.reset()
+            // cropper.destroy()
           } catch (error) {
             console.error(error)
           }
@@ -104,7 +121,11 @@ const PictureCrop = ({ picture, clearPicture }) => {
           setCropper(instance)
         }}
       />
-      <button onClick={getCropData} className="block btn-red py-3 px-5 mt-4">
+      <button
+        onClick={getCropData}
+        className="block btn-red py-3 px-5 mt-4"
+        disabled={loading}
+      >
         Guardar
       </button>
     </div>

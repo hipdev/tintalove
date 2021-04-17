@@ -81,6 +81,7 @@ const PicturesInfo = ({ uid, isArtist }) => {
         <div className="flex">
           <PictureCrop
             picture={picture}
+            uid={uid}
             clearPicture={() => {
               setPicture(null)
               // clear the input, then is possible to select the same picture and onChange will trigger
