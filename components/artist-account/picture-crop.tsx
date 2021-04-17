@@ -68,7 +68,7 @@ const PictureCrop = ({ picture, clearPicture }) => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col ">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -82,8 +82,12 @@ const PictureCrop = ({ picture, clearPicture }) => {
         }}
         position="bottom-right"
       />
+      <p className="text-sm mb-3 mt-5">
+        Puedes mover y hacer zoom con la foto, el cuadrado indica las
+        proporciones requeridas para la foto de perfil.
+      </p>
       <Cropper
-        style={{ height: '72vh', width: '100%' }}
+        style={{ height: '60vh', width: '100%' }}
         initialAspectRatio={1}
         aspectRatio={6 / 7}
         src={picture}
@@ -100,7 +104,9 @@ const PictureCrop = ({ picture, clearPicture }) => {
           setCropper(instance)
         }}
       />
-      <button className="block btn-red py-3 px-5">Guardar</button>
+      <button onClick={getCropData} className="block btn-red py-3 px-5 mt-4">
+        Guardar
+      </button>
     </div>
   )
 }

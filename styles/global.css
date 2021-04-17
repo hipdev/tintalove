@@ -9,7 +9,7 @@
   @apply text-gray-400 bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none;
 }
 .btn-red {
-  @apply text-white bg-primary py-3 rounded-lg;
+  @apply text-white bg-primary py-3 rounded-md;
 }
 
 @tailwind utilities;
