@@ -117,21 +117,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                 className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800"
                 {...register('contact_way', { required: true })}
               >
-                <option value="" selected>
-                  Selecciona por favor
-                </option>
-                <option value="direct-call" selected>
-                  Llamada directa
-                </option>
-                <option value="whatsapp" selected>
-                  WhatsApp
-                </option>
-                <option value="telegram" selected>
-                  Telegram
-                </option>
-                <option value="chat-instagram" selected>
-                  Chat de Instagram
-                </option>
+                <option value="">Selecciona por favor</option>
+                <option value="direct-call">Llamada directa</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="telegram">Telegram</option>
+                <option value="chat-instagram">Chat de Instagram</option>
               </select>
             </label>
           </div>
@@ -151,6 +141,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                     country={'co'}
                     onlyCountries={[
                       'co',
+                      'es',
                       'ar',
                       'it',
                       'ec',
@@ -177,7 +168,7 @@ const ContactInfo = ({ uid, isArtist }) => {
               />
             </label>
           </div>
-          <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
               className="block text-white text-sm  mb-3 tracking-wide"
@@ -194,7 +185,7 @@ const ContactInfo = ({ uid, isArtist }) => {
               />
             </label>
           </div>
-          <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
               className="block text-white text-sm  mb-3 tracking-wide"
@@ -209,7 +200,7 @@ const ContactInfo = ({ uid, isArtist }) => {
               />
             </label>
           </div>
-          <div className="col-span-6 md:col-span-5 xl:col-span-2 mb-4 xl:mb-24">
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
               className="block text-white text-sm  mb-3 tracking-wide"
