@@ -1,7 +1,45 @@
+import Compressor from 'compressorjs'
+import { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
+import PictureCrop from './picture-crop'
 
 const PicturesInfo = ({ uid, isArtist }) => {
+  const [picture, setPicture] = useState(null)
+
+  const fileInput: any = useRef(null)
+
+  const handlePicture = (e: any) => {
+    e.preventDefault()
+
+    console.log('started crop')
+
+    let files
+    if (e.dataTransfer) {
+      // usefull for DragAndDrop files
+      files = e.dataTransfer.files
+    } else if (e.target) {
+      // normal input file
+      files = e.target.files
+    }
+
+    new Compressor(files[0], {
+      quality: 0.8,
+      maxWidth: 800,
+      mimeType: 'image/jpeg',
+      success(result) {
+        const reader = new FileReader()
+        reader.onload = () => {
+          setPicture(reader.result as any)
+        }
+        reader.readAsDataURL(result)
+      },
+      error(err) {
+        console.log(err.message)
+      },
+    })
+  }
+
   return (
     <div className="w-4/5 mt-10">
       <Toaster
@@ -31,18 +69,31 @@ const PicturesInfo = ({ uid, isArtist }) => {
               JPG, GIF or PNG. Max size of 800K
             </p>
             <div className="relative bg-light-900 px-4 py-3 rounded-lg">
-              <p className="text-white tracking-wide">Seleccionar Archivo</p>
-              <input
-                type="file"
-                className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
-              />
+              <label className="text-white tracking-wide">
+                Seleccionar Archivo
+                <input
+                  type="file"
+                  className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
+                  accept="image/*"
+                  onChange={handlePicture}
+                  ref={fileInput}
+                />
+              </label>
             </div>
           </div>
         </div>
-        <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
-          Finalizar
-        </button>
+        <button className="block btn-red py-3 px-5">Finalizar</button>
       </form>
+      <div className="flex">
+        <PictureCrop
+          picture={picture}
+          clearPicture={() => {
+            setPicture(null)
+            // clear the input, then is possible to select the same picture and onChange will trigger
+            fileInput.current.value = null
+          }}
+        />
+      </div>
     </div>
   )
 }
