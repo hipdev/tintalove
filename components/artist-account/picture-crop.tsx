@@ -68,7 +68,7 @@ const PictureCrop = ({ picture, clearPicture }) => {
   }
 
   return (
-    <>
+    <div>
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -100,7 +100,8 @@ const PictureCrop = ({ picture, clearPicture }) => {
           setCropper(instance)
         }}
       />
-    </>
+      <button className="block btn-red py-3 px-5">Guardar</button>
+    </div>
   )
 }
 

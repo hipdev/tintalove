@@ -1,7 +1,10 @@
 import Compressor from 'compressorjs'
 import { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { FaRegUserCircle } from 'react-icons/fa'
+import { BsFillImageFill } from 'react-icons/bs'
+import { FaRegUserCircle, FaUserCircle } from 'react-icons/fa'
+import { HiOutlineCamera } from 'react-icons/hi'
+import { RiUser6Fill } from 'react-icons/ri'
 import PictureCrop from './picture-crop'
 
 const PicturesInfo = ({ uid, isArtist }) => {
@@ -55,22 +58,48 @@ const PicturesInfo = ({ uid, isArtist }) => {
         }}
         position="bottom-right"
       />
-      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
-        Fotos de perfil
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+          Fotos de perfil
+        </h1>
+        {picture && (
+          <label className="text-white tracking-wide flex items-center cursor-pointer">
+            <HiOutlineCamera className="text-xl" />{' '}
+            <span className="ml-2">Cambiar foto</span>
+            <input
+              type="file"
+              className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
+              accept="image/*"
+              onChange={handlePicture}
+              ref={fileInput}
+            />
+          </label>
+        )}
+      </div>
 
-      <form className="mt-10">
+      {picture ? (
+        <div className="flex">
+          <PictureCrop
+            picture={picture}
+            clearPicture={() => {
+              setPicture(null)
+              // clear the input, then is possible to select the same picture and onChange will trigger
+              fileInput.current.value = null
+            }}
+          />
+        </div>
+      ) : (
         <div className="flex justify-center">
           <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <span className="text-4xl text-light-900 mb-4">
               <FaRegUserCircle />
             </span>
             <p className="text-sm sm:text-base text-white text-center mb-4">
-              JPG, GIF or PNG. Max size of 800K
+              JPG, GIF or PNG.
             </p>
             <div className="relative bg-light-900 px-4 py-3 rounded-lg">
               <label className="text-white tracking-wide">
-                Seleccionar Archivo
+                Seleccionar foto
                 <input
                   type="file"
                   className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
@@ -82,18 +111,7 @@ const PicturesInfo = ({ uid, isArtist }) => {
             </div>
           </div>
         </div>
-        <button className="block btn-red py-3 px-5">Finalizar</button>
-      </form>
-      <div className="flex">
-        <PictureCrop
-          picture={picture}
-          clearPicture={() => {
-            setPicture(null)
-            // clear the input, then is possible to select the same picture and onChange will trigger
-            fileInput.current.value = null
-          }}
-        />
-      </div>
+      )}
     </div>
   )
 }
