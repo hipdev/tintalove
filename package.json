@@ -33,6 +33,7 @@
     "react-phone-input-2": "^2.14.0",
     "react-select": "^4.3.0",
     "swiper": "^6.5.7",
+    "swr": "^0.5.5",
     "use-places-autocomplete": "^1.9.1",
     "uuid": "^8.3.2"
   },
