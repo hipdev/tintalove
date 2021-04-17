@@ -20,9 +20,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
   const {
     register,
-    setError,
     setValue,
-    getValues,
     watch,
     handleSubmit,
     formState: { errors },
@@ -59,13 +57,9 @@ const WorkingInfo = ({ uid, isArtist }) => {
     }
   }, [success])
 
-  console.log(artist, 'artist Info')
-
   const watchWorkAs = watch('work_as')
 
   const onSubmit = (data) => {
-    console.log(data, 'data form')
-
     setLoading(true)
 
     toast.promise(updateArtistWorkingInfo(uid, data), {

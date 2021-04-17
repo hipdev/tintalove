@@ -123,6 +123,9 @@ const ContactInfo = ({ uid, isArtist }) => {
                 <option value="telegram">Telegram</option>
                 <option value="chat-instagram">Chat de Instagram</option>
               </select>
+              {errors.contact_way && (
+                <p className="mt-1">Esta campo es requerido</p>
+              )}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
@@ -166,6 +169,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                   />
                 )}
               />
+              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
@@ -183,6 +187,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                   required: watchContactWay == 'chat-instagram' ? true : false,
                 })}
               />
+              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
