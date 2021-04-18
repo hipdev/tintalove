@@ -160,7 +160,7 @@ const MainInfoForm = ({ uid, artist }) => {
     let formData = { bio: data.bio, displayName: data.displayName }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateArtistMainInfo(uid, formData), {
+    toast.promise(updateArtistMainInfo(uid, formData, true), {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)

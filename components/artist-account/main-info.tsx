@@ -161,7 +161,7 @@ const MainInfo = ({ uid }) => {
     }
 
     toast
-      .promise(createArtist(uid, formData), {
+      .promise(createArtist(uid, formData, true), {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
