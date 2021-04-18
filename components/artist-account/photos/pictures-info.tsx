@@ -1,4 +1,4 @@
-import useArtistRealtime from 'hooks/realtime/use-artist-realtime'
+import useArtistRealtime from 'hooks/realtime/use-artist'
 import { Toaster } from 'react-hot-toast'
 import PictureAddMain from './picture-add-main'
 
