@@ -56,20 +56,25 @@ const SideMenuArtist = ({ uid }: Props) => {
   const handleActivateProfile = async () => {
     setLoading(true)
 
-    toast.promise(activateArtist(uid), {
-      loading: 'Guardando...',
-      success: (data) => {
-        setLoading(false)
-        setTriggerAuth(Math.random()) // reload global user state data
-        // router.push('/artist/new/working-info')
+    if (countReadySteps == 4) {
+      toast.promise(activateArtist(uid), {
+        loading: 'Guardando...',
+        success: (data) => {
+          setLoading(false)
+          setTriggerAuth(Math.random()) // reload global user state data
+          // router.push('/artist/new/working-info')
 
-        return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+          return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast.error('Necesitas completar todos los pasos')
+      setLoading(false)
+    }
   }
 
   return (
