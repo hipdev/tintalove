@@ -1,6 +1,7 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { BsPersonCheck } from 'react-icons/bs'
 
 type Props = {
   uid?: string
@@ -66,7 +67,10 @@ const SideMenuArtist = ({ uid }: Props) => {
       </div>
 
       {countReadySteps == 4 && (
-        <button className="text-white mb-10 bg-primary px-4">Activar perfil</button>
+        <button className="text-white mb-10 bg-primary px-4 rounded-sm py-2 flex items-center hover:bg-primaryHover">
+          Activar perfil
+          <BsPersonCheck className="text-xl ml-2" />
+        </button>
       )}
 
       <Link href="/artist/main-info">
