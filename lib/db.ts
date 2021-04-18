@@ -202,15 +202,13 @@ export async function updateArtistMainProfilePicture(
   const artistRef = doc(collection(db, 'artists'), uid)
 
   if (update) {
-    axios.delete('/api/profile/delete-image', imageId).then(() => {
-      console.log('archivo eliminado')
-    })
+    console.log('vamos a eliminar', update, imageId)
+    await axios.delete('/api/profile/delete-image', { data: { imageId } })
   }
 
   const dataForm = {
     profile_picture: data,
     updated_at: serverTimestamp(),
-    // step_four: true,
   }
 
   const docSnap = await getDoc(artistRef)
@@ -233,7 +231,6 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
 
   const usernameSnap = await getDoc(usernameRefNew)
   const userSnap = await getDoc(userRef)
-  const docSnap = await getDoc(artistRef)
 
   if (usernameSnap.exists()) {
     throw new Error('El nombre de usuario ya existe')

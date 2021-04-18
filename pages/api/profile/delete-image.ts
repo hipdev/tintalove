@@ -7,17 +7,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (method === 'DELETE') {
     try {
       const imagekit = new ImageKit({
-        publicKey: 'public_ErRILqyPLPmjLV+o78P2VWkWI58=',
-        privateKey: 'private_BNoT09SOVyNFfmjxu2jidBx07M0=',
+        publicKey: 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=',
+        privateKey: 'private_tD7OrL3QMs7c3jCKdGIddrBFJkE=',
         urlEndpoint: 'https://ik.imagekit.io/Home/',
       })
 
       imagekit.deleteFile(req.body.imageId, function (error: any, result: any) {
         if (error) {
           console.log(error)
-          throw new Error(error.message)
+          res.status(200).send(error.message)
         } else {
-          console.log(result)
           res.status(200).send('File Deleted')
         }
       })

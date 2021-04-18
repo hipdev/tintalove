@@ -1,13 +1,11 @@
 import Compressor from 'compressorjs'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
 import PictureCrop from './picture-crop'
 
 const PictureReady = ({ artist }) => {
-  const [updateMain, setUpdateMain] = useState(false)
   const [picture, setPicture] = useState(null)
   console.log(artist, 'el artista')
-  const fileInput: any = useRef(null)
 
   const handlePicture = (e: any) => {
     e.preventDefault()
@@ -57,7 +55,6 @@ const PictureReady = ({ artist }) => {
             className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
             accept="image/*"
             onChange={handlePicture}
-            ref={fileInput}
           />
         </label>
       </div>
@@ -68,10 +65,16 @@ const PictureReady = ({ artist }) => {
           <p className="text-sm  mb-2">
             Los usuarios podrán ver mas fotos al presionar tu imagen principal.
           </p>
-          <img
-            className="rounded-md"
-            src={`${artist.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
-          />
+          <label className="text-white tracking-wide flex items-center cursor-pointer">
+            <HiOutlineCamera className="text-xl" />
+            <span className="ml-2">Añadir foto</span>
+            {/* <input
+              type="file"
+              className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
+              accept="image/*"
+              onChange={handlePicture}
+            /> */}
+          </label>
         </div>
       )}
 
@@ -82,11 +85,7 @@ const PictureReady = ({ artist }) => {
             actualPictureId={artist.profile_picture.fileId}
             picture={picture}
             uid={artist.uid}
-            clearPicture={() => {
-              setPicture(null)
-              // clear the input, then is possible to select the same picture and onChange will trigger
-              fileInput.current.value = null
-            }}
+            setPicture={setPicture}
           />
         </div>
       )}
