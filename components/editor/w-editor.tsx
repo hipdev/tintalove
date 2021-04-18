@@ -2,8 +2,21 @@ import { GoSearch } from 'react-icons/go';
 import { TiLocationOutline } from 'react-icons/ti';
 import Link from "next/link";
 import EditorText from './layout-editor'
+import { useState } from 'react'
 
 const Editor = () => {
+
+  const initialStateValues = {
+    document: ''
+  };
+
+  const [values, setValues] = useState(initialStateValues)
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(values);
+  }
+
   return (
   <div className="w-full h-auto lg:h-screen bg-gray-800">
     <div className="h-full flex flex-col">
@@ -101,7 +114,9 @@ const Editor = () => {
           <div>
             <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-10">Editor</h1>
             <EditorText />
-            <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">Siguiente</button>
+            <form onSubmit={handleSubmit}>
+              <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">Siguiente</button>
+            </form>
           </div>
         </div>
       </div>

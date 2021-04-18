@@ -1,40 +1,54 @@
-import React, { Component } from "react";
-import { EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
+//import { Editor } from "react-draft-wysiwyg";
+import { useForm, Controller } from "react-hook-form";
 import dynamic from "next/dynamic";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const Editor = dynamic(
   () => {
-    return import("react-draft-wysiwyg").then(mod => mod.Editor);
+    return import('react-draft-wysiwyg').then((mod) => mod.Editor);
   },
-  { ssr: false }
+  { loading: () => null, ssr: false },
 );
 
-class EditorText extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorState: EditorState.createEmpty() };
+const EditorText = () => {
+
+  const handleEditorChange = e => {
+    console.log(e);
   }
 
-  onEditorStateChange = editorState => {
-    this.setState({ editorState });
+  const { handleSubmit, control, watch } = useForm({
+    mode: "onChange"
+  });
+
+  const handleSubmitOnClick = ({ editor_content }) => {
+    console.log("editor_content ==> ", editor_content);
   };
 
-  render() {
-    const { editorState } = this.state;
-
-    return (
-      <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName="rich-editor demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={this.onEditorStateChange}
-          placeholder="The message goes here..."
-        />
-      </div>
-    );
-  }
-}
+  console.log(watch("editor_content"));
+  
+  return (
+    <div className="bg-white h-80 rounded-lg overflow-hidden">
+      <form onSubmit={handleSubmit(handleSubmitOnClick)} name="document">
+      <Controller
+        name="editor_content"
+        control={control}
+        defaultValue=""
+        render={props => (
+          <Editor
+            onChange={handleEditorChange}
+            {...props}
+            onEditorStateChange={editorState => {
+              if (editorState.blocks) {
+                props.onChange(editorState.blocks[0]);
+              }
+            }}
+            placeholder="The message goes here..."
+          />
+        )}
+      />
+    </form>
+    </div>
+  );
+};
 
 export default EditorText;
