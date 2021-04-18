@@ -8,7 +8,7 @@ const PicturesInfo = ({ uid, isArtist }) => {
   const { artist } = useArtistRealtime(uid)
 
   return (
-    <div className="w-4/5 mt-10">
+    <div className="w-full pr-0 lg:w-4/5 lg:pr-5  mt-10">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',

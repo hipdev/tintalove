@@ -131,7 +131,7 @@ const PictureCrop = ({ picture, clearPicture, uid, update }: Props) => {
         className="block btn-red py-3 px-5 mt-4"
         disabled={loading}
       >
-        Guardar
+        {update ? 'Actualizar' : 'Guardar'}
       </button>
     </div>
   )
