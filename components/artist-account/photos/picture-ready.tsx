@@ -78,6 +78,7 @@ const PictureReady = ({ artist }) => {
       {picture && (
         <div className="w-3/5 pl-10">
           <PictureCrop
+            update
             picture={picture}
             uid={artist.uid}
             clearPicture={() => {
