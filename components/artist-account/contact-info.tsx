@@ -16,9 +16,7 @@ const ContactInfo = ({ uid, isArtist }) => {
 
   const {
     register,
-    setError,
     setValue,
-    getValues,
     watch,
     handleSubmit,
     formState: { errors },
@@ -62,11 +60,9 @@ const ContactInfo = ({ uid, isArtist }) => {
   const watchContactWay = watch('contact_way')
 
   const onSubmit = (data) => {
-    console.log(data, 'data form')
-
     setLoading(true)
 
-    toast.promise(updateArtistContactInfo(uid, data), {
+    toast.promise(updateArtistContactInfo(uid, data, true), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
