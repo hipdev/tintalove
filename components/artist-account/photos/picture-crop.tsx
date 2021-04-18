@@ -67,7 +67,8 @@ const PictureCrop = ({
                 uid,
                 content,
                 update,
-                actualPictureId
+                actualPictureId,
+                true
               ),
               {
                 loading: 'Actualizando...',
