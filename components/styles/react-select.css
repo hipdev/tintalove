@@ -98,7 +98,7 @@
   background: none !important;
 }
 
-.react-tel-input .country .highlight {
+.react-tel-input .country-list .country.highlight {
   background-color: #1f232d !important;
 }
 .react-tel-input .country-list .country:hover {
