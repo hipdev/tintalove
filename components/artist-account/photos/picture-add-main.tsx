@@ -11,8 +11,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
   const [picture, setPicture] = useState(null)
   const { artist } = useArtistRealtime(uid)
 
-  const fileInput: any = useRef(null)
-
   const handlePicture = (e: any) => {
     e.preventDefault()
 
@@ -62,10 +60,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
         position="bottom-right"
       />
       <div className="flex justify-between">
-        <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
-          Fotos de perfil
-        </h1>
-
         {picture && (
           <label className="text-white tracking-wide flex items-center cursor-pointer">
             <HiOutlineCamera className="text-xl" />{' '}
@@ -75,7 +69,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
               className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
               accept="image/*"
               onChange={handlePicture}
-              ref={fileInput}
             />
           </label>
         )}
@@ -83,15 +76,7 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
       {picture && (
         <div className="flex">
-          <PictureCrop
-            picture={picture}
-            uid={uid}
-            clearPicture={() => {
-              setPicture(null)
-              // clear the input, then is possible to select the same picture and onChange will trigger
-              fileInput.current.value = null
-            }}
-          />
+          <PictureCrop picture={picture} setPicture={setPicture} uid={uid} />
         </div>
       )}
 
@@ -112,7 +97,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
                   className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
                   accept="image/*"
                   onChange={handlePicture}
-                  ref={fileInput}
                 />
               </label>
             </div>

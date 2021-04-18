@@ -14,14 +14,15 @@ type Props = {
   uid: string
   update?: boolean
   actualPictureId?: string
+  setPicture?: any
 }
 
 const PictureCrop = ({
   picture,
-  clearPicture,
   uid,
   update,
   actualPictureId,
+  setPicture,
 }: Props) => {
   const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
@@ -31,16 +32,12 @@ const PictureCrop = ({
     revalidateOnFocus: false,
   })
 
-  console.log(data, 'the imagekit data')
-
   const getCropData = async () => {
     mutate('/api/imagekit/auth')
     if (typeof cropper !== 'undefined') {
       const file = cropper
         .getCroppedCanvas({ imageSmoothingQuality: 'high' })
         .toDataURL('image/jpeg')
-
-      console.log(cropper.getCanvasData(), cropper, 'el archivo aca')
 
       const dataFile: any = new FormData()
 
@@ -63,7 +60,7 @@ const PictureCrop = ({
             thumbnailUrl: fileImagekit.url,
           }
           try {
-            console.log(content, 'la foto en imagekit')
+            console.log(content, uid, 'la foto en imagekit')
 
             toast.promise(
               updateArtistMainProfilePicture(
@@ -76,8 +73,9 @@ const PictureCrop = ({
                 loading: 'Actualizando...',
                 success: () => {
                   setLoading(false)
+                  setPicture(null)
 
-                  return 'Artista actualizado 😉'
+                  return 'Foto actualizada 😉'
                 },
                 error: (err) => {
                   setLoading(false)
@@ -85,18 +83,6 @@ const PictureCrop = ({
                 },
               }
             )
-
-            // const response: any = await axios.put(
-            //   `api/profile/update-picture`,
-            //   content
-            // )
-
-            // if (response.status !== 200) {
-            //   throw new Error(response.data)
-            // }
-            // mutate('profile')
-            // cropper.reset()
-            // cropper.destroy()
           } catch (error) {
             console.error(error)
           }

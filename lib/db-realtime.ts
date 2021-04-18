@@ -7,7 +7,7 @@ const db = getFirestore(firebaseApp)
 export function listenArtistById(uid, setArtist) {
   const unsub = onSnapshot(doc(collection(db, 'artists'), uid), (doc) => {
     console.log('Artist data realtime: ', doc.data())
-    setArtist(doc.data())
+    setArtist({ ...doc.data(), uid })
   })
 
   return unsub
