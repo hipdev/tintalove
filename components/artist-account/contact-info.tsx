@@ -165,6 +165,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                       background: '#111319',
                       border: 'none',
                     }}
+                    dropdownStyle={{
+                      fontFamily: 'Inter',
+                      background: '#080a12',
+                      color: '#e2e2e2',
+                    }}
                     {...field}
                   />
                 )}
