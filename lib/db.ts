@@ -93,7 +93,6 @@ export async function createArtist(uid, data, wizard) {
 
     batch.set(artistRef, {
       created_at: serverTimestamp(),
-      step_one: true,
       ...data,
     })
 
@@ -169,7 +168,6 @@ export async function updateArtistWorkingInfo(uid, data, wizard) {
     times: data.times,
     work_as: data.work_as,
     styles,
-    step_two: true,
     updated_at: serverTimestamp(),
   }
 
@@ -195,7 +193,6 @@ export async function updateArtistContactInfo(uid, data, wizard) {
   const dataForm = {
     ...data,
     updated_at: serverTimestamp(),
-    step_three: true,
   }
 
   const docSnap = await getDoc(artistRef)
@@ -217,9 +214,11 @@ export async function updateArtistMainProfilePicture(
   uid,
   data,
   update,
-  imageId
+  imageId,
+  wizard
 ) {
   const artistRef = doc(collection(db, 'artists'), uid)
+  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   if (update) {
     console.log('vamos a eliminar', update, imageId)
@@ -235,6 +234,10 @@ export async function updateArtistMainProfilePicture(
 
   if (docSnap.exists()) {
     await updateDoc(artistRef, dataForm)
+
+    if (wizard) {
+      updateDoc(artistWizardRef, { step_four: true })
+    }
 
     return true
   } else {
