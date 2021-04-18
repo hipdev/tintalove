@@ -13,6 +13,17 @@ export function listenArtistById(uid, setArtist) {
   return unsub
 }
 
+export function listenArtistWizardById(uid, setArtistWizard) {
+  const unsub = onSnapshot(
+    doc(collection(db, 'artists_wizard'), uid),
+    (doc) => {
+      setArtistWizard({ ...doc.data(), uid })
+    }
+  )
+
+  return unsub
+}
+
 export async function getUsersRealtime() {
   console.log('entrando aqui')
   const unsubscribe = onSnapshot(

@@ -1,4 +1,4 @@
-import useArtistRealtime from 'hooks/realtime/use-artist-realtime'
+import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -7,12 +7,19 @@ type Props = {
 }
 
 const SideMenuArtist = ({ uid }: Props) => {
-  const { artist } = useArtistRealtime(uid)
+  const { artistWizard } = useArtistWizardRealtime(uid)
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
 
-  console.log(artist, 'el artista')
+  console.log(artistWizard, 'wizard artist')
+  const steps = [
+    artistWizard?.step_one,
+    artistWizard?.step_two,
+    artistWizard?.step_three,
+    artistWizard?.step_four,
+  ]
+  const countReadySteps = steps.filter(Boolean).length
 
   const circle =
     ' relative z-10 w-8 h-8 flex items-center justify-center border-2 rounded-full'
@@ -21,17 +28,21 @@ const SideMenuArtist = ({ uid }: Props) => {
   let step = ' w-0'
   let stepValue = '0'
 
-  if (artist?.step_one) {
+  if (countReadySteps == 1) {
     step = ' w-1/4'
     stepValue = '25'
   }
-  if (artist?.step_two) {
+  if (countReadySteps == 2) {
     step = ' w-2/4'
     stepValue = '50'
   }
-  if (artist?.step_three) {
+  if (countReadySteps == 3) {
     step = ' w-3/4'
     stepValue = '75'
+  }
+  if (countReadySteps == 4) {
+    step = ' w-4/4'
+    stepValue = '100'
   }
 
   return (
@@ -53,6 +64,10 @@ const SideMenuArtist = ({ uid }: Props) => {
           {stepValue}% Completado
         </span>
       </div>
+
+      {countReadySteps == 4 && (
+        <button className="text-white mb-10 bg-primary px-4">Activar perfil</button>
+      )}
 
       <Link href="/artist/main-info">
         <a className="block relative pb-10">

@@ -1,5 +1,5 @@
 import Compressor from 'compressorjs'
-import useArtistRealtime from 'hooks/realtime/use-artist-realtime'
+import useArtistRealtime from 'hooks/realtime/use-artist'
 import { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
