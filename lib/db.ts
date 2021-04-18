@@ -244,6 +244,21 @@ export async function updateArtistMainProfilePicture(
     throw new Error('No estas registrado como artista')
   }
 }
+export async function activateArtist(uid) {
+  const artistRef = doc(collection(db, 'artists'), uid)
+  const usersRef = doc(collection(db, 'users'), uid)
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(artistRef, { artist_active: true })
+    await updateDoc(usersRef, { artist_active: true })
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
 
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
   const usernameRefOld = doc(collection(db, 'usernames'), oldUsername)

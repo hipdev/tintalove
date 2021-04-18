@@ -1,6 +1,10 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
+import { useUserData } from 'hooks/use-user-data'
+import { activateArtist } from 'lib/db'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
 
 type Props = {
@@ -9,6 +13,9 @@ type Props = {
 
 const SideMenuArtist = ({ uid }: Props) => {
   const { artistWizard } = useArtistWizardRealtime(uid)
+
+  const [loading, setLoading] = useState(false)
+  const { setTriggerAuth } = useUserData()
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
@@ -46,8 +53,40 @@ const SideMenuArtist = ({ uid }: Props) => {
     stepValue = '100'
   }
 
+  const handleActivateProfile = async () => {
+    setLoading(true)
+
+    toast.promise(activateArtist(uid), {
+      loading: 'Guardando...',
+      success: (data) => {
+        setLoading(false)
+        setTriggerAuth(Math.random()) // reload global user state data
+        // router.push('/artist/new/working-info')
+
+        return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
+  }
+
   return (
     <div className="mb-10 lg:mb-0">
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600',
+          style: {
+            background: '#ef3e30',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 20000,
+        }}
+        position="bottom-right"
+      />
       <div className="mb-10 mt-12">
         <p className="text-red-500 text-xl font-semibold">Estar en TintaLove</p>
         <h1 className="text-2xl text-white font-bold tracking-wide">
@@ -67,7 +106,11 @@ const SideMenuArtist = ({ uid }: Props) => {
       </div>
 
       {countReadySteps == 4 && (
-        <button className="text-white mb-10 bg-primary px-4 rounded-sm py-2 flex items-center hover:bg-primaryHover">
+        <button
+          onClick={handleActivateProfile}
+          className="text-white mb-10 bg-primary px-4 rounded-sm py-2 flex items-center hover:bg-primaryHover"
+          disabled={loading}
+        >
           Activar perfil
           <BsPersonCheck className="text-xl ml-2" />
         </button>
