@@ -1,4 +1,4 @@
-import PicturesInfo from 'components/artist-account/pictures-info'
+import PicturesInfo from 'components/artist-account/photos/pictures-info'
 
 import IsAuth from 'components/isAuth'
 import LayoutSteps from 'components/layout-steps/layout-steps'
