@@ -62,7 +62,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistWorkingInfo(uid, data), {
+    toast.promise(updateArtistWorkingInfo(uid, data, true), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)

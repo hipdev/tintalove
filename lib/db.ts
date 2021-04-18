@@ -159,8 +159,9 @@ export async function updateArtistMainInfo(uid, data, wizard) {
   }
 }
 
-export async function updateArtistWorkingInfo(uid, data) {
+export async function updateArtistWorkingInfo(uid, data, wizard) {
   const artistRef = doc(collection(db, 'artists'), uid)
+  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const styles = data.styles.map((style) => style.value)
 
@@ -176,6 +177,10 @@ export async function updateArtistWorkingInfo(uid, data) {
 
   if (docSnap.exists()) {
     await updateDoc(artistRef, dataForm)
+
+    if (wizard) {
+      updateDoc(artistWizardRef, { step_two: true })
+    }
 
     return true
   } else {
