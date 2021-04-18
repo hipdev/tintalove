@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { User } from 'firebase/auth'
 import {
   collection,
@@ -192,13 +193,24 @@ export async function updateArtistContactInfo(uid, data) {
   }
 }
 
-export async function updateArtistMainProfilePicture(uid, data) {
+export async function updateArtistMainProfilePicture(
+  uid,
+  data,
+  update,
+  imageId
+) {
   const artistRef = doc(collection(db, 'artists'), uid)
+
+  if (update) {
+    axios.delete('/api/profile/delete-image', imageId).then(() => {
+      console.log('archivo eliminado')
+    })
+  }
 
   const dataForm = {
     profile_picture: data,
     updated_at: serverTimestamp(),
-    step_four: true,
+    // step_four: true,
   }
 
   const docSnap = await getDoc(artistRef)

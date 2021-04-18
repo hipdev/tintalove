@@ -13,9 +13,16 @@ type Props = {
   clearPicture?: any
   uid: string
   update?: boolean
+  actualPictureId?: string
 }
 
-const PictureCrop = ({ picture, clearPicture, uid, update }: Props) => {
+const PictureCrop = ({
+  picture,
+  clearPicture,
+  uid,
+  update,
+  actualPictureId,
+}: Props) => {
   const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
 
@@ -58,18 +65,26 @@ const PictureCrop = ({ picture, clearPicture, uid, update }: Props) => {
           try {
             console.log(content, 'la foto en imagekit')
 
-            toast.promise(updateArtistMainProfilePicture(uid, content), {
-              loading: 'Actualizando...',
-              success: () => {
-                setLoading(false)
+            toast.promise(
+              updateArtistMainProfilePicture(
+                uid,
+                content,
+                update,
+                actualPictureId
+              ),
+              {
+                loading: 'Actualizando...',
+                success: () => {
+                  setLoading(false)
 
-                return 'Artista actualizado 😉'
-              },
-              error: (err) => {
-                setLoading(false)
-                return `${err.toString()}`
-              },
-            })
+                  return 'Artista actualizado 😉'
+                },
+                error: (err) => {
+                  setLoading(false)
+                  return `${err.toString()}`
+                },
+              }
+            )
 
             // const response: any = await axios.put(
             //   `api/profile/update-picture`,
