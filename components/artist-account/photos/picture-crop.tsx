@@ -8,7 +8,14 @@ import useSWR, { mutate } from 'swr'
 import 'cropperjs/dist/cropper.css'
 import { updateArtistMainProfilePicture } from 'lib/db'
 
-const PictureCrop = ({ picture, clearPicture, uid }) => {
+type Props = {
+  picture: any
+  clearPicture?: any
+  uid: string
+  update?: boolean
+}
+
+const PictureCrop = ({ picture, clearPicture, uid, update }: Props) => {
   const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
 
@@ -41,14 +48,12 @@ const PictureCrop = ({ picture, clearPicture, uid }) => {
         .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
         .then(async ({ data: fileImagekit }: any) => {
           const content = {
-            contentMedia: {
-              filePath: fileImagekit.filePath,
-              size: fileImagekit.size,
-              fileId: fileImagekit.fileId,
-              url: fileImagekit.url,
-              name: fileImagekit.name,
-              thumbnailUrl: fileImagekit.url,
-            },
+            filePath: fileImagekit.filePath,
+            size: fileImagekit.size,
+            fileId: fileImagekit.fileId,
+            url: fileImagekit.url,
+            name: fileImagekit.name,
+            thumbnailUrl: fileImagekit.url,
           }
           try {
             console.log(content, 'la foto en imagekit')

@@ -1,14 +1,15 @@
 import Compressor from 'compressorjs'
+import useArtistRealtime from 'hooks/realtime/use-artist-realtime'
 import { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { BsFillImageFill } from 'react-icons/bs'
-import { FaRegUserCircle, FaUserCircle } from 'react-icons/fa'
+import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
-import { RiUser6Fill } from 'react-icons/ri'
+
 import PictureCrop from './picture-crop'
 
-const PicturesInfo = ({ uid, isArtist }) => {
+const PictureAddMain = ({ uid, isArtist }) => {
   const [picture, setPicture] = useState(null)
+  const { artist } = useArtistRealtime(uid)
 
   const fileInput: any = useRef(null)
 
@@ -43,6 +44,8 @@ const PicturesInfo = ({ uid, isArtist }) => {
     })
   }
 
+  console.log(artist, 'el artist realtime')
+
   return (
     <div className="w-4/5 mt-10">
       <Toaster
@@ -62,6 +65,7 @@ const PicturesInfo = ({ uid, isArtist }) => {
         <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
           Fotos de perfil
         </h1>
+
         {picture && (
           <label className="text-white tracking-wide flex items-center cursor-pointer">
             <HiOutlineCamera className="text-xl" />{' '}
@@ -77,7 +81,7 @@ const PicturesInfo = ({ uid, isArtist }) => {
         )}
       </div>
 
-      {picture ? (
+      {picture && (
         <div className="flex">
           <PictureCrop
             picture={picture}
@@ -89,7 +93,9 @@ const PicturesInfo = ({ uid, isArtist }) => {
             }}
           />
         </div>
-      ) : (
+      )}
+
+      {!picture && (
         <div className="flex justify-center">
           <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <span className="text-4xl text-light-900 mb-4">
@@ -117,4 +123,4 @@ const PicturesInfo = ({ uid, isArtist }) => {
   )
 }
 
-export default PicturesInfo
+export default PictureAddMain
