@@ -93,7 +93,7 @@ const SideMenuArtist = ({ uid }: Props) => {
         position="bottom-right"
       />
       <div className="mb-10 mt-12">
-        <p className="text-red-500 text-xl font-semibold">Estar en TintaLove</p>
+        <p className="text-primary text-xl font-semibold">Estar en TintaLove</p>
         <h1 className="text-2xl text-white font-bold tracking-wide">
           Es mostrar tu talento
         </h1>
@@ -129,7 +129,7 @@ const SideMenuArtist = ({ uid }: Props) => {
               <span
                 className={
                   path == 'main-info'
-                    ? 'border-red-500' + circle
+                    ? 'border-primary' + circle
                     : 'border-light-900' + circle
                 }
               >
@@ -165,7 +165,7 @@ const SideMenuArtist = ({ uid }: Props) => {
               <span
                 className={
                   path == 'working-info'
-                    ? 'border-red-500' + circle
+                    ? 'border-primary' + circle
                     : 'border-light-900' + circle
                 }
               >
@@ -201,7 +201,7 @@ const SideMenuArtist = ({ uid }: Props) => {
               <span
                 className={
                   path == 'contact-info'
-                    ? 'border-red-500' + circle
+                    ? 'border-primary' + circle
                     : 'border-light-900' + circle
                 }
               >
@@ -236,7 +236,7 @@ const SideMenuArtist = ({ uid }: Props) => {
               <span
                 className={
                   path == 'pictures-info'
-                    ? 'border-red-500 ' + circle
+                    ? 'border-primary ' + circle
                     : 'border-light-900 ' + circle
                 }
               >
