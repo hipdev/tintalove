@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
   writeBatch,
+  getDocs,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -45,6 +46,17 @@ export async function userNameAvailable(username) {
   }
 }
 
+export async function getArtistIdByUsername(username) {
+  const usernameRef = doc(db, `usernames/${username}`)
+  const queryRef = await getDoc(usernameRef)
+
+  if (queryRef.exists()) {
+    return queryRef.data().uid
+  } else {
+    return false
+  }
+}
+
 export async function getUserInfo(uid) {
   const docRef = doc(collection(db, 'users'), uid)
   const docSnap = await getDoc(docRef)
@@ -66,6 +78,16 @@ export async function getArtistInfo(uid) {
   } else {
     return { artist: null }
   }
+}
+
+export async function getUserNamesByArtists() {
+  const querySnapshot = await getDocs(collection(db, 'usernames'))
+  const usernames: any = []
+  querySnapshot.forEach((doc: any) => usernames.push({ username: doc.id }))
+
+  console.log(usernames, 'los usernames')
+
+  return usernames
 }
 
 export async function createArtist(uid, data, wizard) {
