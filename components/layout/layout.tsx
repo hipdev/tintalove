@@ -2,7 +2,12 @@ import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
 
-const Layout = ({ children, artistData }) => {
+type Props {
+  artistData?: any
+  children: any
+}
+
+const Layout = ({ children, artistData }:Props) => {
   return (
     <>
       <HeadContainer />
