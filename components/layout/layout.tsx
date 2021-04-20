@@ -2,7 +2,7 @@ import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
 
-const Layout = ({ children }) => {
+const Layout = ({ children, artistData }) => {
   return (
     <>
       <HeadContainer />

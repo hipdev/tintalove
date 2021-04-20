@@ -1,13 +1,12 @@
+import ArtistProfile from 'components/artist/profile'
+import Layout from 'components/layout/layout'
 import {
   getArtistIdByUsername,
   getArtistInfo,
-  getArtistInfo2,
   getUserNamesByArtists,
 } from 'lib/db'
 import { postToJSON } from 'lib/firebase'
 import { useRouter } from 'next/router'
-
-import Home from '../components/home/home'
 
 export default function index({ artistId, artistData }: any) {
   const router: any = useRouter()
@@ -21,7 +20,11 @@ export default function index({ artistId, artistData }: any) {
   }
   console.log(artistData, artistId, 'el artista info')
 
-  return <p>Info del artista {} </p>
+  return (
+    <Layout artistData={artistData}>
+      <ArtistProfile />
+    </Layout>
+  )
 }
 
 export async function getStaticPaths() {
