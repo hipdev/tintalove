@@ -74,6 +74,7 @@ export async function getArtistInfo(uid) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
+    console.log('entramos por aca')
     return { artist: docSnap.data() }
   } else {
     return { artist: null }
@@ -84,8 +85,6 @@ export async function getUserNamesByArtists() {
   const querySnapshot = await getDocs(collection(db, 'usernames'))
   const usernames: any = []
   querySnapshot.forEach((doc: any) => usernames.push({ username: doc.id }))
-
-  console.log(usernames, 'los usernames')
 
   return usernames
 }

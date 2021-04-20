@@ -1,13 +1,15 @@
 import {
   getArtistIdByUsername,
   getArtistInfo,
+  getArtistInfo2,
   getUserNamesByArtists,
 } from 'lib/db'
+import { postToJSON } from 'lib/firebase'
 import { useRouter } from 'next/router'
 
 import Home from '../components/home/home'
 
-export default function index({ artistId, artistInfo }: any) {
+export default function index({ artistId, artistData }: any) {
   const router: any = useRouter()
 
   if (router.isFallback) {
@@ -17,16 +19,13 @@ export default function index({ artistId, artistInfo }: any) {
   if (!artistId) {
     return <p>No existe ese artista</p>
   }
-
-  console.log(artistInfo, 'info del artista')
+  console.log(artistData, artistId, 'el artista info')
 
   return <p>Info del artista {} </p>
 }
 
 export async function getStaticPaths() {
   const usernamesList = await getUserNamesByArtists()
-
-  console.log(usernamesList, 'lista de usernames')
 
   const paths = usernamesList.map((doc: any) => ({
     params: {
@@ -42,18 +41,20 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   let artistId = null
-  let artistData: any
+  let artistData = null
 
   if (params.username) {
     try {
       artistId = await getArtistIdByUsername(params.username)
 
-      console.log(artistId, 'el artista')
-
       try {
-        artistData = await getArtistInfo(artistId)
+        const data = await getArtistInfo(artistId)
+
+        artistData = postToJSON(data.artist)
+
+        console.log(artistData, 'y eso que pasho')
       } catch (error) {
-        console.log('Error obteniendo el logo')
+        console.log('Error obteniendo la info del artista')
       }
     } catch (err) {
       if (err.status !== 404) {
