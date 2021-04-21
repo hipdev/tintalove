@@ -99,7 +99,10 @@ const ArtistProfile = ({ artistData }) => {
 
                   {artistData?.styles
                     ? artistData.styles.map((style) => (
-                        <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
+                        <button
+                          key={style}
+                          className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none"
+                        >
                           {style}
                         </button>
                       ))
