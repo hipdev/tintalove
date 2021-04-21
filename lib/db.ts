@@ -242,7 +242,7 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
   return true
 }
 
-/*export async function addOrEditLink(linkObject) {
+export async function addOrEditLink(linkObject) {
   const docRef = doc(collection(db, 'editortext'), linkObject)
   console.log('new task added')
-} */
+}

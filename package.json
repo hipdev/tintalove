@@ -9,6 +9,7 @@
   "dependencies": {
     "@headlessui/react": "^0.3.2",
     "@tailwindcss/forms": "^0.3.2",
+    "draft-convert": "^2.1.10",
     "draft-js": "^0.11.7",
     "firebase": "^0.900.23",
     "geofire-common": "^5.2.0",
@@ -35,6 +36,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.1",
     "@types/googlemaps": "^3.43.3",
     "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",

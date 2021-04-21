@@ -1,11 +1,14 @@
+import { EditorState, convertFromHTML } from 'draft-js'
+import { convertToHTML } from 'draft-convert'
+
 import { GoSearch } from 'react-icons/go'
 import { TiLocationOutline } from 'react-icons/ti'
 import Link from 'next/link'
-import { useState } from 'react'
-//import { Editor } from "react-draft-wysiwyg";
+
 import { useForm, Controller } from 'react-hook-form'
 import dynamic from 'next/dynamic'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import { addOrEditLink } from 'lib/db'
 
 const Editor = dynamic(
   () => {
@@ -13,31 +16,35 @@ const Editor = dynamic(
   },
   { loading: () => null, ssr: false }
 )
+type Props = {
+  editor: EditorState
+}
 
-const EditorText = (props) => {
-  const initialStateValues = {
-    document: '',
-  }
+const EditorText = () => {
+  const {
+    handleSubmit,
+    control,
 
-  const [values, setValues] = useState(initialStateValues)
-
-  const handleEditorChange = (e) => {
-    const { document, value } = e.target
-    setValues({ ...values, [document]: value })
-  }
-
-  const { handleSubmit, control, watch } = useForm({
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      editor: EditorState.createEmpty(),
+    },
   })
 
-  const watchEditor = watch('editor')
+  const handleSubmitOnClick = ({ editor }: Props) => {
+    console.log('editor_content ==> ', editor)
 
-  const handleSubmitOnClick = ({ editor_content }) => {
-    console.log('editor_content ==> ', editor_content, values)
-    props.addOrEditLink(values)
+    const conversionOne = editor.getCurrentContent()
+    const conversionTwo = convertToHTML(editor.getCurrentContent())
+    const fromHTMLToRaw = convertFromHTML(conversionTwo)
+
+    console.log(conversionOne, 'la primera conversion')
+    console.log(conversionTwo, 'la segunda conversion')
+    console.log(fromHTMLToRaw, 'la tercera, de html a raw para el editor')
+    // addOrEditLink(values)
   }
-
-  console.log(watchEditor, 'el estado del form')
 
   return (
     <div className="w-full h-auto lg:h-screen bg-gray-800">
@@ -156,15 +163,20 @@ const EditorText = (props) => {
                     name="editor"
                     control={control}
                     defaultValue=""
-                    render={({ field }) => (
+                    render={({ field: { value, onChange } }) => (
                       <Editor
-                        onChange={handleEditorChange}
-                        {...field}
+                        editorState={value}
+                        onEditorStateChange={onChange}
                         placeholder="The message goes here..."
                       />
                     )}
+                    rules={{ required: true }}
                   />
-                  <button className="block absolute right-10 -bottom-5 btn-red py-3 px-5">
+                  {errors.editor && <span>Este campo es requerido</span>}
+                  <button
+                    type="submit"
+                    className="block absolute right-10 -bottom-5 btn-red py-3 px-5"
+                  >
                     Siguiente
                   </button>
                 </form>
