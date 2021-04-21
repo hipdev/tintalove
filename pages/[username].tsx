@@ -21,8 +21,8 @@ export default function index({ artistId, artistData }: any) {
   console.log(artistData, artistId, 'el artista info')
 
   return (
-    <Layout artistData={artistData}>
-      <ArtistProfile artistData={artistData} />
+    <Layout artistData={artistData || null}>
+      <ArtistProfile artistData={artistData || null} />
     </Layout>
   )
 }
@@ -53,7 +53,7 @@ export async function getStaticProps({ params }: any) {
       try {
         const data = await getArtistInfo(artistId)
 
-        artistData = postToJSON(data.artist)
+        artistData = postToJSON(data?.artist)
 
         console.log(artistData, 'y eso que pasho')
       } catch (error) {

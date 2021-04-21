@@ -43,10 +43,11 @@ export default firebaseApp
  * @param  {DocumentSnapshot} doc
  */
 export function postToJSON(data) {
+  console.log(data, 'la data en posttojson')
   return {
     ...data,
     // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-    created_at: data?.created_at.toMillis() || 0,
-    updated_at: data?.updated_at.toMillis() || 0,
+    created_at: data?.created_at?.toMillis() || 0,
+    updated_at: data?.updated_at?.toMillis() || 0,
   }
 }
