@@ -5,23 +5,26 @@ import { FaTwitter } from 'react-icons/fa'
 import { FiClock, FiInstagram } from 'react-icons/fi'
 import { RiCalendarLine, RiRoadMapLine } from 'react-icons/ri'
 
-const ArtistProfile = () => {
+const ArtistProfile = ({ artistData }) => {
   return (
     <>
       <div className="flex flex-col lg:flex-row mx-6 lg:mx-12 space-x-0 lg:space-x-8 mt-5">
         <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
           <div>
             <img
-              src="https://via.placeholder.com/309x287"
+              // src="https://via.placeholder.com/309x287"
+              src={`${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,h-287,q-100`}
               alt=""
               className="w-full"
             />
           </div>
           <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              Daniela Castillo
+              {artistData.displayName}
             </h1>
-            <h6 className="text-light-700 text-xs">Medellín, Antioquia</h6>
+            <h6 className="text-light-700 text-xs">
+              {artistData.city_name}, {artistData.province}
+            </h6>
             <div className="flex space-x-4 my-4">
               <Link href="#">
                 <a>
@@ -62,11 +65,7 @@ const ArtistProfile = () => {
                 <span className="text-light-500">
                   <FiClock />
                 </span>
-                <p className="text-light-500 text-xs">
-                  Lunes a viernes, de 10am - 7pm
-                  <br />
-                  Sábados, Domingos y Festivos 10:00am <br /> 1:00pm
-                </p>
+                <p className="text-light-500 text-xs">{artistData.times}</p>
               </div>
             </div>
             <button className="btn-red font-light tracking-wide w-full focus:outline-none">
@@ -84,40 +83,25 @@ const ArtistProfile = () => {
             <div className="flex flex-col lg:flex-row mb-5">
               <div className="w-64 sm:w-96 mb-2 sm:mb-0">
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-2">
-                  6 Estilos
+                  {artistData.styles.length} Estilos
                 </h1>
                 <div>
                   <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
                     Realismo
                   </button>
-                  <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                    Puntillismo
-                  </button>
-                  <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                    Sombras
-                  </button>
-                  <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                    Nueva escuela
-                  </button>
-                  <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                    Color
-                  </button>
-                  <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                    Maori
-                  </button>
+
+                  {artistData.styles.map((style) => (
+                    <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
+                      {style}
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="w-full pl-0 lg:pl-10">
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-2">
                   Biografía
                 </h1>
-                <p className="text-light-700 font-raleway">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                  sea takimata sanctus est Lorem ipsum dolor sit amet.
-                </p>
+                <p className="text-light-700 font-raleway">{artistData.bio}</p>
               </div>
             </div>
             <div className="border-t border-white pt-5">
