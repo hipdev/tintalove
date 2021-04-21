@@ -27,7 +27,7 @@ const ArtistProfile = ({ artistData }) => {
               {artistData?.displayName || 'Sin nombre'}
             </h1>
             <h6 className="text-light-700 text-xs">
-              {artistData?.city_name || 'Sin ciudad'},{' '}
+              {artistData?.city_name || 'Sin ciudad'},
               {artistData?.province || 'Sin departamento'}
             </h6>
             <div className="flex space-x-4 my-4">
@@ -90,7 +90,7 @@ const ArtistProfile = ({ artistData }) => {
             <div className="flex flex-col lg:flex-row mb-5">
               <div className="w-64 sm:w-96 mb-2 sm:mb-0">
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-2">
-                  {artistData?.styles?.length || '0'} Estilos
+                  {artistData?.styles?.length + 1 || '0'} Estilos
                 </h1>
                 <div>
                   <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
