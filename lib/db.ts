@@ -10,6 +10,7 @@ import {
   updateDoc,
   writeBatch,
   getDocs,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -87,6 +88,16 @@ export async function getUserNamesByArtists() {
   querySnapshot.forEach((doc: any) => usernames.push({ username: doc.id }))
 
   return usernames
+}
+export async function getArtistsInfo() {
+  const querySnapshot = await getDocs(collection(db, 'artists'))
+  const artists: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return artists.push({ ...doc.data() })
+  })
+
+  return { artists }
 }
 
 export async function createArtist(uid, data, wizard) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// Hook
+// Hook mainly used for the google autocomplete  plugin to load google map script
 function useScript(src) {
   // Keep track of script status ("idle", "loading", "ready", "error")
   const [status, setStatus] = useState(src ? 'loading' : 'idle')

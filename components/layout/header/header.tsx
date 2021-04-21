@@ -62,7 +62,7 @@ const Header = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="flex flex-wrap justify-evenly py-4 md:py-0 mr-0 md:mr-7">
             <div className="flex items-center space-x-2">
-              <span className="text-3xl text-red-600">
+              <span className="text-3xl text-primary">
                 <TiLocationOutline />
               </span>
               <select
