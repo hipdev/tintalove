@@ -7,21 +7,16 @@ import { createUser } from 'lib/db'
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useStateMachine } from 'little-state-machine'
-import { getUser, login } from 'lib/actions'
+import { login } from 'lib/actions'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
-const SubMenuHeader = () => {
-  const { state }: any = useStateMachine({
-    getUser,
-  })
+const SubMenuHeader = ({ user }) => {
   const { state: loginState, actions } = useStateMachine({
     login,
   })
-
-  const { user } = state
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)

@@ -13,6 +13,8 @@ const Header = () => {
 
   const { user } = state
 
+  console.log(user, 'user info')
+
   return (
     <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-800   to-black">
       <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
@@ -42,7 +44,7 @@ const Header = () => {
             <Link href="/">
               <a className="text-white mr-5">ESTUDIOS</a>
             </Link>
-            {user && (
+            {user && !user?.artist_active && (
               <Link href="/artist/main-info">
                 <a className="text-white mr-5">
                   {user.displayName.split(' ')[0]}, ERES ARTISTA?
@@ -73,7 +75,7 @@ const Header = () => {
             </div>
           </div>
 
-          <SubMenuHeader />
+          <SubMenuHeader user={user} />
         </div>
       </div>
     </nav>
