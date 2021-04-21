@@ -22,7 +22,7 @@ export default function index({ artistId, artistData }: any) {
 
   return (
     <Layout artistData={artistData}>
-      <ArtistProfile />
+      <ArtistProfile artistData={artistData} />
     </Layout>
   )
 }
