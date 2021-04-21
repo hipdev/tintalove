@@ -1,7 +1,9 @@
-import Editor from '../components/editor/w-editor'
+import Documents from '../components/editor/documents'
 
-export default function Indexpage(){
-    return(   
-            <Editor/>
-    )
+export default function Indexpage() {
+  return (
+    <>
+      <Documents />
+    </>
+  )
 }

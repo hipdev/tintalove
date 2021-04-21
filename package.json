@@ -13,7 +13,7 @@
     "firebase": "^0.900.23",
     "geofire-common": "^5.2.0",
     "imagekit": "^3.1.2",
-    "immutable": "^4.0.0-rc.12",
+    "immutable": "^3.8.2",
     "little-state-machine": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",

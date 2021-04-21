@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
-const db = getFirestore(firebaseApp)
+export const db = getFirestore(firebaseApp)
 
 export async function createUser(user: User) {
   const docRef = doc(collection(db, 'users'), user.uid)
@@ -242,3 +242,7 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
   return true
 }
 
+/*export async function addOrEditLink(linkObject) {
+  const docRef = doc(collection(db, 'editortext'), linkObject)
+  console.log('new task added')
+} */
