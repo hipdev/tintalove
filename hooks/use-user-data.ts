@@ -34,6 +34,7 @@ export function useUserData() {
               photo: user.photoURL,
               is_artist: userData.is_artist || false,
               is_admin: userData.is_admin || false,
+              artist_active: userData.artist_active || false,
             })
           } else {
             actions.getUser(null)
