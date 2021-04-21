@@ -13,17 +13,22 @@ const ArtistProfile = ({ artistData }) => {
           <div>
             <img
               // src="https://via.placeholder.com/309x287"
-              src={`${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,h-287,q-100`}
+              src={
+                artistData?.profile_picture?.url
+                  ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,h-287,q-100`
+                  : 'https://via.placeholder.com/309x287'
+              }
               alt=""
               className="w-full"
             />
           </div>
           <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              {artistData.displayName}
+              {artistData?.displayName || 'Sin nombre'}
             </h1>
             <h6 className="text-light-700 text-xs">
-              {artistData.city_name}, {artistData.province}
+              {artistData?.city_name || 'Sin ciudad'},{' '}
+              {artistData?.province || 'Sin departamento'}
             </h6>
             <div className="flex space-x-4 my-4">
               <Link href="#">
@@ -65,7 +70,9 @@ const ArtistProfile = ({ artistData }) => {
                 <span className="text-light-500">
                   <FiClock />
                 </span>
-                <p className="text-light-500 text-xs">{artistData.times}</p>
+                <p className="text-light-500 text-xs">
+                  {artistData?.times || 'Sin horarios'}
+                </p>
               </div>
             </div>
             <button className="btn-red font-light tracking-wide w-full focus:outline-none">
@@ -83,25 +90,29 @@ const ArtistProfile = ({ artistData }) => {
             <div className="flex flex-col lg:flex-row mb-5">
               <div className="w-64 sm:w-96 mb-2 sm:mb-0">
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-2">
-                  {artistData.styles.length} Estilos
+                  {artistData?.styles?.length || '0'} Estilos
                 </h1>
                 <div>
                   <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
                     Realismo
                   </button>
 
-                  {artistData.styles.map((style) => (
-                    <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-                      {style}
-                    </button>
-                  ))}
+                  {artistData?.styles
+                    ? artistData.styles.map((style) => (
+                        <button className="text-light-700 font-raleway border border-light-700 px-2 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
+                          {style}
+                        </button>
+                      ))
+                    : 'Sin estilos'}
                 </div>
               </div>
               <div className="w-full pl-0 lg:pl-10">
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-2">
                   Biografía
                 </h1>
-                <p className="text-light-700 font-raleway">{artistData.bio}</p>
+                <p className="text-light-700 font-raleway">
+                  {artistData?.bio || 'Sin bio'}
+                </p>
               </div>
             </div>
             <div className="border-t border-white pt-5">
@@ -113,7 +124,7 @@ const ArtistProfile = ({ artistData }) => {
                   <p className="text-light-700">20 fotos · 2 Videos</p>
                 </div>
                 <button className="flex items-center text-white font-raleway focus:outline-none">
-                  Ver todo{' '}
+                  Ver todo
                   <span className="text-red-600 text-2xl">
                     <BsArrowDown />
                   </span>
