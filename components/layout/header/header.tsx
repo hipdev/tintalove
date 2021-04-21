@@ -12,7 +12,9 @@ import { useStateMachine } from 'little-state-machine'
 import { getUser, login } from 'lib/actions'
 import React from 'react'
 
-const provider = new GoogleAuthProvider()
+const provider = new GoogleAuthProvider().setCustomParameters({
+  prompt: 'select_account',
+})
 
 const Header = () => {
   const { state }: any = useStateMachine({
