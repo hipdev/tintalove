@@ -5,7 +5,7 @@ import { auth } from 'lib/firebase'
 import useUser from 'hooks/use-user'
 import { createUser } from 'lib/db'
 import { useEffect, useState } from 'react'
-import { provider } from './layout/header/header'
+import { provider } from './layout/header/submenu'
 
 export default function IsAuth({ children }) {
   const [isAuth, setAuth] = useState(true)
