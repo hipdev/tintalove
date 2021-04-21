@@ -1,4 +1,9 @@
-import { EditorState, convertFromHTML } from 'draft-js'
+import {
+  EditorState,
+  convertFromHTML,
+  convertToRaw,
+  convertFromRaw,
+} from 'draft-js'
 import { convertToHTML } from 'draft-convert'
 
 import { GoSearch } from 'react-icons/go'
@@ -10,7 +15,7 @@ import dynamic from 'next/dynamic'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { addOrEditLink } from 'lib/db'
 
-const Editor = dynamic(
+const Editor: any = dynamic(
   () => {
     return import('react-draft-wysiwyg').then((mod) => mod.Editor)
   },
@@ -38,11 +43,41 @@ const EditorText = () => {
 
     const conversionOne = editor.getCurrentContent()
     const conversionTwo = convertToHTML(editor.getCurrentContent())
+
+    const dataToRaw = convertToRaw(editor.getCurrentContent()) // GUARDAR ESTE POR FAVOR EN BD
+
+    const dataToRawhtml = convertToHTML(convertFromRaw(dataToRaw)) // asi es como la tienen en html cuando la vayan a pintar
+
     const fromHTMLToRaw = convertFromHTML(conversionTwo)
+
+    const fromHTMLwithPowers = convertToHTML({
+      styleToHTML: (style) => {
+        if (style === 'BOLD') {
+          return <span style={{ color: 'blue' }} />
+        }
+      },
+      blockToHTML: (block) => {
+        if (block.type === 'PARAGRAPH') {
+          return <p />
+        }
+      },
+      entityToHTML: (entity, originalText) => {
+        if (entity.type === 'LINK') {
+          return <a href={entity.data.url}>{originalText}</a>
+        }
+        return originalText
+      },
+    })(editor.getCurrentContent())
 
     console.log(conversionOne, 'la primera conversion')
     console.log(conversionTwo, 'la segunda conversion')
     console.log(fromHTMLToRaw, 'la tercera, de html a raw para el editor')
+    console.log(
+      fromHTMLwithPowers,
+      'la cuarta, html con links y colores, todo bien melito'
+    )
+
+    console.log(dataToRaw, dataToRawhtml, 'data recomendada para guardar en db')
     // addOrEditLink(values)
   }
 
