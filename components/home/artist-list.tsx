@@ -38,7 +38,7 @@ const ArtistList = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-8">
         {artists ? (
           artists.map((artist) => (
-            <Link href={`/${artist.username}`}>
+            <Link href={`/${artist.username}`} key={artist.username}>
               <a>
                 <img
                   // src="https://via.placeholder.com/309x234"
