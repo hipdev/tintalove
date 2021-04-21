@@ -6,7 +6,7 @@ import { MdFilterList } from 'react-icons/md'
 
 import ArtistList from './artist-list'
 
-const Home = () => {
+const Home = ({ artists }) => {
   return (
     <div className="w-full h-auto bg-black">
       <div className="h-1/4 flex flex-col justify-center items-center bg-gradient-to-r from-dark-800  to-black">
@@ -60,7 +60,7 @@ const Home = () => {
         </div>
       </div>
       <div className="px-5 container mx-auto">
-        <ArtistList />
+        <ArtistList artists={artists} />
       </div>
       <div className="flex h-609 mt-20">
         <div className="flex flex-col justify-center w-full lg:w-3/4 bg-dark-700 pl-10 sm:pl-20 xl:pl-32 pr-20 py-8">

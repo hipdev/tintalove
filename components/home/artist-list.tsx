@@ -4,11 +4,8 @@ import { TiLocationOutline } from 'react-icons/ti'
 import { MdFilterList } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
-import useArtists from 'hooks/user-artists'
 
-const ArtistList = () => {
-  const { artists } = useArtists()
-
+const ArtistList = ({ artists }) => {
   console.log(artists, 'los artistas')
   return (
     <div className="px-5 sm:px-10 lg:px-20">
