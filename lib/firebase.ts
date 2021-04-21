@@ -51,3 +51,12 @@ export function postToJSON(data) {
     updated_at: data?.updated_at?.toMillis() || 0,
   }
 }
+
+export function postsToJSON(arrayData) {
+  console.log(arrayData, 'la data en posttojson')
+  let data = []
+
+  data = arrayData.map((doc) => postToJSON(doc))
+
+  return data
+}
