@@ -242,7 +242,6 @@ export async function updateArtistMainProfilePicture(
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   if (update) {
-    console.log('vamos a eliminar', update, imageId)
     await axios.delete('/api/profile/delete-image', { data: { imageId } })
   }
 
