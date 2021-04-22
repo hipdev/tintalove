@@ -12,7 +12,7 @@ export default function WorkingInfopage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid}>
+        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
           {state && state.user && (
             <WorkingInfo uid={state?.user?.uid || null} isArtist={isArtist} />
           )}
