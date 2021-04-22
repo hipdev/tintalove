@@ -11,7 +11,7 @@ export default function MainInfoPage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid}>
+        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
           {state && state.user && isArtist ? (
             <MainInfoEdit uid={state?.user?.uid || null} />
           ) : (
