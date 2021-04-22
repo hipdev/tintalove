@@ -15,6 +15,7 @@ type Props = {
 
 const LayoutSteps = ({ children, uid, userState }: Props) => {
   console.log(userState, 'estado de usuario')
+  if (!userState) return <span>Loading</span>
   return (
     <div className="grid grid-cols-10 h-screen">
       <HeadContainer />
@@ -33,8 +34,8 @@ const LayoutSteps = ({ children, uid, userState }: Props) => {
             </a>
           </Link>
         </div>
-        {userState?.artist_active ? (
-          <SideMenuArtist />
+        {userState && userState?.artist_active ? (
+          <SideMenuArtist username={userState.username || null} />
         ) : (
           <SideMenuArtistSteps uid={uid} />
         )}

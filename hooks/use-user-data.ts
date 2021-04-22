@@ -29,6 +29,7 @@ export function useUserData() {
 
             actions.getUser({
               email: user.email,
+              username: userData.username,
               displayName: userData.displayName || user.displayName,
               uid: user.uid,
               photo: user.photoURL,
