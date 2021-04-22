@@ -89,7 +89,11 @@ const SubMenuHeader = ({ user }) => {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#account-settings"
+                              href={
+                                user?.artist_active
+                                  ? '/artist/main-info'
+                                  : '/user/profile'
+                              }
                               className={`${
                                 active
                                   ? 'bg-gray-100 text-gray-900'
