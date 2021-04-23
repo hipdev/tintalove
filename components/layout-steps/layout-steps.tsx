@@ -6,6 +6,7 @@ import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/artist-account/side-menu-artist'
+import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
 
 type Props = {
   uid?: string
@@ -50,7 +51,19 @@ const LayoutSteps = ({ children, uid, userState }: Props) => {
               <RiArrowGoBackFill className="mr-5" /> Volver al inicio
             </a>
           </Link>
-          <div>
+          <div className="flex">
+            {userState?.artist_active && (
+              <div className="text-white mr-7 flex items-center">
+                <Link href="#">
+                  <a className="bg-primary px-2 py-1 flex items-center rounded-sm text-sm">
+                    Subir post <AiOutlineCamera className="ml-2 text-lg" />
+                  </a>
+                </Link>
+                <div>
+                  <AiOutlineCalendar className="text-xl ml-4" />
+                </div>
+              </div>
+            )}
             <StepNav />
           </div>
         </header>
