@@ -14,7 +14,7 @@ type Props = {
   userState?: UserState
 }
 
-const LayoutSteps = ({ children, uid, userState }: Props) => {
+const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
   console.log(userState, 'estado de usuario')
   // if (!userState) return <span>Loading</span>
   return (
@@ -73,4 +73,4 @@ const LayoutSteps = ({ children, uid, userState }: Props) => {
   )
 }
 
-export default LayoutSteps
+export default LayoutStepsArtist

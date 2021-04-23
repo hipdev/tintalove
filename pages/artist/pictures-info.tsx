@@ -1,7 +1,7 @@
 import PicturesInfo from 'components/artist-account/photos/pictures-info'
 
 import IsAuth from 'components/isAuth'
-import LayoutSteps from 'components/layout-steps/layout-steps'
+import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
 import useUser from 'hooks/use-user'
 
 export default function PictureInfoPage() {
@@ -11,15 +11,18 @@ export default function PictureInfoPage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
+        <LayoutStepsArtist
+          uid={state?.user?.uid}
+          userState={state?.user || null}
+        >
           {state && state.user && (
             <PicturesInfo uid={state?.user?.uid || null} isArtist={isArtist} />
           )}
-        </LayoutSteps>
+        </LayoutStepsArtist>
       ) : (
-        <LayoutSteps>
+        <LayoutStepsArtist>
           <IsAuth>Cargando...</IsAuth>
-        </LayoutSteps>
+        </LayoutStepsArtist>
       )}
     </>
   )

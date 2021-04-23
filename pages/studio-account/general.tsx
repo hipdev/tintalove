@@ -1,7 +1,7 @@
 import MainInfo from 'components/artist-account/main-info'
 import MainInfoEdit from 'components/artist-account/main-info-edit/main-info-edit'
 import IsAuth from 'components/isAuth'
-import LayoutSteps from 'components/layout-steps/layout-steps'
+import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
 import useUser from 'hooks/use-user'
 
 export default function MainInfoPage() {
@@ -11,17 +11,20 @@ export default function MainInfoPage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
+        <LayoutStepsStudio
+          uid={state?.user?.uid}
+          userState={state?.user || null}
+        >
           {state && state.user && isArtist ? (
             <MainInfoEdit uid={state?.user?.uid || null} />
           ) : (
             <MainInfo uid={state?.user?.uid || null} />
           )}
-        </LayoutSteps>
+        </LayoutStepsStudio>
       ) : (
-        <LayoutSteps>
+        <LayoutStepsStudio>
           <IsAuth>Cargando...</IsAuth>
-        </LayoutSteps>
+        </LayoutStepsStudio>
       )}
     </>
   )
