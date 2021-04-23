@@ -241,6 +241,7 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
 
   return true
 }
+<<<<<<< HEAD
 
 /*export async function createDocument(document) {
   const docRef = doc(collection(db, 'editortext'), document)
@@ -254,3 +255,5 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
     return true
   }
 }*/
+=======
+>>>>>>> 2b1c0975815a14f0da25e7ebb5d2e53705e33fb3
