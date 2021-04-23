@@ -1,7 +1,6 @@
 import WorkingInfo from 'components/artist-account/working-info'
 import IsAuth from 'components/isAuth'
-import LayoutSteps from 'components/layout-steps/layout-steps'
-import useArtist from 'hooks/use-artist'
+import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
 
 import useUser from 'hooks/use-user'
 
@@ -12,15 +11,18 @@ export default function WorkingInfopage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
+        <LayoutStepsArtist
+          uid={state?.user?.uid}
+          userState={state?.user || null}
+        >
           {state && state.user && (
             <WorkingInfo uid={state?.user?.uid || null} isArtist={isArtist} />
           )}
-        </LayoutSteps>
+        </LayoutStepsArtist>
       ) : (
-        <LayoutSteps>
+        <LayoutStepsArtist>
           <IsAuth>Cargando...</IsAuth>
-        </LayoutSteps>
+        </LayoutStepsArtist>
       )}
     </>
   )

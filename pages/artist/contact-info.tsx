@@ -1,7 +1,7 @@
 import ContactInfo from 'components/artist-account/contact-info'
 import IsAuth from 'components/isAuth'
-import LayoutSteps from 'components/layout-steps/layout-steps'
-import Layout from 'components/layout/layout'
+import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
+
 import useUser from 'hooks/use-user'
 
 export default function ContactInfoPage() {
@@ -11,15 +11,18 @@ export default function ContactInfoPage() {
   return (
     <>
       {state?.user ? (
-        <LayoutSteps uid={state?.user?.uid} userState={state?.user || null}>
+        <LayoutStepsArtist
+          uid={state?.user?.uid}
+          userState={state?.user || null}
+        >
           {state && state.user && (
             <ContactInfo uid={state?.user?.uid || null} isArtist={isArtist} />
           )}
-        </LayoutSteps>
+        </LayoutStepsArtist>
       ) : (
-        <LayoutSteps>
+        <LayoutStepsArtist>
           <IsAuth>Cargando...</IsAuth>
-        </LayoutSteps>
+        </LayoutStepsArtist>
       )}
     </>
   )
