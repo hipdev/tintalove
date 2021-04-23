@@ -78,16 +78,18 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="text-white mr-7 flex items-center">
-            <Link href="#">
-              <a className="bg-primary px-2 py-1 flex items-center rounded-sm text-sm">
-                Subir post <AiOutlineCamera className="ml-2 text-lg" />
-              </a>
-            </Link>
-            <div>
-              <AiOutlineCalendar className="text-xl ml-4" />
+          {user?.artist_active && (
+            <div className="text-white mr-7 flex items-center">
+              <Link href="#">
+                <a className="bg-primary px-2 py-1 flex items-center rounded-sm text-sm">
+                  Subir post <AiOutlineCamera className="ml-2 text-lg" />
+                </a>
+              </Link>
+              <div>
+                <AiOutlineCalendar className="text-xl ml-4" />
+              </div>
             </div>
-          </div>
+          )}
 
           <SubMenuHeader user={user} />
         </div>
