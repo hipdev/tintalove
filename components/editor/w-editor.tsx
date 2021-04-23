@@ -13,7 +13,6 @@ import Link from 'next/link'
 import { useForm, Controller } from 'react-hook-form'
 import dynamic from 'next/dynamic'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { addOrEditLink } from 'lib/db'
 
 const Editor: any = dynamic(
   () => {
@@ -25,7 +24,7 @@ type Props = {
   editor: EditorState
 }
 
-const EditorText = () => {
+const EditorText = ({}) => {
   const {
     handleSubmit,
     control,
@@ -37,6 +36,14 @@ const EditorText = () => {
       editor: EditorState.createEmpty(),
     },
   })
+
+  const checkEditor = (props, editor) => {
+    if (props.exist === editor.fromHTMLToRaw) {
+      console.log('todo bien')
+    } else {
+      editor.EditorState.createEmpty()
+    }
+  }
 
   const handleSubmitOnClick = ({ editor }: Props) => {
     console.log('editor_content ==> ', editor)
@@ -150,9 +157,8 @@ const EditorText = () => {
         <div className="h-full flex flex-col lg:flex-row justify-evenly items-center">
           <div className="mb-10 lg:mb-0">
             <div className="mb-10 mt-12">
-              <p className="text-red-500">¿Eres un artista?</p>
               <h1 className="text-2xl text-white font-bold tracking-wide">
-                Encuentra Clientes
+                Políticas de Privacidad
               </h1>
             </div>
             <ol>
@@ -165,7 +171,7 @@ const EditorText = () => {
                     </span>
                   </span>
                   <span className="ml-4 min-w-0 mt-1.5">
-                    <span className="text-sm text-white tracking-wide">
+                    <span className="text-xl text-white tracking-wide">
                       Política de Privacidad
                     </span>
                   </span>
@@ -179,7 +185,7 @@ const EditorText = () => {
                     </span>
                   </span>
                   <span className="ml-4 min-w-0 mt-1.5">
-                    <span className="text-sm text-light-900 tracking-wide">
+                    <span className="text-xl text-light-900 tracking-wide">
                       Terminos y Condiciones
                     </span>
                   </span>
@@ -189,10 +195,7 @@ const EditorText = () => {
           </div>
           <div className="relative w-10/12 sm:w-2/3 h-auto bg-dark-700 bg-opacity-50 rounded-xl p-6 sm:p-12 mb-10 lg:mb-0">
             <div>
-              <h1 className="text-white text-xl sm:text-2xl font-bold text-center sm:text-left tracking-wide mb-10">
-                Editor
-              </h1>
-              <div className="bg-white h-80 rounded-lg overflow-hidden">
+              <div className="bg-white h-80 rounded-lg overflow-hidden p-5">
                 <form onSubmit={handleSubmit(handleSubmitOnClick)}>
                   <Controller
                     name="editor"
