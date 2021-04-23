@@ -5,13 +5,16 @@ import Link from 'next/link'
 import { useStateMachine } from 'little-state-machine'
 import { getUser } from 'lib/actions'
 import SubMenuHeader from './submenu'
+import { UserState } from 'types/user'
+import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
+import { BsFilePost } from 'react-icons/bs'
 
 const Header = () => {
   const { state }: any = useStateMachine({
     getUser,
   })
 
-  const { user } = state
+  const { user }: { user: UserState } = state
 
   console.log(user, 'user info')
 
@@ -72,6 +75,17 @@ const Header = () => {
               >
                 <option value="">TODO COLOMBIA</option>
               </select>
+            </div>
+          </div>
+
+          <div className="text-white mr-7 flex items-center">
+            <Link href="#">
+              <a className="bg-primary px-2 py-1 flex items-center rounded-sm text-sm">
+                Subir post <AiOutlineCamera className="ml-2 text-lg" />
+              </a>
+            </Link>
+            <div>
+              <AiOutlineCalendar className="text-xl ml-4" />
             </div>
           </div>
 
