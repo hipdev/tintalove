@@ -242,7 +242,15 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
   return true
 }
 
-export async function addOrEditLink(linkObject) {
-  const docRef = doc(collection(db, 'editortext'), linkObject)
-  console.log('new task added')
-}
+/*export async function createDocument(document) {
+  const docRef = doc(collection(db, 'editortext'), document)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    console.log('Document data:', docSnap.data())
+    return true
+  } else {
+    console.log('No such document!')
+    return true
+  }
+}*/
