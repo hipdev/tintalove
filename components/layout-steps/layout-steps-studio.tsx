@@ -1,4 +1,3 @@
-import SideMenuArtistSteps from 'components/artist-account/side-menu-artist-steps'
 import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './step-nav'
@@ -7,6 +6,8 @@ import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/artist-account/side-menu-artist'
 import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
+import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
+import SideMenuStudio from 'components/studio-account/side-menu-studio'
 
 type Props = {
   uid?: string
@@ -35,13 +36,13 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
             </a>
           </Link>
         </div>
-        {userState && userState?.artist_active && (
-          <SideMenuArtist username={userState?.username || null} />
+        {userState && userState?.studio_active && (
+          <SideMenuStudio username={userState?.username || null} />
         )}
 
         {!userState ||
-          (userState && !userState?.artist_active && (
-            <SideMenuArtistSteps uid={uid} />
+          (userState && !userState?.studio_active && (
+            <SideMenuStudioSteps uid={uid} />
           ))}
       </div>
       <div className="col-span-7 2xl:col-span-8 pl-14 2xl:pl-20 bg-dark-500 text-white">
