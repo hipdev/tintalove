@@ -1,5 +1,5 @@
 import GeneralInfo from 'components/studio-account/general-info'
-import MainInfoEdit from 'components/studio-account/general-info-edit/general-info-edit'
+import GeneralInfoEdit from 'components/studio-account/general-info-edit/general-info-edit'
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
 import useUser from 'hooks/use-user'
@@ -16,7 +16,7 @@ export default function MainInfoPage() {
           userState={state?.user || null}
         >
           {state && state.user && isStudio ? (
-            <MainInfoEdit uid={state?.user?.uid || null} />
+            <GeneralInfoEdit uid={state?.user?.uid || null} />
           ) : (
             <GeneralInfo uid={state?.user?.uid || null} />
           )}

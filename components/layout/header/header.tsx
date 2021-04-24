@@ -44,7 +44,7 @@ const Header = () => {
             <Link href="/">
               <a className="text-white mr-5">ARTISTAS</a>
             </Link>
-            <Link href="/">
+            <Link href="/studio-account/general">
               <a className="text-white mr-5">ESTUDIOS</a>
             </Link>
             {user && !user?.artist_active && (

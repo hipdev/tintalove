@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-import React, { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
 import {
@@ -11,12 +11,12 @@ import {
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import MainInfoAvailable from './general-info-available'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 import 'microtip/microtip.css'
 
-import MainInfoCity from './general-info-city'
+import GeneralInfoCity from './general-info-city'
+import GeneralInfoAvailable from './general-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -213,7 +213,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Ciudad</span>
 
-              <MainInfoCity
+              <GeneralInfoCity
                 defaultValue={artist.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
@@ -276,7 +276,7 @@ const MainInfoForm = ({ uid, artist }) => {
           <div className="col-span-6 md:col-span-3">
             <div className="text-white flex items-center">
               {watchUserName != artistUsername && (
-                <MainInfoAvailable
+                <GeneralInfoAvailable
                   validUserName={validUserName}
                   availableUserName={availableUserName}
                 />

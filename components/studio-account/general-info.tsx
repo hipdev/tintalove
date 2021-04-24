@@ -12,7 +12,7 @@ import { useUserData } from 'hooks/use-user-data'
 import MainInfoAvailable from './general-info-edit/general-info-available'
 
 import 'microtip/microtip.css'
-import MainInfoCity from './general-info-edit/general-info-city'
+import GeneralInfoCity from './general-info-edit/general-info-city'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -24,7 +24,7 @@ const GeneralInfo = ({ uid }) => {
       customNick: false,
       availableUsername: false,
       validUserName: false,
-      displayName: '',
+      studio_name: '',
       username: '',
       bio: '',
     },
@@ -77,7 +77,7 @@ const GeneralInfo = ({ uid }) => {
     debounce((name) => {
       if (name != '') {
         console.log('se ejecuta el debounce')
-        setValue('displayName', name)
+        setValue('studio_name', name)
       }
     }, 3000),
     []
@@ -88,7 +88,7 @@ const GeneralInfo = ({ uid }) => {
 
     const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
 
-    setValue('displayName', capitalName)
+    setValue('studio_name', capitalName)
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
 
@@ -215,9 +215,9 @@ const GeneralInfo = ({ uid }) => {
           <div className="grid grid-cols-6 gap-6 tooltipBox">
             <div className="col-span-6 md:col-span-3">
               <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-                <span className="mb-3 block">Nombre artístico</span>
+                <span className="mb-3 block">Nombre del estudio</span>
                 <input
-                  {...register('displayName')}
+                  {...register('studio_name')}
                   autoComplete="off"
                   placeholder="..."
                   className="input-primary w-full"
@@ -251,7 +251,7 @@ const GeneralInfo = ({ uid }) => {
                   }}
                 /> */}
 
-                <MainInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
+                <GeneralInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
               </label>
             </div>
 
@@ -274,8 +274,8 @@ const GeneralInfo = ({ uid }) => {
                   <input
                     className={
                       availableUserName
-                        ? 'input-primary w-full pl-[109px] text-green-500'
-                        : 'input-primary w-full pl-[109px] text-red-500'
+                        ? 'input-primary w-full pl-[126px] text-green-500'
+                        : 'input-primary w-full pl-[126px] text-red-500'
                     }
                     type="text"
                     autoComplete="off"
@@ -284,7 +284,7 @@ const GeneralInfo = ({ uid }) => {
                     onChange={handleUserName}
                   />
                   <span className="absolute top-[13px] left-[10px]">
-                    tintalove.com/
+                    tintalove.com/st/
                   </span>
 
                   <div className="absolute right-2 top-3">
