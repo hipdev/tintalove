@@ -1,5 +1,5 @@
-import MainInfo from 'components/artist-account/main-info'
-import MainInfoEdit from 'components/artist-account/main-info-edit/main-info-edit'
+import MainInfo from 'components/studio-account/main-info'
+import MainInfoEdit from 'components/studio-account/main-info-edit/main-info-edit'
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
 import useUser from 'hooks/use-user'

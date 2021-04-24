@@ -65,7 +65,7 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
           setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
-          return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+          return 'Estudio activado, serás redireccionado a tu perfil en unos segundos... 🥳'
         },
         error: (err) => {
           setLoading(false)
@@ -117,26 +117,26 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
           className="text-white mb-10 bg-primary px-4 rounded-sm py-2 flex items-center hover:bg-primaryHover"
           disabled={loading}
         >
-          Activar perfil
+          Activar estudio
           <BsPersonCheck className="text-xl ml-2" />
         </button>
       )}
 
-      <Link href="/artist/main-info">
+      <Link href="/studio-account/general">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
-                  path == 'main-info'
+                  path == 'general'
                     ? 'border-primary' + circle
                     : 'border-light-900' + circle
                 }
               >
                 <span
                   className={
-                    path == 'main-info' ? 'text-white' : 'text-light-900'
+                    path == 'general' ? 'text-white' : 'text-light-900'
                   }
                 >
                   1
@@ -146,19 +146,19 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
             <span className="ml-4 min-w-0 mt-1.5">
               <span
                 className={
-                  path == 'main-info'
+                  path == 'general'
                     ? 'text-white ' + textWhite
                     : 'text-light-900 ' + textWhite
                 }
               >
-                Información personal
+                Información general
               </span>
             </span>
           </div>
         </a>
       </Link>
 
-      <Link href="/artist/working-info">
+      <Link href="/studio-account/working-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
@@ -194,7 +194,7 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
         </a>
       </Link>
 
-      <Link href="/artist/contact-info">
+      <Link href="/studio-account/contact-info">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
@@ -230,7 +230,7 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
         </a>
       </Link>
 
-      <Link href="/artist/pictures-info">
+      <Link href="/studio-account/pictures-info">
         <a className="block relative">
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
@@ -258,7 +258,7 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
                     : 'text-light-900 ' + textWhite
                 }
               >
-                Fotos de perfil
+                Fotos del estudio
               </span>
             </span>
           </div>
