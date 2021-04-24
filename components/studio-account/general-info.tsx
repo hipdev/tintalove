@@ -9,14 +9,14 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
 import { useUserData } from 'hooks/use-user-data'
-import MainInfoAvailable from 'components/artist-account/main-info-edit/main-info-available'
+import MainInfoAvailable from './general-info-edit/general-info-available'
 
 import 'microtip/microtip.css'
-import MainInfoCity from 'components/artist-account/main-info-edit/main-info-city'
+import MainInfoCity from './general-info-edit/general-info-city'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfo = ({ uid }) => {
+const GeneralInfo = ({ uid }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -350,4 +350,4 @@ const MainInfo = ({ uid }) => {
   )
 }
 
-export default MainInfo
+export default GeneralInfo
