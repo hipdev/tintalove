@@ -1,5 +1,6 @@
 export type UserState = {
   artist_active: boolean
+  studio_active: boolean
   displayName: string
   email: string
   username: string
