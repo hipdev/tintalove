@@ -4,8 +4,8 @@ import { useCallback, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
 import {
-  updateArtistUsername,
   updateStudioGeneralInfo,
+  updateStudioUsername,
   userNameAvailableStudio,
 } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
@@ -39,7 +39,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const watchMultiple: any = watch()
   const cityRef = useRef(null)
 
-  const [artistUsername, setArtistUserName] = useState(studio.username)
+  const [studioUsername, setStudioUsername] = useState(studio.username)
   const [loading, setLoading] = useState(false)
 
   const [counter, setCounter] = useState(studio.bio.length || 0)
@@ -124,12 +124,12 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
     setLoading(true)
 
     const newUsername = getValues('username')
-    toast.promise(updateArtistUsername(studioId, artistUsername, newUsername), {
+    toast.promise(updateStudioUsername(studioId, studioUsername, newUsername), {
       loading: 'Actualizando usuario...',
       success: (data) => {
         setLoading(false)
-        setArtistUserName(newUsername)
-        return 'Usuario actualizado 😉'
+        setStudioUsername(newUsername)
+        return 'Usuario actualizado en el estudio 😉'
       },
       error: (err) => {
         setLoading(false)
@@ -236,7 +236,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
               <div className="relative">
                 <input
                   className={
-                    availableUserName || watchUserName == artistUsername
+                    availableUserName || watchUserName == studioUsername
                       ? 'input-primary w-full pl-[126px] text-green-500'
                       : 'input-primary w-full pl-[126px] text-red-500'
                   }
@@ -253,7 +253,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                 <div className="absolute right-2 top-3">
                   {validUserName ? (
                     <>
-                      {availableUserName || watchUserName == artistUsername ? (
+                      {availableUserName || watchUserName == studioUsername ? (
                         <FiCheckCircle className="ml-1 text-2xl text-green-500" />
                       ) : (
                         <FiAlertCircle className="ml-1 text-2xl text-red-500" />
@@ -265,7 +265,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                 </div>
               </div>
 
-              {watchUserName == artistUsername && (
+              {watchUserName == studioUsername && (
                 <span className="mt-2 block">Este es tu usuario actual</span>
               )}
             </label>
@@ -273,7 +273,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
           <div className="col-span-6 md:col-span-3">
             <div className="text-white flex items-center">
-              {watchUserName != artistUsername && (
+              {watchUserName != studioUsername && (
                 <GeneralInfoAvailable
                   validUserName={validUserName}
                   availableUserName={availableUserName}
@@ -282,7 +282,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
             </div>
 
             {validUserName &&
-              watchUserName != artistUsername &&
+              watchUserName != studioUsername &&
               availableUserName && (
                 <button
                   disabled={loading}
