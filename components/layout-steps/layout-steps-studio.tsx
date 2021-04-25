@@ -42,7 +42,7 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
 
         {!userState ||
           (userState && !userState?.studio_active && (
-            <SideMenuStudioSteps uid={uid} />
+            <SideMenuStudioSteps studioId={userState.studio_id} />
           ))}
       </div>
       <div className="col-span-7 2xl:col-span-8 pl-14 2xl:pl-20 bg-dark-500 text-white">

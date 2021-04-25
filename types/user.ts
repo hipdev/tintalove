@@ -8,4 +8,5 @@ export type UserState = {
   is_artist: boolean
   photo: string
   uid: string
+  studio_id: string
 } | null
