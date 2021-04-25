@@ -42,7 +42,7 @@ const MainInfoForm = ({ studioId, studio }) => {
   const [artistUsername, setArtistUserName] = useState(studio.username)
   const [loading, setLoading] = useState(false)
 
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(studio.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: studio.formatted_address || '',
   })
@@ -58,6 +58,7 @@ const MainInfoForm = ({ studioId, studio }) => {
     (e) => {
       const text = e.target.value
       setCounter(text.length)
+      setValue('bio', text)
     },
     [counter]
   )
@@ -313,10 +314,10 @@ const MainInfoForm = ({ studioId, studio }) => {
               <span className="text-white ">{counter}/500</span>
             </div>
             <textarea
-              onChange={handleCounter}
               maxLength={500}
               required
               {...register('bio')}
+              onChange={handleCounter}
               rows={6}
               placeholder="Cuentale al mundo sobre ti"
               className="w-full input-primary resize-none"
