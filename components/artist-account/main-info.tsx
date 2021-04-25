@@ -51,6 +51,7 @@ const MainInfo = ({ uid }) => {
     (e) => {
       const text = e.target.value
       setCounter(text.length)
+      setValue('bio', text)
     },
     [counter]
   )
@@ -324,10 +325,10 @@ const MainInfo = ({ uid }) => {
                 <span className="text-white">{counter}/500</span>
               </div>
               <textarea
-                onChange={handleCounter}
                 maxLength={500}
                 required
                 {...register('bio')}
+                onChange={handleCounter}
                 rows={6}
                 placeholder="Cuentale al mundo sobre ti"
                 className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"

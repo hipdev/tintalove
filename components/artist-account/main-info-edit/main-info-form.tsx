@@ -58,6 +58,7 @@ const MainInfoForm = ({ uid, artist }) => {
     (e) => {
       const text = e.target.value
       setCounter(text.length)
+      setValue('bio', text)
     },
     [counter]
   )
@@ -308,10 +309,10 @@ const MainInfoForm = ({ uid, artist }) => {
               <span className="text-white ">{counter}/500</span>
             </div>
             <textarea
-              onChange={handleCounter}
               maxLength={500}
               required
               {...register('bio')}
+              onChange={handleCounter}
               rows={6}
               placeholder="Cuentale al mundo sobre ti"
               className="w-full input-primary resize-none"
