@@ -6,7 +6,7 @@ import { useUserData } from 'hooks/use-user-data'
 import {
   updateArtistMainInfo,
   updateArtistUsername,
-  userNameAvailable,
+  userNameAvailableStudio,
 } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
@@ -65,7 +65,7 @@ const MainInfoForm = ({ studioId, studio }) => {
   const checkUsername = useCallback(
     debounce(async (username) => {
       if (username != '') {
-        const available = await userNameAvailable(username)
+        const available = await userNameAvailableStudio(username)
         setAvailableUserName(available)
 
         // Falta validar cuando el username esta disponible agregar el estado para guardar
@@ -140,7 +140,7 @@ const MainInfoForm = ({ studioId, studio }) => {
 
   const onSubmit = async (data) => {
     setLoading(true)
-    if (data.displayName == '' || data.bio == '') {
+    if (data?.studio_name == '' && data?.bio == '') {
       setLoading(false)
       toast('Debes ingresar el nombre y la bio 😓')
       return
@@ -148,7 +148,7 @@ const MainInfoForm = ({ studioId, studio }) => {
 
     if (
       !placeInfo &&
-      data.displayName == studio.displayName &&
+      data.studio_name == studio.studio_name &&
       data.bio == studio.bio
     ) {
       cityRef.current.focus()
@@ -173,11 +173,9 @@ const MainInfoForm = ({ studioId, studio }) => {
         return `${err.toString()}`
       },
     })
-    console.log(formData, 'data form')
+
     // setLoading(false)
   }
-
-  console.log(watchMultiple, 'comparaciones')
 
   return (
     <>
@@ -239,8 +237,8 @@ const MainInfoForm = ({ studioId, studio }) => {
                 <input
                   className={
                     availableUserName || watchUserName == artistUsername
-                      ? 'input-primary w-full pl-[109px] text-green-500'
-                      : 'input-primary w-full pl-[109px] text-red-500'
+                      ? 'input-primary w-full pl-[126px] text-green-500'
+                      : 'input-primary w-full pl-[126px] text-red-500'
                   }
                   type="text"
                   autoComplete="off"
@@ -249,7 +247,7 @@ const MainInfoForm = ({ studioId, studio }) => {
                   onChange={handleUserName}
                 />
                 <span className="absolute top-[13px] left-[10px]">
-                  tintalove.com/
+                  tintalove.com/st/
                 </span>
 
                 <div className="absolute right-2 top-3">
