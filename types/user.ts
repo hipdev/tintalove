@@ -4,6 +4,7 @@ export type UserState = {
   displayName: string
   email: string
   username: string
+  has_studio: boolean
   is_admin: boolean
   is_artist: boolean
   photo: string

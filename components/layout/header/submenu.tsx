@@ -107,7 +107,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                           )}
                         </Menu.Item>
 
-                        {user?.studio_id && (
+                        {user?.has_studio && (
                           <Menu.Item>
                             {({ active }) => (
                               <a
