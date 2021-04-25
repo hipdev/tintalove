@@ -6,7 +6,7 @@ import useUser from 'hooks/use-user'
 
 export default function MainInfoPage() {
   const { state } = useUser()
-  const isStudio = state?.user?.is_studio
+  const hasStudio = state?.user?.has_studio
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function MainInfoPage() {
           uid={state?.user?.uid}
           userState={state?.user || null}
         >
-          {state && state.user && isStudio ? (
+          {state && state.user && hasStudio ? (
             <GeneralInfoEdit uid={state?.user?.uid || null} />
           ) : (
             <GeneralInfo uid={state?.user?.uid || null} />

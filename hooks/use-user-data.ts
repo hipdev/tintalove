@@ -33,9 +33,13 @@ export function useUserData() {
               displayName: userData.displayName || user.displayName,
               uid: user.uid,
               photo: user.photoURL,
-              is_artist: userData.is_artist || false,
-              is_admin: userData.is_admin || false,
-              artist_active: userData.artist_active || false,
+              ...(userData.is_artist && { is_artist: userData.is_artist }),
+              ...(userData.is_admin && { is_admin: userData.is_admin }),
+              ...(userData.artist_active && {
+                artist_active: userData.artist_active,
+              }),
+              ...(userData.studio_id && { studio_id: userData.studio_id }),
+              ...(userData.has_studio && { has_studio: userData.has_studio }),
             })
           } else {
             actions.getUser(null)

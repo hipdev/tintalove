@@ -1,9 +1,14 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
 
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import { createArtist, userNameAvailable } from 'lib/db'
+import {
+  createArtist,
+  createStudio,
+  userNameAvailable,
+  userNameAvailableStudio,
+} from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -17,7 +22,14 @@ import GeneralInfoCity from './general-info-edit/general-info-city'
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const GeneralInfo = ({ uid }) => {
-  const { register, setValue, getValues, handleSubmit, watch } = useForm({
+  const {
+    register,
+    setValue,
+    getValues,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
     defaultValues: {
       show: false,
@@ -35,6 +47,7 @@ const GeneralInfo = ({ uid }) => {
   const cityRef = useRef(null)
 
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
@@ -50,17 +63,26 @@ const GeneralInfo = ({ uid }) => {
   const handleCounter = useCallback(
     (e) => {
       const text = e.target.value
+      setValue('bio', text)
       setCounter(text.length)
     },
     [counter]
   )
 
-  console.log(placeInfo, 'la ciudad')
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(
+        () => router.push('/studio-account/working-info'),
+        1000
+      )
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   const checkUsername = useCallback(
     debounce(async (username) => {
       if (username != '') {
-        const available = await userNameAvailable(username)
+        const available = await userNameAvailableStudio(username)
         setAvailableUserName(available)
 
         // Falta validar cuando el username esta disponible agregar el estado para guardar
@@ -151,7 +173,7 @@ const GeneralInfo = ({ uid }) => {
     }
 
     const formData = {
-      displayName: data.displayName
+      studio_name: data.studio_name
         .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
         .replace(/\s\s+/g, ' ')
         .trim(),
@@ -160,27 +182,23 @@ const GeneralInfo = ({ uid }) => {
       ...placeInfo,
     }
 
-    toast
-      .promise(createArtist(uid, formData, true), {
-        loading: 'Guardando...',
-        success: (data) => {
-          setLoading(false)
-          setTriggerAuth(Math.random()) // reload global user state data
-          // router.push('/artist/new/working-info')
+    console.log(formData, 'data a enviar')
 
-          return 'Artista creado 😉'
-        },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
-      .then((res) => {
-        if (res) {
-          router.push('/artist/working-info')
-          setTriggerAuth(Math.random())
-        }
-      })
+    toast.promise(createStudio(uid, formData, true), {
+      loading: 'Creando estudio...',
+      success: (data) => {
+        setLoading(false)
+        setSuccess(true)
+        setTriggerAuth(Math.random()) // reload global user state data
+        // router.push('/artist/new/working-info')
+
+        return 'Estudio creado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
 
     // setLoading(false)
 
@@ -227,8 +245,8 @@ const GeneralInfo = ({ uid }) => {
               </label>
             </div>
             <div className="col-span-6 md:col-span-3">
-              <label className="block text-white text-sm uppercase mb-2 tracking-wide">
-                <span className="mb-3 block">Ciudad</span>
+              <label className="block text-white text-sm  mb-2 tracking-wide">
+                <span className="mb-3 block">CIUDAD</span>
 
                 {/* <GooglePlacesAutocomplete
                   apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
@@ -317,21 +335,30 @@ const GeneralInfo = ({ uid }) => {
               <div className="flex justify-between items-center mb-3">
                 <label
                   htmlFor=""
-                  className="block text-white text-sm uppercase tracking-wide"
+                  className="flex text-white text-sm tracking-wide"
                 >
-                  biografia
+                  <span>HISTORIA / BIO</span>
+                  <span
+                    aria-label="Esta es la descripción de tu perfil de estudio"
+                    data-microtip-position="top"
+                    role="tooltip"
+                  >
+                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                  </span>
                 </label>
                 <span className="text-white">{counter}/500</span>
               </div>
               <textarea
-                onChange={handleCounter}
                 maxLength={500}
                 required
-                {...register('bio')}
+                {...(register('bio'), { required: true })}
+                onChange={handleCounter}
                 rows={6}
                 placeholder="Cuentale al mundo sobre ti"
                 className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
               ></textarea>
+
+              {errors?.bio && <span>Este campo es requerido</span>}
             </div>
           </div>
 

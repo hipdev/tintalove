@@ -301,9 +301,16 @@ const MainInfoForm = ({ uid, artist }) => {
             <div className="flex justify-between items-center mb-3">
               <label
                 htmlFor=""
-                className="block text-white text-sm tracking-wide"
+                className="flex text-white text-sm tracking-wide"
               >
-                <span className="uppercase">Biografía</span>
+                <span className="uppercase">HISTORIA / BIO</span>
+                <span
+                  aria-label="Esta es la descripción de tu perfil de estudio"
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
               </label>
               <span className="text-white ">{counter}/500</span>
             </div>
