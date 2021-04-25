@@ -10,10 +10,13 @@ import { BsPersonCheck } from 'react-icons/bs'
 
 type Props = {
   uid?: string
+  studioId?: string
 }
 
-const SideMenuStudioSteps = ({ uid }: Props) => {
-  const { studioWizard } = useStudioWizardRealtime(uid)
+const SideMenuStudioSteps = ({ studioId }: Props) => {
+  const { studioWizard } = useStudioWizardRealtime(studioId)
+
+  console.log(studioWizard, 'steps studio')
 
   const [loading, setLoading] = useState(false)
   const { setTriggerAuth } = useUserData()
@@ -58,7 +61,7 @@ const SideMenuStudioSteps = ({ uid }: Props) => {
     setLoading(true)
 
     if (countReadySteps == 4) {
-      toast.promise(activateArtist(uid), {
+      toast.promise(activateArtist(studioId), {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
