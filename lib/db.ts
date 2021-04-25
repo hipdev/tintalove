@@ -427,6 +427,44 @@ export async function updateStudioGeneralInfo(studioId, uid, data) {
   }
 }
 
+export async function updateStudioUsername(studioId, oldUsername, newUsername) {
+  const usernameRefOld = doc(collection(db, 'usernames_studios'), oldUsername)
+  const usernameRefNew = doc(collection(db, 'usernames_studios'), newUsername)
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const usernameSnap = await getDoc(usernameRefNew)
+  const studioSnap = await getDoc(studioRef)
+
+  if (usernameSnap.exists()) {
+    throw new Error('El nombre de usuario ya existe')
+  }
+
+  if (!studioSnap.exists()) {
+    throw new Error('Este estudio no existe')
+  }
+
+  const batch = writeBatch(db)
+
+  batch.delete(usernameRefOld)
+
+  batch.set(usernameRefNew, {
+    studio_id: studioId,
+  })
+
+  batch.set(
+    studioRef,
+    {
+      updated_at: serverTimestamp(),
+      username: newUsername,
+    },
+    { merge: true }
+  )
+
+  await batch.commit()
+
+  return true
+}
+
 export async function getStudioInfo(uid) {
   const docRef = doc(collection(db, 'studios'), uid)
   const docSnap = await getDoc(docRef)
