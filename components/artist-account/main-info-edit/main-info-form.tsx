@@ -42,7 +42,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const [artistUsername, setArtistUserName] = useState(artist.username)
   const [loading, setLoading] = useState(false)
 
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: artist.formatted_address || '',
   })
