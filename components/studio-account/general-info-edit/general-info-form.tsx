@@ -82,7 +82,6 @@ const MainInfoForm = ({ studioId, studio }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        console.log('se ejecuta el debounce')
         setValue('studio_name', name)
       }
     }, 3000),
@@ -123,7 +122,7 @@ const MainInfoForm = ({ studioId, studio }) => {
 
   const saveUsername = async () => {
     setLoading(true)
-    console.log(getValues('username'), 'me diste click')
+
     const newUsername = getValues('username')
     toast.promise(updateArtistUsername(studioId, artistUsername, newUsername), {
       loading: 'Actualizando usuario...',
