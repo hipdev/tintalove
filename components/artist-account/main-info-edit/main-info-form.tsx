@@ -82,7 +82,6 @@ const MainInfoForm = ({ uid, artist }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        console.log('se ejecuta el debounce')
         setValue('displayName', name)
       }
     }, 3000),
@@ -123,7 +122,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const saveUsername = async () => {
     setLoading(true)
-    console.log(getValues('username'), 'me diste click')
+
     const newUsername = getValues('username')
     toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
       loading: 'Actualizando usuario...',
@@ -161,7 +160,7 @@ const MainInfoForm = ({ uid, artist }) => {
     let formData = { bio: data.bio, displayName: data.displayName }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateArtistMainInfo(uid, formData, true), {
+    toast.promise(updateArtistMainInfo(uid, formData), {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
@@ -174,11 +173,9 @@ const MainInfoForm = ({ uid, artist }) => {
         return `${err.toString()}`
       },
     })
-    console.log(formData, 'data form')
+
     // setLoading(false)
   }
-
-  console.log(watchMultiple, 'comparaciones')
 
   return (
     <>

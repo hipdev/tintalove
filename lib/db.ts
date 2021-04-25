@@ -159,9 +159,8 @@ export async function createArtist(uid, data, wizard) {
   }
 }
 
-export async function updateArtistMainInfo(uid, data, wizard) {
+export async function updateArtistMainInfo(uid, data) {
   const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const userRef = doc(collection(db, 'users'), uid)
 
@@ -189,10 +188,6 @@ export async function updateArtistMainInfo(uid, data, wizard) {
     )
 
     await batch.commit()
-
-    if (wizard) {
-      setDoc(artistWizardRef, { step_one: true }, { merge: true })
-    }
 
     return true
   } else {
