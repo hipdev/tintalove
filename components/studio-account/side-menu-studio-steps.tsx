@@ -190,7 +190,7 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
                     : 'text-light-900 ' + textWhite
                 }
               >
-                Información laboral
+                Artistas
               </span>
             </span>
           </div>
