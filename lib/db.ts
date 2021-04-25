@@ -86,7 +86,6 @@ export async function getArtistInfo(uid) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    console.log(docSnap.data(), 'entramos por aca')
     return { artist: docSnap.data() }
   } else {
     return { artist: null }
@@ -394,5 +393,16 @@ export async function createStudio(uid, data, wizard) {
 
       return true
     })
+  }
+}
+
+export async function getStudioInfo(uid) {
+  const docRef = doc(collection(db, 'studios'), uid)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    return { studio: docSnap.data() }
+  } else {
+    return { studio: null }
   }
 }

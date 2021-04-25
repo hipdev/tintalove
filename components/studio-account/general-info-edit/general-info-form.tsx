@@ -20,16 +20,16 @@ import GeneralInfoAvailable from './general-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfoForm = ({ uid, artist }) => {
+const MainInfoForm = ({ studioId, studio }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      displayName: artist.displayName || '',
-      username: artist.username || '',
-      bio: artist.bio,
+      studio_name: studio.studio_name || '',
+      username: studio.username || '',
+      bio: studio.bio,
     },
   })
 
@@ -39,12 +39,12 @@ const MainInfoForm = ({ uid, artist }) => {
   const watchMultiple: any = watch()
   const cityRef = useRef(null)
 
-  const [artistUsername, setArtistUserName] = useState(artist.username)
+  const [artistUsername, setArtistUserName] = useState(studio.username)
   const [loading, setLoading] = useState(false)
 
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState({
-    formatted_address: artist.formatted_address || '',
+    formatted_address: studio.formatted_address || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -82,7 +82,7 @@ const MainInfoForm = ({ uid, artist }) => {
     debounce((name) => {
       if (name != '') {
         console.log('se ejecuta el debounce')
-        setValue('displayName', name)
+        setValue('studio_name', name)
       }
     }, 3000),
     []
@@ -93,13 +93,13 @@ const MainInfoForm = ({ uid, artist }) => {
 
     const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
 
-    setValue('displayName', capitalName)
+    setValue('studio_name', capitalName)
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
 
     updateName(formattedName)
 
-    setValue('displayName', capitalizeAllWords(name))
+    setValue('studio_name', capitalizeAllWords(name))
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +124,7 @@ const MainInfoForm = ({ uid, artist }) => {
     setLoading(true)
     console.log(getValues('username'), 'me diste click')
     const newUsername = getValues('username')
-    toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
+    toast.promise(updateArtistUsername(studioId, artistUsername, newUsername), {
       loading: 'Actualizando usuario...',
       success: (data) => {
         setLoading(false)
@@ -148,8 +148,8 @@ const MainInfoForm = ({ uid, artist }) => {
 
     if (
       !placeInfo &&
-      data.displayName == artist.displayName &&
-      data.bio == artist.bio
+      data.displayName == studio.displayName &&
+      data.bio == studio.bio
     ) {
       cityRef.current.focus()
       setLoading(false)
@@ -160,7 +160,7 @@ const MainInfoForm = ({ uid, artist }) => {
     let formData = { bio: data.bio, displayName: data.displayName }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateArtistMainInfo(uid, formData, true), {
+    toast.promise(updateArtistMainInfo(studioId, formData, true), {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
@@ -200,7 +200,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Nombre del estudio</span>
               <input
-                {...register('displayName')}
+                {...register('studio_name')}
                 autoComplete="off"
                 placeholder="..."
                 className="input-primary w-full"
@@ -214,7 +214,7 @@ const MainInfoForm = ({ uid, artist }) => {
               <span className="mb-3 block uppercase">Ciudad</span>
 
               <GeneralInfoCity
-                defaultValue={artist.formatted_address || ''}
+                defaultValue={studio.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
             </label>
@@ -326,9 +326,9 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
         </div>
 
-        {artist.displayName != watchMultiple.displayName ||
-        artist.formatted_address != placeInfo?.formatted_address ||
-        artist.bio != watchMultiple.bio ? (
+        {studio.displayName != watchMultiple.displayName ||
+        studio.formatted_address != placeInfo?.formatted_address ||
+        studio.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button
               type="submit"
