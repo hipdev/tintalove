@@ -16,7 +16,7 @@ export default function MainInfoPage() {
           userState={state?.user || null}
         >
           {state && state.user && hasStudio ? (
-            <GeneralInfoEdit uid={state?.user?.uid || null} />
+            <GeneralInfoEdit studioId={state?.user?.studio_id || null} />
           ) : (
             <GeneralInfo uid={state?.user?.uid || null} />
           )}

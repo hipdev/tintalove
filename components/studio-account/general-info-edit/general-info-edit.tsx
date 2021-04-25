@@ -1,8 +1,8 @@
-import useArtist from 'hooks/use-artist'
+import useStudio from 'hooks/use-studio'
 import MainInfoForm from './general-info-form'
 
-const MainInfoEdit = ({ uid }) => {
-  const { artist } = useArtist(uid)
+const MainInfoEdit = ({ studioId }) => {
+  const { studio } = useStudio(studioId)
 
   return (
     <div className="w-4/5 mt-10">
@@ -10,11 +10,13 @@ const MainInfoEdit = ({ uid }) => {
         Información general
       </h1>
       <p className="text-white mb-5 sm:mb-6 lg:mb-8">
-        Gracias por ser parte de la familia Tinta Love, cuando llenes todos los
-        pasos aparecerá un botón mágico para activar tu perfil
+        Al terminar todos los pasos aparecerá un boton para activar tu estudio
+        en Tinta Love.
       </p>
 
-      {artist?.displayName && <MainInfoForm uid={uid} artist={artist} />}
+      {studio?.studio_name && (
+        <MainInfoForm studioId={studioId} studio={studio} />
+      )}
     </div>
   )
 }
