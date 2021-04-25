@@ -4,8 +4,8 @@ import { useCallback, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
 import {
-  updateArtistMainInfo,
   updateArtistUsername,
+  updateStudioGeneralInfo,
   userNameAvailableStudio,
 } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
@@ -20,7 +20,7 @@ import GeneralInfoAvailable from './general-info-available'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfoForm = ({ studioId, studio }) => {
+const MainInfoForm = ({ studioId, studio, uid }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -157,16 +157,16 @@ const MainInfoForm = ({ studioId, studio }) => {
       return
     }
 
-    let formData = { bio: data.bio, displayName: data.displayName }
+    let formData = { bio: data.bio, studio_name: data.studio_name }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateArtistMainInfo(studioId, formData, true), {
+    toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
         setTriggerAuth(Math.random()) // reload global user state data
         router.push('/artist/working-info')
-        return 'Artista actualizado 😉'
+        return 'Estudio actualizado 😉'
       },
       error: (err) => {
         setLoading(false)
