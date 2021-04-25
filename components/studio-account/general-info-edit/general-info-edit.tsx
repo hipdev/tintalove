@@ -1,7 +1,7 @@
 import useStudio from 'hooks/use-studio'
 import MainInfoForm from './general-info-form'
 
-const MainInfoEdit = ({ studioId }) => {
+const MainInfoEdit = ({ studioId, uid }) => {
   const { studio } = useStudio(studioId)
 
   return (
@@ -15,7 +15,7 @@ const MainInfoEdit = ({ studioId }) => {
       </p>
 
       {studio?.studio_name && (
-        <MainInfoForm studioId={studioId} studio={studio} />
+        <MainInfoForm studioId={studioId} studio={studio} uid={uid} />
       )}
     </div>
   )

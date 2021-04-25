@@ -396,6 +396,42 @@ export async function createStudio(uid, data, wizard) {
   }
 }
 
+export async function updateStudioGeneralInfo(studioId, uid, data) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const userRef = doc(collection(db, 'users'), uid)
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    const batch = writeBatch(db)
+
+    batch.set(
+      studioRef,
+      {
+        updated_at: serverTimestamp(),
+        ...data,
+      },
+      { merge: true }
+    )
+
+    batch.set(
+      userRef,
+      {
+        studio_name: data.studio_name.trim(),
+        updated_at: serverTimestamp(),
+      },
+      { merge: true }
+    )
+
+    await batch.commit()
+
+    return true
+  } else {
+    throw new Error('No estas registrado como estudio')
+  }
+}
+
 export async function getStudioInfo(uid) {
   const docRef = doc(collection(db, 'studios'), uid)
   const docSnap = await getDoc(docRef)
