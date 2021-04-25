@@ -8,12 +8,13 @@ import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useStateMachine } from 'little-state-machine'
 import { login } from 'lib/actions'
+import { UserState } from 'types/user'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
-const SubMenuHeader = ({ user }) => {
+const SubMenuHeader = ({ user }: { user: UserState }) => {
   const { state: loginState, actions } = useStateMachine({
     login,
   })
@@ -105,6 +106,24 @@ const SubMenuHeader = ({ user }) => {
                             </a>
                           )}
                         </Menu.Item>
+
+                        {user?.studio_id && (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/studio-account/general"
+                                className={`${
+                                  active
+                                    ? 'bg-gray-100 text-gray-900'
+                                    : 'text-gray-700'
+                                } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                              >
+                                Administrar estudio
+                              </a>
+                            )}
+                          </Menu.Item>
+                        )}
+
                         <Menu.Item>
                           {({ active }) => (
                             <a
