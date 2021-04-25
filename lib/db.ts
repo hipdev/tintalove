@@ -11,6 +11,7 @@ import {
   writeBatch,
   getDocs,
   QueryDocumentSnapshot,
+  addDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -38,6 +39,16 @@ export async function createUser(user: User) {
 
 export async function userNameAvailable(username) {
   const usernameRef = doc(db, `usernames/${username}`)
+  const queryRef = await getDoc(usernameRef)
+
+  if (queryRef.exists()) {
+    return false
+  } else {
+    return true
+  }
+}
+export async function userNameAvailableStudio(username) {
+  const usernameRef = doc(db, `usernames_studios/${username}`)
   const queryRef = await getDoc(usernameRef)
 
   if (queryRef.exists()) {
@@ -338,4 +349,50 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
   await batch.commit()
 
   return true
+}
+
+// Studio queries
+
+export async function createStudio(uid, data, wizard) {
+  const usernameRef = doc(collection(db, 'usernames_studios'), data.username)
+  const userRef = doc(collection(db, 'users'), uid)
+
+  const usernameSnap = await getDoc(usernameRef)
+
+  if (usernameSnap.exists()) {
+    throw new Error('El nombre de usuario para el estudio ya existe')
+  } else {
+    await addDoc(collection(db, 'studios'), {
+      created_at: serverTimestamp(),
+      ...data,
+      admins: [uid],
+    }).then(async (docRef) => {
+      const studioWizardRef = doc(collection(db, 'studios_wizard'), docRef.id)
+
+      const batch = writeBatch(db)
+
+      batch.set(usernameRef, {
+        studio_id: docRef.id,
+      })
+
+      batch.set(
+        userRef,
+        {
+          studio_name: data.studio_name.trim(),
+          has_studio: true,
+          studio_id: docRef.id,
+          updated_at: serverTimestamp(),
+        },
+        { merge: true }
+      )
+
+      if (wizard) {
+        batch.set(studioWizardRef, { step_one: true }, { merge: true })
+      }
+
+      await batch.commit()
+
+      return true
+    })
+  }
 }
