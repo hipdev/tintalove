@@ -76,7 +76,7 @@ const Artists = ({ uid, isArtist }) => {
   }
 
   return uid ? (
-    <div className="w-4/5 mt-10">
+    <div className="w-5/5 mt-10 pr-10">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -102,7 +102,7 @@ const Artists = ({ uid, isArtist }) => {
         </div>
 
         <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-3">
+          <div className="col-span-4">
             <label className="text-sm mb-3 tracking-wide">
               <span className="mb-3 block"> ESTILOS QUE OFRECEN </span>
 
@@ -125,13 +125,13 @@ const Artists = ({ uid, isArtist }) => {
             </label>
           </div>
 
-          <div className="col-span-3 mb-6 ">
+          <div className="col-span-2 mb-6 ">
             <label htmlFor="" className="text-sm tracking-wide">
               <span className="mb-3 block">HORARIOS DEL ESTUDIO</span>
 
               <textarea
                 {...register('times', { required: true })}
-                rows={6}
+                rows={4}
                 placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm"
                 className="w-full input-primary resize-none"
               ></textarea>
