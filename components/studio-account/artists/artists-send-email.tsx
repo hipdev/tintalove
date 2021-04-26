@@ -1,6 +1,6 @@
 const ArtistsSendEmail = () => {
   return (
-    <>
+    <div className="mb-10">
       <h2 className="text-xl font-semibold">Invitar un artista</h2>
       <p className="mb-5 text-sm">
         Escribe nombre y correo, le enviaremos una invitación para que pueda ser
@@ -27,11 +27,11 @@ const ArtistsSendEmail = () => {
             />
           </label>
         </div>
-        <div className="flex justify-end">
+        <div className="col-span-2 flex justify-center items-center">
           <button>Enviar</button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
