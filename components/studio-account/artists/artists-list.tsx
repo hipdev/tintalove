@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { MdCheckCircle, MdChevronRight, MdMail } from 'react-icons/md'
+import 'microtip/microtip.css'
 
 const applications = [
   {
@@ -44,7 +45,7 @@ const ArtistsAccountList = () => {
   return (
     <>
       <h2 className="text-xl font-semibold mb-5">Artistas actuales</h2>
-      <div className="bg-dark-800 shadow overflow-hidden sm:rounded-sm mb-10">
+      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10">
         <ul className="divide-y divide-gray-200">
           {applications.map((application) => (
             <li
@@ -84,7 +85,7 @@ const ArtistsAccountList = () => {
                     <div className="hidden md:block">
                       <div>
                         <p className="text-sm text-gray-400">
-                          Aplico en{' '}
+                          Aplicó en
                           <time dateTime={application.date}>
                             {application.dateFull}
                           </time>
@@ -101,10 +102,16 @@ const ArtistsAccountList = () => {
                   </div>
                 </div>
                 <div>
-                  <AiOutlineDelete
-                    className="h-5 w-5 text-red-400"
-                    aria-hidden="true"
-                  />
+                  <span
+                    aria-label="Eliminar "
+                    data-microtip-position="top"
+                    role="tooltip"
+                  >
+                    <AiOutlineDelete
+                      className="h-5 w-5 text-red-400 cursor-pointer"
+                      aria-hidden="true"
+                    />
+                  </span>
                 </div>
               </div>
             </li>
