@@ -161,21 +161,21 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
         </a>
       </Link>
 
-      <Link href="/studio-account/working-info">
+      <Link href="/studio-account/artists">
         <a className="block relative pb-10">
           <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
-                  path == 'working-info'
+                  path == 'artists'
                     ? 'border-primary' + circle
                     : 'border-light-900' + circle
                 }
               >
                 <span
                   className={
-                    path == 'working-info' ? 'text-white' : 'text-light-900'
+                    path == 'artists' ? 'text-white' : 'text-light-900'
                   }
                 >
                   2
@@ -185,7 +185,7 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
             <span className="ml-4 min-w-0 mt-1.5">
               <span
                 className={
-                  path == 'working-info'
+                  path == 'artists'
                     ? 'text-white ' + textWhite
                     : 'text-light-900 ' + textWhite
                 }
