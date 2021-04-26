@@ -44,7 +44,7 @@ const applications = [
 const ArtistsAccountList = () => {
   return (
     <>
-      <h2 className="text-xl font-semibold mb-5">Artistas actuales</h2>
+      <h2 className="text-xl font-semibold mb-5">Listado de artistas </h2>
       <div className="bg-dark-800 shadow  sm:rounded-sm mb-10">
         <ul className="divide-y divide-gray-200">
           {applications.map((application) => (
@@ -52,7 +52,7 @@ const ArtistsAccountList = () => {
               key={application.applicant.email}
               className="block hover:bg-gray-900"
             >
-              <div className="flex items-center px-4 py-4 sm:px-6">
+              <div className="flex items-center px-4 py-3 sm:px-6">
                 <div className="min-w-0 flex-1 flex items-center">
                   <div className="flex-shrink-0">
                     <img
@@ -85,7 +85,7 @@ const ArtistsAccountList = () => {
                     <div className="hidden md:block">
                       <div>
                         <p className="text-sm text-gray-400">
-                          Aplicó en
+                          Aplicó en{' '}
                           <time dateTime={application.date}>
                             {application.dateFull}
                           </time>
