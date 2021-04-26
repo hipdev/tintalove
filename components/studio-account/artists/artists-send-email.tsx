@@ -34,9 +34,9 @@ const ArtistsSendEmail = () => {
     console.log(data, 'data invitation')
     setLoading(true)
 
-    // axios.post('/api/emails/invitation-artist', data).then((res) => {
-    //   console.log(res, 'la res')
-    // })
+    axios.post('/api/emails/invitation-artist', data).then((res) => {
+      console.log(res, 'la res')
+    })
 
     setLoading(false)
   }
@@ -70,21 +70,27 @@ const ArtistsSendEmail = () => {
             <span className="mb-3 block">NOMBRE</span>
             <input
               type="text"
+              autoComplete="off"
               className="input-primary w-full"
               placeholder="Nombre del artista"
-              {...register('artist_name')}
+              {...register('artist_name', { required: true })}
             />
+            {errors.artist_name && (
+              <p className="mt-2">Esta campo es requerido</p>
+            )}
           </label>
         </div>
         <div className="col-span-4">
           <label className="text-sm mb-3 tracking-wide">
             <span className="mb-3 block">EMAIL</span>
             <input
-              type="text"
+              type="email"
+              autoComplete="off"
               className="input-primary w-full"
               placeholder="Email del artista"
-              {...register('email')}
+              {...register('email', { required: true })}
             />
+            {errors.email && <p className="mt-2">Esta campo es requerido</p>}
           </label>
         </div>
         <div className="col-span-2 flex justify-center items-center">

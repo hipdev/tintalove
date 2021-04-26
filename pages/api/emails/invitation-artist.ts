@@ -1,33 +1,31 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import * as SendGrid from '@sendgrid/mail'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const method = req.method
 
-  if (method === 'POST' && req.body.artistEmail) {
-    const sgMail = require('@sendgrid/mail')
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  if (method === 'POST' && req.body.artist_name && req.body.email) {
+    SendGrid.setApiKey(process.env.SENDGRID_API_KEY)
 
-    console.log(req.body, 'body en api')
-
-    const msg = {
-      to: req.body.artistEmail,
-      from: 'em8994.no-responder.tintalove.com', // Use the email address or domain you verified above
-      subject: 'Sending with Twilio SendGrid is Fun',
-      text: 'and easy to do anywhere, even with Node.js',
+    const msg: SendGrid.MailDataRequired = {
+      to: req.body.email,
+      from: { email: 'admin@tintalove.com', name: 'Tinta Love' }, // Use the email address or domain you verified above
+      subject: `Hola ${req.body.artist_name}, Opio Tattoo te esta invitando a su equipo`,
+      text: `Hola ${req.body.artist_name}, Opio Tattoo te esta invitando a su equipo`,
       html: '<strong>and easy to do anywhere, even with Node.js</strong>',
     }
 
     try {
-      //   ;(async () => {
-      //     try {
-      //       await sgMail.send(msg)
-      //     } catch (error) {
-      //       console.error(error)
-      //       if (error.response) {
-      //         console.error(error.response.body)
-      //       }
-      //     }
-      //   })()
+      ;(async () => {
+        try {
+          await SendGrid.send(msg)
+        } catch (error) {
+          console.error(error)
+          if (error.response) {
+            console.error(error.response.body)
+          }
+        }
+      })()
       res.status(200).send('ok')
     } catch (error) {
       res.status(400).send(error.message)
