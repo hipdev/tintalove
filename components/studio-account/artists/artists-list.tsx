@@ -44,8 +44,7 @@ const applications = [
 const ArtistsAccountList = () => {
   return (
     <>
-      <h2 className="text-xl font-semibold mb-5">Listado de artistas </h2>
-      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10">
+      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-5">
         <ul className="divide-y divide-gray-200">
           {applications.map((application) => (
             <li

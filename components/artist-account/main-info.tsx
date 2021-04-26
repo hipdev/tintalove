@@ -340,7 +340,7 @@ const MainInfo = ({ uid }) => {
             <button
               type="submit"
               disabled={loading}
-              className="block  btn-red py-3 px-5"
+              className="block  btn-primary py-3 px-5"
             >
               Guardar
             </button>

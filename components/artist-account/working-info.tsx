@@ -197,14 +197,14 @@ const WorkingInfo = ({ uid, isArtist }) => {
           {isArtist ? (
             <button
               type="submit"
-              className="block  btn-red py-3 px-5"
+              className="block  btn-primary py-3 px-5"
               disabled={loading}
             >
               Siguiente
             </button>
           ) : (
             <Link href="/artist/main-info">
-              <button className="block   btn-red py-3 px-5">
+              <button className="block   btn-primary py-3 px-5">
                 Ir al paso 1
               </button>
             </Link>

@@ -95,11 +95,9 @@ const Artists = ({ uid, isArtist }) => {
         Artistas
       </h1>
 
+      <ArtistsAccountList />
+
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-        <ArtistsSendEmail />
-
-        <ArtistsAccountList />
-
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-4">
             <label className="text-sm mb-3 tracking-wide">
@@ -148,20 +146,22 @@ const Artists = ({ uid, isArtist }) => {
           {isArtist ? (
             <button
               type="submit"
-              className="block  btn-red py-3 px-5"
+              className="block  btn-primary py-3 px-5"
               disabled={loading}
             >
               Siguiente
             </button>
           ) : (
             <Link href="/artist/main-info">
-              <button className="block   btn-red py-3 px-5">
+              <button className="block   btn-primary py-3 px-5">
                 Ir al paso 1
               </button>
             </Link>
           )}
         </div>
       </form>
+
+      <ArtistsSendEmail />
     </div>
   ) : null
 }

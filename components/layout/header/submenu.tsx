@@ -49,7 +49,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
           <button
             title="Acceder con Gmail"
             onClick={handleLogin}
-            className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
+            className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder
           </button>

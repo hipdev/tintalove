@@ -45,7 +45,7 @@ export default function IsAuth({ children }) {
           </p>
           <button
             onClick={handleLogin}
-            className="btn-red w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
+            className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder
           </button>
