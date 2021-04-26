@@ -1,6 +1,6 @@
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
-import Artists from 'components/studio-account/artists'
+import Artists from 'components/studio-account/artists/artists'
 
 import useUser from 'hooks/use-user'
 
