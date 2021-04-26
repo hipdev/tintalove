@@ -50,7 +50,7 @@ const StepNav = () => {
           <>
             <button
               onClick={handleLogin}
-              className="btn-red w-auto text-white mx-auto sm:mx-0 rounded-lg focus:outline-none px-6"
+              className="btn-primary w-auto text-white mx-auto sm:mx-0 rounded-lg focus:outline-none px-6"
             >
               Acceder
             </button>

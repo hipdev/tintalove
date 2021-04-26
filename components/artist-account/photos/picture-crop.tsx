@@ -130,7 +130,7 @@ const PictureCrop = ({
       />
       <button
         onClick={getCropData}
-        className="block btn-red py-3 px-5 mt-4"
+        className="block btn-primary py-3 px-5 mt-4"
         disabled={loading}
       >
         {update ? 'Actualizar' : 'Guardar'}

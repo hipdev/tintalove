@@ -7,6 +7,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const sgMail = require('@sendgrid/mail')
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+    console.log(req.body, 'body en api')
+
     const msg = {
       to: req.body.artistEmail,
       from: 'em8994.no-responder.tintalove.com', // Use the email address or domain you verified above
@@ -16,17 +18,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-      ;(async () => {
-        try {
-          await sgMail.send(msg)
-        } catch (error) {
-          console.error(error)
-
-          if (error.response) {
-            console.error(error.response.body)
-          }
-        }
-      })()
+      //   ;(async () => {
+      //     try {
+      //       await sgMail.send(msg)
+      //     } catch (error) {
+      //       console.error(error)
+      //       if (error.response) {
+      //         console.error(error.response.body)
+      //       }
+      //     }
+      //   })()
+      res.status(200).send('ok')
     } catch (error) {
       res.status(400).send(error.message)
     }

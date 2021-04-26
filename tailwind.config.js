@@ -10,7 +10,7 @@ module.exports = {
       },
       colors: {
         primary: '#158e72',
-        primaryHover: '#ca3032',
+        primaryHover: '#126b56',
         dark: {
           500: '#111319', // new layout design
           700: '#1f1f1f',

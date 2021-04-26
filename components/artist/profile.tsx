@@ -75,7 +75,7 @@ const ArtistProfile = ({ artistData }) => {
                 </p>
               </div>
             </div>
-            <button className="btn-red font-light tracking-wide w-full focus:outline-none">
+            <button className="btn-primary font-light tracking-wide w-full focus:outline-none">
               Contáctame
             </button>
             <button className="absolute top-0 right-0 -mt-6 mr-5 w-12 h-12 flex justify-center items-center text-white text-2xl bg-red-600 rounded-full focus:outline-none">

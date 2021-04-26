@@ -8,7 +8,7 @@
 .input-primary {
   @apply text-gray-400 bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none;
 }
-.btn-red {
+.btn-primary {
   @apply text-white bg-primary py-3 rounded-md hover:bg-primaryHover;
 }
 
