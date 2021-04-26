@@ -8,6 +8,7 @@ import { updateArtistWorkingInfo } from 'lib/db'
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
 import ArtistsSendEmail from './artists-send-email'
+import ArtistsAccountList from './artists-list'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -90,16 +91,14 @@ const Artists = ({ uid, isArtist }) => {
         }}
         position="bottom-right"
       />
-      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide">
         Artistas
       </h1>
 
-      <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
+      <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <ArtistsSendEmail />
 
-        <div>
-          <h2 className="text-xl font-semibold"> Artistas actuales</h2>
-        </div>
+        <ArtistsAccountList />
 
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-4">
