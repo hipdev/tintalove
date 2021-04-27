@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 
 const ArtistsSendEmail = () => {
   const [loading, setLoading] = useState(false)
@@ -36,6 +36,10 @@ const ArtistsSendEmail = () => {
 
     axios.post('/api/emails/invitation-artist', data).then((res) => {
       console.log(res, 'la res')
+      if (res?.status == 200) {
+        reset()
+        toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
+      }
     })
 
     setLoading(false)
@@ -45,9 +49,9 @@ const ArtistsSendEmail = () => {
     <div className="mt-12">
       <Toaster
         toastOptions={{
-          className: 'bg-red-600',
+          className: 'bg-primary',
           style: {
-            background: '#ef3e30',
+            background: '#158e72',
             border: 'none',
             borderRadius: '3px',
             color: '#fff',

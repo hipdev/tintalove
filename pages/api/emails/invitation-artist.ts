@@ -8,11 +8,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     SendGrid.setApiKey(process.env.SENDGRID_API_KEY)
 
     const msg: SendGrid.MailDataRequired = {
-      to: req.body.email,
       from: { email: 'admin@tintalove.com', name: 'Tinta Love' }, // Use the email address or domain you verified above
       subject: `Hola ${req.body.artist_name}, Opio Tattoo te esta invitando a su equipo`,
       text: `Hola ${req.body.artist_name}, Opio Tattoo te esta invitando a su equipo`,
       html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      personalizations: [
+        {
+          to: [{ name: 'Julian David', email: req.body.email }],
+          dynamicTemplateData: {
+            artist_name: req.body.artist_name,
+          },
+        },
+      ],
+      templateId: 'd-8ac303c7e80e49d08c4b0a8c086af04f',
     }
 
     try {
