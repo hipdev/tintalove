@@ -9,16 +9,21 @@ import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
 import ArtistsSendEmail from './artists-send-email'
 import ArtistsAccountList from './artists-list'
+import useStudio from 'hooks/use-studio'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const Artists = ({ uid, isArtist }) => {
+const Artists = ({ uid, studioId, hasStudio }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { artist } = useArtist(uid)
   const router = useRouter()
+
+  const { studio } = useStudio(studioId)
+
+  console.log(studio, 'studio data')
 
   const {
     register,
@@ -138,12 +143,12 @@ const Artists = ({ uid, isArtist }) => {
         </div>
 
         <div className="flex justify-between">
-          {!isArtist && (
+          {!hasStudio && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
             </p>
           )}
-          {isArtist ? (
+          {hasStudio ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"
@@ -161,7 +166,7 @@ const Artists = ({ uid, isArtist }) => {
         </div>
       </form>
 
-      <ArtistsSendEmail />
+      <ArtistsSendEmail studioInfo={studio} />
     </div>
   ) : null
 }
