@@ -484,7 +484,6 @@ export async function updateStudioArtists(studioId, data, wizard) {
 
   const dataForm = {
     times: data.times,
-    work_as: data.work_as,
     styles,
     updated_at: serverTimestamp(),
   }
