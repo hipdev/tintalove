@@ -1,6 +1,6 @@
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
-import ContactInfoStudio from 'components/studio-account/contact-info'
+import ContactInfoStudio from 'components/studio-account/contact-info/contact-info'
 
 import useUser from 'hooks/use-user'
 
