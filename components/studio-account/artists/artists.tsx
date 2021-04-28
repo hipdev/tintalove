@@ -4,7 +4,7 @@ import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { updateArtistWorkingInfo } from 'lib/db'
+import { updateStudioArtists } from 'lib/db'
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
 import ArtistsSendEmail from './artists-send-email'
@@ -18,7 +18,6 @@ const options = tattooStyles.map((style) => {
 const Artists = ({ uid, studioId, hasStudio }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { artist } = useArtist(uid)
   const router = useRouter()
 
   const { studio } = useStudio(studioId)
@@ -35,24 +34,24 @@ const Artists = ({ uid, studioId, hasStudio }) => {
     mode: 'onChange',
     defaultValues: {
       styles: [],
-      times: artist?.times || '',
+      times: studio?.times || '',
     },
   })
 
   useEffect(() => {
-    if (artist) {
+    if (studio) {
       let styles = []
-      if (artist.styles) {
-        styles = artist.styles.map((style) => ({
+      if (studio.styles) {
+        styles = studio.styles.map((style) => ({
           label: style,
           value: style,
         }))
       }
 
-      setValue('times', artist.times)
+      setValue('times', studio.times)
       setValue('styles', styles)
     }
-  }, [artist])
+  }, [studio])
 
   useEffect(() => {
     if (success) {
@@ -64,13 +63,13 @@ const Artists = ({ uid, studioId, hasStudio }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistWorkingInfo(uid, data, true), {
+    toast.promise(updateStudioArtists(studioId, data, true), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
         setSuccess(true)
 
-        return 'Artista actualizado 😉'
+        return 'Estudio actualizado 😉'
       },
       error: (err) => {
         setLoading(false)
@@ -100,13 +99,16 @@ const Artists = ({ uid, studioId, hasStudio }) => {
         Artistas
       </h1>
 
-      <ArtistsAccountList />
+      <ArtistsAccountList studioInfo={studio} />
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-4">
             <label className="text-sm mb-3 tracking-wide">
-              <span className="mb-3 block"> ESTILOS QUE OFRECEN </span>
+              <span className="mb-3 block">
+                {' '}
+                ESTILOS QUE OFRECEN EN EL ESTUDIO{' '}
+              </span>
 
               <Controller
                 rules={{ required: true }}
@@ -145,7 +147,7 @@ const Artists = ({ uid, studioId, hasStudio }) => {
         <div className="flex justify-between">
           {!hasStudio && (
             <p className="text-white">
-              Primero debes guardar el Paso 1, Información Personal.
+              Primero debes guardar el Paso 1, Información general.
             </p>
           )}
           {hasStudio ? (
