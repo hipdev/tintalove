@@ -7,8 +7,10 @@ import { Controller, useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import ContactInfoLocation from './contact-info-location'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
+  const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { studio } = useStudio(studioId)
@@ -220,6 +222,16 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 className="w-full input-primary"
                 {...register('twitter')}
               />
+            </label>
+          </div>
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+            <label
+              htmlFor=""
+              className="block text-white text-sm  mb-3 tracking-wide"
+            >
+              <span className="mb-3 block">Ubicación</span>
+
+              <ContactInfoLocation setPlaceInfo={setPlaceInfo} />
             </label>
           </div>
         </div>
