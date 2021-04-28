@@ -502,3 +502,31 @@ export async function updateStudioArtists(studioId, data, wizard) {
     throw new Error('No estas registrado como artista')
   }
 }
+
+export async function updateStudioContactInfo(studioId, data, wizard) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+  const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+
+  const dataForm = {
+    contact_way: data.contact_way,
+    facebook: data.facebook || null,
+    instagram: data.instagram || null,
+    phone: data.phone,
+    twitter: data.twitter || null,
+    updated_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, dataForm)
+
+    if (wizard) {
+      updateDoc(studioWizardRef, { step_three: true })
+    }
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
