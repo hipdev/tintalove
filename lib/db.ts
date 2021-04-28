@@ -475,3 +475,31 @@ export async function getStudioInfo(uid) {
     return { studio: null }
   }
 }
+
+export async function updateStudioArtists(studioId, data, wizard) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+  const studiosWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+
+  const styles = data.styles.map((style) => style.value)
+
+  const dataForm = {
+    times: data.times,
+    work_as: data.work_as,
+    styles,
+    updated_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, dataForm)
+
+    if (wizard) {
+      updateDoc(studiosWizardRef, { step_two: true })
+    }
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
