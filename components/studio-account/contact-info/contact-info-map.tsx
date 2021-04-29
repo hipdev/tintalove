@@ -2,8 +2,9 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api'
 
 const ContactInfoMapStudio = () => {
   const containerStyle = {
-    width: '400px',
+    width: '100%',
     height: '400px',
+    borderRadius: '4px',
   }
 
   const center = {
@@ -12,8 +13,10 @@ const ContactInfoMapStudio = () => {
   }
 
   return (
-    <div>
-      <h2>Selecciona la ubicación exacta de tu estudio</h2>
+    <div className="w-full mb-10">
+      <h2 className="text-lg font-semibold mb-2 mt-7">
+        Selecciona la ubicación exacta de tu estudio
+      </h2>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
         {/* Child components, such as markers, info windows, etc. */}
         <></>
