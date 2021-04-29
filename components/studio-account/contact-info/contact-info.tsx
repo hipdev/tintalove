@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './contact-info-location'
+import ContactInfoMapStudio from './contact-info-map'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
   const [placeInfo, setPlaceInfo] = useState(null)
@@ -236,6 +237,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               <ContactInfoLocation setPlaceInfo={setPlaceInfo} />
             </label>
           </div>
+        </div>
+
+        <div>
+          <ContactInfoMapStudio />
         </div>
         <div className="flex justify-between">
           {!hasStudio && (
