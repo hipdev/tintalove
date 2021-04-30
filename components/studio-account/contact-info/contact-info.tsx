@@ -35,6 +35,8 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     },
   })
 
+  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
+
   useEffect(() => {
     if (studio) {
       let styles = []
@@ -124,8 +126,6 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
                 <option value="chat-instagram">Chat de Instagram</option>
-                <option value="chat-facebook">Facebook</option>
-                <option value="chat-twitter">Twitter</option>
               </select>
               {errors.contact_way && (
                 <p className="mt-1">Esta campo es requerido</p>
@@ -198,11 +198,8 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
-                    message: 'Debe ser una url',
+                    value: regexUrl,
+                    message: 'Debe ser una url de tu perfil',
                   },
                 })}
               />
@@ -230,10 +227,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
+                    value: regexUrl,
                     message: 'Debe ser la url de tu perfil',
                   },
                 })}
@@ -262,10 +256,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
+                    value: regexUrl,
                     message: 'Debe ser la url de tu perfil',
                   },
                 })}

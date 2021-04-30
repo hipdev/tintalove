@@ -32,6 +32,8 @@ const ContactInfo = ({ uid, isArtist }) => {
     },
   })
 
+  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
+
   useEffect(() => {
     if (artist) {
       let styles = []
@@ -119,9 +121,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                 <option value="direct-call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
-                <option value="chat-instagram">Instagram</option>
-                <option value="chat-facebook">Facebook</option>
-                <option value="chat-twitter">Twitter</option>
+                <option value="chat-instagram">Chat de Instagram</option>
               </select>
               {errors.contact_way && (
                 <p className="mt-1">Esta campo es requerido</p>
@@ -190,15 +190,12 @@ const ContactInfo = ({ uid, isArtist }) => {
                 className="w-full input-primary"
                 {...register('instagram', {
                   required: {
-                    value: watchContactWay == 'instagram' ? true : false,
+                    value: watchContactWay == 'chat-instagram' ? true : false,
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
-                    message: 'Debe ser una url',
+                    value: regexUrl,
+                    message: 'Debe ser una url de tu perfil',
                   },
                 })}
               />
@@ -222,14 +219,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                 className="w-full input-primary"
                 {...register('facebook', {
                   required: {
-                    value: watchContactWay == 'chat-facebook' ? true : false,
+                    value: watchContactWay == 'facebook' ? true : false,
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
+                    value: regexUrl,
                     message: 'Debe ser la url de tu perfil',
                   },
                 })}
@@ -254,14 +248,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                 className="w-full input-primary"
                 {...register('twitter', {
                   required: {
-                    value: watchContactWay == 'chat-twitter' ? true : false,
+                    value: watchContactWay == 'twitter' ? true : false,
                     message: 'Este campo es requerido',
                   },
                   pattern: {
-                    value: new RegExp(
-                      '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
-                      'gm'
-                    ),
+                    value: regexUrl,
                     message: 'Debe ser la url de tu perfil',
                   },
                 })}
