@@ -6,8 +6,10 @@ import useOnclickOutside from 'react-cool-onclickoutside'
 import useScript from 'hooks/use-script'
 import { useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
+import toast from 'react-hot-toast'
+import { updateStudioLocation } from 'lib/db'
 
-const ContactInfoLocation = ({ setPlaceInfo, setLocation }) => {
+const ContactInfoLocation = ({ setLocation, studioId }) => {
   const [placeholder, setPlaceholder] = useState('')
 
   const {
@@ -63,16 +65,22 @@ const ContactInfoLocation = ({ setPlaceInfo, setLocation }) => {
 
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
-    const province = fullAddress[1].trim() || ''
-    const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
-    setPlaceInfo({
+    const dataLocation = {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
       city_name,
       city_hash: cityHash,
-      province,
-      country,
+    }
+
+    toast.promise(updateStudioLocation(studioId, dataLocation), {
+      loading: 'Actualizando...',
+      success: () => {
+        return 'Ubicaciíon actualizada 😉'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
     })
   }
 
@@ -103,11 +111,13 @@ const ContactInfoLocation = ({ setPlaceInfo, setLocation }) => {
         placeholder={placeholder ? placeholder : '' ? '' : 'Busca tu ciudad'}
         className="input-primary w-full"
         spellCheck="false"
-        onFocus={() => setValue('')}
+        required
       />
       {/* We can use the "status" to decide whether we should display the dropdown or not */}
       {status === 'OK' && (
-        <ul className="bg-dark-800 absolute w-full">{renderSuggestions()}</ul>
+        <ul className="bg-dark-800 absolute w-full z-10">
+          {renderSuggestions()}
+        </ul>
       )}
     </div>
   )

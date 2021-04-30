@@ -3,7 +3,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
-import useScript from 'hooks/use-script'
+
 import { useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 
@@ -40,35 +40,35 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
 
   const handleSelect = (placeData) => async () => {
     console.log(placeData, 'data from city')
-    // //pedir explicación aquí a lucho
-    // // // When user selects a place, we can replace the keyword without request data from API
-    // // // by setting the second parameter to "false"
-    // setValue(description, false)
-    // clearSuggestions()
-    // setPlaceholder(description)
+    //pedir explicación aquí a lucho
+    // // When user selects a place, we can replace the keyword without request data from API
+    // // by setting the second parameter to "false"
+    setValue(placeData.description, false)
+    clearSuggestions()
+    setPlaceholder(placeData.description)
 
-    // // Get latitude and longitude via utility functions
-    // const results = await getGeocode({ address: description })
+    // Get latitude and longitude via utility functions
+    const results = await getGeocode({ address: placeData.description })
 
-    // const { lat, lng }: any = await getLatLng(results[0])
+    const { lat, lng }: any = await getLatLng(results[0])
 
-    // console.log(lat, lng, 'los lat y long')
+    console.log(lat, lng, 'los lat y long')
 
-    // const cityHash = geohashForLocation([lat, lng])
+    const cityHash = geohashForLocation([lat, lng])
 
-    // const fullAddress = results[0].formatted_address.split(',')
-    // const city_name = fullAddress[0]
-    // const province = fullAddress[1].trim() || ''
-    // const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
+    const fullAddress = results[0].formatted_address.split(',')
+    const city_name = fullAddress[0]
+    const province = fullAddress[1].trim() || ''
+    const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
-    // setPlaceInfo({
-    //   place_id: results[0].place_id,
-    //   formatted_address: results[0].formatted_address,
-    //   city_name,
-    //   city_hash: cityHash,
-    //   province,
-    //   country,
-    // })
+    setPlaceInfo({
+      place_id: results[0].place_id,
+      formatted_address: results[0].formatted_address,
+      city_name,
+      city_hash: cityHash,
+      province,
+      country,
+    })
   }
 
   const renderSuggestions = () =>

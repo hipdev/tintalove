@@ -3,12 +3,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import {
-  createArtist,
-  createStudio,
-  userNameAvailable,
-  userNameAvailableStudio,
-} from 'lib/db'
+import { createStudio, userNameAvailableStudio } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -72,7 +67,7 @@ const GeneralInfo = ({ uid }) => {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(
-        () => router.push('/studio-account/working-info'),
+        () => router.push('/studio-account/artists'),
         1000
       )
       return () => clearTimeout(timer)
@@ -190,7 +185,6 @@ const GeneralInfo = ({ uid }) => {
         setLoading(false)
         setSuccess(true)
         setTriggerAuth(Math.random()) // reload global user state data
-        // router.push('/artist/new/working-info')
 
         return 'Estudio creado 😉'
       },
@@ -199,11 +193,6 @@ const GeneralInfo = ({ uid }) => {
         return `${err.toString()}`
       },
     })
-
-    // setLoading(false)
-
-    // console.log(data, 'form data')
-    // console.log(formData, 'formatted data')
   }
 
   return (
