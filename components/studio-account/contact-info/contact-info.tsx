@@ -11,6 +11,7 @@ import ContactInfoLocation from './contact-info-location'
 import ContactInfoMapStudio from './contact-info-map'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
+  const [location, setLocation] = useState(null)
   const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -83,7 +84,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     setLoading(false)
   }
 
-  console.log(placeInfo, 'data de ubicación')
+  console.log(placeInfo, location, 'data de ubicación')
 
   return (
     <div className="w-4/5 mt-10">
@@ -234,14 +235,16 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
             >
               <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
 
-              <ContactInfoLocation setPlaceInfo={setPlaceInfo} />
+              <ContactInfoLocation
+                setPlaceInfo={setPlaceInfo}
+                setLocation={setLocation}
+              />
             </label>
           </div>
         </div>
 
-        <div>
-          <ContactInfoMapStudio />
-        </div>
+        {location && <ContactInfoMapStudio cityLocation={location} />}
+
         <div className="flex justify-between">
           {!hasStudio && (
             <p className="text-white">
