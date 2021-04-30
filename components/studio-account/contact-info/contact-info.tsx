@@ -36,6 +36,8 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     },
   })
 
+  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
+
   useEffect(() => {
     if (studio) {
       let styles = []
@@ -192,10 +194,21 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
                 {...register('instagram', {
-                  required: watchContactWay == 'chat-instagram' ? true : false,
+                  required: {
+                    value: watchContactWay == 'instagram' ? true : false,
+                    message: 'Este campo es requerido',
+                  },
+                  pattern: {
+                    value: regexUrl,
+                    message: 'Debe ser una url de tu perfil',
+                  },
                 })}
               />
-              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
+              {errors.instagram && errors.instagram.message && (
+                <p className="mt-1">
+                  {errors.instagram && errors.instagram.message}
+                </p>
+              )}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
@@ -209,8 +222,22 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
-                {...register('facebook')}
+                {...register('facebook', {
+                  required: {
+                    value: watchContactWay == 'chat-facebook' ? true : false,
+                    message: 'Este campo es requerido',
+                  },
+                  pattern: {
+                    value: regexUrl,
+                    message: 'Debe ser la url de tu perfil',
+                  },
+                })}
               />
+              {errors.facebook && errors.facebook.message && (
+                <p className="mt-1">
+                  {errors.facebook && errors.facebook.message}
+                </p>
+              )}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
@@ -224,8 +251,22 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 type="text"
                 placeholder="Pega la URL de tu perfil"
                 className="w-full input-primary"
-                {...register('twitter')}
+                {...register('twitter', {
+                  required: {
+                    value: watchContactWay == 'chat-twitter' ? true : false,
+                    message: 'Este campo es requerido',
+                  },
+                  pattern: {
+                    value: regexUrl,
+                    message: 'Debe ser la url de tu perfil',
+                  },
+                })}
               />
+              {errors.twitter && errors.twitter.message && (
+                <p className="mt-1">
+                  {errors.twitter && errors.twitter.message}
+                </p>
+              )}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
