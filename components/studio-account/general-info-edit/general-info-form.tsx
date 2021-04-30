@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
 
 import {
@@ -41,6 +41,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
   const [studioUsername, setStudioUsername] = useState(studio.username)
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const [counter, setCounter] = useState(studio.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
@@ -87,6 +88,16 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
     }, 3000),
     []
   )
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(
+        () => router.push('/studio-account/artists'),
+        1000
+      )
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   const handleName = (e) => {
     const name: string = e.target.value
@@ -164,8 +175,9 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
+        setSuccess(true)
         setTriggerAuth(Math.random()) // reload global user state data
-        router.push('/artist/working-info')
+
         return 'Estudio actualizado 😉'
       },
       error: (err) => {

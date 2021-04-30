@@ -530,3 +530,37 @@ export async function updateStudioContactInfo(studioId, data, wizard) {
     throw new Error('No estas registrado como artista')
   }
 }
+
+export async function updateStudioLocation(studioId, dataLocation) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, {
+      dataLocation,
+      updated_at: serverTimestamp(),
+    })
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function updateStudioLocationMarker(studioId, dataMarker) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, {
+      dataMarker,
+      updated_at: serverTimestamp(),
+    })
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}

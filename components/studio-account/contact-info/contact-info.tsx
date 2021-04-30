@@ -87,7 +87,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   console.log(placeInfo, location, 'data de ubicación')
 
   return (
-    <div className="w-4/5 mt-10">
+    <div className="w-full mt-10 pr-10">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -236,14 +236,16 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
 
               <ContactInfoLocation
-                setPlaceInfo={setPlaceInfo}
+                studioId={studioId}
                 setLocation={setLocation}
               />
             </label>
           </div>
         </div>
 
-        {location && <ContactInfoMapStudio cityLocation={location} />}
+        {location && (
+          <ContactInfoMapStudio studioId={studioId} cityLocation={location} />
+        )}
 
         <div className="flex justify-between">
           {!hasStudio && (
