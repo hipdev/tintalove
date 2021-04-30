@@ -119,7 +119,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                 <option value="direct-call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
+<<<<<<< HEAD
                 <option value="instagram">Instagram</option>
+=======
+                <option value="chat-instagram">Instagram</option>
+>>>>>>> 502c34386c89b544bc110502b46bba092e122f3a
                 <option value="chat-facebook">Facebook</option>
                 <option value="chat-twitter">Twitter</option>
               </select>
@@ -198,7 +202,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                       '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
                       'gm'
                     ),
+<<<<<<< HEAD
                     message: 'Debe ser una url',
+=======
+                    message: 'Debe ser la url de tu perfil',
+>>>>>>> 502c34386c89b544bc110502b46bba092e122f3a
                   },
                 })}
               />
@@ -230,7 +238,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                       '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
                       'gm'
                     ),
+<<<<<<< HEAD
                     message: 'Debe ser una url',
+=======
+                    message: 'Debe ser la url de tu perfil',
+>>>>>>> 502c34386c89b544bc110502b46bba092e122f3a
                   },
                 })}
               />
@@ -262,7 +274,11 @@ const ContactInfo = ({ uid, isArtist }) => {
                       '^https?://[w-]+(.[w-]+)+[/#?]?.*$',
                       'gm'
                     ),
+<<<<<<< HEAD
                     message: 'Debe ser una url',
+=======
+                    message: 'Debe ser la url de tu perfil',
+>>>>>>> 502c34386c89b544bc110502b46bba092e122f3a
                   },
                 })}
               />

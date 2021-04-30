@@ -7,8 +7,11 @@ import { Controller, useForm } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import ContactInfoLocation from './contact-info-location'
+import ContactInfoMapStudio from './contact-info-map'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
+  const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { studio } = useStudio(studioId)
@@ -80,6 +83,8 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     setLoading(false)
   }
 
+  console.log(placeInfo, 'data de ubicación')
+
   return (
     <div className="w-4/5 mt-10">
       <Toaster
@@ -100,13 +105,13 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
       </h1>
 
       <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-6 gap-6">
+        <div className="grid grid-cols-6 gap-4 gap-x-6">
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
+              className="block text-white text-sm  mb-2 tracking-wide"
             >
-              <span className="mb-3 block">
+              <span className="mb-2 block">
                 POR DÓNDE QUIERES QUE TE CONTACTEN
               </span>
 
@@ -128,9 +133,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm mb-3 tracking-wide"
+              className="block text-white text-sm mb-2 tracking-wide"
             >
-              <span className="mb-3 block">NÚMERO</span>
+              <span className="mb-2 block">NÚMERO</span>
 
               <Controller
                 rules={{ required: true }}
@@ -177,9 +182,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
+              className="block text-white text-sm  mb-2 tracking-wide"
             >
-              <span className="mb-3 block">INSTAGRAM</span>
+              <span className="mb-2 block">INSTAGRAM</span>
 
               <input
                 type="text"
@@ -195,9 +200,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
+              className="block text-white text-sm  mb-2 tracking-wide"
             >
-              <span className="mb-3 block">FACEBOOK</span>
+              <span className="mb-2 block">FACEBOOK</span>
 
               <input
                 type="text"
@@ -210,9 +215,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
+              className="block text-white text-sm  mb-2 tracking-wide"
             >
-              <span className="mb-3 block">TWITTER</span>
+              <span className="mb-2 block">TWITTER</span>
 
               <input
                 type="text"
@@ -222,6 +227,20 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               />
             </label>
           </div>
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+            <label
+              htmlFor=""
+              className="block text-white text-sm  mb-2 tracking-wide"
+            >
+              <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
+
+              <ContactInfoLocation setPlaceInfo={setPlaceInfo} />
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <ContactInfoMapStudio />
         </div>
         <div className="flex justify-between">
           {!hasStudio && (
@@ -232,7 +251,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           {hasStudio ? (
             <button
               type="submit"
-              className="block  btn-primary py-3 px-5"
+              className="block  btn-primary py-3 px-5 mb-10"
               disabled={loading}
             >
               Siguiente
