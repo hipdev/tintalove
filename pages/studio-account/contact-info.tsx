@@ -24,7 +24,7 @@ export default function ContactInfoPageStudio() {
           uid={state?.user?.uid}
           userState={state?.user || null}
         >
-          {state && state.user && (
+          {state && state?.user && (
             <div>
               {status === 'ready' && (
                 <ContactInfoStudio
