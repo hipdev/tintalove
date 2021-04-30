@@ -7,7 +7,7 @@ import useScript from 'hooks/use-script'
 import { useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 
-const ContactInfoLocation = ({ setPlaceInfo }) => {
+const ContactInfoLocation = ({ setPlaceInfo, setLocation }) => {
   const [placeholder, setPlaceholder] = useState('')
 
   const {
@@ -54,6 +54,8 @@ const ContactInfoLocation = ({ setPlaceInfo }) => {
     const results = await getGeocode({ address: placeData.description })
 
     const { lat, lng }: any = await getLatLng(results[0])
+
+    setLocation({ lat, lng })
 
     console.log(lat, lng, 'los lat y long')
 
