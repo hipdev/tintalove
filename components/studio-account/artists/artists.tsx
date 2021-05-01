@@ -159,7 +159,7 @@ const Artists = ({ uid, studioId, hasStudio }) => {
               Siguiente
             </button>
           ) : (
-            <Link href="/studio-account/general-info">
+            <Link href="/studio-account/general">
               <button className="block   btn-primary py-3 px-5">
                 Ir al paso 1
               </button>

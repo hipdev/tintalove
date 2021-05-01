@@ -1,5 +1,6 @@
 import Compressor from 'compressorjs'
 import useArtistRealtime from 'hooks/realtime/use-artist'
+import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
@@ -7,7 +8,7 @@ import { HiOutlineCamera } from 'react-icons/hi'
 
 import PictureCrop from './picture-crop'
 
-const PictureAddMain = ({ uid, isArtist }) => {
+const PictureAddMain = ({ uid, hasStudio }) => {
   const [picture, setPicture] = useState(null)
   const { artist } = useArtistRealtime(uid)
 
@@ -80,7 +81,7 @@ const PictureAddMain = ({ uid, isArtist }) => {
         </div>
       )}
 
-      {!picture && (
+      {!picture && hasStudio && (
         <div className="flex justify-center">
           <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <span className="text-4xl text-light-900 mb-4">
@@ -101,6 +102,18 @@ const PictureAddMain = ({ uid, isArtist }) => {
               </label>
             </div>
           </div>
+        </div>
+      )}
+      {!hasStudio && (
+        <div className="flex justify-between">
+          <p className="text-white">
+            Primero debes guardar el Paso 1, Información Personal.
+          </p>
+          <Link href="/studio-account/general">
+            <button className="block   btn-primary py-3 px-5">
+              Ir al paso 1
+            </button>
+          </Link>
         </div>
       )}
     </div>

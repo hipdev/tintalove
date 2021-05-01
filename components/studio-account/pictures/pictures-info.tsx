@@ -31,7 +31,7 @@ const PicturesInfoStudio = ({ studioId, hasStudio }) => {
       {artist?.profile_picture ? (
         <PictureReady artist={artist} />
       ) : (
-        <PictureAddMain uid={studioId} isArtist={hasStudio} />
+        <PictureAddMain uid={studioId} hasStudio={hasStudio} />
       )}
     </div>
   )
