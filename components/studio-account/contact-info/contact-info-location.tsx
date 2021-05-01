@@ -4,12 +4,12 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
 import useScript from 'hooks/use-script'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
 import { updateStudioLocation } from 'lib/db'
 
-const ContactInfoLocation = ({ setLocation, studioId }) => {
+const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
 
   const {
@@ -27,6 +27,22 @@ const ContactInfoLocation = ({ setLocation, studioId }) => {
     // callbackName: 'initMap',
     defaultValue: '',
   })
+
+  useEffect(() => {
+    if (studioInfo?.dataLocation) {
+      setPlaceholder(studioInfo?.dataLocation.formatted_address)
+      setLocation(
+        {
+          lat: studioInfo.dataMarker.marker_location[0],
+          lng: studioInfo.dataMarker.marker_location[1],
+        } || {
+          lat: studioInfo.dataLocation.coordinates.lat,
+          lng: studioInfo.dataLocation.coordinates.lng,
+        }
+      )
+      console.log(studioInfo?.dataLocation.formatted_address, 'address')
+    }
+  }, [studioInfo])
 
   // useScript(
   //   'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places&callback=initMap'
@@ -70,6 +86,7 @@ const ContactInfoLocation = ({ setLocation, studioId }) => {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
       city_name,
+      coordinates: { lat, lng },
       city_hash: cityHash,
     }
 
