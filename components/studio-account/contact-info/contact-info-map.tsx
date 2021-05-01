@@ -6,7 +6,7 @@ import { updateStudioLocationMarker } from 'lib/db'
 const ContactInfoMapStudio = ({ cityLocation, studioId }) => {
   const containerStyle = {
     width: '100%',
-    height: '450px',
+    height: '500px',
     borderRadius: '4px',
   }
 
