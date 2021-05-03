@@ -1,13 +1,13 @@
+import HomeLayout from 'components/home/layout/home-layout'
 import { getArtistsInfo } from 'lib/db'
 import { postsToJSON } from 'lib/firebase'
 import Home from '../components/home/home'
-import Layout from '../components/layout/layout'
 
 export default function IndexPage({ artistsData }) {
   return (
-    <Layout>
+    <HomeLayout>
       <Home artists={artistsData} />
-    </Layout>
+    </HomeLayout>
   )
 }
 
