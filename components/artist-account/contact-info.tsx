@@ -26,9 +26,9 @@ const ContactInfo = ({ uid, isArtist }) => {
     defaultValues: {
       contact_way: '',
       phone: '',
-      instagram: '',
-      facebook: '',
-      twitter: '',
+      instagram: null,
+      facebook: null,
+      twitter: null,
     },
   })
 
@@ -44,11 +44,11 @@ const ContactInfo = ({ uid, isArtist }) => {
         }))
       }
 
-      setValue('contact_way', artist.contact_way)
-      setValue('phone', artist.phone)
-      setValue('instagram', artist.instagram)
-      setValue('facebook', artist.facebook)
-      setValue('twitter', artist.twitter)
+      setValue('contact_way', artist.contact_way || null)
+      setValue('phone', artist.phone || null)
+      setValue('instagram', artist.instagram || null)
+      setValue('facebook', artist.facebook || null)
+      setValue('twitter', artist.twitter || null)
     }
   }, [artist])
 
