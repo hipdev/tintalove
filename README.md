@@ -20,3 +20,6 @@ Y si agregamos un sistema de disponibilidad y citas con al menos 5 citas por mes
 
 Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala estas cifras sean mejores.
 
+## para algolia
+
+firebase functions:config:set algolia.app=JE20HAUJXG algolia.key=privatekey

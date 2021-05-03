@@ -1,10 +1,16 @@
 import Link from 'next/link'
 import { FiPlus } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
-import { TiLocationOutline } from 'react-icons/ti'
-import { MdFilterList } from 'react-icons/md'
-
+import { getAlgoliaResults } from '@algolia/autocomplete-js'
+import algoliasearch from 'algoliasearch'
 import ArtistList from './artist-list'
+import { Autocomplete } from 'components/algolia/autocomplete'
+import { ProductItem } from 'components/algolia/product-item'
+import '@algolia/autocomplete-theme-classic'
+
+const appId = 'JE20HAUJXG'
+const apiKey = 'db9dbba9f07212053022eec3e364876a'
+const searchClient = algoliasearch(appId, apiKey)
 
 const Home = ({ artists }) => {
   return (
@@ -19,11 +25,38 @@ const Home = ({ artists }) => {
               <GoSearch />
             </span>
           </div>
-          <input
+
+          <Autocomplete
+            // openOnFocus={true}
+            placeholder="Busca tatuajes, artistas..."
+            getSources={({ query }) => [
+              {
+                sourceId: 'artists',
+                getItems() {
+                  return getAlgoliaResults({
+                    searchClient,
+                    queries: [
+                      {
+                        indexName: 'tintalove_dev',
+                        query,
+                      },
+                    ],
+                  })
+                },
+                templates: {
+                  item({ item, components }) {
+                    return <ProductItem hit={item} components={components} />
+                  },
+                },
+              },
+            ]}
+          />
+          {/* <input
             type="text"
             placeholder="Busca tatuajes o artistas"
             className="w-full py-3 pl-12 md:pl-14 rounded-l-lg focus:outline-none placeholder-black"
-          />
+          /> */}
+
           <button
             type="submit"
             className="text-white bg-primary px-5 py-3 rounded-r-lg focus:outline-none tracking-wide"

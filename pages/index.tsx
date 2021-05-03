@@ -1,5 +1,5 @@
 import { getArtistsInfo } from 'lib/db'
-import { postsToJSON, postToJSON } from 'lib/firebase'
+import { postsToJSON } from 'lib/firebase'
 import Home from '../components/home/home'
 import Layout from '../components/layout/layout'
 
