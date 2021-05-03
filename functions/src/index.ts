@@ -18,3 +18,12 @@ exports.addToIndex = functions.firestore
     const data = snapshot.data()
     const objectID = snapshot.id
   })
+
+const addToIndex2 = functions.firestore
+  .document('users/{artistId}')
+  .onCreate((snapshot) => {
+    const data = snapshot.data()
+    const objectID = snapshot.id
+  })
+
+export { addToIndex2 }
