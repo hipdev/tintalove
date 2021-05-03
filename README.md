@@ -22,4 +22,4 @@ Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala
 
 ## para algolia
 
-firebase functions:config:set algolia.app=VY2QAD04OE algolia.key=privatekey
+firebase functions:config:set algolia.app=JE20HAUJXG algolia.key=privatekey
