@@ -19,7 +19,7 @@ const Header = () => {
   console.log(user, 'user info')
 
   return (
-    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-gradient-to-r from-dark-800   to-black">
+    <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-dark-800">
       <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
         <div className="flex justify-center items-center">
           <Link href="/">
