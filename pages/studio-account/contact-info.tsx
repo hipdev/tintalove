@@ -9,13 +9,13 @@ const libraries = 'places'
 
 export default function ContactInfoPageStudio() {
   const { state } = useUser()
-  const hasStudio = state?.user?.has_studio
+  const hasStudio = state?.user?.has_studio || null
 
   const status = useScript(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places'
   )
 
-  console.log(status, 'status del map')
+  console.log(status, hasStudio, 'status del map')
 
   return (
     <>

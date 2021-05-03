@@ -182,11 +182,6 @@ const MainInfo = ({ uid }) => {
           setTriggerAuth(Math.random())
         }
       })
-
-    // setLoading(false)
-
-    // console.log(data, 'form data')
-    // console.log(formData, 'formatted data')
   }
 
   return (
@@ -230,27 +225,6 @@ const MainInfo = ({ uid }) => {
             <div className="col-span-6 md:col-span-3">
               <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                 <span className="mb-3 block">Ciudad</span>
-
-                {/* <GooglePlacesAutocomplete
-                  apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                  debounce={500}
-                  apiOptions={{ region: 'CO', language: 'es' }}
-                  autocompletionRequest={{
-                    componentRestrictions: { country: ['CO'] },
-                    types: ['(cities)'],
-                  }}
-                  selectProps={{
-                    value: city,
-                    onChange: handleCity,
-                    placeholder: 'Escribe tu ciudad...',
-                    noOptionsMessage: () => 'Sin opciones',
-                    // defaultMenuIsOpen: true,
-                    // menuIsOpen: true,
-                    classNamePrefix: 'create_artist',
-                    // autoFocus: true,
-                    ref: cityRef,
-                  }}
-                /> */}
 
                 <MainInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
               </label>

@@ -55,7 +55,10 @@ const Artists = ({ uid, studioId, hasStudio }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => router.push('/artist/contact-info'), 1000)
+      const timer = setTimeout(
+        () => router.push('/studio-account/contact-info'),
+        1000
+      )
       return () => clearTimeout(timer)
     }
   }, [success])
@@ -159,7 +162,7 @@ const Artists = ({ uid, studioId, hasStudio }) => {
               Siguiente
             </button>
           ) : (
-            <Link href="/artist/main-info">
+            <Link href="/studio-account/general">
               <button className="block   btn-primary py-3 px-5">
                 Ir al paso 1
               </button>

@@ -336,7 +336,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
           </div>
         </div>
 
-        {studio.displayName != watchMultiple.displayName ||
+        {studio.studio_name != watchMultiple.studio_name ||
         studio.formatted_address != placeInfo?.formatted_address ||
         studio.bio != watchMultiple.bio ? (
           <div className="flex justify-end">

@@ -276,10 +276,14 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
             >
               <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
 
-              <ContactInfoLocation
-                studioId={studioId}
-                setLocation={setLocation}
-              />
+              {studioId && (
+                <ContactInfoLocation
+                  studioId={studioId}
+                  studioInfo={studio || null}
+                  setLocation={setLocation}
+                />
+              )}
+              {!studioId && <p>Debes terminar el primer paso</p>}
             </label>
           </div>
         </div>
@@ -288,7 +292,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           <ContactInfoMapStudio studioId={studioId} cityLocation={location} />
         )}
 
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-8">
           {!hasStudio && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
@@ -303,7 +307,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               Siguiente
             </button>
           ) : (
-            <Link href="/artist/main-info">
+            <Link href="/studio-account/general">
               <button className="block   btn-primary py-3 px-5">
                 Ir al paso 1
               </button>
