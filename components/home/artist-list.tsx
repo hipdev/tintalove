@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-import { TiLocationOutline } from 'react-icons/ti'
 import { MdFilterList } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
@@ -8,23 +7,16 @@ import { RiHeartLine } from 'react-icons/ri'
 const ArtistList = ({ artists }) => {
   console.log(artists, 'los artistas')
   return (
-    <div className="px-5 sm:px-10 lg:px-20">
+    <div className="px-5 sm:px-10 lg:px-20 pt-10">
       <div className="flex flex-wrap justify-center sm:justify-between mb-6">
         <div className="flex items-center space-x-2 mb-3 sm:mb-0 mr-3">
-          <span className="text-red-600 text-3xl">
-            <TiLocationOutline />
-          </span>
-          <Link href="/">
-            <a className="text-white font-raleway underline">
-              Medellín, Antioquia
-            </a>
-          </Link>
+          <button className="text-white mr-4 border-b border-primary pb-2">
+            POPULAR
+          </button>
+          <button className="text-white pb-2">MÁS RECIENTE</button>
         </div>
         <div className="flex space-x-5">
-          <select className="text-white font-raleway border border-light-700 p-3 rounded-lg bg-transparent focus:outline-none">
-            <option value="">Popular</option>
-          </select>
-          <button className="flex items-center text-white font-raleway border border-light-700 px-5 py-3 rounded-lg focus:outline-none">
+          <button className="flex items-center text-white border border-gray-100 px-5 py-3 rounded-lg focus:outline-none">
             <span className="mr-2 text-xl">
               <MdFilterList />
             </span>
@@ -45,27 +37,27 @@ const ArtistList = ({ artists }) => {
                       : 'https://via.placeholder.com/309x234'
                   }
                   alt=""
-                  className="w-full rounded-lg mb-1 h-72"
+                  className="w-full rounded-md mb-1 h-52"
                 />
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-primary rounded-full"></div>
-                    <p className="text-white text-sm font-raleway">
+                    <p className="text-white text-sm">
                       {artist.displayName || 'Sin nombre'}
                     </p>
                   </div>
                   <div className="flex space-x-5">
                     <div className="flex items-center space-x-2 text-white">
+                      <p className="">10</p>
                       <span>
                         <FaRegCommentDots />
                       </span>
-                      <p className="font-raleway">10</p>
                     </div>
                     <div className="flex items-center space-x-2 text-white">
+                      <p className="">53</p>
                       <span>
                         <RiHeartLine />
                       </span>
-                      <p className="font-raleway">53</p>
                     </div>
                   </div>
                 </div>
