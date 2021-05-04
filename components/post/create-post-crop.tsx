@@ -164,12 +164,13 @@ const CreatePostCrop = ({
         proporciones requeridas para la foto de perfil.
       </p>
 
-      <div className="mb-14">
+      <div className="mb-14 flex justify-center">
         <ReactCrop
           src={picture}
           crop={crop}
           onImageLoaded={onLoad}
           onChange={(c) => setCrop(c)}
+          imageStyle={{ maxHeight: '600px' }}
         />
       </div>
 
