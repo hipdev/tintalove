@@ -1,12 +1,13 @@
 import axios from 'axios'
-import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
-import { useState } from 'react'
-import { Cropper } from 'react-cropper'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
-import 'cropperjs/dist/cropper.css'
+
 import { updateArtistMainProfilePicture } from 'lib/db'
+
+import ReactCrop from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 
 type Props = {
   picture: any
@@ -28,68 +29,116 @@ const CreatePostCrop = ({
   isPortrait,
   dataForm,
 }: Props) => {
-  const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
+  const imgRef = useRef(null)
+
+  const [crop, setCrop]: any = useState({
+    aspect: 6 / 7,
+    unit: '%',
+    width: 100,
+    // height: 100,
+  })
+
+  useEffect(() => {
+    setCrop({
+      aspect: isPortrait ? 6 / 7 : 16 / 9,
+      unit: '%',
+      width: 100,
+      // height: 100,
+    })
+  }, [isPortrait, picture])
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img
+  }, [])
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
 
+  const getResizedCanvas = () => {
+    const scaleX = imgRef.current.naturalWidth / imgRef.current.width
+    const scaleY = imgRef.current.naturalHeight / imgRef.current.height
+    const tmpCanvas = document.createElement('canvas')
+    tmpCanvas.width = Math.ceil(crop.width * scaleX)
+    tmpCanvas.height = Math.ceil(crop.height * scaleY)
+
+    const ctx = tmpCanvas.getContext('2d')
+    const image = imgRef.current
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    )
+
+    return tmpCanvas
+  }
+
   const getCropData = async () => {
-    console.log(dataForm, 'campos')
+    // console.log(dataForm, 'campos')
+    const canvas = getResizedCanvas()
+    const file: any = canvas.toDataURL('image/jpeg')
+
     if (dataForm.description != '' && dataForm.styles != '') {
-      // mutate('/api/imagekit/auth')
-      // if (typeof cropper !== 'undefined') {
-      //   const file = cropper
-      //     .getCroppedCanvas({ imageSmoothingQuality: 'high' })
-      //     .toDataURL('image/jpeg')
-      //   const dataFile: any = new FormData()
-      //   dataFile.append('fileName', (file && file.name) || 'cropped')
-      //   dataFile.append('file', file)
-      //   dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
-      //   dataFile.append('signature', data.signature)
-      //   dataFile.append('expire', data.expire)
-      //   dataFile.append('token', data.token)
-      //   await axios
-      //     .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
-      //     .then(async ({ data: fileImagekit }: any) => {
-      //       const content = {
-      //         filePath: fileImagekit.filePath,
-      //         size: fileImagekit.size,
-      //         fileId: fileImagekit.fileId,
-      //         url: fileImagekit.url,
-      //         name: fileImagekit.name,
-      //         thumbnailUrl: fileImagekit.url,
-      //       }
-      //       try {
-      //         console.log(content, uid, 'la foto en imagekit')
-      //         toast.promise(
-      //           updateArtistMainProfilePicture(
-      //             uid,
-      //             content,
-      //             update,
-      //             actualPictureId,
-      //             true
-      //           ),
-      //           {
-      //             loading: 'Actualizando...',
-      //             success: () => {
-      //               setLoading(false)
-      //               setPicture(null)
-      //               return 'Foto actualizada 😉'
-      //             },
-      //             error: (err) => {
-      //               setLoading(false)
-      //               return `${err.toString()}`
-      //             },
-      //           }
-      //         )
-      //       } catch (error) {
-      //         console.error(error)
-      //       }
-      //     })
-      // }
+      mutate('/api/imagekit/auth')
+
+      if (!crop || !canvas) {
+        toast('Ocurrió un error con la foto')
+        return
+      }
+
+      const dataFile: any = new FormData()
+      dataFile.append('fileName', (file && file.name) || 'cropped')
+      dataFile.append('file', file)
+      dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
+      dataFile.append('signature', data.signature)
+      dataFile.append('expire', data.expire)
+      dataFile.append('token', data.token)
+      await axios
+        .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
+        .then(async ({ data: fileImagekit }: any) => {
+          const content = {
+            filePath: fileImagekit.filePath,
+            size: fileImagekit.size,
+            fileId: fileImagekit.fileId,
+            url: fileImagekit.url,
+            name: fileImagekit.name,
+            thumbnailUrl: fileImagekit.url,
+          }
+          try {
+            console.log(content, uid, 'la foto en imagekit')
+            // toast.promise(
+            //   updateArtistMainProfilePicture(
+            //     uid,
+            //     content,
+            //     update,
+            //     actualPictureId,
+            //     true
+            //   ),
+            //   {
+            //     loading: 'Actualizando...',
+            //     success: () => {
+            //       setLoading(false)
+            //       setPicture(null)
+            //       return 'Foto actualizada 😉'
+            //     },
+            //     error: (err) => {
+            //       setLoading(false)
+            //       return `${err.toString()}`
+            //     },
+            //   }
+            // )
+          } catch (error) {
+            console.error(error)
+          }
+        })
     } else {
       toast('Agrega la descripción y al menos un estilo')
     }
@@ -114,23 +163,12 @@ const CreatePostCrop = ({
         Puedes mover y hacer zoom con la foto, el cuadrado indica las
         proporciones requeridas para la foto de perfil.
       </p>
-      <Cropper
-        style={{ height: '60vh', width: '100%' }}
-        initialAspectRatio={isPortrait ? 6 / 7 : 6 / 4}
-        aspectRatio={isPortrait ? 6 / 7 : 6 / 4}
+
+      <ReactCrop
         src={picture}
-        viewMode={0}
-        dragMode="move"
-        autoCropArea={1}
-        guides={false}
-        cropBoxResizable={false}
-        cropBoxMovable={false}
-        background={false}
-        responsive={true}
-        checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-        onInitialized={(instance: any) => {
-          setCropper(instance)
-        }}
+        crop={crop}
+        onImageLoaded={onLoad}
+        onChange={(c) => setCrop(c)}
       />
       <button
         onClick={getCropData}
