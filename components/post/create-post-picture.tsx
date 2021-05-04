@@ -6,11 +6,12 @@ import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 import CreatePostCrop from './create-post-crop'
 
-const CreatePostPicture = ({ uid, dataForm }) => {
+const CreatePostPicture = ({ uid, dataForm, setWithPicture }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
     e.preventDefault()
+    setWithPicture(true)
 
     console.log('started crop')
 
