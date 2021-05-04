@@ -6,7 +6,7 @@ import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 import CreatePostCrop from './create-post-crop'
 
-const CreatePostPicture = ({ uid, dataForm, setWithPicture }) => {
+const CreatePostPicture = ({ uid, dataForm, setWithPicture, isPortrait }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -25,8 +25,8 @@ const CreatePostPicture = ({ uid, dataForm, setWithPicture }) => {
     }
 
     new Compressor(files[0], {
-      quality: 0.8,
-      maxWidth: 800,
+      quality: 0.9,
+      // maxWidth: 800,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()
@@ -78,6 +78,7 @@ const CreatePostPicture = ({ uid, dataForm, setWithPicture }) => {
             setPicture={setPicture}
             uid={uid}
             dataForm={dataForm}
+            isPortrait={isPortrait}
           />
         </div>
       )}
