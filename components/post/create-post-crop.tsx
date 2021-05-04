@@ -15,6 +15,7 @@ type Props = {
   update?: boolean
   actualPictureId?: string
   setPicture?: any
+  dataForm?: any
 }
 
 const CreatePostCrop = ({
@@ -23,6 +24,7 @@ const CreatePostCrop = ({
   update,
   actualPictureId,
   setPicture,
+  dataForm,
 }: Props) => {
   const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
@@ -33,61 +35,61 @@ const CreatePostCrop = ({
   })
 
   const getCropData = async () => {
-    mutate('/api/imagekit/auth')
-    if (typeof cropper !== 'undefined') {
-      const file = cropper
-        .getCroppedCanvas({ imageSmoothingQuality: 'high' })
-        .toDataURL('image/jpeg')
-
-      const dataFile: any = new FormData()
-
-      dataFile.append('fileName', (file && file.name) || 'cropped')
-      dataFile.append('file', file)
-      dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
-      dataFile.append('signature', data.signature)
-      dataFile.append('expire', data.expire)
-      dataFile.append('token', data.token)
-
-      await axios
-        .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
-        .then(async ({ data: fileImagekit }: any) => {
-          const content = {
-            filePath: fileImagekit.filePath,
-            size: fileImagekit.size,
-            fileId: fileImagekit.fileId,
-            url: fileImagekit.url,
-            name: fileImagekit.name,
-            thumbnailUrl: fileImagekit.url,
-          }
-          try {
-            console.log(content, uid, 'la foto en imagekit')
-
-            toast.promise(
-              updateArtistMainProfilePicture(
-                uid,
-                content,
-                update,
-                actualPictureId,
-                true
-              ),
-              {
-                loading: 'Actualizando...',
-                success: () => {
-                  setLoading(false)
-                  setPicture(null)
-
-                  return 'Foto actualizada 😉'
-                },
-                error: (err) => {
-                  setLoading(false)
-                  return `${err.toString()}`
-                },
-              }
-            )
-          } catch (error) {
-            console.error(error)
-          }
-        })
+    console.log(dataForm, 'campos')
+    if (dataForm.description != '' && dataForm != '') {
+      // mutate('/api/imagekit/auth')
+      // if (typeof cropper !== 'undefined') {
+      //   const file = cropper
+      //     .getCroppedCanvas({ imageSmoothingQuality: 'high' })
+      //     .toDataURL('image/jpeg')
+      //   const dataFile: any = new FormData()
+      //   dataFile.append('fileName', (file && file.name) || 'cropped')
+      //   dataFile.append('file', file)
+      //   dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
+      //   dataFile.append('signature', data.signature)
+      //   dataFile.append('expire', data.expire)
+      //   dataFile.append('token', data.token)
+      //   await axios
+      //     .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
+      //     .then(async ({ data: fileImagekit }: any) => {
+      //       const content = {
+      //         filePath: fileImagekit.filePath,
+      //         size: fileImagekit.size,
+      //         fileId: fileImagekit.fileId,
+      //         url: fileImagekit.url,
+      //         name: fileImagekit.name,
+      //         thumbnailUrl: fileImagekit.url,
+      //       }
+      //       try {
+      //         console.log(content, uid, 'la foto en imagekit')
+      //         toast.promise(
+      //           updateArtistMainProfilePicture(
+      //             uid,
+      //             content,
+      //             update,
+      //             actualPictureId,
+      //             true
+      //           ),
+      //           {
+      //             loading: 'Actualizando...',
+      //             success: () => {
+      //               setLoading(false)
+      //               setPicture(null)
+      //               return 'Foto actualizada 😉'
+      //             },
+      //             error: (err) => {
+      //               setLoading(false)
+      //               return `${err.toString()}`
+      //             },
+      //           }
+      //         )
+      //       } catch (error) {
+      //         console.error(error)
+      //       }
+      //     })
+      // }
+    } else {
+      toast('Agrega la descripción y al menos un estilo')
     }
   }
 
@@ -106,7 +108,7 @@ const CreatePostCrop = ({
         }}
         position="bottom-right"
       />
-      <p className="text-sm mb-3 mt-5">
+      <p className="text-sm mb-3 mt-5 text-gray-400">
         Puedes mover y hacer zoom con la foto, el cuadrado indica las
         proporciones requeridas para la foto de perfil.
       </p>
@@ -133,7 +135,7 @@ const CreatePostCrop = ({
         className="block btn-primary py-3 px-5 mt-4"
         disabled={loading}
       >
-        {update ? 'Actualizar' : 'Guardar'}
+        {update ? 'Actualizar' : 'Crear post'}
       </button>
     </div>
   )
