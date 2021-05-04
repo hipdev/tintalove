@@ -16,6 +16,7 @@ type Props = {
   actualPictureId?: string
   setPicture?: any
   dataForm?: any
+  isPortrait?: boolean
 }
 
 const CreatePostCrop = ({
@@ -24,6 +25,7 @@ const CreatePostCrop = ({
   update,
   actualPictureId,
   setPicture,
+  isPortrait,
   dataForm,
 }: Props) => {
   const [cropper, setCropper] = useState<any>()
@@ -114,8 +116,8 @@ const CreatePostCrop = ({
       </p>
       <Cropper
         style={{ height: '60vh', width: '100%' }}
-        initialAspectRatio={1}
-        aspectRatio={6 / 7}
+        initialAspectRatio={isPortrait ? 6 / 7 : 6 / 4}
+        aspectRatio={isPortrait ? 6 / 7 : 6 / 4}
         src={picture}
         viewMode={0}
         dragMode="move"
