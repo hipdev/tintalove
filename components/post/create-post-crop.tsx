@@ -36,7 +36,7 @@ const CreatePostCrop = ({
 
   const getCropData = async () => {
     console.log(dataForm, 'campos')
-    if (dataForm.description != '' && dataForm != '') {
+    if (dataForm.description != '' && dataForm.styles != '') {
       // mutate('/api/imagekit/auth')
       // if (typeof cropper !== 'undefined') {
       //   const file = cropper
