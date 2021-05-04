@@ -26,7 +26,7 @@ const CreatePostPicture = ({ uid, dataForm, setWithPicture, isPortrait }) => {
 
     new Compressor(files[0], {
       quality: 0.9,
-      // maxWidth: 800,
+      maxWidth: 1600,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()
