@@ -9,9 +9,9 @@ const CreatePost = ({ uid }) => {
   const [isPortrait, setIsPortrait] = useState(true)
 
   return (
-    <div className="bg-dark-800 pt-10 pb-48 h-3/6 xl:h-screen">
-      <div className="bg-dark-500 container mx-auto flex w-4/5 xl:w-3/5  py-12 px-10  ">
-        <div className="w-2/3  pr-10">
+    <div className="bg-dark-800 pt-10 pb-48 h-3/6 xl:h-screen ">
+      <div className="bg-dark-500 container mx-auto flex flex-col md:flex-row  w-4/5 xl:w-3/5  py-5 md:py-12 px-5 md:px-10  relative pb-40 md:pb-12">
+        <div className="w-full md:w-2/3  pr-0 md:pr-10">
           <CreatePostPicture
             uid={uid}
             dataForm={{ description, styles }}
@@ -20,7 +20,7 @@ const CreatePost = ({ uid }) => {
           />
         </div>
 
-        <div className="w-1/3 text-gray-300">
+        <div className="w-full md:w-1/3 text-gray-300">
           <label className="flex flex-col mb-5">
             <span className="block mb-2">Descripción corta</span>
             <textarea

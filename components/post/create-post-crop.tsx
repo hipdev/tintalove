@@ -164,15 +164,18 @@ const CreatePostCrop = ({
         proporciones requeridas para la foto de perfil.
       </p>
 
-      <ReactCrop
-        src={picture}
-        crop={crop}
-        onImageLoaded={onLoad}
-        onChange={(c) => setCrop(c)}
-      />
+      <div className="mb-14">
+        <ReactCrop
+          src={picture}
+          crop={crop}
+          onImageLoaded={onLoad}
+          onChange={(c) => setCrop(c)}
+        />
+      </div>
+
       <button
         onClick={getCropData}
-        className="block btn-primary py-3 px-5 mt-4"
+        className="block btn-primary py-3 px-5 mt-4 absolute bottom-10 w-2/3 md:relative right-0 left-0 mx-auto"
         disabled={loading}
       >
         {update ? 'Actualizar' : 'Crear post'}
