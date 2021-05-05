@@ -10,8 +10,6 @@ import { geohashForLocation } from 'geofire-common'
 const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
 
-  console.log(defaultValue, 'valor por defecto')
-
   const {
     ready,
     value,
@@ -39,7 +37,6 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
   }
 
   const handleSelect = (placeData) => async () => {
-    console.log(placeData, 'data from city')
     //pedir explicación aquí a lucho
     // // When user selects a place, we can replace the keyword without request data from API
     // // by setting the second parameter to "false"
@@ -51,8 +48,6 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
     const results = await getGeocode({ address: placeData.description })
 
     const { lat, lng }: any = await getLatLng(results[0])
-
-    console.log(lat, lng, 'los lat y long')
 
     const cityHash = geohashForLocation([lat, lng])
 

@@ -7,7 +7,6 @@ import { getUser } from 'lib/actions'
 import SubMenuHeader from './submenu'
 import { UserState } from 'types/user'
 import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
-import { BsFilePost } from 'react-icons/bs'
 import HomeFilter from '../home-filter'
 
 const Header = () => {

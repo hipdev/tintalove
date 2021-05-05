@@ -1,4 +1,4 @@
-import { getStudioInfo } from 'lib/db'
+import { getStudioInfo } from 'lib/queries/studios'
 import { useEffect, useState } from 'react'
 
 const useStudio = (uid) => {

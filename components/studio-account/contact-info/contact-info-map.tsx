@@ -1,7 +1,7 @@
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { geohashForLocation } from 'geofire-common'
+import { updateStudioLocationMarker } from 'lib/queries/studios'
 import toast from 'react-hot-toast'
-import { updateStudioLocationMarker } from 'lib/db'
 
 const ContactInfoMapStudio = ({ cityLocation, studioId }) => {
   const containerStyle = {

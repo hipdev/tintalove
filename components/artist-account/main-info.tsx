@@ -3,7 +3,6 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import React, { useCallback, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import { createArtist, userNameAvailable } from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -13,6 +12,7 @@ import MainInfoAvailable from './main-info-edit/main-info-available'
 
 import 'microtip/microtip.css'
 import MainInfoCity from './main-info-edit/main-info-city'
+import { createArtist, userNameAvailable } from 'lib/queries/artists'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -56,8 +56,6 @@ const MainInfo = ({ uid }) => {
     [counter]
   )
 
-  console.log(placeInfo, 'la ciudad')
-
   const checkUsername = useCallback(
     debounce(async (username) => {
       if (username != '') {
@@ -77,7 +75,6 @@ const MainInfo = ({ uid }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        console.log('se ejecuta el debounce')
         setValue('displayName', name)
       }
     }, 3000),
@@ -145,7 +142,6 @@ const MainInfo = ({ uid }) => {
     }
 
     if (!validUserName && !availableUserName) {
-      console.log(validUserName, availableUserName, 'estados')
       setLoading(false)
       toast('Usuario no disponible o es inválido 😓')
       return

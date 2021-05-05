@@ -1,6 +1,6 @@
 import HomeLayout from 'components/home/layout/home-layout'
-import { getArtistsInfo } from 'lib/db'
 import { postsToJSON } from 'lib/firebase'
+import { getArtistsInfo } from 'lib/queries/artists'
 import Home from '../components/home/home'
 
 export default function IndexPage({ artistsData }) {

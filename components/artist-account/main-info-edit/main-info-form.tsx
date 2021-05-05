@@ -2,12 +2,6 @@ import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
-
-import {
-  updateArtistMainInfo,
-  updateArtistUsername,
-  userNameAvailable,
-} from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -17,6 +11,11 @@ import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
 
 import MainInfoCity from './main-info-city'
+import {
+  updateArtistMainInfo,
+  updateArtistUsername,
+  userNameAvailable,
+} from 'lib/queries/artists'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 

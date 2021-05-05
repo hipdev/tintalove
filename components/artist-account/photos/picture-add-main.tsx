@@ -1,6 +1,6 @@
 import Compressor from 'compressorjs'
 import useArtistRealtime from 'hooks/realtime/use-artist'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
@@ -13,9 +13,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
   const handlePicture = (e: any) => {
     e.preventDefault()
-
-    console.log('started crop')
-
     let files
     if (e.dataTransfer) {
       // usefull for DragAndDrop files

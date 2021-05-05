@@ -3,12 +3,10 @@ import fetcher from 'lib/fetcher'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
-
-import { createArtistPost } from 'lib/db'
-
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { useRouter } from 'next/router'
+import { createArtistPost } from 'lib/queries/posts'
 
 type Props = {
   picture: any

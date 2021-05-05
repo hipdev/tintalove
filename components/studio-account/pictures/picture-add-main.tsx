@@ -1,7 +1,7 @@
 import Compressor from 'compressorjs'
 import useArtistRealtime from 'hooks/realtime/use-artist'
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
@@ -14,8 +14,6 @@ const PictureAddMain = ({ uid, hasStudio }) => {
 
   const handlePicture = (e: any) => {
     e.preventDefault()
-
-    console.log('started crop')
 
     let files
     if (e.dataTransfer) {
@@ -42,8 +40,6 @@ const PictureAddMain = ({ uid, hasStudio }) => {
       },
     })
   }
-
-  console.log(artist, 'el artist realtime')
 
   return (
     <div className="w-4/5 mt-10">

@@ -1,4 +1,4 @@
-import { getArtistsInfo } from 'lib/db'
+import { getArtistsInfo } from 'lib/queries/artists'
 import { useEffect, useState } from 'react'
 
 const useArtists = () => {

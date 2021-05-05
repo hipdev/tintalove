@@ -4,12 +4,13 @@ import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { updateStudioArtists } from 'lib/db'
+
 import { useRouter } from 'next/router'
-import useArtist from 'hooks/use-artist'
+
 import ArtistsSendEmail from './artists-send-email'
 import ArtistsAccountList from './artists-list'
 import useStudio from 'hooks/use-studio'
+import { updateStudioArtists } from 'lib/queries/studios'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -21,8 +22,6 @@ const Artists = ({ uid, studioId, hasStudio }) => {
   const router = useRouter()
 
   const { studio } = useStudio(studioId)
-
-  console.log(studio, 'studio data')
 
   const {
     register,

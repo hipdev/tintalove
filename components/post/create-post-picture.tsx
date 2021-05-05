@@ -1,5 +1,5 @@
 import Compressor from 'compressorjs'
-import useArtistRealtime from 'hooks/realtime/use-artist'
+
 import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
@@ -18,8 +18,6 @@ const CreatePostPicture = ({
   const handlePicture = (e: any) => {
     e.preventDefault()
     setWithPicture(true)
-
-    console.log('started crop')
 
     let files
     if (e.dataTransfer) {
