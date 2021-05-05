@@ -10,7 +10,13 @@ import firebaseApp from 'lib/firebase'
 
 const db = getFirestore(firebaseApp)
 
-export async function createArtistPost(uid, infoPicture, dataForm, artist) {
+export async function createArtistPost(
+  uid,
+  infoPicture,
+  dataForm,
+  artist,
+  isPortrait
+) {
   if (!dataForm?.description || dataForm?.styles.length < 0) {
     throw new Error('Te faltan los campos del formulario')
   }
@@ -27,8 +33,10 @@ export async function createArtistPost(uid, infoPicture, dataForm, artist) {
     city_name: artist.city_name,
     country: artist.country,
     displayName: artist.displayName,
+    artist_picture: artist.profile_picture.url,
     styles,
     description: dataForm.description,
+    isPortrait,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }

@@ -25,7 +25,7 @@ const ArtistList = ({ posts }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-8">
-        {posts.lenght > 0 ? (
+        {posts.length > 0 ? (
           posts.map((artist) => (
             <Link href={`/${artist.username}`} key={artist.username}>
               <a>
