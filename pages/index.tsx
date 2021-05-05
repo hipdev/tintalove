@@ -1,23 +1,23 @@
-import HomeLayout from 'components/home/layout/home-layout'
+import Layout from 'components/layout/layout'
 import { postsToJSON } from 'lib/firebase'
-import { getArtistsInfo } from 'lib/queries/artists'
+import { getPostsInfo } from 'lib/queries/posts'
 import Home from '../components/home/home'
 
-export default function IndexPage({ artistsData }) {
+export default function IndexPage({ postData }) {
   return (
-    <HomeLayout>
-      <Home artists={artistsData} />
-    </HomeLayout>
+    <Layout>
+      <Home posts={postData} />
+    </Layout>
   )
 }
 
 export const getStaticProps = async () => {
-  const { artists } = await getArtistsInfo()
-  const artistsData = postsToJSON(artists)
+  const { posts } = await getPostsInfo()
+  const postData = postsToJSON(posts)
 
   return {
     props: {
-      artistsData,
+      postData,
     },
     revalidate: 50,
   }
