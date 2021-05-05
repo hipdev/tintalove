@@ -5,12 +5,9 @@ import PictureCrop from './picture-crop'
 
 const PictureReady = ({ artist }) => {
   const [picture, setPicture] = useState(null)
-  console.log(artist, 'el artista')
 
   const handlePicture = (e: any) => {
     e.preventDefault()
-
-    console.log('started crop')
 
     let files
     if (e.dataTransfer) {

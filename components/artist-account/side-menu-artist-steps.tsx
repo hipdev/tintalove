@@ -1,6 +1,7 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 import { useUserData } from 'hooks/use-user-data'
-import { activateArtist } from 'lib/db'
+import { activateArtist } from 'lib/queries/artists'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -20,7 +21,6 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
 
-  console.log(artistWizard, 'wizard artist')
   const steps = [
     artistWizard?.step_one,
     artistWizard?.step_two,

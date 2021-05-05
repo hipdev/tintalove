@@ -1,11 +1,12 @@
 import ArtistProfile from 'components/artist/profile'
 import Layout from 'components/layout/layout'
+
+import { postToJSON } from 'lib/firebase'
 import {
   getArtistIdByUsername,
   getArtistInfo,
   getUserNamesByArtists,
-} from 'lib/db'
-import { postToJSON } from 'lib/firebase'
+} from 'lib/queries/artists'
 import { useRouter } from 'next/router'
 
 export default function index({ artistId, artistData }: any) {

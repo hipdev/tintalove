@@ -1,5 +1,6 @@
 import useArtist from 'hooks/use-artist'
-import { updateArtistContactInfo } from 'lib/db'
+import { updateArtistContactInfo } from 'lib/queries/artists'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -80,8 +81,6 @@ const ContactInfo = ({ uid, isArtist }) => {
 
     setLoading(false)
   }
-
-  console.log(errors, 'errores del form')
 
   return (
     <div className="w-4/5 mt-10">

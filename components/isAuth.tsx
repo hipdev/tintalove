@@ -3,9 +3,10 @@ import { useStateMachine } from 'little-state-machine'
 import { login } from 'lib/actions'
 import { auth } from 'lib/firebase'
 import useUser from 'hooks/use-user'
-import { createUser } from 'lib/db'
+
 import { useEffect, useState } from 'react'
 import { provider } from './layout/header/submenu'
+import { createUser } from 'lib/queries/users'
 
 export default function IsAuth({ children }) {
   const [isAuth, setAuth] = useState(true)

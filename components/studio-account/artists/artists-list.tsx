@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { MdCheckCircle, MdChevronRight, MdMail } from 'react-icons/md'
+import { MdCheckCircle, MdMail } from 'react-icons/md'
 import 'microtip/microtip.css'
 
 const applications = [

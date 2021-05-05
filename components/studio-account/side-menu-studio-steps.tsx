@@ -1,7 +1,8 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 import useStudioWizardRealtime from 'hooks/realtime/use-studio-wizard'
 import { useUserData } from 'hooks/use-user-data'
-import { activateArtist } from 'lib/db'
+import { activateArtist } from 'lib/queries/artists'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'

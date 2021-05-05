@@ -3,7 +3,6 @@ import Select from 'react-select'
 import CreatePostPicture from './create-post-picture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
-import Artists from 'components/studio-account/artists/artists'
 
 const CreatePost = ({ uid }) => {
   const [description, setDescription] = useState('')

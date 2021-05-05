@@ -4,9 +4,10 @@ import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { updateArtistWorkingInfo } from 'lib/db'
+
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
+import { updateArtistWorkingInfo } from 'lib/queries/artists'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }

@@ -7,7 +7,7 @@ import useScript from 'hooks/use-script'
 import { useEffect, useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
-import { updateStudioLocation } from 'lib/db'
+import { updateStudioLocation } from 'lib/queries/studios'
 
 const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
@@ -40,7 +40,6 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
           lng: studioInfo.dataLocation.coordinates.lng,
         }
       )
-      console.log(studioInfo?.dataLocation.formatted_address, 'address')
     }
   }, [studioInfo])
 
@@ -60,7 +59,6 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   }
 
   const handleSelect = (placeData) => async () => {
-    console.log(placeData, 'data from city')
     //pedir explicación aquí a lucho
     // // When user selects a place, we can replace the keyword without request data from API
     // // by setting the second parameter to "false"
@@ -74,8 +72,6 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
     const { lat, lng }: any = await getLatLng(results[0])
 
     setLocation({ lat, lng })
-
-    console.log(lat, lng, 'los lat y long')
 
     const cityHash = geohashForLocation([lat, lng])
 

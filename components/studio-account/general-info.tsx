@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-import { createStudio, userNameAvailableStudio } from 'lib/db'
+
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -13,6 +13,7 @@ import MainInfoAvailable from './general-info-edit/general-info-available'
 
 import 'microtip/microtip.css'
 import GeneralInfoCity from './general-info-edit/general-info-city'
+import { createStudio, userNameAvailableStudio } from 'lib/queries/studios'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
@@ -95,7 +96,6 @@ const GeneralInfo = ({ uid }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        console.log('se ejecuta el debounce')
         setValue('studio_name', name)
       }
     }, 3000),
@@ -163,7 +163,6 @@ const GeneralInfo = ({ uid }) => {
     }
 
     if (!validUserName && !availableUserName) {
-      console.log(validUserName, availableUserName, 'estados')
       setLoading(false)
       toast('Usuario no disponible o es inválido 😓')
       return
@@ -178,8 +177,6 @@ const GeneralInfo = ({ uid }) => {
       username: data.username,
       ...placeInfo,
     }
-
-    console.log(formData, 'data a enviar')
 
     toast.promise(createStudio(uid, formData, true), {
       loading: 'Creando estudio...',

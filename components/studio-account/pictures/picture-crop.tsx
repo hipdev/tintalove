@@ -1,12 +1,12 @@
 import axios from 'axios'
-import Compressor from 'compressorjs'
+
 import fetcher from 'lib/fetcher'
 import { useState } from 'react'
 import { Cropper } from 'react-cropper'
 import toast, { Toaster } from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import 'cropperjs/dist/cropper.css'
-import { updateArtistMainProfilePicture } from 'lib/db'
+import { updateArtistMainProfilePicture } from 'lib/queries/artists'
 
 type Props = {
   picture: any
@@ -60,8 +60,6 @@ const PictureCrop = ({
             thumbnailUrl: fileImagekit.url,
           }
           try {
-            console.log(content, uid, 'la foto en imagekit')
-
             toast.promise(
               updateArtistMainProfilePicture(
                 uid,

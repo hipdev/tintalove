@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { useStateMachine } from 'little-state-machine'
 import { login, getUser } from 'lib/actions'
-import { getUserInfo } from 'lib/db'
+import { getUserInfo } from 'lib/queries/users'
 
 export function useUserData() {
   const [userInfo, setUserInfo] = useState(null)

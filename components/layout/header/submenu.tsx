@@ -1,14 +1,14 @@
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
-import Link from 'next/link'
+
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { createUser } from 'lib/db'
 
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useStateMachine } from 'little-state-machine'
 import { login } from 'lib/actions'
 import { UserState } from 'types/user'
+import { createUser } from 'lib/queries/users'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',

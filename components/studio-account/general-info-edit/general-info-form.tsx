@@ -2,12 +2,6 @@ import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserData } from 'hooks/use-user-data'
-
-import {
-  updateStudioGeneralInfo,
-  updateStudioUsername,
-  userNameAvailableStudio,
-} from 'lib/db'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -17,6 +11,11 @@ import 'microtip/microtip.css'
 
 import GeneralInfoCity from './general-info-city'
 import GeneralInfoAvailable from './general-info-available'
+import {
+  updateStudioGeneralInfo,
+  updateStudioUsername,
+  userNameAvailableStudio,
+} from 'lib/queries/studios'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 

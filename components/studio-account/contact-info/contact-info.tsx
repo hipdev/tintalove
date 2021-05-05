@@ -1,5 +1,6 @@
 import useStudio from 'hooks/use-studio'
-import { updateStudioContactInfo } from 'lib/db'
+import { updateStudioContactInfo } from 'lib/queries/studios'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -66,7 +67,6 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   const watchContactWay = watch('contact_way')
 
   const onSubmit = (data) => {
-    console.log(data, 'data form')
     setLoading(true)
 
     toast.promise(updateStudioContactInfo(studioId, data, true), {
@@ -85,8 +85,6 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
 
     setLoading(false)
   }
-
-  console.log(placeInfo, location, 'data de ubicación')
 
   return (
     <div className="w-full mt-10 pr-10">

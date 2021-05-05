@@ -4,10 +4,11 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
-import { createUser } from 'lib/db'
+
 import { useStateMachine } from 'little-state-machine'
 import { getUser, login } from 'lib/actions'
 import React from 'react'
+import { createUser } from 'lib/queries/users'
 
 const provider = new GoogleAuthProvider()
 
