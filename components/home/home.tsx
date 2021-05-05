@@ -2,7 +2,7 @@ import PostsList from './post-list'
 
 const Home = ({ posts }) => {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <PostsList posts={posts} />
     </div>
   )
