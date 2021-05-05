@@ -6,7 +6,13 @@ import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 import CreatePostCrop from './create-post-crop'
 
-const CreatePostPicture = ({ uid, dataForm, setWithPicture, isPortrait }) => {
+const CreatePostPicture = ({
+  uid,
+  dataForm,
+  setWithPicture,
+  isPortrait,
+  artist,
+}) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -79,6 +85,7 @@ const CreatePostPicture = ({ uid, dataForm, setWithPicture, isPortrait }) => {
             uid={uid}
             dataForm={dataForm}
             isPortrait={isPortrait}
+            artist={artist}
           />
         </div>
       )}
@@ -90,7 +97,7 @@ const CreatePostPicture = ({ uid, dataForm, setWithPicture, isPortrait }) => {
               <FaRegUserCircle />
             </span>
             <p className="text-sm sm:text-base text-white text-center mb-4">
-              JPG, GIF or PNG.
+              JPG, GIF ó PNG.
             </p>
             <div className="relative bg-light-900 px-4 py-3 rounded-lg">
               <button className="text-white tracking-wide">

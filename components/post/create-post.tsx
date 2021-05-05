@@ -1,12 +1,25 @@
 import { useState } from 'react'
+import Select from 'react-select'
 import CreatePostPicture from './create-post-picture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
+import useArtist from 'hooks/use-artist'
+import Artists from 'components/studio-account/artists/artists'
 
 const CreatePost = ({ uid }) => {
   const [description, setDescription] = useState('')
-  const [styles, setStyles] = useState('')
+  const [styles, setStyles] = useState([])
   const [withPicture, setWithPicture] = useState(false)
   const [isPortrait, setIsPortrait] = useState(true)
+
+  const { artist } = useArtist(uid)
+
+  const options = artist?.styles.map((style) => {
+    return { value: style, label: style }
+  })
+
+  const handleStyles = (styles) => {
+    setStyles(styles)
+  }
 
   return (
     <div className="bg-dark-800 pt-10 pb-48 h-3/6 xl:h-screen ">
@@ -17,6 +30,7 @@ const CreatePost = ({ uid }) => {
             dataForm={{ description, styles }}
             setWithPicture={setWithPicture}
             isPortrait={isPortrait}
+            artist={artist || null}
           />
         </div>
 
@@ -33,12 +47,13 @@ const CreatePost = ({ uid }) => {
 
           <label className="flex flex-col">
             <span className="block mb-2">Estilos usados</span>
-            <input
-              className="input-primary"
-              type="text"
-              placeholder="Ej: Gato en sombras, con un toque de color..."
-              value={styles}
-              onChange={(e) => setStyles(e.target.value)}
+            <Select
+              options={options}
+              isMulti
+              classNamePrefix="create_artist"
+              placeholder="Seleccionar estilos"
+              closeMenuOnSelect={false}
+              onChange={handleStyles}
             />
           </label>
 

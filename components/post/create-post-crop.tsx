@@ -4,10 +4,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 
-import { updateArtistMainProfilePicture } from 'lib/db'
+import { createArtistPost } from 'lib/db'
 
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
+import { useRouter } from 'next/router'
 
 type Props = {
   picture: any
@@ -17,6 +18,7 @@ type Props = {
   actualPictureId?: string
   setPicture?: any
   dataForm?: any
+  artist?: any
   isPortrait?: boolean
 }
 
@@ -28,9 +30,13 @@ const CreatePostCrop = ({
   setPicture,
   isPortrait,
   dataForm,
+  artist,
 }: Props) => {
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const imgRef = useRef(null)
+
+  const router = useRouter()
 
   const [crop, setCrop]: any = useState({
     aspect: 6 / 7,
@@ -51,6 +57,13 @@ const CreatePostCrop = ({
   const onLoad = useCallback((img) => {
     imgRef.current = img
   }, [])
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => router.push('/' + artist.username), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,
@@ -82,20 +95,19 @@ const CreatePostCrop = ({
   }
 
   const getCropData = async () => {
-    // console.log(dataForm, 'campos')
+    setLoading(true)
     const canvas = getResizedCanvas()
     const file: any = canvas.toDataURL('image/jpeg')
 
-    if (dataForm.description != '' && dataForm.styles != '') {
+    if (dataForm.description != '' && dataForm.styles.length > 0) {
       mutate('/api/imagekit/auth')
-
       if (!crop || !canvas) {
+        setLoading(false)
         toast('Ocurrió un error con la foto')
         return
       }
-
       const dataFile: any = new FormData()
-      dataFile.append('fileName', (file && file.name) || 'cropped')
+      dataFile.append('fileName', uid || 'cropped')
       dataFile.append('file', file)
       dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
       dataFile.append('signature', data.signature)
@@ -104,7 +116,7 @@ const CreatePostCrop = ({
       await axios
         .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
         .then(async ({ data: fileImagekit }: any) => {
-          const content = {
+          const pictureInfo = {
             filePath: fileImagekit.filePath,
             size: fileImagekit.size,
             fileId: fileImagekit.fileId,
@@ -113,28 +125,21 @@ const CreatePostCrop = ({
             thumbnailUrl: fileImagekit.url,
           }
           try {
-            console.log(content, uid, 'la foto en imagekit')
-            // toast.promise(
-            //   updateArtistMainProfilePicture(
-            //     uid,
-            //     content,
-            //     update,
-            //     actualPictureId,
-            //     true
-            //   ),
-            //   {
-            //     loading: 'Actualizando...',
-            //     success: () => {
-            //       setLoading(false)
-            //       setPicture(null)
-            //       return 'Foto actualizada 😉'
-            //     },
-            //     error: (err) => {
-            //       setLoading(false)
-            //       return `${err.toString()}`
-            //     },
-            //   }
-            // )
+            toast.promise(
+              createArtistPost(uid, pictureInfo, dataForm, artist),
+              {
+                loading: 'Creando post...',
+                success: () => {
+                  setLoading(false)
+                  setSuccess(true)
+                  return 'Post creado 😉'
+                },
+                error: (err) => {
+                  setLoading(false)
+                  return `${err.toString()}`
+                },
+              }
+            )
           } catch (error) {
             console.error(error)
           }
