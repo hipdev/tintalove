@@ -26,24 +26,27 @@ const ArtistList = ({ posts }) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-8">
         {posts.length > 0 ? (
-          posts.map((artist) => (
-            <Link href={`/${artist.username}`} key={artist.username}>
+          posts.map((post) => (
+            <Link href={`/${post.username}`} key={post.username}>
               <a>
                 <img
                   // src="https://via.placeholder.com/309x234"
                   src={
-                    artist?.profile_picture?.url
-                      ? `${artist.profile_picture.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
+                    post?.image?.url
+                      ? `${post.image.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
                       : 'https://via.placeholder.com/309x234'
                   }
                   alt=""
-                  className="w-full rounded-md mb-1 h-52"
+                  className="w-full rounded-md mb-1 h-52 object-cover"
                 />
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mt-2">
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-primary rounded-full"></div>
+                    <img
+                      src={`${post.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`}
+                      className="w-8 h-8 bg-primary rounded-full object-cover"
+                    />
                     <p className="text-white text-sm">
-                      {artist.displayName || 'Sin nombre'}
+                      {post.displayName || 'Sin nombre'}
                     </p>
                   </div>
                   <div className="flex space-x-5">
