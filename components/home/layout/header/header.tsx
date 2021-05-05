@@ -83,7 +83,7 @@ const Header = () => {
             {user?.artist_active && (
               <div className="text-white mr-7 flex items-center">
                 <Link href="/post/create">
-                  <a className="bg-primary px-2 py-1 flex items-center rounded-sm text-sm">
+                  <a className="bg-primary hover:bg-primaryHover px-2 py-1 flex items-center rounded-sm text-sm">
                     Subir post <AiOutlineCamera className="ml-2 text-lg" />
                   </a>
                 </Link>
