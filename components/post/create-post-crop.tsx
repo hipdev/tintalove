@@ -12,9 +12,6 @@ type Props = {
   picture: any
   clearPicture?: any
   uid: string
-  update?: boolean
-  actualPictureId?: string
-  setPicture?: any
   dataForm?: any
   artist?: any
   isPortrait?: boolean
@@ -23,9 +20,6 @@ type Props = {
 const CreatePostCrop = ({
   picture,
   uid,
-  update,
-  actualPictureId,
-  setPicture,
   isPortrait,
   dataForm,
   artist,
@@ -124,7 +118,7 @@ const CreatePostCrop = ({
           }
           try {
             toast.promise(
-              createArtistPost(uid, pictureInfo, dataForm, artist),
+              createArtistPost(uid, pictureInfo, dataForm, artist, isPortrait),
               {
                 loading: 'Creando post...',
                 success: () => {
@@ -179,10 +173,32 @@ const CreatePostCrop = ({
 
       <button
         onClick={getCropData}
-        className="block btn-primary py-3 px-5 mt-4 absolute bottom-10 w-2/3 md:relative right-0 left-0 mx-auto"
+        className="btn-primary py-3 px-5 mt-4 absolute bottom-10 w-2/3 md:relative right-0 left-0 mx-auto flex justify-center"
         disabled={loading}
       >
-        {update ? 'Actualizar' : 'Crear post'}
+        {loading ? 'Creando el post...' : 'Crear post'}
+        {loading && (
+          <svg
+            className="animate-spin  ml-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        )}
       </button>
     </div>
   )

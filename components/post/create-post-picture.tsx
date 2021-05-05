@@ -79,7 +79,6 @@ const CreatePostPicture = ({
         <div className="flex">
           <CreatePostCrop
             picture={picture}
-            setPicture={setPicture}
             uid={uid}
             dataForm={dataForm}
             isPortrait={isPortrait}
