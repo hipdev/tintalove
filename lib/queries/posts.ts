@@ -3,6 +3,8 @@ import {
   getFirestore,
   serverTimestamp,
   addDoc,
+  getDocs,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -32,4 +34,15 @@ export async function createArtistPost(uid, infoPicture, dataForm, artist) {
       return { doc: doc.id, status: true }
     })
     .catch((error) => console.log(error))
+}
+
+export async function getPostsInfo() {
+  const querySnapshot = await getDocs(collection(db, 'posts'))
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return posts.push({ ...doc.data() })
+  })
+
+  return { posts }
 }

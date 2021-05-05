@@ -12,7 +12,7 @@ const Layout = ({ children, artistData }: Props) => {
     <>
       <HeadContainer />
       <Header />
-      <main className="bg-white">{children}</main>
+      <main className="bg-dark-800">{children}</main>
       <Footer />
     </>
   )

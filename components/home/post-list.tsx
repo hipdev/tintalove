@@ -4,8 +4,8 @@ import { MdFilterList } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 
-const ArtistList = ({ artists }) => {
-  console.log(artists, 'los artistas')
+const ArtistList = ({ posts }) => {
+  console.log(posts, 'los posts')
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-10">
       <div className="flex flex-wrap justify-center sm:justify-between mb-6">
@@ -25,8 +25,8 @@ const ArtistList = ({ artists }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-8">
-        {artists ? (
-          artists.map((artist) => (
+        {posts.lenght > 0 ? (
+          posts.map((artist) => (
             <Link href={`/${artist.username}`} key={artist.username}>
               <a>
                 <img
@@ -65,7 +65,7 @@ const ArtistList = ({ artists }) => {
             </Link>
           ))
         ) : (
-          <p>sin artistas registrados</p>
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
       </div>
     </div>
