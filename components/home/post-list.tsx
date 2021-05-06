@@ -24,11 +24,11 @@ const ArtistList = ({ posts }) => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 relative">
         {posts.length > 0 ? (
           posts.map((post) => (
             <Link href={`/${post.username}`} key={post.username}>
-              <a>
+              <a className="aspect-w-6 aspect-h-7 ">
                 <img
                   // src="https://via.placeholder.com/309x234"
                   src={
@@ -37,13 +37,13 @@ const ArtistList = ({ posts }) => {
                       : 'https://via.placeholder.com/309x234'
                   }
                   alt=""
-                  className="w-full rounded-md mb-1 h-52 object-cover"
+                  className="w-full rounded-md mb-1 object-cover"
                 />
-                <div className="flex justify-between items-center mt-2">
+                <div className=" w-full flex">
                   <div className="flex items-center space-x-2">
                     <img
                       src={`${post.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`}
-                      className="w-8 h-8 bg-primary rounded-full object-cover"
+                      className="w-8 h-8 bg-primary rounded-full"
                     />
                     <p className="text-white text-sm">
                       {post.displayName || 'Sin nombre'}
