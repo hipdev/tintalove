@@ -9,7 +9,8 @@ const ArtistList = ({ posts }) => {
   console.log(posts, 'los posts')
 
   const breakpointColumnsObj = {
-    default: 4,
+    default: 6,
+    1600: 4,
     1100: 3,
     700: 2,
     500: 1,
@@ -53,11 +54,11 @@ const ArtistList = ({ posts }) => {
                   alt=""
                   className="w-full rounded-sm mb-1 object-cover"
                 />
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-2">
                   <div className="flex items-center space-x-2">
                     <img
                       src={`${post.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`}
-                      className="w-8 h-8 bg-primary rounded-full"
+                      className="w-7 h-7 bg-primary rounded-full"
                     />
                     <p className="text-white text-sm">
                       {post.displayName || 'Sin nombre'}
