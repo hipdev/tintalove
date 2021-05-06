@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.1.1",
     "@react-google-maps/api": "^2.1.1",
     "@sendgrid/mail": "^7.4.2",
+    "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.3.2",
     "algoliasearch": "^4.9.1",
     "axios": "^0.21.1",

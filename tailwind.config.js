@@ -37,6 +37,7 @@ module.exports = {
     position: ['responsive', 'hover', 'focus'],
   },
   plugins: [
+    require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
