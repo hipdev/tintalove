@@ -3,9 +3,18 @@ import Link from 'next/link'
 import { MdFilterList } from 'react-icons/md'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
+import Masonry from 'react-masonry-css'
 
 const ArtistList = ({ posts }) => {
   console.log(posts, 'los posts')
+
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  }
+
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-10">
       <div className="flex flex-wrap justify-center sm:justify-between mb-6">
@@ -24,11 +33,16 @@ const ArtistList = ({ posts }) => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 relative">
+
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
         {posts.length > 0 ? (
           posts.map((post) => (
             <Link href={`/${post.username}`} key={post.username}>
-              <a className="aspect-w-6 aspect-h-7 ">
+              <a>
                 <img
                   // src="https://via.placeholder.com/309x234"
                   src={
@@ -37,9 +51,9 @@ const ArtistList = ({ posts }) => {
                       : 'https://via.placeholder.com/309x234'
                   }
                   alt=""
-                  className="w-full rounded-md mb-1 object-cover"
+                  className="w-full rounded-sm mb-1 object-cover"
                 />
-                <div className=" w-full flex">
+                <div className="flex justify-between">
                   <div className="flex items-center space-x-2">
                     <img
                       src={`${post.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`}
@@ -70,7 +84,7 @@ const ArtistList = ({ posts }) => {
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
-      </div>
+      </Masonry>
     </div>
   )
 }
