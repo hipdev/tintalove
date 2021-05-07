@@ -12,7 +12,7 @@ import { BsBookmarkPlus } from 'react-icons/bs'
 import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
 
-const Post = () => {
+const Post = ({ postData, postId }) => {
   return (
     <div className="w-full bg-dark-700 bg-opacity-75 relative">
       <div className="mx-5 sm:mx-20 md:mx-40 lg:mx-48 pt-6">
