@@ -39,7 +39,27 @@ const ArtistList = ({ posts }) => {
         columnClassName="my-masonry-grid_column"
       >
         {posts.length > 0 ? (
-          posts.map((post) => <PostItem post={post} />)
+          posts.map((post) => <PostItem key={Math.random()} post={post} />)
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => <PostItem key={Math.random()} post={post} />)
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => <PostItem key={Math.random()} post={post} />)
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => <PostItem key={Math.random()} post={post} />)
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => <PostItem key={Math.random()} post={post} />)
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
