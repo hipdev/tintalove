@@ -8,13 +8,14 @@ import { FiClock } from 'react-icons/fi'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
-import { BsBookmarkPlus } from 'react-icons/bs'
+import { BsBookmark } from 'react-icons/bs'
 import { FiSend } from 'react-icons/fi'
+import { RiMessengerLine } from 'react-icons/ri'
 import Link from 'next/link'
 
 const Post = () => {
   return (
-    <div className="w-full bg-dark-700 bg-opacity-75 relative">
+    <div className="w-full bg-dark-600 bg-opacity-75 px-6 xl:px-36">
       <div className="mx-5 sm:mx-20 md:mx-40 lg:mx-48 pt-6">
         <div className="flex flex-wrap justify-center lg:justify-between mb-8">
           <div className="flex flex-wrap justify-center space-x-5 mb-4 lg:mb-0 mt-8 sm:mt-0 mr-0 md:mr-1">
@@ -22,23 +23,28 @@ const Post = () => {
               <h1 className="text-white text-2xl sm:text-xl font-semibold font-raleway tracking-wide">
                 Daniela Castillo
               </h1>
-              <h6 className="text-light-700 text-xs">Medellín, Antioquia</h6>
+              <h6 className="text-light-200 text-sm">Medellín, Antioquia</h6>
             </div>
-            <button className="btn-primary px-5 py-3 tracking-wide mb-3 sm:mb-0">
-              Contáctame
+            <button className="flex items-center gap-3 btn-primary px-5 py-3 tracking-wide mb-3 sm:mb-0">
+              <span className="text-2xl">
+                <RiMessengerLine />
+              </span>
+              CONTÁCTAME
             </button>
           </div>
-          <div className="flex flex-col">
-            <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              Tatuaje realista de payaso loco
-            </h1>
-            <p className="text-light-700 text-xs self-end">
-              #Realismo #Color #Payaso #Retrato
-            </p>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col mb-2">
+              <h1 className="text-white text-2xl font-semibold font-raleway tracking-wide">
+                Tatuaje realista de payaso loco
+              </h1>
+              <p className="text-light-200 text-sm self-end">
+                #Realismo #Color #Payaso #Retrato
+              </p>
+            </div>
+            <span className="text-4xl text-white">
+              <CgClose />
+            </span>
           </div>
-          <span className="absolute top-3 sm:top-8 lg:top-9 right-5 sm:right-16 lg:right-28 text-3xl text-white">
-            <CgClose />
-          </span>
         </div>
         <div className="mb-5 h-1/2 sm:h-672">
           <img
@@ -48,16 +54,28 @@ const Post = () => {
           />
         </div>
         <div className="flex flex-col-reverse lg:flex-row justify-between mb-10">
-          <div>
-            <div className="flex justify-center lg:justify-start space-x-3 sm:space-x-5 mb-5">
+          <div className="mb-4 mr-3">
+            <div>
+              <p className="text-light-200 mb-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Molestiae aut ipsam, dolor qui reprehenderit voluptate nesciunt,
+                labore neque illo, at commodi ab tempore esse reiciendis.
+              </p>
+            </div>
+            <div className="flex justify-center lg:justify-start gap-2 mb-5">
               <input
                 type="text"
                 placeholder="Escribe algo..."
-                className="w-3/5 bg-transparent border border-light-700 px-5 py-3 rounded-lg focus:outline-none"
+                className="w-3/5 bg-ocean_blue-200 border border-light-700 px-5 py-3 rounded-lg focus:outline-none"
               />
-              <button className="btn-primary px-4 py-3">Comentar</button>
+              <button className="flex items-center gap-2 btn-primary px-4 py-3">
+                <span className="text-xl">
+                  <FaRegCommentDots />
+                </span>
+                Comentar
+              </button>
             </div>
-            <div className="w-4/5 flex space-x-4 mb-3">
+            <div className="w-96 flex space-x-4 mb-3">
               <div className="flex-shrink-0">
                 <img
                   src="https://via.placeholder.com/45x45"
@@ -66,13 +84,13 @@ const Post = () => {
                 />
               </div>
               <div>
-                <div className="flex items-center space-x-3">
+                <div>
                   <h4 className="text-white font-raleway font-semibold tracking-wide">
                     Daniel Castillo
                   </h4>
-                  <p className="text-light-700 text-xs">24 de Marzo</p>
+                  <p className="text-light-400 text-xs">24 de Marzo</p>
                 </div>
-                <p className="text-light-700 text-sm">
+                <p className="text-light-200 text-sm">
                   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                   diam nonumy eirmod tempor invidunt ut labore et dolore magna
                   aliquyam erat,
@@ -88,13 +106,13 @@ const Post = () => {
                 />
               </div>
               <div>
-                <div className="flex items-center space-x-3">
+                <div>
                   <h4 className="text-white font-raleway font-semibold tracking-wide">
                     Daniel Castillo
                   </h4>
-                  <p className="text-light-700 text-xs">24 de Marzo</p>
+                  <p className="text-light-400 text-xs">24 de Marzo</p>
                 </div>
-                <p className="text-light-700 text-sm">
+                <p className="text-light-200 text-sm">
                   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                   diam nonumy eirmod tempor invidunt ut labore et dolore magna
                   aliquyam erat,
@@ -110,25 +128,22 @@ const Post = () => {
                 />
               </div>
               <div>
-                <div className="flex items-center space-x-3">
+                <div>
                   <h4 className="text-white font-raleway font-semibold tracking-wide">
                     Daniel Castillo
                   </h4>
-                  <p className="text-light-700 text-xs">24 de Marzo</p>
+                  <p className="text-light-400 text-xs">24 de Marzo</p>
                 </div>
-                <p className="text-light-700 text-sm">
+                <p className="text-light-200 text-sm">
                   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                   diam nonumy eirmod tempor invidunt ut labore et dolore magna
                   aliquyam erat,
                 </p>
               </div>
             </div>
-            <button className="text-white font-raleway border border-light-700 px-4 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-              Cargar más
-            </button>
           </div>
           <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
-            <div className="w-80 xl:w-96 h-auto bg-dark-700 px-10 xl:px-13 pt-10 pb-8 rounded-b-lg">
+            <div className="w-80 xl:w-96 h-auto bg-ocean_blue-200 px-10 xl:px-13 pt-10 pb-8 rounded-b-lg">
               <div className="flex space-x-3">
                 <div className="flex-shrink-0">
                   <img
@@ -141,7 +156,7 @@ const Post = () => {
                   <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
                     Daniela Castillo
                   </h1>
-                  <h6 className="text-light-700 text-xs">
+                  <h6 className="text-light-200 text-xs">
                     Medellín, Antioquia
                   </h6>
                 </div>
@@ -149,21 +164,21 @@ const Post = () => {
               <div className="flex space-x-4 my-4">
                 <Link href="#">
                   <a>
-                    <span className="text-2xl text-light-700">
+                    <span className="text-2xl text-light-200">
                       <FiInstagram />
                     </span>
                   </a>
                 </Link>
                 <Link href="#">
                   <a>
-                    <span className="text-2xl text-light-700">
+                    <span className="text-2xl text-light-200">
                       <AiFillFacebook />
                     </span>
                   </a>
                 </Link>
                 <Link href="#">
                   <a>
-                    <span className="text-2xl text-light-700">
+                    <span className="text-2xl text-light-200">
                       <FaTwitter />
                     </span>
                   </a>
@@ -184,16 +199,17 @@ const Post = () => {
                   </span>
                   <p className="text-light-500 text-xs">Cómo llegar</p>
                 </div>
-                <div className="flex space-x-2 mb-5">
+                <div className="flex space-x-2">
                   <span className="text-light-500">
                     <FiClock />
                   </span>
                   <p className="text-light-500 text-xs">
                     Lunes a viernes, de 10am - 7pm
-                    <br />
-                    Sábados, Domingos y Festivos 10:00am 1:00pm
                   </p>
                 </div>
+                <p className="text-light-500 text-xs mb-5">
+                  Sábados, Domingos y Festivos 10:00am 1:00pm
+                </p>
               </div>
               <button className="btn-primary py-3 font-light tracking-wide w-full focus:outline-none">
                 Contáctame
@@ -202,10 +218,10 @@ const Post = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-12 sm:top-6 left-4 md:left-20 lg:left-28 z-10">
+      <div className="absolute top-12 sm:top-6 left-4 md:left-20 lg:left-64 z-10">
         <Link href="#">
           <a>
-            <div className="w-12 h-12 bg-light-900 rounded-lg mb-8 overflow-hidden">
+            <div className="w-14 h-14 bg-light-900 rounded-lg mb-6 overflow-hidden">
               <img
                 src="https://via.placeholder.com/45x45"
                 alt=""
@@ -215,49 +231,49 @@ const Post = () => {
           </a>
         </Link>
         <button className="block mb-2">
-          <div className="flex justify-center items-center w-12 h-12 bg-light-900 rounded-lg">
+          <div className="flex justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
             <span className="text-3xl text-white">
-              <BsBookmarkPlus />
+              <BsBookmark />
             </span>
           </div>
-          <p className="text-sm font-raleway text-white">Guardar</p>
+          <p className="text-atomico text-white tracking-wide">GUARDAR</p>
         </button>
         <button className="block mb-2">
-          <div className="flex flex-col justify-center items-center w-12 h-12 bg-light-900 rounded-lg">
+          <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
             <span className="text-2xl text-white">
               <RiHeartLine />
             </span>
             <p className="text-xs text-white font-raleway">74</p>
           </div>
-          <p className="text-sm font-raleway text-white">Valorar</p>
+          <p className="text-atomico text-white tracking-wide">ME GUSTA</p>
         </button>
         <button className="block mb-2">
-          <div className="flex flex-col justify-center items-center w-12 h-12 bg-light-900 rounded-lg">
+          <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
             <span className="text-2xl text-white">
               <FaRegCommentDots />
             </span>
             <p className="text-xs text-white font-raleway">10</p>
           </div>
-          <p className="text-sm -ml-2 font-raleway text-white">Comentar</p>
+          <p className="text-atomico text-white tracking-wide">COMENTAR</p>
         </button>
         <button className="block mb-2">
-          <div className="flex flex-col justify-center items-center w-12 h-12 bg-light-900 rounded-lg">
+          <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
             <span className="text-2xl text-white">
               <FiSend />
             </span>
           </div>
-          <p className="text-sm -ml-2 font-raleway text-white">Compartir</p>
+          <p className="text-atomico text-white tracking-wide">COMPARTIR</p>
         </button>
       </div>
-      <div className="relative w-full px-6 sm:px-14 z-20">
-        <div className="border-t border-b border-light-700 py-5">
+      <div className="w-full px-6 sm:px-14 pb-32">
+        <div className="border-t-2 border-b-2 border-light-800 py-5">
           <div className="flex flex-wrap justify-center sm:justify-between mb-5">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
               Más de Daniela Castillo
             </h1>
             <button className="flex items-center text-white font-raleway tracking-wide">
-              Visitar perfil{' '}
-              <span className="text-red-600 text-2xl pl-2">
+              Visitar perfil
+              <span className="text-green-600 text-2xl pl-2">
                 <HiArrowNarrowRight />
               </span>
             </button>
@@ -269,28 +285,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Julián Álvarez
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -298,28 +292,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Juliana Álvarez
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -327,28 +299,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Esteban Dido
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -356,35 +306,21 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Jorge Nitales
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
         <div className="py-5">
-          <h1 className="text-white text-xl font-semibold font-raleway tracking-wide mb-5">
-            También te podría interesar
-          </h1>
+          <div className="flex flex-wrap justify-center sm:justify-between mb-5">
+            <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
+              También podría interesarte
+            </h1>
+            <button className="flex items-center text-white font-raleway tracking-wide">
+              Ver más
+              <span className="text-green-600 text-2xl pl-2">
+                <HiArrowNarrowRight />
+              </span>
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
             <div>
               <img
@@ -392,28 +328,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Julián Álvarez
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -421,28 +335,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Juliana Álvarez
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -450,28 +342,6 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Esteban Dido
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <img
@@ -479,35 +349,8 @@ const Post = () => {
                 alt=""
                 className="w-full rounded-lg mb-1"
               />
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full"></div>
-                  <p className="text-white text-sm font-raleway">
-                    Jorge Nitales
-                  </p>
-                </div>
-                <div className="flex space-x-5">
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <FaRegCommentDots />
-                    </span>
-                    <p className="font-raleway">10</p>
-                  </div>
-                  <div className="flex items-center space-x-2 text-white">
-                    <span>
-                      <RiHeartLine />
-                    </span>
-                    <p className="font-raleway">53</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center">
-          <button className="text-white font-raleway border border-light-700 px-4 py-1 rounded-lg mb-2 mr-2 focus:outline-none">
-            Cargar más
-          </button>
         </div>
       </div>
     </div>
