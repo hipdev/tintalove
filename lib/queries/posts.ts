@@ -5,6 +5,8 @@ import {
   addDoc,
   getDocs,
   QueryDocumentSnapshot,
+  doc,
+  getDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -53,4 +55,25 @@ export async function getPostsInfo() {
   })
 
   return { posts }
+}
+
+export async function getPostsIds() {
+  const querySnapshot = await getDocs(collection(db, 'posts'))
+  const posts: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    posts.push({ id: doc.id })
+  )
+
+  return posts
+}
+
+export async function getPostDataById(id) {
+  const docRef = doc(collection(db, 'posts'), id)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    return { post: docSnap.data() }
+  } else {
+    return { post: null }
+  }
 }
