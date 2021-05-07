@@ -20,7 +20,7 @@ const Header = () => {
   console.log(user, 'user info')
 
   return (
-    <Sticky top={0}>
+    <Sticky top={0} activeClass="header-active">
       <nav className="flex flex-col lg:flex-row px-2 sm:px-20 py-4 bg-dark-800 relative">
         <div className="w-full flex flex-wrap justify-center lg:justify-between items-center">
           <div className="flex justify-center items-center">
