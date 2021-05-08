@@ -90,10 +90,10 @@ const Post = ({ postData, postId, artistData }) => {
                 </div>
                 <div>
                   <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-                    Daniela Castillo
+                    {artistData.displayName}
                   </h1>
                   <h6 className="text-light-200 text-xs">
-                    Medellín, Antioquia
+                    {artistData.city_name}, {artistData.province}
                   </h6>
                 </div>
               </div>
@@ -139,13 +139,10 @@ const Post = ({ postData, postId, artistData }) => {
                   <span className="text-light-500">
                     <FiClock />
                   </span>
-                  <p className="text-light-500 text-xs">
-                    Lunes a viernes, de 10am - 7pm
+                  <p className="text-light-500 text-xs mb-5">
+                    {artistData.times}
                   </p>
                 </div>
-                <p className="text-light-500 text-xs mb-5">
-                  Sábados, Domingos y Festivos 10:00am 1:00pm
-                </p>
               </div>
               <button className="btn-primary py-3 font-light tracking-wide w-full focus:outline-none">
                 Contáctame
@@ -166,14 +163,7 @@ const Post = ({ postData, postId, artistData }) => {
             </div>
           </a>
         </Link>
-        <button className="block mb-2">
-          <div className="flex justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
-            <span className="text-3xl text-white">
-              <BsBookmark />
-            </span>
-          </div>
-          <p className="text-atomico text-white tracking-wide">GUARDAR</p>
-        </button>
+
         <button className="block mb-2">
           <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
             <span className="text-2xl text-white">
@@ -205,7 +195,7 @@ const Post = ({ postData, postId, artistData }) => {
         <div className="border-t-2 border-b-2 border-light-800 py-5">
           <div className="flex flex-wrap justify-center sm:justify-between mb-5">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              Más de Daniela Castillo
+              Más de {artistData.displayName}
             </h1>
             <button className="flex items-center text-white font-raleway tracking-wide">
               Visitar perfil
