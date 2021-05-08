@@ -20,7 +20,7 @@ const Post = ({ postData, postId, artistData }) => {
     <div className="w-full bg-dark-800 bg-opacity-75 px-6 xl:px-36">
       <div className="mx-5 sm:mx-20 md:mx-40 lg:mx-48 pt-6">
         <div className="flex flex-wrap justify-center lg:justify-between mb-8">
-          <div className="flex flex-wrap justify-center space-x-5 mb-4 lg:mb-0 mt-8 sm:mt-0 mr-0 md:mr-1">
+          <div className="flex flex-wrap justify-center space-x-5 mb-4 lg:mb-0 mt-8 sm:mt-0 mr-0 md:mr-1 items-center">
             <div className="mb-3 sm:mb-0">
               <h1 className="text-white text-2xl sm:text-xl font-semibold font-raleway tracking-wide">
                 {artistData.displayName || 'Sin nombre'}
@@ -30,8 +30,8 @@ const Post = ({ postData, postId, artistData }) => {
                 {artistData.province || 'Sin departamento'}
               </h6>
             </div>
-            <button className="flex items-center gap-3 btn-primary px-5 py-3 tracking-wide mb-3 sm:mb-0">
-              <span className="text-2xl">
+            <button className="flex items-center gap-3 btn-primary px-3 py-2 tracking-wide mb-3 sm:mb-0 ">
+              <span className="text-xl">
                 <RiMessengerLine />
               </span>
               CONTÁCTAME
@@ -51,9 +51,14 @@ const Post = ({ postData, postId, artistData }) => {
             </span>
           </div>
         </div>
-        <div className="mb-5 h-1/2 sm:h-672">
+        <div className="mb-5">
           <img
-            src="https://via.placeholder.com/1100x621"
+            // src="https://via.placeholder.com/1100x621"
+            src={
+              postData?.image?.url
+                ? `${postData.image.url}/tr:pr-true,c-at_max,f-auto,q-100`
+                : 'https://via.placeholder.com/1100x621'
+            }
             alt=""
             className="w-full h-full object-cover rounded-lg"
           />
@@ -79,13 +84,18 @@ const Post = ({ postData, postId, artistData }) => {
             <PostComment />
           </div>
           <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
-            <div className="w-80 xl:w-96 h-auto bg-ocean_blue-200 px-10 xl:px-13 pt-10 pb-8 rounded-b-lg">
+            <div className="w-80 xl:w-96 h-auto bg-ocean_blue-200 px-10 xl:px-13 pt-10 pb-8 ">
               <div className="flex space-x-3">
                 <div className="flex-shrink-0">
                   <img
-                    src="https://via.placeholder.com/45x45"
+                    src={
+                      artistData?.profile_picture?.url
+                        ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-38`
+                        : 'https://via.placeholder.com/1100x621'
+                    }
+                    // src="https://via.placeholder.com/45x45"
                     alt=""
-                    className="rounded-lg"
+                    className="rounded-md"
                   />
                 </div>
                 <div>
@@ -151,16 +161,19 @@ const Post = ({ postData, postId, artistData }) => {
           </div>
         </div>
       </div>
-      <div className="absolute top-12 sm:top-6 left-4 md:left-20 lg:left-64 z-10">
+      <div className="fixed top-12 sm:top-6 left-4 md:left-20 lg:left-32 z-10">
         <Link href="#">
           <a>
-            <div className="w-14 h-14 bg-light-900 rounded-lg mb-6 overflow-hidden">
-              <img
-                src="https://via.placeholder.com/45x45"
-                alt=""
-                className="w-full"
-              />
-            </div>
+            <img
+              // src="https://via.placeholder.com/45x45"
+              src={
+                artistData?.profile_picture?.url
+                  ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
+                  : 'https://via.placeholder.com/1100x621'
+              }
+              alt=""
+              className=" object-cover h-16 rounded-sm mb-5 overflow-hidden"
+            />
           </a>
         </Link>
 
