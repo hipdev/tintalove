@@ -3,7 +3,7 @@ import { MdFilterList } from 'react-icons/md'
 import Masonry from 'react-masonry-css'
 import PostItem from './post-item'
 
-const ArtistList = ({ posts }) => {
+const PostListHome = ({ posts }) => {
   const breakpointColumnsObj = {
     default: 6,
     1600: 4,
@@ -66,4 +66,4 @@ const ArtistList = ({ posts }) => {
   )
 }
 
-export default ArtistList
+export default PostListHome

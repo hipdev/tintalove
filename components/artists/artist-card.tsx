@@ -1,16 +1,12 @@
-import { BsSearch } from 'react-icons/bs'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import { AiOutlineStar } from 'react-icons/ai'
 import { FaInstagram } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
 import { AiOutlineTwitter } from 'react-icons/ai'
 import { AiOutlineCalendar } from 'react-icons/ai'
-import { RiMessengerLine } from 'react-icons/ri'
-import { FaWhatsapp } from 'react-icons/fa'
-import { HiOutlinePhoneOutgoing } from 'react-icons/hi'
-import CardArtist from 'components/layout-pages/card2-artist'
 
-const CardArstist = () => {
+import { ArtistTypes } from 'types/artist'
+
+const ArtistCard = ({ artist }: { artist: ArtistTypes }) => {
   return (
     <div className="w-full h-full bg-ocean_blue-800 p-5 rounded-md">
       <div className="flex justify-between mb-8">
@@ -20,9 +16,11 @@ const CardArstist = () => {
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-white tracking-wide">
-              Sebastian Rodri...
+              {artist.displayName}
             </h1>
-            <p className="text-white">Medellin, Antioquia</p>
+            <p className="text-white">
+              {artist.city_name} {artist.province}
+            </p>
           </div>
         </div>
         <div className="w-14 h-14 bg-light-600 rounded-full flex flex-shrink-0 items-center justify-center">
@@ -51,7 +49,12 @@ const CardArstist = () => {
         </div>
       </div>
       <p className="text-white my-4">
-        Estilos: Puntillismo, Realismo, Color, Sombras (10+)
+        <span>Estilos: </span>
+        {artist?.styles ? (
+          artist.styles.toString()
+        ) : (
+          <span>Ninguno registrado</span>
+        )}
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
@@ -68,4 +71,4 @@ const CardArstist = () => {
   )
 }
 
-export default CardArstist
+export default ArtistCard
