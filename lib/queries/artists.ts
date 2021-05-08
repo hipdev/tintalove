@@ -56,6 +56,7 @@ export async function getUserNamesByArtists() {
 
   return usernames
 }
+
 export async function getArtistsInfo() {
   const querySnapshot = await getDocs(collection(db, 'artists'))
   const artists: Array<any> = []

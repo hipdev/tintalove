@@ -1,17 +1,8 @@
 import { BsSearch } from 'react-icons/bs'
 import { MdKeyboardArrowDown } from 'react-icons/md'
-import { AiOutlineStar } from 'react-icons/ai'
-import { FaInstagram } from 'react-icons/fa'
-import { AiFillFacebook } from 'react-icons/ai'
-import { AiOutlineTwitter } from 'react-icons/ai'
-import { AiOutlineCalendar } from 'react-icons/ai'
-import { RiMessengerLine } from 'react-icons/ri'
-import { FaWhatsapp } from 'react-icons/fa'
-import { HiOutlinePhoneOutgoing } from 'react-icons/hi'
-import Card2Artist from 'components/layout-pages/card2-artist'
-import CardArtist from 'components/layout-pages/card-artist'
+import ArtistCard from './artist-card'
 
-const ArtistLayout = () => {
+const ArtistsList = ({ artistsData }) => {
   return (
     <div className="bg-ocean_blue-900 h-auto">
       <div className="container mx-auto pt-32">
@@ -59,16 +50,17 @@ const ArtistLayout = () => {
           </div>
         </div>
         <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 pb-20 mx-5 sm:mx-0">
-          <CardArtist />
-          <CardArtist />
-          <CardArtist />
-          <CardArtist />
-          <CardArtist />
-          <CardArtist />
+          {artistsData ? (
+            artistsData.map((artist) => {
+              return <ArtistCard artist={artist} />
+            })
+          ) : (
+            <span>No hay artistas</span>
+          )}
         </section>
       </div>
     </div>
   )
 }
 
-export default ArtistLayout
+export default ArtistsList
