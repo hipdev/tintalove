@@ -1,14 +1,21 @@
 import Layout from 'components/layout/layout'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Modal from 'react-modal'
 import Post from 'components/post/post'
-
 import { postToJSON } from 'lib/firebase'
 import { getArtistInfo } from 'lib/queries/artists'
-
 import { getPostsIds, getPostDataById } from 'lib/queries/posts'
-import { useRouter } from 'next/router'
+
+Modal.setAppElement('#__next')
 
 export default function postPage({ postId, postData, artistData }: any) {
-  const router: any = useRouter()
+  const router = useRouter()
+
+  useEffect(() => {
+    router.prefetch('/')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (router.isFallback) {
     return 'Loading'
@@ -22,7 +29,19 @@ export default function postPage({ postId, postData, artistData }: any) {
     // <Layout artistData={postData || null}>
     //   <Post postData={postData || null} postId={postId} />
     // </Layout>
-    <Post postData={postData || null} postId={postId} artistData={artistData} />
+    <>
+      <Modal
+        isOpen={true} // The modal should always be shown on page load, it is the 'page'
+        onRequestClose={() => router.push('/')}
+        contentLabel="Post modal"
+      >
+        <Post
+          postData={postData || null}
+          postId={postId}
+          artistData={artistData}
+        />
+      </Modal>
+    </>
   )
 }
 
