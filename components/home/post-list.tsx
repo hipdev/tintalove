@@ -4,8 +4,6 @@ import Masonry from 'react-masonry-css'
 import PostItem from './post-item'
 
 const ArtistList = ({ posts }) => {
-  console.log(posts, 'los posts')
-
   const breakpointColumnsObj = {
     default: 6,
     1600: 4,
