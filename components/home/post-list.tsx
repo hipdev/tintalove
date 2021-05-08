@@ -1,5 +1,4 @@
 import { MdFilterList } from 'react-icons/md'
-
 import Masonry from 'react-masonry-css'
 import PostItem from './post-item'
 
