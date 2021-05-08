@@ -51,7 +51,7 @@ export async function getPostsInfo() {
   const posts: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     // console.log('consultando artistas', doc.data())
-    return posts.push({ ...doc.data() })
+    return posts.push({ ...doc.data(), id: doc.id })
   })
 
   return { posts }

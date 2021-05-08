@@ -32,7 +32,9 @@ export default function postPage({ postId, postData, artistData }: any) {
     <>
       <Modal
         isOpen={true} // The modal should always be shown on page load, it is the 'page'
-        onRequestClose={() => router.push('/')}
+        onRequestClose={() =>
+          router.push('/', '/', { scroll: false, shallow: true })
+        }
         contentLabel="Post modal"
       >
         <Post
