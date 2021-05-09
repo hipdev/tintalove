@@ -6,8 +6,10 @@ const useArtist = (uid) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { artist } = await getArtistInfo(uid)
-      setArtist(artist)
+      if (uid) {
+        const { artist } = await getArtistInfo(uid)
+        setArtist(artist)
+      }
     }
     fetch()
   }, [])
