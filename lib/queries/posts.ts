@@ -72,7 +72,7 @@ export async function getPostDataById(id) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { post: docSnap.data() }
+    return { post: { ...docSnap.data(), id: docSnap.id } }
   } else {
     return { post: null }
   }
