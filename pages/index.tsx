@@ -23,7 +23,9 @@ export default function IndexPage({ postData }) {
     <>
       <Modal
         isOpen={!!router.query.postId}
-        onRequestClose={() => router.push('/')}
+        onRequestClose={() =>
+          router.push('/', '/', { shallow: true, scroll: false })
+        }
         contentLabel="Post modal"
       >
         <Post postId={router.query.postId} />
