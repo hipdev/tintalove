@@ -31,9 +31,7 @@ export default function TattoosPage({ postsData, postData, artistData }) {
           <PostStatic postData={postData} artistData={artistData} />
         </Modal>
       )}
-      <Layout>
-        <Home posts={postsData} />
-      </Layout>
+      <Layout>{postsData && <Home posts={postsData} />}</Layout>
     </>
   )
 }
