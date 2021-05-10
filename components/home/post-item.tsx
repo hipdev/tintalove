@@ -6,16 +6,20 @@ import { RiHeartLine } from 'react-icons/ri'
 const PostItem = ({ post }) => {
   return (
     <div>
-      <img
-        // src="https://via.placeholder.com/309x234"
-        src={
-          post?.image?.url
-            ? `${post.image.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
-            : 'https://via.placeholder.com/309x234'
-        }
-        alt=""
-        className="w-full rounded-sm  object-cover"
-      />
+      <Link href={`/?postId=${post.id}`} as={`/post/${post.id}`} scroll={false}>
+        <a>
+          <img
+            // src="https://via.placeholder.com/309x234"
+            src={
+              post?.image?.url
+                ? `${post.image.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
+                : 'https://via.placeholder.com/309x234'
+            }
+            alt=""
+            className="w-full rounded-sm  object-cover"
+          />
+        </a>
+      </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
           <img
