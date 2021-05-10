@@ -51,7 +51,7 @@ export async function getPostsInfo() {
   const posts: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     // console.log('consultando artistas', doc.data())
-    return posts.push({ ...doc.data() })
+    return posts.push({ ...doc.data(), id: doc.id })
   })
 
   return { posts }
@@ -72,7 +72,7 @@ export async function getPostDataById(id) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { post: docSnap.data() }
+    return { post: { ...docSnap.data(), id: docSnap.id } }
   } else {
     return { post: null }
   }
