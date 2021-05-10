@@ -16,8 +16,7 @@ const PostComment = () => {
           <p className="text-light-400 text-xs">24 de Marzo</p>
         </div>
         <p className="text-light-200 text-sm">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          Que nota de tatuaje!, esta muy bien hecho,
         </p>
       </div>
     </div>
