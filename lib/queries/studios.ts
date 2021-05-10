@@ -7,6 +7,8 @@ import {
   updateDoc,
   writeBatch,
   addDoc,
+  getDocs,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -151,6 +153,28 @@ export async function getStudioInfo(uid) {
     return { studio: docSnap.data() }
   } else {
     return { studio: null }
+  }
+}
+
+export async function getStudiosInfo() {
+  const querySnapshot = await getDocs(collection(db, 'studios'))
+  const studios: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return studios.push({ ...doc.data() })
+  })
+
+  return { studios }
+}
+
+export async function getStudioIdByUsername(username) {
+  const usernameRef = doc(db, `usernames/${username}`)
+  const queryRef = await getDoc(usernameRef)
+
+  if (queryRef.exists()) {
+    return queryRef.data().uid
+  } else {
+    return false
   }
 }
 
