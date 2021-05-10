@@ -32,56 +32,58 @@ export default function postPage({ postId, postData, artistData }: any) {
     <>
       <Modal
         isOpen={true} // The modal should always be shown on page load, it is the 'page'
-        onRequestClose={() => router.push('/')}
+        onRequestClose={() =>
+          router.push('/', '/', { scroll: false, shallow: true })
+        }
         contentLabel="Post modal"
       >
         <Post
-          postData={postData || null}
+          // postData={postData || null}
           postId={postId}
-          artistData={artistData}
+          // artistData={artistData}
         />
       </Modal>
     </>
   )
 }
 
-export async function getStaticPaths() {
-  const postList = await getPostsIds()
+// export async function getStaticPaths() {
+//   const postList = await getPostsIds()
 
-  const paths = postList.map((doc: any) => ({
-    params: {
-      id: doc.id,
-    },
-  }))
+//   const paths = postList.map((doc: any) => ({
+//     params: {
+//       id: doc.id,
+//     },
+//   }))
 
-  return {
-    paths,
-    fallback: true,
-  }
-}
+//   return {
+//     paths,
+//     fallback: true,
+//   }
+// }
 
-export async function getStaticProps({ params }: any) {
-  let postData = null
-  let artistData = null
+// export async function getStaticProps({ params }: any) {
+//   let postData = null
+//   let artistData = null
 
-  if (params.id) {
-    try {
-      const data = await getPostDataById(params.id)
-      const dataArtist = await getArtistInfo(data.post.artist_id)
+//   if (params.id) {
+//     try {
+//       const data = await getPostDataById(params.id)
+//       const dataArtist = await getArtistInfo(data.post.artist_id)
 
-      postData = postToJSON(data?.post)
-      artistData = postToJSON(dataArtist.artist)
-    } catch (error) {
-      console.log(error, 'Error obteniendo la info del artista')
-    }
-  }
+//       postData = postToJSON(data?.post)
+//       artistData = postToJSON(dataArtist.artist)
+//     } catch (error) {
+//       console.log(error, 'Error obteniendo la info del artista')
+//     }
+//   }
 
-  return {
-    props: {
-      postId: params.id,
-      postData,
-      artistData,
-    },
-    revalidate: 2,
-  }
-}
+//   return {
+//     props: {
+//       postId: params.id,
+//       postData,
+//       artistData,
+//     },
+//     revalidate: 2,
+//   }
+// }
