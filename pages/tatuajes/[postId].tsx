@@ -12,6 +12,17 @@ import PostStatic from 'components/post/post-static'
 
 Modal.setAppElement('#__next')
 
+// const customStyles = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//   },
+// }
+
 export default function TattoosPage({ postsData, postData, artistData }) {
   const router = useRouter()
 
@@ -23,6 +34,22 @@ export default function TattoosPage({ postsData, postData, artistData }) {
       {postData && artistData && (
         <Modal
           isOpen={!(router.query.postId == 'all')}
+          // style={customStyles}
+          style={{
+            overlay: {
+              position: 'fixed',
+              backgroundColor: 'rgb(8 10 18 / 92%)',
+              top: 80,
+              right: 0,
+              left: 0,
+              bottom: 0,
+            },
+            content: {
+              background: 'transparent',
+              border: 'none',
+              top: 0,
+            },
+          }}
           onRequestClose={() =>
             router.push('/tatuajes/all', '', { scroll: false, shallow: true })
           }

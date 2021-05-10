@@ -17,7 +17,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
   return (
-    <div className="w-full bg-dark-800 bg-opacity-75 px-6 xl:px-36">
+    <div className="w-full px-6 xl:px-36">
       <div className="mx-5 sm:mx-20 md:mx-40 lg:mx-48 pt-6">
         <div className="flex flex-wrap justify-center lg:justify-between mb-8">
           <div className="flex flex-wrap justify-center space-x-5 mb-4 lg:mb-0 mt-8 sm:mt-0 mr-0 md:mr-1 items-center">
@@ -161,7 +161,8 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
           </div>
         </div>
       </div>
-      <div className="fixed top-12 sm:top-6 left-4 md:left-20 lg:left-32 z-10">
+
+      <div className="fixed top-24 left-4 md:left-20 lg:left-32 z-10">
         <Link href="#">
           <a>
             <img
