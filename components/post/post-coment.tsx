@@ -16,7 +16,7 @@ const PostComment = () => {
           <p className="text-light-400 text-xs">24 de Marzo</p>
         </div>
         <p className="text-light-200 text-sm">
-          Que nota de tatuaje!, esta muy bien hecho,
+          Que nota de tatuaje!, esta muy bien hecho
         </p>
       </div>
     </div>

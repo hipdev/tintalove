@@ -18,7 +18,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(artistData, 'la data del artista')
   return (
     <div className="w-full px-6 xl:px-36">
-      <div className="mx-5 sm:mx-20 md:mx-40 lg:mx-48 pt-6">
+      <div className="mx-20 ">
         <div className="flex flex-wrap justify-center lg:justify-between mb-8">
           <div className="flex flex-wrap justify-center space-x-5 mb-4 lg:mb-0 mt-8 sm:mt-0 mr-0 md:mr-1 items-center">
             <div className="mb-3 sm:mb-0">
@@ -51,7 +51,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
             </span>
           </div>
         </div>
-        <div className="mb-5">
+        <div className="mb-5 flex justify-center">
           <img
             // src="https://via.placeholder.com/1100x621"
             src={
@@ -60,11 +60,12 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
                 : 'https://via.placeholder.com/1100x621'
             }
             alt=""
-            className="w-full h-full object-cover rounded-lg"
+            className="max-h-609 object-cover rounded-lg"
           />
         </div>
+
         <div className="flex flex-col-reverse lg:flex-row justify-between mb-10">
-          <div className="mb-4 mr-3">
+          <div className="mb-4 w-2/3">
             <div className="flex justify-center lg:justify-start gap-2 mb-5">
               <input
                 type="text"
@@ -83,21 +84,21 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
             <PostComment />
             <PostComment />
           </div>
-          <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
-            <div className="w-80 xl:w-96 h-auto bg-ocean_blue-200 px-10 xl:px-13 pt-10 pb-8 ">
+
+          <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0  bg-ocean_blue-200 w-1/3">
+            <div className=" h-auto  px-10 xl:px-13 pt-10 pb-8 ">
               <div className="flex space-x-3">
-                <div className="flex-shrink-0">
-                  <img
-                    src={
-                      artistData?.profile_picture?.url
-                        ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-38`
-                        : 'https://via.placeholder.com/1100x621'
-                    }
-                    // src="https://via.placeholder.com/45x45"
-                    alt=""
-                    className="rounded-md"
-                  />
-                </div>
+                <img
+                  src={
+                    artistData?.profile_picture?.url
+                      ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-38`
+                      : 'https://via.placeholder.com/1100x621'
+                  }
+                  // src="https://via.placeholder.com/45x45"
+                  alt=""
+                  className="rounded-md"
+                />
+
                 <div>
                   <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
                     {artistData.displayName}
@@ -162,7 +163,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
         </div>
       </div>
 
-      <div className="fixed top-24 left-4 md:left-20 lg:left-32 z-10">
+      <div className="fixed top-24 left-4  lg:left-32 z-10">
         <Link href="#">
           <a>
             <img
@@ -205,7 +206,8 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
           <p className="text-atomico text-white tracking-wide">COMPARTIR</p>
         </button>
       </div>
-      <div className="w-full px-6 sm:px-14 pb-32">
+
+      <div className="w-full ">
         <div className="border-t-2 border-b-2 border-light-800 py-5">
           <div className="flex flex-wrap justify-center sm:justify-between mb-5">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
