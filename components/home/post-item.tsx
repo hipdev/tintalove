@@ -6,7 +6,11 @@ import { RiHeartLine } from 'react-icons/ri'
 const PostItem = ({ post }) => {
   return (
     <div>
-      <Link href={`/?postId=${post.id}`} as={`/post/${post.id}`} scroll={false}>
+      <Link
+        href={`/tatuajes/${post.id}`}
+        as={`/tatuajes/${post.id}`}
+        scroll={false}
+      >
         <a>
           <img
             // src="https://via.placeholder.com/309x234"

@@ -13,7 +13,7 @@ import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
 import PostComment from './post-coment'
 
-const PostStatic = ({ postData, postId, artistData }) => {
+const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
   return (
