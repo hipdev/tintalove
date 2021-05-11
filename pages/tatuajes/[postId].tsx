@@ -3,12 +3,11 @@ import { postsToJSON, postToJSON } from 'lib/firebase'
 import { getPostDataById, getPostsIds, getPostsInfo } from 'lib/queries/posts'
 import Home from 'components/home/home'
 import Modal from 'react-modal'
-// import Post from 'components/post/post'
+
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { getArtistInfo } from 'lib/queries/artists'
-import PostStatic from 'components/post/post-static'
-// import PostStatic from 'components/post/post-static'
+import Post from 'components/post/post'
 
 Modal.setAppElement('#__next')
 
@@ -55,7 +54,7 @@ export default function TattoosPage({ postsData, postData, artistData }) {
           }
           contentLabel="Post modal"
         >
-          <PostStatic postData={postData} artistData={artistData} />
+          <Post postData={postData} artistData={artistData} />
         </Modal>
       )}
       <Layout>{postsData && <Home posts={postsData} />}</Layout>
