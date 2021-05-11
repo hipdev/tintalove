@@ -157,14 +157,14 @@ export async function getStudioInfo(uid) {
 }
 
 export async function getStudiosInfo() {
-  const querySnapshot = await getDocs(collection(db, 'studios'))
-  const studios: Array<any> = []
+  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
+  const usernames_studios: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    // console.log('consultando artistas', doc.data())
-    return studios.push({ ...doc.data() })
+    console.log('consultando estudios', doc.data())
+    return usernames_studios.push({ ...doc.data() })
   })
 
-  return { studios }
+  return { usernames_studios }
 }
 
 export async function getStudioIdByUsername(username) {
