@@ -17,7 +17,7 @@ export async function createArtistPost(
   infoPicture,
   dataForm,
   artist,
-  isPortrait
+  picture_size
 ) {
   if (!dataForm?.description || dataForm?.styles.length < 0) {
     throw new Error('Te faltan los campos del formulario')
@@ -38,7 +38,7 @@ export async function createArtistPost(
     artist_picture: artist.profile_picture.url,
     styles,
     description: dataForm.description,
-    isPortrait,
+    picture_size,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }

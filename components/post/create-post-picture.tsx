@@ -10,7 +10,7 @@ const CreatePostPicture = ({
   uid,
   dataForm,
   setWithPicture,
-  isPortrait,
+  pictureSize,
   artist,
 }) => {
   const [picture, setPicture] = useState(null)
@@ -81,7 +81,7 @@ const CreatePostPicture = ({
             picture={picture}
             uid={uid}
             dataForm={dataForm}
-            isPortrait={isPortrait}
+            pictureSize={pictureSize}
             artist={artist}
           />
         </div>
