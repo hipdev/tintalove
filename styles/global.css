@@ -73,5 +73,10 @@ th:not(:last-child) {
   /* change div to reference your elements you put in <Masonry> */
   margin-bottom: 20px;
 }
+.ReactModal__Body--open {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
 
 @import 'components/styles/react-select.css';
