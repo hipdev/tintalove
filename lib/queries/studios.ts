@@ -145,8 +145,8 @@ export async function updateStudioUsername(studioId, oldUsername, newUsername) {
   return true
 }
 
-export async function getStudioInfo(uid) {
-  const docRef = doc(collection(db, 'studios'), uid)
+export async function getStudioInfo(studioId) {
+  const docRef = doc(collection(db, 'studios'), studioId)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
@@ -159,20 +159,19 @@ export async function getStudioInfo(uid) {
 export async function getStudiosInfo() {
   const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
   const usernames_studios: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    console.log('consultando estudios', doc.data())
-    return usernames_studios.push({ ...doc.data() })
-  })
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    usernames_studios.push({ ...doc.data() })
+  )
 
   return { usernames_studios }
 }
 
 export async function getStudioIdByUsername(username) {
-  const usernameRef = doc(db, `usernames/${username}`)
+  const usernameRef = doc(db, `usernames_studios/${username}`)
   const queryRef = await getDoc(usernameRef)
 
   if (queryRef.exists()) {
-    return queryRef.data().uid
+    return queryRef.data().studio_id
   } else {
     return false
   }
@@ -265,4 +264,15 @@ export async function updateStudioLocationMarker(studioId, dataMarker) {
   } else {
     throw new Error('No estas registrado como artista')
   }
+}
+
+export async function getUsernamesByStudios() {
+  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
+  const usernames: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    console.log(usernames, 'array en cada loop')
+    return usernames.push({ username: doc.id })
+  })
+
+  return usernames
 }
