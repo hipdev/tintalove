@@ -11,6 +11,7 @@ import { RiHeartLine } from 'react-icons/ri'
 import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
 import PostComment from './post-coment'
+import StickyBox from 'react-sticky-box'
 
 const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(postData, 'la data del post')
@@ -20,49 +21,57 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
       {/* Picture, comments and card block */}
       <div className="mx-20 flex">
         <div className="w-1/6">
-          <aside className="z-10 fixed">
-            <Link href="#">
-              <a>
-                <img
-                  // src="https://via.placeholder.com/45x45"
-                  src={
-                    artistData?.profile_picture?.url
-                      ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
-                      : 'https://via.placeholder.com/1100x621'
-                  }
-                  alt=""
-                  className=" object-cover h-16 rounded-sm mb-5 overflow-hidden"
-                />
-              </a>
-            </Link>
+          <StickyBox offsetTop={0} offsetBottom={30}>
+            <aside className="z-10">
+              <Link href="#">
+                <a>
+                  <img
+                    // src="https://via.placeholder.com/45x45"
+                    src={
+                      artistData?.profile_picture?.url
+                        ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
+                        : 'https://via.placeholder.com/1100x621'
+                    }
+                    alt=""
+                    className=" object-cover h-16 rounded-sm mb-5 overflow-hidden"
+                  />
+                </a>
+              </Link>
 
-            <button className="block mb-2">
-              <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
-                <span className="text-2xl text-white">
-                  <RiHeartLine />
-                </span>
-                <p className="text-xs text-white font-raleway">74</p>
-              </div>
-              <p className="text-atomico text-white tracking-wide">ME GUSTA</p>
-            </button>
-            <button className="block mb-2">
-              <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
-                <span className="text-2xl text-white">
-                  <FaRegCommentDots />
-                </span>
-                <p className="text-xs text-white font-raleway">10</p>
-              </div>
-              <p className="text-atomico text-white tracking-wide">COMENTAR</p>
-            </button>
-            <button className="block mb-2">
-              <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
-                <span className="text-2xl text-white">
-                  <FiSend />
-                </span>
-              </div>
-              <p className="text-atomico text-white tracking-wide">COMPARTIR</p>
-            </button>
-          </aside>
+              <button className="block mb-2">
+                <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
+                  <span className="text-2xl text-white">
+                    <RiHeartLine />
+                  </span>
+                  <p className="text-xs text-white font-raleway">74</p>
+                </div>
+                <p className="text-atomico text-white tracking-wide">
+                  ME GUSTA
+                </p>
+              </button>
+              <button className="block mb-2">
+                <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
+                  <span className="text-2xl text-white">
+                    <FaRegCommentDots />
+                  </span>
+                  <p className="text-xs text-white font-raleway">10</p>
+                </div>
+                <p className="text-atomico text-white tracking-wide">
+                  COMENTAR
+                </p>
+              </button>
+              <button className="block mb-2">
+                <div className="flex flex-col justify-center items-center w-14 h-14 bg-light-900 rounded-lg">
+                  <span className="text-2xl text-white">
+                    <FiSend />
+                  </span>
+                </div>
+                <p className="text-atomico text-white tracking-wide">
+                  COMPARTIR
+                </p>
+              </button>
+            </aside>
+          </StickyBox>
         </div>
         <div className="w-5/6">
           <div className="flex flex-wrap justify-center lg:justify-between mb-8">
