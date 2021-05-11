@@ -3,7 +3,11 @@ import Layout from 'components/layout/layout'
 
 import { postToJSON } from 'lib/firebase'
 
-import { getStudiosInfo, getStudioIdByUsername } from 'lib/queries/studios'
+import {
+  getStudioIdByUsername,
+  getUsernamesByStudios,
+  getStudioInfo,
+} from 'lib/queries/studios'
 import { useRouter } from 'next/router'
 
 export default function index({ studioId, studioData }: any) {
@@ -16,7 +20,6 @@ export default function index({ studioId, studioData }: any) {
   if (!studioId) {
     return <p>No existe ese estudio</p>
   }
-  console.log(studioData, studioId, 'el artista info')
 
   return (
     <Layout>
@@ -26,11 +29,13 @@ export default function index({ studioId, studioData }: any) {
 }
 
 export async function getStaticPaths() {
-  const usernamesList = await getStudioIdByUsername(username)
+  const studioUsernamesList = await getUsernamesByStudios()
 
-  const paths = usernamesList.map((doc: any) => ({
+  console.log(studioUsernamesList, 'usernames')
+
+  const paths = studioUsernamesList.map((doc: any) => ({
     params: {
-      usernames_studios: doc.usernames_studios,
+      username: doc.username,
     },
   }))
 
@@ -44,16 +49,13 @@ export async function getStaticProps({ params }: any) {
   let studioId = null
   let studioData = null
 
-  if (params.usernames_studio) {
+  if (params.username) {
     try {
-      studioId = await getStudioIdByUsername(params.studio_id)
-
+      studioId = await getStudioIdByUsername(params.username)
       try {
-        const data = await getStudiosInfo()
+        const studioInfo = await getStudioInfo(studioId)
 
-        studioData = postToJSON(data?.usernames_studios)
-
-        console.log(studioData, 'y eso que pasho')
+        studioData = postToJSON(studioInfo?.studio)
       } catch (error) {
         console.log('Error obteniendo la info del estudio')
       }

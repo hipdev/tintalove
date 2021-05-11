@@ -75,13 +75,7 @@ const ProfileStudio = ({ studioData }) => {
             Artistas del estudio
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {studioData ? (
-              studioData.map((studio) => {
-                return <StudioCard studios={studio} />
-              })
-            ) : (
-              <span>No hay artistas</span>
-            )}
+            <StudioCard studios={studioData} />
           </div>
         </div>
       </div>
