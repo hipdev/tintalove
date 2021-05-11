@@ -14,13 +14,13 @@ type Props = {
   uid: string
   dataForm?: any
   artist?: any
-  isPortrait?: boolean
+  pictureSize?: string
 }
 
 const CreatePostCrop = ({
   picture,
   uid,
-  isPortrait,
+  pictureSize,
   dataForm,
   artist,
 }: Props) => {
@@ -39,12 +39,17 @@ const CreatePostCrop = ({
 
   useEffect(() => {
     setCrop({
-      aspect: isPortrait ? 3 / 4 : 4 / 3,
+      aspect:
+        pictureSize == 'portrait'
+          ? 3 / 4
+          : pictureSize == 'landscape'
+          ? 4 / 3
+          : 1 / 1,
       unit: '%',
       width: 100,
       // height: 100,
     })
-  }, [isPortrait, picture])
+  }, [pictureSize, picture])
 
   const onLoad = useCallback((img) => {
     imgRef.current = img
@@ -118,7 +123,7 @@ const CreatePostCrop = ({
           }
           try {
             toast.promise(
-              createArtistPost(uid, pictureInfo, dataForm, artist, isPortrait),
+              createArtistPost(uid, pictureInfo, dataForm, artist, pictureSize),
               {
                 loading: 'Creando post...',
                 success: () => {
