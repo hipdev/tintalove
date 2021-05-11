@@ -38,7 +38,7 @@ export default function TattoosPage({ postsData, postData, artistData }) {
           style={{
             overlay: {
               position: 'fixed',
-              backgroundColor: 'rgb(8 10 18 / 92%)',
+              backgroundColor: 'rgb(8 10 18 / 98%)',
               top: 80,
               right: 0,
               left: 0,

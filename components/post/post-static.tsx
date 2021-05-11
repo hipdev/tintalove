@@ -60,7 +60,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
                 : 'https://via.placeholder.com/1100x621'
             }
             alt=""
-            className="max-h-609 object-cover rounded-lg"
+            className=" object-cover rounded-lg"
           />
         </div>
 
