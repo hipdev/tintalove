@@ -39,7 +39,7 @@ const CreatePostCrop = ({
 
   useEffect(() => {
     setCrop({
-      aspect: isPortrait ? 6 / 7 : 16 / 9,
+      aspect: isPortrait ? 3 / 4 : 4 / 3,
       unit: '%',
       width: 100,
       // height: 100,
@@ -138,6 +138,7 @@ const CreatePostCrop = ({
         })
     } else {
       toast('Agrega la descripción y al menos un estilo')
+      setLoading(false)
     }
   }
 
