@@ -24,7 +24,7 @@ const StudioCard = ({ studios }: { studios: StudioTypes }) => {
           </div>
         </div>
       </div>
-      <p className="text-white mb-2 mt-3">
+      <p className="text-white mb-2 mt-3 truncate">
         <span>Estilos: </span>
         {studios?.styles ? (
           studios.styles.toString()
@@ -32,14 +32,14 @@ const StudioCard = ({ studios }: { studios: StudioTypes }) => {
           <span>Ninguno registrado</span>
         )}
       </p>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
           <img src="" alt="" className="h-32 w-full" />
         </div>
         <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
           <img src="" alt="" className="h-32 w-full" />
         </div>
-        <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
+        <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden hidden sm:block">
           <img src="" alt="" className="h-32 w-full" />
         </div>
       </div>
