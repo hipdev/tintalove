@@ -12,12 +12,40 @@ import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
 import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
+import { PostTypes } from 'types/post'
+import { ArtistTypes } from 'types/artist'
+import { Toaster } from 'react-hot-toast'
+import useUser from 'hooks/use-user'
 
-const PostStatic = ({ postData, postId, artistData }: any) => {
+const PostStatic = ({
+  postData,
+  artistData,
+}: {
+  postData: PostTypes
+  artistData: ArtistTypes
+}) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
+
+  const { state } = useUser()
+
+  console.log(state, 'el user')
   return (
     <div className="w-full container mx-auto">
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600',
+          style: {
+            background: '#ef3e30',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 5000,
+        }}
+        position="bottom-right"
+      />
+
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs mx-20 ">
         <div className="w-1/6">
@@ -119,7 +147,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
             />
           </div>
           <div className="flex flex-col-reverse lg:flex-row justify-between mb-10">
-            <PostsComments />
+            <PostsComments postId={postData.id} userData={state?.user} />
 
             <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0  bg-ocean_blue-200 w-1/3">
               <div className=" h-auto  px-10 xl:px-13 pt-10 pb-8 ">
