@@ -10,6 +10,7 @@ import {
   query,
   where,
   orderBy,
+  limit,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -106,7 +107,8 @@ export async function addComment(comment, postId, userData) {
 export async function getPostComments(postId) {
   const q = query(
     collection(db, `posts/${postId}/comments`),
-    orderBy('created_at', 'desc')
+    orderBy('created_at', 'desc'),
+    limit(10)
   )
 
   const querySnapshot = await getDocs(q)
