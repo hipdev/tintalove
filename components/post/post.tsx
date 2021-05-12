@@ -17,9 +17,9 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
   return (
-    <div className="w-full px-6 xl:px-36">
+    <div className="w-full">
       {/* Picture, comments and card block */}
-      <div className="mx-20 flex">
+      <div className="flex lg:container-xs mx-auto ">
         <div className="w-1/6">
           <StickyBox offsetTop={0} offsetBottom={30}>
             <aside className="z-10">
