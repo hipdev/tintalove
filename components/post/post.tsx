@@ -20,12 +20,15 @@ import useUser from 'hooks/use-user'
 const PostStatic = ({
   postData,
   artistData,
+  commentsData,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
+  commentsData: any
 }) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
+  console.log(commentsData, 'Los comentarios del post')
 
   const { state } = useUser()
 
