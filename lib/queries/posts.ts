@@ -77,6 +77,9 @@ export async function getPostDataById(id) {
     return { post: null }
   }
 }
+
+// Comments queries
+
 export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
 
@@ -88,4 +91,18 @@ export async function addComment(comment, postId, userData) {
   })
     .then(() => true)
     .catch((error) => console.log(error, 'error creando el comentario'))
+}
+
+export async function getPostComments(postId) {
+  const querySnapshot = await getDocs(
+    collection(db, `posts/${postId}/comments`)
+  )
+  const comments: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    comments.push(doc.data())
+  )
+
+  console.log(comments, 'los comentarios en el cliente ')
+
+  return { comments }
 }
