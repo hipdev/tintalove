@@ -10,7 +10,7 @@ import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
-import PostComment from './post-coment'
+import PostComment from './post-comment'
 import useArtist from 'hooks/use-artist'
 
 const PostProfile = ({ post }) => {

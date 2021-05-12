@@ -10,16 +10,16 @@ import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 import { FiSend } from 'react-icons/fi'
 import Link from 'next/link'
-import PostComment from './post-coment'
+import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 
 const PostStatic = ({ postData, postId, artistData }: any) => {
   console.log(postData, 'la data del post')
   console.log(artistData, 'la data del artista')
   return (
-    <div className="w-full">
+    <div className="w-full container mx-auto">
       {/* Picture, comments and card block */}
-      <div className="flex lg:container-xs mx-auto ">
+      <div className="flex lg:container-xs mx-20 ">
         <div className="w-1/6">
           <StickyBox offsetTop={0} offsetBottom={30}>
             <aside className="z-10">
@@ -32,8 +32,7 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
                         ? `${artistData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
                         : 'https://via.placeholder.com/1100x621'
                     }
-                    alt=""
-                    className=" object-cover h-16 rounded-sm mb-5 overflow-hidden"
+                    className="object-cover h-16 rounded-sm mb-5 overflow-hidden"
                   />
                 </a>
               </Link>
@@ -116,29 +115,11 @@ const PostStatic = ({ postData, postId, artistData }: any) => {
                   : 'https://via.placeholder.com/1100x621'
               }
               alt=""
-              className=" object-cover rounded-lg"
+              className=" object-cover rounded-lg max-h-[55rem]"
             />
           </div>
           <div className="flex flex-col-reverse lg:flex-row justify-between mb-10">
-            <div className="mb-4 w-2/3">
-              <div className="flex justify-center lg:justify-start gap-2 mb-5">
-                <input
-                  type="text"
-                  placeholder="Escribe algo..."
-                  className="w-3/5 bg-ocean_blue-200 border border-light-700 px-5 py-3 rounded-lg focus:outline-none"
-                />
-                <button className="flex items-center gap-2 btn-primary px-4 py-3">
-                  <span className="text-xl">
-                    <FaRegCommentDots />
-                  </span>
-                  Comentar
-                </button>
-              </div>
-
-              <PostComment />
-              <PostComment />
-              <PostComment />
-            </div>
+            <PostsComments />
 
             <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0  bg-ocean_blue-200 w-1/3">
               <div className=" h-auto  px-10 xl:px-13 pt-10 pb-8 ">
