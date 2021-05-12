@@ -7,6 +7,9 @@ import {
   QueryDocumentSnapshot,
   doc,
   getDoc,
+  query,
+  where,
+  orderBy,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -94,9 +97,13 @@ export async function addComment(comment, postId, userData) {
 }
 
 export async function getPostComments(postId) {
-  const querySnapshot = await getDocs(
-    collection(db, `posts/${postId}/comments`)
+  const q = query(
+    collection(db, `posts/${postId}/comments`),
+    orderBy('created_at', 'desc')
   )
+
+  const querySnapshot = await getDocs(q)
+
   const comments: any = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
     comments.push({ ...doc.data(), id: doc.id })
