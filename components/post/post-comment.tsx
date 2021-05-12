@@ -1,13 +1,13 @@
 import {
-  differenceInDays,
-  differenceInMinutes,
+  // differenceInDays,
+  // differenceInMinutes,
   formatDistanceToNow,
 } from 'date-fns'
 import { es } from 'date-fns/locale'
 
 const PostComment = ({ comment }) => {
-  const daysGone = differenceInDays(comment.created_at, Date.now())
-  const minutesGone = differenceInMinutes(Date.now(), comment.created_at)
+  // const daysGone = differenceInDays(comment.created_at, Date.now())
+  // const minutesGone = differenceInMinutes(Date.now(), comment.created_at)
   const distanceGone = formatDistanceToNow(comment.created_at, {
     locale: es,
   }).replace('alrededor de', 'Hace')

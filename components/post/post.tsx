@@ -44,7 +44,7 @@ const PostStatic = ({
             borderRadius: '3px',
             color: '#fff',
           },
-          duration: 5000,
+          duration: 2000,
         }}
         position="bottom-right"
       />
