@@ -91,10 +91,10 @@ export const getStaticProps = async ({ params }) => {
 
   if (params.postId != 'all') {
     try {
-      const data: any = await getPostDataById(params.postId)
-      const dataArtist = await getArtistInfo(data.post.artist_id)
+      const dataPost: any = await getPostDataById(params.postId)
+      const dataArtist = await getArtistInfo(dataPost.post.artist_id)
 
-      postData = postToJSON(data?.post)
+      postData = postToJSON(dataPost?.post)
       artistData = postToJSON(dataArtist.artist)
     } catch (error) {
       console.log(error, 'Error obteniendo la info')

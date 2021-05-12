@@ -77,3 +77,15 @@ export async function getPostDataById(id) {
     return { post: null }
   }
 }
+export async function addComment(comment, postId, userData) {
+  const postsRef = collection(db, `posts/${postId}/comments`)
+
+  await addDoc(postsRef, {
+    comment,
+    created_at: serverTimestamp(),
+    displayName: userData.displayName,
+    user_picture: userData.photo,
+  })
+    .then(() => true)
+    .catch((error) => console.log(error, 'error creando el comentario'))
+}
