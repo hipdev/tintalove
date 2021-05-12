@@ -150,7 +150,11 @@ const PostStatic = ({
             />
           </div>
           <div className="flex flex-col-reverse lg:flex-row justify-between mb-10">
-            <PostsComments postId={postData.id} userData={state?.user} />
+            <PostsComments
+              postId={postData.id}
+              userData={state?.user}
+              commentsData={commentsData}
+            />
 
             <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0  bg-ocean_blue-200 w-1/3">
               <div className=" h-auto  px-10 xl:px-13 pt-10 pb-8 ">

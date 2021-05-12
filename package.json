@@ -17,6 +17,7 @@
     "algoliasearch": "^4.9.1",
     "axios": "^0.21.1",
     "compressorjs": "^1.0.7",
+    "date-fns": "^2.21.3",
     "draft-js": "^0.11.7",
     "firebase": "^9.0.0-beta.1",
     "geofire-common": "^5.2.0",
