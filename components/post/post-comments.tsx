@@ -1,12 +1,14 @@
 import { addComment } from 'lib/queries/posts'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './post-comment'
 
-const PostComments = ({ postId, userData }) => {
+const PostComments = ({ postId, userData, commentsData }) => {
   const [comment, setComment] = useState('')
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState(commentsData)
+
+  console.log(commentsData, 'la data desde getProps')
 
   const sendComment = () => {
     console.log(comment, 'le diste click a crear un comentario')
@@ -66,7 +68,9 @@ const PostComments = ({ postId, userData }) => {
       </div>
 
       {comments.length > 0 ? (
-        comments.map((comment) => <PostComment comment={comment} />)
+        comments.map((comment) => (
+          <PostComment key={comment.id} comment={comment} />
+        ))
       ) : (
         <p className="text-gray-300">Sin comentarios</p>
       )}

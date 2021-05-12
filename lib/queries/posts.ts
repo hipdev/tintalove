@@ -99,7 +99,7 @@ export async function getPostComments(postId) {
   )
   const comments: any = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    comments.push(doc.data())
+    comments.push({ ...doc.data(), id: doc.id })
   )
 
   console.log(comments, 'los comentarios en el cliente ')
