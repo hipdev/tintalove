@@ -6,16 +6,33 @@ import PostComment from './post-comment'
 
 const PostComments = ({ postId, userData }) => {
   const [comment, setComment] = useState('')
+  const [comments, setComments] = useState([])
 
   const sendComment = () => {
     console.log(comment, 'le diste click a crear un comentario')
 
+    console.log(userData, 'user')
+    if (!userData) {
+      toast('Ingresa para hacer un comentario')
+      return
+    }
     if (comment != '') {
       toast.promise(addComment(comment, postId, userData), {
         loading: 'Enviando comentario...',
         success: () => {
           // setLoading(false)
           // setSuccess(true)
+          setComments([
+            ...comments,
+            {
+              displayName: userData.displayName,
+              created_at: Date.now(),
+              comment,
+              user_picture: userData.photo,
+            },
+          ])
+
+          setComment('')
 
           return 'Comentario añadido 😉'
         },
@@ -28,7 +45,7 @@ const PostComments = ({ postId, userData }) => {
   }
 
   return (
-    <div className="mb-4 w-2/3">
+    <div className="mb-4 w-2/3 max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
       <div className="flex justify-center lg:justify-start gap-2 mb-5">
         <input
           type="text"
@@ -48,9 +65,11 @@ const PostComments = ({ postId, userData }) => {
         </button>
       </div>
 
-      <PostComment />
-      <PostComment />
-      <PostComment />
+      {comments.length > 0 ? (
+        comments.map((comment) => <PostComment comment={comment} />)
+      ) : (
+        <p className="text-gray-300">Sin comentarios</p>
+      )}
     </div>
   )
 }
