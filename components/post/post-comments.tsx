@@ -9,6 +9,11 @@ const PostComments = ({ postId, userData, commentsData }) => {
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
 
+  const removeComment = (commentId) => {
+    let filteredArray = comments.filter((item) => item.id !== commentId)
+    setComments(filteredArray)
+  }
+
   const sendComment = () => {
     setLoading(true)
     console.log(userData, 'user')
@@ -102,6 +107,7 @@ const PostComments = ({ postId, userData, commentsData }) => {
             comment={comment}
             userId={userData.uid}
             postId={postId}
+            removeComment={removeComment}
           />
         ))
       ) : (

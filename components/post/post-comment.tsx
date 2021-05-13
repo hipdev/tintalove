@@ -4,7 +4,7 @@ import { deletePostComment } from 'lib/queries/posts'
 import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
 
-const PostComment = ({ comment, userId, postId }) => {
+const PostComment = ({ comment, userId, postId, removeComment }) => {
   // const daysGone = differenceInDays(comment.created_at, Date.now())
   // const minutesGone = differenceInMinutes(Date.now(), comment.created_at)
   console.log(userId, 'id del usuario')
@@ -18,17 +18,7 @@ const PostComment = ({ comment, userId, postId }) => {
     toast.promise(deletePostComment(comment.id, postId), {
       loading: 'Eliminando comentario...',
       success: () => {
-        // setComments([
-        //   {
-        //     displayName: userData.displayName,
-        //     created_at: Date.now(),
-        //     comment,
-        //     user_id: userData.uid,
-        //     id: data.commentId,
-        //     user_picture: userData.photo,
-        //   },
-        //   ...comments,
-        // ])
+        removeComment(comment.id)
 
         return 'Comentario eliminado 😉'
       },
