@@ -8,7 +8,6 @@ import {
   doc,
   getDoc,
   query,
-  where,
   orderBy,
   limit,
   deleteDoc,
@@ -16,7 +15,18 @@ import {
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
 
+import firebase from 'firebase-8/app'
+import 'firebase-8/firestore'
+
 const db = getFirestore(firebaseApp)
+
+const firebaseConfig = { projectId: 'tinta-love' }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+} else {
+  firebase.app() // if already initialized, use that one
+}
+const db8 = firebase.firestore()
 
 export async function createArtistPost(
   uid,
@@ -90,28 +100,31 @@ export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
   const docRef = doc(collection(db, 'posts'), postId)
 
-  const counter = new Counter(docRef, 'counter_comments')
-  console.log(counter, 'el counter')
+  // Initialize Firebase 8.
 
-  counter.incrementBy(1)
+  const res = await addDoc(postsRef, {
+    comment,
+    created_at: serverTimestamp(),
+    displayName: userData.displayName,
+    user_picture: userData.photo,
+    user_id: userData.uid,
+  })
+    .then((docRef) => {
+      const counter = new Counter(
+        db8.doc(`posts/${postId}`),
+        'counter_comments'
+      )
 
-  const hola = counter.onSnapshot()
-  // const res = await addDoc(postsRef, {
-  //   comment,
-  //   created_at: serverTimestamp(),
-  //   displayName: userData.displayName,
-  //   user_picture: userData.photo,
-  //   user_id: userData.uid,
-  // })
-  //   .then((docRef) => {
-  //     return { commentId: docRef.id }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error, 'error creando el comentario')
-  //     return false
-  //   })
+      counter.incrementBy(1)
 
-  // return res
+      return { commentId: docRef.id }
+    })
+    .catch((error) => {
+      console.log(error, 'error creando el comentario')
+      return false
+    })
+
+  return res
 }
 
 export async function getPostComments(postId) {
@@ -133,4 +146,8 @@ export async function getPostComments(postId) {
 
 export async function deletePostComment(commentId, postId) {
   await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
+
+  const counter = new Counter(db8.doc(`posts/${postId}`), 'counter_comments')
+
+  counter.incrementBy(-1)
 }

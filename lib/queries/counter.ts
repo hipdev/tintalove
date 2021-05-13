@@ -13,23 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { onSnapshot } from 'firebase/firestore'
-import { FirebaseOptions } from 'firebase/app'
-import {
-  collection,
-  doc,
-  DocumentReference,
-  DocumentSnapshot,
-  FirebaseFirestore,
-  getDoc,
-  getFirestore,
-  increment,
-  setDoc,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
+import firebase from 'firebase-8/app'
 import * as uuid from 'uuid'
-
-const db = getFirestore(firebaseApp)
 
 const SHARD_COLLECTION_ID = '_counter_shards_'
 const COOKIE_NAME = 'FIRESTORE_COUNTER_SHARD_ID'
@@ -40,7 +25,7 @@ export interface CounterSnapshot {
 }
 
 export class Counter {
-  private db: FirebaseFirestore = null
+  private db: firebase.firestore.Firestore = null
   private shardId = ''
   private shards: { [key: string]: number } = {}
   private notifyPromise: Promise<void> = null
@@ -52,21 +37,20 @@ export class Counter {
    * @param doc A reference to a document with a counter field.
    * @param field A path to a counter field in the above document.
    */
-  constructor(private docu: DocumentReference, private field: string) {
-    this.db = getFirestore(firebaseApp)
+  constructor(
+    private doc: firebase.firestore.DocumentReference,
+    private field: string
+  ) {
+    this.db = doc.firestore
     this.shardId = getShardId(COOKIE_NAME)
 
-    const shardsRef = collection(db, SHARD_COLLECTION_ID)
-
-    this.shards[this.docu.path] = 0
-
-    this.shards[doc(shardsRef, this.shardId).path] = 0
-    this.shards[doc(shardsRef, this.shardId.substr(0, 4)).path] = 0
-    this.shards[doc(shardsRef, this.shardId.substr(0, 3)).path] = 0
-    this.shards[doc(shardsRef, this.shardId.substr(0, 2)).path] = 0
-    this.shards[doc(shardsRef, this.shardId.substr(0, 1)).path] = 0
-
-    console.log(this.shards, 'los chards')
+    const shardsRef = doc.collection(SHARD_COLLECTION_ID)
+    this.shards[doc.path] = 0
+    this.shards[shardsRef.doc(this.shardId).path] = 0
+    this.shards[shardsRef.doc('\t' + this.shardId.substr(0, 4)).path] = 0
+    this.shards[shardsRef.doc('\t\t' + this.shardId.substr(0, 3)).path] = 0
+    this.shards[shardsRef.doc('\t\t\t' + this.shardId.substr(0, 2)).path] = 0
+    this.shards[shardsRef.doc('\t\t\t\t' + this.shardId.substr(0, 1)).path] = 0
   }
 
   /**
@@ -75,11 +59,9 @@ export class Counter {
    * All local increments will be reflected in the counter even if the main
    * counter hasn't been updated yet.
    */
-  public async get(options?: FirebaseOptions): Promise<number> {
+  public async get(options?: firebase.firestore.GetOptions): Promise<number> {
     const valuePromises = Object.keys(this.shards).map(async (path) => {
-      //   const shard = await this.db.doc(path).get(options)
-      const shard = await getDoc(doc(db, path))
-
+      const shard = await this.db.doc(path).get(options)
       return <number>shard.get(this.field) || 0
     })
     const values = await Promise.all(valuePromises)
@@ -92,47 +74,23 @@ export class Counter {
    * All local increments to this counter will be immediately visible in the
    * snapshot.
    */
-  public onSnapshot() {
-    const unsub = onSnapshot(
-      doc(collection(db, 'posts'), 'PuB26Kq35ImiIsCLifMB'),
-      (doc) => {
-        console.log('Current data: ', doc.data())
-      }
-    )
-
-    return true
-
-    // Object.keys(this.shards).forEach((path) => {
-    //   let docRef = doc(this.db, path)
-
-    //   console.log(path, 'los path')
-
-    //   //   console.log(docRef, 'la docRef')
-
-    //   const unsub = onSnapshot(
-    //     doc(this.db, 'posts', 'PuB26Kq35ImiIsCLifMB'),
-    //     (snap) => {
-    //       console.log(snap, 'que es snap')
-    //       // this.shards[snap.ref.path] = snap.get(this.field) || 0
-
-    //       // console.log(
-    //       //   (this.shards[snap.ref.path] = snap.get(this.field) || 0),
-    //       //   'esto que'
-    //       // )
-
-    //       // if (this.notifyPromise !== null) return
-    //       // this.notifyPromise = schedule(() => {
-    //       //   const sum = Object.values(this.shards).reduce((a, b) => a + b, 0)
-    //       //   observable({
-    //       //     exists: true,
-    //       //     data: () => sum,
-    //       //   })
-    //       //   this.notifyPromise = null
-    //       // })
-    //     },
-    //     (error) => console.log(error, 'error de snapshot')
-    //   )
-    // })
+  public onSnapshot(observable: (next: CounterSnapshot) => void) {
+    Object.keys(this.shards).forEach((path) => {
+      this.db
+        .doc(path)
+        .onSnapshot((snap: firebase.firestore.DocumentSnapshot) => {
+          this.shards[snap.ref.path] = snap.get(this.field) || 0
+          if (this.notifyPromise !== null) return
+          this.notifyPromise = schedule(() => {
+            const sum = Object.values(this.shards).reduce((a, b) => a + b, 0)
+            observable({
+              exists: true,
+              data: () => sum,
+            })
+            this.notifyPromise = null
+          })
+        })
+    })
   }
 
   /**
@@ -143,22 +101,16 @@ export class Counter {
    * counter.incrementBy(1);
    */
   public incrementBy(val: number): Promise<void> {
-    console.log(this.field, 'el campo pasado a la clase')
-    console.log(SHARD_COLLECTION_ID, this.shardId, 'la colección y el shardId')
     // @ts-ignore
-    const incrementTo = increment(val)
-    const update: any = this.field
+    const increment: any = firebase.firestore.FieldValue.increment(val)
+    const update: { [key: string]: any } = this.field
       .split('.')
       .reverse()
-      .reduce((value: any, name: any) => ({ [name]: value }), incrementTo)
-    // return this.doc
-    //   .collection(SHARD_COLLECTION_ID)
-    //   .doc(this.shardId)
-    //   .set(update, { merge: true })
-
-    const docRef = doc(collection(db, SHARD_COLLECTION_ID), this.shardId)
-
-    return setDoc(docRef, update, { merge: true })
+      .reduce((value, name) => ({ [name]: value }), increment)
+    return this.doc
+      .collection(SHARD_COLLECTION_ID)
+      .doc(this.shardId)
+      .set(update, { merge: true })
   }
 
   /**
@@ -171,9 +123,8 @@ export class Counter {
    * shardRef.set({"counter1", firestore.FieldValue.Increment(1),
    *               "counter2", firestore.FieldValue.Increment(1));
    */
-  public shard(): DocumentReference {
-    // return this.doc.collection(SHARD_COLLECTION_ID).doc(this.shardId);
-    return doc(collection(db, SHARD_COLLECTION_ID), this.shardId)
+  public shard(): firebase.firestore.DocumentReference {
+    return this.doc.collection(SHARD_COLLECTION_ID).doc(this.shardId)
   }
 }
 
