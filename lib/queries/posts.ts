@@ -14,6 +14,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { Counter } from './counter'
 
 const db = getFirestore(firebaseApp)
 
@@ -87,23 +88,30 @@ export async function getPostDataById(id) {
 
 export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
+  const docRef = doc(collection(db, 'posts'), postId)
 
-  const res = await addDoc(postsRef, {
-    comment,
-    created_at: serverTimestamp(),
-    displayName: userData.displayName,
-    user_picture: userData.photo,
-    user_id: userData.uid,
-  })
-    .then((docRef) => {
-      return { commentId: docRef.id }
-    })
-    .catch((error) => {
-      console.log(error, 'error creando el comentario')
-      return false
-    })
+  const counter = new Counter(docRef, 'counter_comments')
+  console.log(counter, 'el counter')
 
-  return res
+  counter.incrementBy(1)
+
+  const hola = counter.onSnapshot()
+  // const res = await addDoc(postsRef, {
+  //   comment,
+  //   created_at: serverTimestamp(),
+  //   displayName: userData.displayName,
+  //   user_picture: userData.photo,
+  //   user_id: userData.uid,
+  // })
+  //   .then((docRef) => {
+  //     return { commentId: docRef.id }
+  //   })
+  //   .catch((error) => {
+  //     console.log(error, 'error creando el comentario')
+  //     return false
+  //   })
+
+  // return res
 }
 
 export async function getPostComments(postId) {
