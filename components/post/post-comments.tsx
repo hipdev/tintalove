@@ -27,20 +27,18 @@ const PostComments = ({ postId, userData, commentsData }) => {
       toast.promise(addComment(comment, postId, userData), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
-          // setLoading(false)
-          // setSuccess(true)
           console.log(data, 'callback en success')
-          // setComments([
-          //   {
-          //     displayName: userData.displayName,
-          //     created_at: Date.now(),
-          //     comment,
-          //     user_id: userData.uid,
-          //     id: data.commentId,
-          //     user_picture: userData.photo,
-          //   },
-          //   ...comments,
-          // ])
+          setComments([
+            {
+              displayName: userData.displayName,
+              created_at: Date.now(),
+              comment,
+              user_id: userData.uid,
+              id: data.commentId,
+              user_picture: userData.photo,
+            },
+            ...comments,
+          ])
 
           setComment('')
           setLoading(false)
@@ -60,9 +58,6 @@ const PostComments = ({ postId, userData, commentsData }) => {
 
   return (
     <div className="mb-4 w-2/3 max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
-      <Head>
-        <script src="/libs/sharded-counter.js"></script>
-      </Head>
       <div className="flex justify-center lg:justify-start gap-2 mb-5">
         <input
           type="text"
@@ -109,7 +104,7 @@ const PostComments = ({ postId, userData, commentsData }) => {
           <PostComment
             key={comment.id}
             comment={comment}
-            userId={userData.uid}
+            userId={userData?.uid || null}
             postId={postId}
             removeComment={removeComment}
           />
