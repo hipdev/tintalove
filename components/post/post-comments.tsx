@@ -29,6 +29,7 @@ const PostComments = ({ postId, userData, commentsData }) => {
               displayName: userData.displayName,
               created_at: Date.now(),
               comment,
+              user_id: userData.uid,
               id: data.commentId,
               user_picture: userData.photo,
             },
@@ -96,7 +97,12 @@ const PostComments = ({ postId, userData, commentsData }) => {
 
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <PostComment key={comment.id} comment={comment} />
+          <PostComment
+            key={comment.id}
+            comment={comment}
+            userId={userData.uid}
+            postId={postId}
+          />
         ))
       ) : (
         <p className="text-gray-300">Sin comentarios</p>

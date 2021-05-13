@@ -11,6 +11,7 @@ import {
   where,
   orderBy,
   limit,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -92,6 +93,7 @@ export async function addComment(comment, postId, userData) {
     created_at: serverTimestamp(),
     displayName: userData.displayName,
     user_picture: userData.photo,
+    user_id: userData.uid,
   })
     .then((docRef) => {
       return { commentId: docRef.id }
@@ -118,7 +120,9 @@ export async function getPostComments(postId) {
     comments.push({ ...doc.data(), id: doc.id })
   )
 
-  console.log(comments, 'los comentarios en el cliente ')
-
   return { comments }
+}
+
+export async function deletePostComment(commentId, postId) {
+  await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
 }
