@@ -7,12 +7,10 @@ import { AiOutlineDelete } from 'react-icons/ai'
 const PostComment = ({ comment, userId, postId, removeComment }) => {
   // const daysGone = differenceInDays(comment.created_at, Date.now())
   // const minutesGone = differenceInMinutes(Date.now(), comment.created_at)
-  console.log(userId, 'id del usuario')
+
   const distanceGone = formatDistanceToNow(comment.created_at, {
     locale: es,
   }).replace('alrededor de', 'Hace')
-
-  console.log(comment, 'el comentario')
 
   const handleDelete = () => {
     toast.promise(deletePostComment(comment.id, postId), {

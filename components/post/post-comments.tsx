@@ -1,5 +1,6 @@
 import { addComment } from 'lib/queries/posts'
-import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './post-comment'
@@ -29,17 +30,17 @@ const PostComments = ({ postId, userData, commentsData }) => {
           // setLoading(false)
           // setSuccess(true)
           console.log(data, 'callback en success')
-          setComments([
-            {
-              displayName: userData.displayName,
-              created_at: Date.now(),
-              comment,
-              user_id: userData.uid,
-              id: data.commentId,
-              user_picture: userData.photo,
-            },
-            ...comments,
-          ])
+          // setComments([
+          //   {
+          //     displayName: userData.displayName,
+          //     created_at: Date.now(),
+          //     comment,
+          //     user_id: userData.uid,
+          //     id: data.commentId,
+          //     user_picture: userData.photo,
+          //   },
+          //   ...comments,
+          // ])
 
           setComment('')
           setLoading(false)
@@ -59,6 +60,9 @@ const PostComments = ({ postId, userData, commentsData }) => {
 
   return (
     <div className="mb-4 w-2/3 max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
+      <Head>
+        <script src="/libs/sharded-counter.js"></script>
+      </Head>
       <div className="flex justify-center lg:justify-start gap-2 mb-5">
         <input
           type="text"
