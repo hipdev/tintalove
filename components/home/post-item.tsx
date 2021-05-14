@@ -35,12 +35,14 @@ const PostItem = ({ post }) => {
           </p>
         </div>
         <div className="flex space-x-5">
-          <div className="flex items-center space-x-2 text-white">
-            <p className="">10</p>
-            <span>
-              <FaRegCommentDots />
-            </span>
-          </div>
+          {post.counter_comments && (
+            <div className="flex items-center space-x-2 text-white">
+              <p className="">{post.counter_comments || 0}</p>
+              <span>
+                <FaRegCommentDots />
+              </span>
+            </div>
+          )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">53</p>
             <span>

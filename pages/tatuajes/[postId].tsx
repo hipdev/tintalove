@@ -1,29 +1,27 @@
 import Layout from 'components/layout/layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
-import { getPostDataById, getPostsIds, getPostsInfo } from 'lib/queries/posts'
+import {
+  getPostComments,
+  getPostDataById,
+  getPostsIds,
+  getPostsInfo,
+} from 'lib/queries/posts'
 import Home from 'components/home/home'
 import Modal from 'react-modal'
-// import Post from 'components/post/post'
+
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+
 import { getArtistInfo } from 'lib/queries/artists'
-import PostStatic from 'components/post/post-static'
-// import PostStatic from 'components/post/post-static'
+import Post from 'components/post/post'
 
 Modal.setAppElement('#__next')
 
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-// }
-
-export default function TattoosPage({ postsData, postData, artistData }) {
+export default function TattoosPage({
+  postsData,
+  postData,
+  artistData,
+  commentsData,
+}) {
   const router = useRouter()
 
   console.log(postsData, postData, artistData, 'toda la data')
@@ -55,7 +53,11 @@ export default function TattoosPage({ postsData, postData, artistData }) {
           }
           contentLabel="Post modal"
         >
-          <PostStatic postData={postData} artistData={artistData} />
+          <Post
+            postData={postData}
+            artistData={artistData}
+            commentsData={commentsData}
+          />
         </Modal>
       )}
       <Layout>{postsData && <Home posts={postsData} />}</Layout>
@@ -72,7 +74,6 @@ export async function getStaticPaths() {
     },
   }))
   const withAll = [...paths, { params: { postId: 'all' } }]
-  console.log(withAll, 'esto que es')
 
   return {
     paths: withAll,
@@ -82,6 +83,7 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async ({ params }) => {
   let postsData = null
+  let commentsData = null
   let postData = null
   let artistData = null
 
@@ -92,11 +94,15 @@ export const getStaticProps = async ({ params }) => {
 
   if (params.postId != 'all') {
     try {
-      const data: any = await getPostDataById(params.postId)
-      const dataArtist = await getArtistInfo(data.post.artist_id)
+      const dataPost: any = await getPostDataById(params.postId)
+      const dataArtist = await getArtistInfo(dataPost.post.artist_id)
+      const dataComments = await getPostComments(params.postId)
 
-      postData = postToJSON(data?.post)
+      console.log(dataComments, 'los comments')
+
+      postData = postToJSON(dataPost?.post)
       artistData = postToJSON(dataArtist.artist)
+      commentsData = postsToJSON(dataComments.comments)
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }
@@ -106,6 +112,7 @@ export const getStaticProps = async ({ params }) => {
     props: {
       postsData,
       postData,
+      commentsData,
       artistData,
     },
     revalidate: 50,

@@ -61,6 +61,7 @@
 /* Scroll */
 
 /* width */
+.nice_scroll::-webkit-scrollbar,
 .ReactModal__Content::-webkit-scrollbar,
 .create_artist__menu-list::-webkit-scrollbar,
 .react-tel-input .country-list::-webkit-scrollbar {
@@ -68,6 +69,7 @@
 }
 
 /* Track */
+.nice_scroll::-webkit-scrollbar-track,
 .ReactModal__Content::-webkit-scrollbar-track,
 .create_artist__menu-list::-webkit-scrollbar-track,
 .react-tel-input .country-list::-webkit-scrollbar-track {
@@ -75,6 +77,7 @@
 }
 
 /* Handle */
+.nice_scroll::-webkit-scrollbar-thumb,
 .ReactModal__Content::-webkit-scrollbar-thumb,
 .create_artist__menu-list::-webkit-scrollbar-thumb,
 .react-tel-input .country-list::-webkit-scrollbar-thumb {
@@ -82,6 +85,7 @@
 }
 
 /* Handle on hover */
+.nice_scroll::-webkit-scrollbar-thumb:hover,
 .ReactModal__Content::-webkit-scrollbar-thumb:hover,
 .create_artist__menu-list::-webkit-scrollbar-thumb:hover,
 .react-tel-input .country-list::-webkit-scrollbar-thumb:hover {

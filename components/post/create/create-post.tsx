@@ -3,12 +3,14 @@ import Select from 'react-select'
 import CreatePostPicture from './create-post-picture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
+import { BsSquare } from 'react-icons/bs'
+import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
 
 const CreatePost = ({ uid }) => {
   const [description, setDescription] = useState('')
   const [styles, setStyles] = useState([])
   const [withPicture, setWithPicture] = useState(false)
-  const [isPortrait, setIsPortrait] = useState(true)
+  const [pictureSize, setPictureSize] = useState('portrait')
 
   const { artist } = useArtist(uid)
 
@@ -28,7 +30,7 @@ const CreatePost = ({ uid }) => {
             uid={uid}
             dataForm={{ description, styles }}
             setWithPicture={setWithPicture}
-            isPortrait={isPortrait}
+            pictureSize={pictureSize}
             artist={artist || null}
           />
         </div>
@@ -62,23 +64,37 @@ const CreatePost = ({ uid }) => {
                 Orientación de la foto
               </h2>
               <div className="flex justify-around">
-                <div className={isPortrait ? 'text-primary' : ''}>
+                <div
+                  className={pictureSize == 'portrait' ? 'text-primary' : ''}
+                >
                   <button
-                    className="outline-none focus:outline-none relative top-3 hover:text-primary"
-                    onClick={() => setIsPortrait(true)}
+                    className="outline-none focus:outline-none relative top-2 hover:text-primary"
+                    onClick={() => setPictureSize('portrait')}
                   >
                     <IoMdTabletPortrait className="text-7xl" />
                     <span className="mt-3 block">Retrato</span>
                   </button>
                 </div>
-                <div className={!isPortrait ? 'text-primary' : ''}>
+                <div
+                  className={pictureSize == 'landscape' ? 'text-primary' : ''}
+                >
                   <button
                     className="hover:text-primary focus:outline-none"
-                    onClick={() => setIsPortrait(false)}
+                    onClick={() => setPictureSize('landscape')}
                   >
-                    <IoMdTabletLandscape className="text-8xl" />
+                    <IoMdTabletLandscape className="text-7xl" />
 
                     <span>Paisaje</span>
+                  </button>
+                </div>
+                <div className={pictureSize == 'square' ? 'text-primary' : ''}>
+                  <button
+                    className="hover:text-primary focus:outline-none relative top-3"
+                    onClick={() => setPictureSize('square')}
+                  >
+                    <FaTabletAlt className="text-7xl" />
+
+                    <span className="block mt-2">Cuadrado</span>
                   </button>
                 </div>
               </div>
