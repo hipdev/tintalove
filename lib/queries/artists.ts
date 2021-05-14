@@ -10,7 +10,6 @@ import {
   writeBatch,
   getDocs,
   QueryDocumentSnapshot,
-  addDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
