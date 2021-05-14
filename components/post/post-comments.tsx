@@ -5,13 +5,19 @@ import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './post-comment'
 
-const PostComments = ({ postId, userData, commentsData }) => {
+const PostComments = ({
+  postId,
+  userData,
+  commentsData,
+  setTotalComments,
+  totalComments,
+}) => {
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
 
   const removeComment = (commentId) => {
-    let filteredArray = comments.filter((item) => item.id !== commentId)
+    let filteredArray = comments.filter((comment) => comment.id !== commentId)
     setComments(filteredArray)
   }
 
@@ -39,6 +45,7 @@ const PostComments = ({ postId, userData, commentsData }) => {
             },
             ...comments,
           ])
+          setTotalComments(totalComments + 1)
 
           setComment('')
           setLoading(false)
@@ -107,6 +114,8 @@ const PostComments = ({ postId, userData, commentsData }) => {
             userId={userData?.uid || null}
             postId={postId}
             removeComment={removeComment}
+            setTotalComments={setTotalComments}
+            totalComments={totalComments}
           />
         ))
       ) : (
