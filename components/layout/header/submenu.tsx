@@ -57,7 +57,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
       )}
       {user && (
         <>
-          <div className="relative text-left z-10">
+          <div className="relative text-left z-50">
             <Menu>
               {({ open }) => (
                 <>

@@ -7,17 +7,33 @@ import {
   QueryDocumentSnapshot,
   doc,
   getDoc,
+  query,
+  orderBy,
+  limit,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { Counter } from './counter'
+
+import firebase from 'firebase-8/app'
+import 'firebase-8/firestore'
 
 const db = getFirestore(firebaseApp)
+
+const firebaseConfig = { projectId: 'tinta-love' }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+} else {
+  firebase.app() // if already initialized, use that one
+}
+const db8 = firebase.firestore()
 
 export async function createArtistPost(
   uid,
   infoPicture,
   dataForm,
   artist,
-  isPortrait
+  picture_size
 ) {
   if (!dataForm?.description || dataForm?.styles.length < 0) {
     throw new Error('Te faltan los campos del formulario')
@@ -38,7 +54,7 @@ export async function createArtistPost(
     artist_picture: artist.profile_picture.url,
     styles,
     description: dataForm.description,
-    isPortrait,
+    picture_size,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }
@@ -76,4 +92,62 @@ export async function getPostDataById(id) {
   } else {
     return { post: null }
   }
+}
+
+// Comments queries
+
+export async function addComment(comment, postId, userData) {
+  const postsRef = collection(db, `posts/${postId}/comments`)
+  const docRef = doc(collection(db, 'posts'), postId)
+
+  // Initialize Firebase 8.
+
+  const res = await addDoc(postsRef, {
+    comment,
+    created_at: serverTimestamp(),
+    displayName: userData.displayName,
+    user_picture: userData.photo,
+    user_id: userData.uid,
+  })
+    .then((docRef) => {
+      const counter = new Counter(
+        db8.doc(`posts/${postId}`),
+        'counter_comments'
+      )
+
+      counter.incrementBy(1)
+
+      return { commentId: docRef.id }
+    })
+    .catch((error) => {
+      console.log(error, 'error creando el comentario')
+      return false
+    })
+
+  return res
+}
+
+export async function getPostComments(postId) {
+  const q = query(
+    collection(db, `posts/${postId}/comments`),
+    orderBy('created_at', 'desc'),
+    limit(10)
+  )
+
+  const querySnapshot = await getDocs(q)
+
+  const comments: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    comments.push({ ...doc.data(), id: doc.id })
+  )
+
+  return { comments }
+}
+
+export async function deletePostComment(commentId, postId) {
+  await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
+
+  const counter = new Counter(db8.doc(`posts/${postId}`), 'counter_comments')
+
+  counter.incrementBy(-1)
 }
