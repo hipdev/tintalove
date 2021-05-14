@@ -6,6 +6,7 @@ export type PostTypes = {
   artist_picture: string
   city_name: string
   country: string
+  counter_comments: number
   created_at: Timestamp
   description: string
   displayName: string

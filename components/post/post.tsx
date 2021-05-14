@@ -16,6 +16,7 @@ import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { Toaster } from 'react-hot-toast'
 import useUser from 'hooks/use-user'
+import { useState } from 'react'
 
 const PostStatic = ({
   postData,
@@ -31,6 +32,10 @@ const PostStatic = ({
   console.log(commentsData, 'Los comentarios del post')
 
   const { state } = useUser()
+
+  const [totalComments, setTotalComments] = useState(
+    postData.counter_comments || 0
+  )
 
   console.log(state, 'el user')
   return (
@@ -84,7 +89,9 @@ const PostStatic = ({
                   <span className="text-2xl text-white">
                     <FaRegCommentDots />
                   </span>
-                  <p className="text-xs text-white font-raleway">10</p>
+                  <p className="text-xs text-white font-raleway">
+                    {totalComments}
+                  </p>
                 </div>
                 <p className="text-atomico text-white tracking-wide">
                   COMENTAR
@@ -154,6 +161,8 @@ const PostStatic = ({
               postId={postData.id}
               userData={state?.user}
               commentsData={commentsData}
+              setTotalComments={setTotalComments}
+              totalComments={totalComments}
             />
 
             <div className="flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0  bg-ocean_blue-200 w-1/3">
