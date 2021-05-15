@@ -29,39 +29,42 @@ export default function TattoosPage({
 
   return (
     <>
-      {postData && artistData && (
-        <Modal
-          isOpen={!(router.query.postId == 'all')}
-          // style={customStyles}
-          style={{
-            overlay: {
-              position: 'fixed',
-              backgroundColor: 'rgb(8 10 18 / 98%)',
-              top: 80,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              zIndex: 10,
-            },
-            content: {
-              background: 'transparent',
-              border: 'none',
-              top: 0,
-            },
-          }}
-          onRequestClose={() =>
-            router.push('/tatuajes/all', '', { scroll: false, shallow: true })
-          }
-          contentLabel="Post modal"
-        >
-          <Post
-            postData={postData}
-            artistData={artistData}
-            commentsData={commentsData}
-          />
-        </Modal>
-      )}
-      <Layout>{postsData && <Home posts={postsData} />}</Layout>
+      <Layout>
+        {postData && artistData && (
+          <Modal
+            isOpen={!(router.query.postId == 'all')}
+            // style={customStyles}
+            style={{
+              overlay: {
+                position: 'fixed',
+                backgroundColor: 'rgb(8 10 18 / 98%)',
+                top: 80,
+                right: 0,
+                left: 0,
+                bottom: 0,
+                zIndex: 10,
+              },
+              content: {
+                background: 'transparent',
+                border: 'none',
+                top: 0,
+                inset: '0px 65px 40px',
+              },
+            }}
+            onRequestClose={() =>
+              router.push('/tatuajes/all', '', { scroll: false, shallow: true })
+            }
+            contentLabel="Post modal"
+          >
+            <Post
+              postData={postData}
+              artistData={artistData}
+              commentsData={commentsData}
+            />
+          </Modal>
+        )}
+        {postsData && <Home posts={postsData} />}
+      </Layout>
     </>
   )
 }
