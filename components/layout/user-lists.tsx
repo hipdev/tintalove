@@ -20,6 +20,7 @@ const UserLists = () => {
             right: 0,
             left: 0,
             bottom: 0,
+            zIndex: 20,
           },
           content: {
             background: 'transparent',
@@ -33,7 +34,7 @@ const UserLists = () => {
         <span>Hola soy el modal</span>
       </Modal>
 
-      <div className="fixed bottom-1/2 right-8 text-2xl">
+      <div className="fixed bottom-1/2 right-7 text-2xl z-20">
         <AiOutlineUnorderedList
           className="text-white cursor-pointer"
           onClick={() => setOpenSide(true)}
