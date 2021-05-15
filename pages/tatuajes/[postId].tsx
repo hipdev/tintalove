@@ -41,6 +41,7 @@ export default function TattoosPage({
               right: 0,
               left: 0,
               bottom: 0,
+              zIndex: 10,
             },
             content: {
               background: 'transparent',
