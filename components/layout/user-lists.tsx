@@ -7,7 +7,7 @@ import { lists } from 'lib/actions'
 Modal.setAppElement('#__next')
 
 const UserLists = () => {
-  const [openSide, setOpenSide] = useState(false)
+  const [listName, setListName] = useState('')
 
   const {
     state: { list, user },
@@ -17,6 +17,11 @@ const UserLists = () => {
   })
 
   console.log(list, user, 'estados')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(listName, 'hola esta es tu lista')
+  }
 
   return (
     <>
@@ -46,15 +51,34 @@ const UserLists = () => {
         onRequestClose={() => actions.lists({ postId: null, listOpen: false })}
         contentLabel="Post modal"
       >
-        <h1>Tus listas</h1>
-        <p className="text-gray-300">Crea tu primera lista</p>
-        <input type="text" placeholder="Nombre de la lista" />
+        <h1 className="text-gray-300 text-xl">Tus listas</h1>
+        {user?.has_list ? (
+          <>
+            <div>Lista lista lista</div>
+          </>
+        ) : (
+          <>
+            <p className="text-gray-300">Post: {list.postId}</p>
+            <p className="text-gray-300">Crea tu primera lista</p>
+            <form
+              onSubmit={handleSubmit}
+              className="text-gray-400 flex flex-col"
+            >
+              <input
+                type="text"
+                placeholder="Nombre de la lista"
+                onChange={(e) => setListName(e.target.value)}
+              />
+              <button type="submit">Crear</button>
+            </form>
+          </>
+        )}
       </Modal>
 
       <div className="fixed bottom-1/2 right-7 text-2xl z-20">
         <AiOutlineUnorderedList
           className="text-white cursor-pointer"
-          onClick={() => setOpenSide(true)}
+          onClick={() => actions.lists({ postId: null, listOpen: true })}
         />
       </div>
     </>
