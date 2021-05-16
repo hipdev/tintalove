@@ -13,3 +13,10 @@ export function login(state, payload) {
     login: payload,
   }
 }
+
+export function lists(state, payload) {
+  return {
+    ...state,
+    list: payload,
+  }
+}
