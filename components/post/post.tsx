@@ -14,7 +14,6 @@ import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import { Toaster } from 'react-hot-toast'
 import useUser from 'hooks/use-user'
 import { useState } from 'react'
 
@@ -40,20 +39,6 @@ const PostStatic = ({
   console.log(state, 'el user')
   return (
     <div className="w-full container mx-auto">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 2000,
-        }}
-        position="bottom-right"
-      />
-
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs mx-20 ">
         <div className="w-1/6">
