@@ -5,21 +5,27 @@ import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
+import toast from 'react-hot-toast'
 
 const PostItem = ({ post }: { post: PostTypes }) => {
   const {
-    state: { list },
+    state: { user },
     actions,
   }: any = useStateMachine({
     lists,
   })
 
   const handleList = () => {
-    actions.lists({
-      postId: post.id,
-      listOpen: true,
-    })
+    if (!user && !user?.displayName) {
+      toast('Entra para crear listas 🤩')
+    } else {
+      actions.lists({
+        postId: post.id,
+        listOpen: true,
+      })
+    }
   }
+  console.log(user, 'el user state')
 
   return (
     <div>
