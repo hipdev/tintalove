@@ -58,7 +58,7 @@ const UserLists = () => {
           </>
         ) : (
           <>
-            <p className="text-gray-300">Post: {list.postId}</p>
+            <p className="text-gray-300">Post: {list?.postId || 'Sin Id'}</p>
             <p className="text-gray-300">Crea tu primera lista</p>
             <form
               onSubmit={handleSubmit}
