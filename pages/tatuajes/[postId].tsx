@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
 
-Modal.setAppElement('#__next')
+// Modal.setAppElement('#__next')
 
 export default function TattoosPage({
   postsData,

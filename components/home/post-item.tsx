@@ -1,9 +1,26 @@
+import { useStateMachine } from 'little-state-machine'
 import Link from 'next/link'
 
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
+import { lists } from 'lib/actions'
+import { PostTypes } from 'types/post'
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post }: { post: PostTypes }) => {
+  const {
+    state: { list },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
+
+  const handleList = () => {
+    actions.lists({
+      postId: post.id,
+      listOpen: true,
+    })
+  }
+
   return (
     <div>
       <Link
@@ -45,7 +62,7 @@ const PostItem = ({ post }) => {
           )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">53</p>
-            <span>
+            <span onClick={handleList}>
               <RiHeartLine />
             </span>
           </div>

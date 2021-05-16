@@ -15,23 +15,29 @@ const UserLists = () => {
         style={{
           overlay: {
             position: 'fixed',
-            backgroundColor: 'rgb(8 10 18 / 98%)',
+            backgroundColor: 'rgb(8 10 18 / 33%)',
             top: 80,
-            right: 0,
-            left: 0,
-            bottom: 0,
             zIndex: 20,
           },
           content: {
-            background: 'transparent',
+            background: 'rgb(6 7 12)',
+            position: 'fixed',
             border: 'none',
-            top: 0,
+            // inset: 'auto',
+            right: '0px',
+            left: 'auto',
+            top: '80px',
+            height: '100%',
+            width: '315px',
+            borderRadius: '0',
           },
         }}
         onRequestClose={() => setOpenSide(false)}
         contentLabel="Post modal"
       >
-        <span>Hola soy el modal</span>
+        <h1>Tus listas</h1>
+        <p className="text-gray-300">Crea tu primera lista</p>
+        <input type="text" placeholder="Nombre de la lista" />
       </Modal>
 
       <div className="fixed bottom-1/2 right-7 text-2xl z-20">
