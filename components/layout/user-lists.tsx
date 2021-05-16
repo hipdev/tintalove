@@ -1,16 +1,27 @@
+import { useStateMachine } from 'little-state-machine'
 import { useState } from 'react'
 import { AiOutlineUnorderedList } from 'react-icons/ai'
 import Modal from 'react-modal'
+import { lists } from 'lib/actions'
 
 Modal.setAppElement('#__next')
 
 const UserLists = () => {
   const [openSide, setOpenSide] = useState(false)
 
+  const {
+    state: { list, user },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
+
+  console.log(list, user, 'estados')
+
   return (
     <>
       <Modal
-        isOpen={openSide}
+        isOpen={list?.listOpen || false}
         // style={customStyles}
         style={{
           overlay: {
@@ -32,7 +43,7 @@ const UserLists = () => {
             borderRadius: '0',
           },
         }}
-        onRequestClose={() => setOpenSide(false)}
+        onRequestClose={() => actions.lists({ postId: null, listOpen: false })}
         contentLabel="Post modal"
       >
         <h1>Tus listas</h1>
