@@ -1,6 +1,7 @@
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
+import NewHeader from './new-header/new-header'
 
 type Props = {
   artistData?: any
@@ -11,7 +12,7 @@ const Layout = ({ children, artistData }: Props) => {
   return (
     <>
       <HeadContainer />
-      <Header />
+      <NewHeader />
       <main className="bg-dark-800">{children}</main>
       <Footer />
     </>
