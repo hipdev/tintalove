@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { AiOutlineUnorderedList } from 'react-icons/ai'
 import Modal from 'react-modal'
 import { lists } from 'lib/actions'
+import toast from 'react-hot-toast'
+import { addPostToList, createList } from 'lib/queries/lists'
 
 Modal.setAppElement('#__next')
 
@@ -20,6 +22,34 @@ const UserLists = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (list.postId) {
+    } else {
+    }
+    toast.promise(createList(user.uid, listName), {
+      loading: 'Creando lista y asignando el tattoo...',
+      success: (res: { doc: string; status: boolean }) => {
+        console.log(res, 'la res')
+        toast.promise(addPostToList(user.uid, list.postId, res.doc), {
+          loading: 'Asignando lista...',
+          success: () => {
+            setListName('')
+            actions.lists({ postId: null, listOpen: false })
+            list.setListed(true)
+
+            return 'Tattoo guardado 😉'
+          },
+          error: (err) => {
+            return `${err.toString()}`
+          },
+        })
+
+        return 'Lista creada...'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
+
     console.log(listName, 'hola esta es tu lista')
   }
 
@@ -66,6 +96,7 @@ const UserLists = () => {
             >
               <input
                 type="text"
+                value={listName}
                 placeholder="Nombre de la lista"
                 onChange={(e) => setListName(e.target.value)}
               />
