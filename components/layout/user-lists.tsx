@@ -34,7 +34,7 @@ const UserLists = () => {
           success: () => {
             setListName('')
             actions.lists({ postId: null, listOpen: false })
-            list.setListed(true)
+            list.setIsListed(true)
 
             return 'Tattoo guardado 😉'
           },

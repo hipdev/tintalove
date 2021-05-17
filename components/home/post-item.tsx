@@ -7,9 +7,10 @@ import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
+import useListed from 'hooks/use-listed'
 
 const PostItem = ({ post }: { post: PostTypes }) => {
-  const [listed, setListed] = useState(false)
+  const [isListed, setIsListed] = useState(false)
 
   const {
     state: { user },
@@ -18,6 +19,8 @@ const PostItem = ({ post }: { post: PostTypes }) => {
     lists,
   })
 
+  const { listed } = useListed(post.id, user?.uid)
+
   const handleList = () => {
     if (!user && !user?.displayName) {
       toast('Entra para crear listas 🤩')
@@ -25,11 +28,12 @@ const PostItem = ({ post }: { post: PostTypes }) => {
       actions.lists({
         postId: post.id,
         listOpen: true,
-        setListed,
+        setIsListed,
       })
     }
   }
-  console.log(user, 'el user state')
+
+  // console.log(listed, 'listado', post.id)
 
   return (
     <div>
@@ -72,7 +76,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
           )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">53</p>
-            {listed ? (
+            {isListed || listed ? (
               <span>
                 <RiHeart3Fill />
               </span>
