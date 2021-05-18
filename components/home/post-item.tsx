@@ -26,7 +26,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
       toast('Entra para crear listas 🤩')
     } else {
       actions.lists({
-        postId: post.id,
+        post: post,
         listOpen: true,
         setIsListed,
       })
