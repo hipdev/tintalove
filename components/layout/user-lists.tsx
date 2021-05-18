@@ -5,11 +5,13 @@ import Modal from 'react-modal'
 import { lists } from 'lib/actions'
 import toast from 'react-hot-toast'
 import { addPostToList, createList } from 'lib/queries/lists'
+import { useUserData } from 'hooks/use-user-data'
 
 Modal.setAppElement('#__next')
 
 const UserLists = () => {
   const [listName, setListName] = useState('')
+  const { setTriggerAuth } = useUserData()
 
   const {
     state: { list, user },
@@ -22,33 +24,36 @@ const UserLists = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (list.postId) {
+    if (list.post?.id) {
+      console.log(list.post, 'list post')
+      toast.promise(createList(user, listName, true), {
+        loading: 'Creando lista y asignando el tattoo...',
+        success: (res: { doc: string; status: boolean }) => {
+          console.log(res, 'la res')
+          toast.promise(addPostToList(user.uid, list.post, res.doc), {
+            loading: 'Asignando lista...',
+            success: () => {
+              setListName('')
+              actions.lists({ post: null, listOpen: false })
+              list.setIsListed(true)
+              setTriggerAuth(Math.random())
+
+              return 'Tattoo guardado 😉'
+            },
+            error: (err) => {
+              return `${err.toString()}`
+            },
+          })
+
+          return 'Lista creada...'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      })
     } else {
+      toast('No existe el post')
     }
-    toast.promise(createList(user.uid, listName), {
-      loading: 'Creando lista y asignando el tattoo...',
-      success: (res: { doc: string; status: boolean }) => {
-        console.log(res, 'la res')
-        toast.promise(addPostToList(user.uid, list.postId, res.doc), {
-          loading: 'Asignando lista...',
-          success: () => {
-            setListName('')
-            actions.lists({ postId: null, listOpen: false })
-            list.setIsListed(true)
-
-            return 'Tattoo guardado 😉'
-          },
-          error: (err) => {
-            return `${err.toString()}`
-          },
-        })
-
-        return 'Lista creada...'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
 
     console.log(listName, 'hola esta es tu lista')
   }
@@ -88,7 +93,7 @@ const UserLists = () => {
           </>
         ) : (
           <>
-            <p className="text-gray-300">Post: {list?.postId || 'Sin Id'}</p>
+            <p className="text-gray-300">Post: {list?.post?.id || 'Sin Id'}</p>
             <p className="text-gray-300">Crea tu primera lista</p>
             <form
               onSubmit={handleSubmit}

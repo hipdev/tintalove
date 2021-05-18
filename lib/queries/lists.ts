@@ -12,6 +12,7 @@ import {
   limit,
   deleteDoc,
   where,
+  updateDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
@@ -29,10 +30,21 @@ if (!firebase.apps.length) {
 }
 const db8 = firebase.firestore()
 
-export async function createList(uid, list_name) {
+export async function createList(user, list_name, isFirst) {
+  if (isFirst) {
+    const usrRef = doc(collection(db, 'users'), user.uid)
+
+    await updateDoc(usrRef, {
+      has_list: true,
+      updated_at: serverTimestamp(),
+    })
+  }
+
   const res = await addDoc(collection(db, 'lists'), {
     created_at: serverTimestamp(),
-    artist_id: uid,
+    user_id: user.uid,
+    user_name: user.displayName,
+    is_artist: user.is_artist || false,
     list_name,
   })
     .then((doc) => {
@@ -43,12 +55,18 @@ export async function createList(uid, list_name) {
   return res
 }
 
-export async function addPostToList(uid, postId, listId) {
+export async function addPostToList(uid, post, listId) {
   await addDoc(collection(db, 'lists_items'), {
     created_at: serverTimestamp(),
     user_id: uid,
     list_id: listId,
-    post_id: postId,
+    post_id: post.id,
+    post_image: post.image.url,
+    post_picture_size: post.picture_size,
+    post_description: post.description,
+    post_artist_id: post.artist_id,
+    post_artist_name: post.displayName,
+    post_styles: post.styles,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }
