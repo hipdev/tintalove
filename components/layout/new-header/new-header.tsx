@@ -19,13 +19,13 @@ const NewHeader = () => {
   console.log(user, 'user info')
 
   return (
-    <nav className="h-auto xl:h-20 w-full bg-blue-500 py-4 px-20">
-      <div className="flex flex-wrap xl:flex-nowrap justify-center  xl:justify-between">
-        <div className="flex flex-shrink items-center xl:justify-start gap-10 mb:0 sm:mb-4 xl:mb-0 w-full justify-center">
+    <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
+      <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">
+        <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start gap-10">
           <Link href="/">
             <a>
               {/* <img className="w-52" src="/short-logo.png" /> */}
-              <div className="w-40 relative  h-9 mt-2">
+              <div className="w-40 relative h-9 mt-2">
                 <Image
                   // layout="fill"
                   width={180}
@@ -39,11 +39,11 @@ const NewHeader = () => {
           <span className="text-white text-2xl hidden md:block">
             <VscMenu />
           </span>
-          <div className="hidden md:flex items-center relative">
+          <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
             <input
               type="search"
               placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
-              className="w-96 xl:w-510 h-12 px-5 rounded-l-lg placeholder-black truncate"
+              className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-black truncate"
             />
             <button
               type="submit"
@@ -54,24 +54,29 @@ const NewHeader = () => {
               </span>
             </button>
           </div>
-          <span className="static   text-white text-2xl  md:hidden">
-            <VscMenu />
-          </span>
+          <div className="flex items-center gap-8">
+            <span className="static text-xl text-white block lg:hidden">
+              <BsSearch />
+            </span>
+            <span className="static text-white text-3xl block md:hidden">
+              <VscMenu />
+            </span>
+          </div>
         </div>
-        <div className="flex flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0">
-          <div className="flex items-center space-x-2">
+        <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden md:flex">
+          <div className="flex items-center space-x-2 ml-0 md:ml-6 lg:ml-0 ">
             <span className="text-3xl text-primary">
               <TiLocationOutline />
             </span>
             <select
               name=""
               id=""
-              className="bg-transparent text-white font-light font-raleway underline focus:outline-none mr-3 hidden md:block"
+              className="bg-transparent text-white font-light font-raleway underline focus:outline-none mr-3"
             >
               <option value="">TODO COLOMBIA</option>
             </select>
           </div>
-          <button className="text-white text-base font-semibold tracking-wide bg-green-600 px-8 rounded-lg py-3">
+          <button className="text-white text-base font-semibold tracking-wide bg-green-600 px-8 py-3 rounded-lg">
             ACCEDER
           </button>
         </div>
@@ -90,7 +95,7 @@ const NewHeader = () => {
 
         <SubMenuHeader user={user} />
 
-*/}
+        */}
       </div>
     </nav>
   )
