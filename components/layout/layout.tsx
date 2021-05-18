@@ -1,6 +1,7 @@
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
+import NewHeader from './header/header'
 
 type Props = {
   artistData?: any
