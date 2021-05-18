@@ -1,9 +1,40 @@
+import { useStateMachine } from 'little-state-machine'
 import Link from 'next/link'
 
 import { FaRegCommentDots } from 'react-icons/fa'
-import { RiHeartLine } from 'react-icons/ri'
+import { RiHeart3Fill, RiHeartLine } from 'react-icons/ri'
+import { lists } from 'lib/actions'
+import { PostTypes } from 'types/post'
+import toast from 'react-hot-toast'
+import { useState } from 'react'
+import useListed from 'hooks/use-listed'
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post }: { post: PostTypes }) => {
+  const [isListed, setIsListed] = useState(false)
+
+  const {
+    state: { user },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
+
+  const { listed } = useListed(post.id, user?.uid)
+
+  const handleList = () => {
+    if (!user && !user?.displayName) {
+      toast('Entra para crear listas 🤩')
+    } else {
+      actions.lists({
+        post: post,
+        listOpen: true,
+        setIsListed,
+      })
+    }
+  }
+
+  // console.log(listed, 'listado', post.id)
+
   return (
     <div>
       <Link
@@ -45,9 +76,15 @@ const PostItem = ({ post }) => {
           )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">53</p>
-            <span>
-              <RiHeartLine />
-            </span>
+            {isListed || listed ? (
+              <span>
+                <RiHeart3Fill />
+              </span>
+            ) : (
+              <span onClick={handleList}>
+                <RiHeartLine />
+              </span>
+            )}
           </div>
         </div>
       </div>
