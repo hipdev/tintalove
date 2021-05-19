@@ -51,9 +51,19 @@ export default function TattoosPage({
                 inset: '0px 65px 40px',
               },
             }}
-            onRequestClose={() =>
-              router.push('/tatuajes/all', '', { scroll: false, shallow: true })
-            }
+            onRequestClose={() => {
+              if (router.query.listId) {
+                router.push(`/list/${router.query.listId}`, '', {
+                  scroll: false,
+                  shallow: true,
+                })
+              } else {
+                router.push('/tatuajes/all', '', {
+                  scroll: false,
+                  shallow: true,
+                })
+              }
+            }}
             contentLabel="Post modal"
           >
             <Post

@@ -42,7 +42,7 @@ const ListPost = ({ post }: { post: any }) => {
   return (
     <div>
       <Link
-        href={`/tatuajes/${post.post_id}`}
+        href={`/tatuajes/${post.post_id}?listId=${post.list_id}`}
         as={`/tatuajes/${post.post_id}`}
         scroll={false}
       >
