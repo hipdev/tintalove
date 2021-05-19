@@ -1,6 +1,6 @@
 import useLists from 'hooks/use-lists'
 import { useState } from 'react'
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import NoListForm from './no-list-form'
 
 const SelectList = ({ userId, post }) => {
@@ -20,7 +20,11 @@ const SelectList = ({ userId, post }) => {
           className="outline-none focus:outline-none"
           onClick={() => setShowForm(!showForm)}
         >
-          <AiFillPlusCircle className="text-primary text-3xl hover:text-primaryHover" />
+          {showForm ? (
+            <AiFillMinusCircle className="text-primary text-3xl hover:text-primaryHover" />
+          ) : (
+            <AiFillPlusCircle className="text-primary text-3xl hover:text-primaryHover" />
+          )}
         </button>
       </div>
 
