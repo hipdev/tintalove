@@ -1,15 +1,8 @@
-import { CgClose } from 'react-icons/cg'
-import { FiBookmark, FiInstagram } from 'react-icons/fi'
-import { AiFillFacebook } from 'react-icons/ai'
-import { FaTwitter } from 'react-icons/fa'
-import { RiCalendarLine, RiMessengerLine } from 'react-icons/ri'
-import { RiRoadMapLine } from 'react-icons/ri'
-import { FiClock } from 'react-icons/fi'
+import { FiBookmark } from 'react-icons/fi'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 import { FiSend } from 'react-icons/fi'
-import Link from 'next/link'
 import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
@@ -17,6 +10,8 @@ import { ArtistTypes } from 'types/artist'
 import useUser from 'hooks/use-user'
 import { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
+import PostPortrait from './post-portrait'
+import PostHorizontal from './post-horizontal'
 
 const PostStatic = ({
   postData,
@@ -58,77 +53,19 @@ const PostStatic = ({
             </button>
           </div>
 
-          <div className="mb-5 flex justify-center">
-            <img
-              // src="https://via.placeholder.com/1100x621"
-              src={
-                postData?.image?.url
-                  ? `${postData.image.url}/tr:pr-true,c-at_max,f-auto,q-100`
-                  : 'https://via.placeholder.com/1100x621'
-              }
-              alt=""
-              className=" object-cover rounded-lg w-672"
-            />
-            <div className="">
-              <StickyBox offsetTop={0} offsetBottom={30}>
-                <aside className="z-10 ml-4">
-                  <button className="block mb-2">
-                    <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                      <span className="text-2xl text-green-500">
-                        <FiBookmark />
-                      </span>
-                    </div>
-                    <p className="text-atomico text-white tracking-wide">
-                      GUARDAR
-                    </p>
-                  </button>
-                  <button className="block mb-2">
-                    <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                      <span className="text-2xl text-green-500">
-                        <RiHeartLine />
-                      </span>
-                      <p className="text-xs text-white font-raleway">74</p>
-                    </div>
-                    <p className="text-atomico text-white tracking-wide">
-                      ME GUSTA
-                    </p>
-                  </button>
-                  <button className="block mb-2">
-                    <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                      <span className="text-2xl text-green-500">
-                        <FaRegCommentDots />
-                      </span>
-                      <p className="text-xs text-white font-raleway">
-                        {totalComments}
-                      </p>
-                    </div>
-                    <p className="text-atomico text-white tracking-wide">
-                      COMENTAR
-                    </p>
-                  </button>
-                  <button className="block mb-2">
-                    <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                      <span className="text-2xl text-green-500">
-                        <FiSend />
-                      </span>
-                    </div>
-                    <p className="text-atomico text-white tracking-wide">
-                      COMPARTIR
-                    </p>
-                  </button>
-                </aside>
-              </StickyBox>
-            </div>
-          </div>
-          <div className="w-full flex flex-col-reverse mb-10">
-            <PostsComments
-              postId={postData.id}
-              userData={state?.user}
+          {postData.picture_size == 'portrait' ? (
+            <PostPortrait
+              postData={postData}
+              artistData={artistData}
               commentsData={commentsData}
-              setTotalComments={setTotalComments}
-              totalComments={totalComments}
             />
-          </div>
+          ) : (
+            <PostHorizontal
+              postData={postData}
+              artistData={artistData}
+              commentsData={commentsData}
+            />
+          )}
         </div>
       </div>
 
