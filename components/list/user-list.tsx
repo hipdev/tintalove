@@ -21,7 +21,7 @@ const UserList = ({ listData, listItemsData }) => {
     return <span>Cargando user...</span>
   }
   return (
-    <div className="h-screen px-20 pt-12">
+    <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
         {listData.list_name} <span className="ml-3 font-medium"> (4) </span>
       </h2>
