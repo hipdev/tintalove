@@ -86,3 +86,16 @@ export async function isPostListed(postId, userId) {
 
   return { notListed: !querySnapshotEmpty }
 }
+
+export async function getUserLists(userId) {
+  const q = query(collection(db, 'lists'), where('user_id', '==', userId))
+
+  const querySnapshot = await getDocs(q)
+  const lists: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return lists.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { lists }
+}
