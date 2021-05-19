@@ -6,8 +6,9 @@ import { RiHeart3Fill, RiHeartLine } from 'react-icons/ri'
 import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useListed from 'hooks/use-listed'
+import { removePostFromList } from 'lib/queries/lists'
 
 const PostItem = ({ post }: { post: PostTypes }) => {
   const [isListed, setIsListed] = useState(false)
@@ -21,6 +22,10 @@ const PostItem = ({ post }: { post: PostTypes }) => {
 
   const { listed } = useListed(post.id, user?.uid)
 
+  useEffect(() => {
+    setIsListed(listed)
+  }, [listed])
+
   const handleList = () => {
     if (!user && !user?.displayName) {
       toast('Entra para crear listas 🤩')
@@ -29,6 +34,24 @@ const PostItem = ({ post }: { post: PostTypes }) => {
         post: post,
         listOpen: true,
         setIsListed,
+      })
+    }
+  }
+  const removeFromList = async () => {
+    if (!user && !user?.displayName && (!isListed || !listed)) {
+      toast('Ups, está no es tu lista')
+    } else {
+      console.log('hola')
+
+      toast.promise(removePostFromList(post.id, user.uid), {
+        loading: 'Eliminando de tu lista...',
+        success: () => {
+          setIsListed(false)
+          return 'Tattoo eliminado 😉'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
       })
     }
   }
@@ -74,8 +97,8 @@ const PostItem = ({ post }: { post: PostTypes }) => {
           )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">53</p>
-            {isListed || listed ? (
-              <span>
+            {isListed ? (
+              <span className="cursor-pointer" onClick={removeFromList}>
                 <RiHeart3Fill />
               </span>
             ) : (
