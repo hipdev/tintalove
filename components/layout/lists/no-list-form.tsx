@@ -25,11 +25,9 @@ const NoListForm = ({ hasList }: Props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (list.post?.id) {
-      console.log(list.post, 'list post')
       toast.promise(createList(user, listName, hasList ? false : true), {
         loading: 'Creando lista y asignando el tattoo...',
         success: (res: { doc: string; status: boolean }) => {
-          console.log(res, 'la res')
           toast.promise(addPostToList(user.uid, list.post, res.doc), {
             loading: 'Asignando lista...',
             success: () => {

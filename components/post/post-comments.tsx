@@ -23,7 +23,7 @@ const PostComments = ({
 
   const sendComment = () => {
     setLoading(true)
-    console.log(userData, 'user')
+
     if (!userData) {
       toast('Ingresa para hacer un comentario')
       setLoading(false)
@@ -33,7 +33,6 @@ const PostComments = ({
       toast.promise(addComment(comment, postId, userData), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
-          console.log(data, 'callback en success')
           setComments([
             {
               displayName: userData.displayName,

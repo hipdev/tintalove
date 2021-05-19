@@ -26,17 +26,12 @@ const PostStatic = ({
   artistData: ArtistTypes
   commentsData: any
 }) => {
-  console.log(postData, 'la data del post')
-  console.log(artistData, 'la data del artista')
-  console.log(commentsData, 'Los comentarios del post')
-
   const { state } = useUser()
 
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
 
-  console.log(state, 'el user')
   return (
     <div className="w-full container mx-auto">
       {/* Picture, comments and card block */}

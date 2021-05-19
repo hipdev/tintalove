@@ -16,8 +16,6 @@ const Header = () => {
 
   const { user }: { user: UserState } = state
 
-  console.log(user, 'user info')
-
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
       <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">

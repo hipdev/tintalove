@@ -4,8 +4,6 @@ import Link from 'next/link'
 const ShowLists = ({ userId }) => {
   const [lists] = useLists(userId)
 
-  console.log(lists, 'listas del usuario')
-
   if (!lists) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (

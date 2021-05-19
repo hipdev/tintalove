@@ -33,8 +33,6 @@ const PostItem = ({ post }: { post: PostTypes }) => {
     }
   }
 
-  // console.log(listed, 'listado', post.id)
-
   return (
     <div>
       <Link

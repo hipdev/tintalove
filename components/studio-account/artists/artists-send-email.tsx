@@ -31,11 +31,9 @@ const ArtistsSendEmail = ({ studioInfo }) => {
   }, [success])
 
   const onSubmit = (data) => {
-    console.log(data, 'data invitation')
     setLoading(true)
 
     axios.post('/api/emails/invitation-artist', data).then((res) => {
-      console.log(res, 'la res')
       if (res?.status == 200) {
         reset()
         toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
