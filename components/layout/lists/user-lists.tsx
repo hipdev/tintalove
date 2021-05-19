@@ -42,6 +42,7 @@ const UserLists = () => {
             height: '100%',
             width: '315px',
             borderRadius: '0',
+            boxShadow: '0px 1px 4px #000000',
           },
         }}
         onRequestClose={() => actions.lists({ postId: null, listOpen: false })}
