@@ -99,3 +99,19 @@ export async function getUserLists(userId) {
 
   return { userLists }
 }
+
+export async function removePostFromList(postId, userId) {
+  const q = query(
+    collection(db, 'lists_items'),
+    where('user_id', '==', userId),
+    where('post_id', '==', postId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach(async (listItem: QueryDocumentSnapshot) => {
+    return await deleteDoc(doc(db, 'lists_items', listItem.id))
+  })
+
+  console.log(querySnapshot.empty, 'esto que')
+  return true
+}
