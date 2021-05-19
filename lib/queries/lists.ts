@@ -56,7 +56,7 @@ export async function createList(user, list_name, isFirst) {
 }
 
 export async function addPostToList(uid, post, listId) {
-  await addDoc(collection(db, 'lists_items'), {
+  const res = await addDoc(collection(db, 'lists_items'), {
     created_at: serverTimestamp(),
     user_id: uid,
     list_id: listId,
@@ -72,6 +72,8 @@ export async function addPostToList(uid, post, listId) {
       return { doc: doc.id, status: true }
     })
     .catch((error) => console.log(error))
+
+  return res
 }
 export async function isPostListed(postId, userId) {
   const q = query(
@@ -91,11 +93,11 @@ export async function getUserLists(userId) {
   const q = query(collection(db, 'lists'), where('user_id', '==', userId))
 
   const querySnapshot = await getDocs(q)
-  const lists: Array<any> = []
+  const userLists: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     // console.log('consultando artistas', doc.data())
-    return lists.push({ ...doc.data(), id: doc.id })
+    return userLists.push({ ...doc.data(), id: doc.id })
   })
 
-  return { lists }
+  return { userLists }
 }

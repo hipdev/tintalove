@@ -1,17 +1,46 @@
 import useLists from 'hooks/use-lists'
+import { addPostToList } from 'lib/queries/lists'
+import { useStateMachine } from 'little-state-machine'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import NoListForm from './no-list-form'
+import { lists } from 'lib/actions'
 
 const SelectList = ({ userId, post }) => {
-  const [lists] = useLists(userId)
+  const [userLists] = useLists(userId)
   const [showForm, setShowForm] = useState(false)
 
+  const {
+    state: { list },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
+
   const savePostOnList = (listId) => {
-    console.log(listId, 'list id')
+    if (listId && userId && post) {
+      console.log(list, 'la lista')
+      toast.promise(addPostToList(userId, post, listId), {
+        loading: 'Agregando tattoo...',
+        success: (res) => {
+          console.log(res, 'la res')
+          list.setIsListed(true)
+
+          actions.lists({ post: null, listOpen: false })
+
+          return 'Tattoo guardado 😉'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast('Error: Sin suficientes datos')
+    }
   }
 
-  if (!lists) return <p className="text-gray-300">Cargando listas...</p>
+  if (!userLists) return <p className="text-gray-300">Cargando listas...</p>
 
   return (
     <div className="text-gray-300">
@@ -33,7 +62,7 @@ const SelectList = ({ userId, post }) => {
       {showForm && <NoListForm hasList />}
 
       <div className="flex flex-col">
-        {lists.map((list) => (
+        {userLists.map((list) => (
           <button
             key={list.id}
             type="button"

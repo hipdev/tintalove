@@ -28,8 +28,8 @@ const UserLists = () => {
           overlay: {
             position: 'fixed',
             backgroundColor: 'rgb(8 10 18 / 33%)',
-            top: 80,
-            zIndex: 20,
+            top: 0,
+            zIndex: 100,
           },
           content: {
             background: 'rgb(6 7 12)',
@@ -38,11 +38,12 @@ const UserLists = () => {
             // inset: 'auto',
             right: '0px',
             left: 'auto',
-            top: '80px',
+            top: 0,
             height: '100%',
             width: '315px',
             borderRadius: '0',
             boxShadow: '0px 1px 4px #000000',
+            paddingTop: '1.7rem',
           },
         }}
         onRequestClose={() => actions.lists({ postId: null, listOpen: false })}
