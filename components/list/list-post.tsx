@@ -1,16 +1,15 @@
 import { useStateMachine } from 'little-state-machine'
 import Link from 'next/link'
 
-import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeart3Fill } from 'react-icons/ri'
 import { lists } from 'lib/actions'
-import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { removePostFromList } from 'lib/queries/lists'
+import { PostList } from 'types/post-list'
 
-const ListPost = ({ post }: { post: any }) => {
+const ListPost = ({ post }: { post: PostList }) => {
   const [isListed, setIsListed] = useState(false)
 
   const {
