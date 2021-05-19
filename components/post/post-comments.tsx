@@ -1,5 +1,6 @@
 import { addComment } from 'lib/queries/posts'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
@@ -64,17 +65,30 @@ const PostComments = ({
   }
 
   return (
-    <div className="mb-4 w-2/3 max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
+    <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
       <div className="flex justify-center lg:justify-start gap-2 mb-5">
+        <Link href="#">
+          <a className="flex flex-shrink-0">
+            <img
+              // src="https://via.placeholder.com/45x45"
+              src={
+                userData?.profile_picture?.url
+                  ? `${userData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
+                  : 'https://via.placeholder.com/45x45'
+              }
+              className="object-cover w-12 h-12 rounded-md overflow-hidden"
+            />
+          </a>
+        </Link>
         <input
           type="text"
           value={comment}
-          placeholder="Escribe algo..."
-          className="w-3/5 bg-ocean_blue-200 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300"
+          placeholder="Escribe un comentario..."
+          className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300"
           onChange={(e) => setComment(e.target.value)}
         />
         <button
-          className="flex items-center gap-2 btn-primary px-4 py-3"
+          className="flex items-center gap-2 btn-primary px-4 py-1"
           onClick={sendComment}
           disabled={loading}
         >
