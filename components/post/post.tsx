@@ -14,7 +14,6 @@ import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import { Toaster } from 'react-hot-toast'
 import useUser from 'hooks/use-user'
 import { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
@@ -28,39 +27,15 @@ const PostStatic = ({
   artistData: ArtistTypes
   commentsData: any
 }) => {
-  console.log(postData, 'la data del post')
-  console.log(artistData, 'la data del artista')
-  console.log(commentsData, 'Los comentarios del post')
-
   const { state } = useUser()
 
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
 
-  const PictureSize = () =>{
-    if(postData.pictureSize !=== postData.pictureSize){
-      console.log('Img ')
-    }
-  }
-
   console.log(state, 'el user')
   return (
     <div className="w-full container mx-auto">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 2000,
-        }}
-        position="bottom-right"
-      />
-
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs mx-56">
         <div className="w-full">

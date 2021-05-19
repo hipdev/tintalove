@@ -1,12 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { VscMenu } from 'react-icons/vsc'
 import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
-import {
-  AiOutlineCalendar,
-  AiOutlineCamera,
-  AiOutlineMenu,
-} from 'react-icons/ai'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
 import { getUser } from 'lib/actions'
@@ -18,8 +14,6 @@ const Header = () => {
   })
 
   const { user }: { user: UserState } = state
-
-  console.log(user, 'user info')
 
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
@@ -39,8 +33,8 @@ const Header = () => {
               </div>
             </a>
           </Link>
-          <span className="text-white text-3xl hidden md:block">
-            <AiOutlineMenu />
+          <span className="text-white text-2xl hidden md:block">
+            <VscMenu />
           </span>
           <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
             <input
@@ -62,7 +56,7 @@ const Header = () => {
               <BsSearch />
             </span>
             <span className="static text-white text-3xl block md:hidden">
-              <AiOutlineMenu />
+              <VscMenu />
             </span>
           </div>
         </div>

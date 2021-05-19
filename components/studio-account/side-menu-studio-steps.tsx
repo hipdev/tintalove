@@ -17,15 +17,12 @@ type Props = {
 const SideMenuStudioSteps = ({ studioId }: Props) => {
   const { studioWizard } = useStudioWizardRealtime(studioId)
 
-  console.log(studioWizard, 'steps studio')
-
   const [loading, setLoading] = useState(false)
   const { setTriggerAuth } = useUserData()
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
 
-  console.log(studioWizard, 'wizard artist')
   const steps = [
     studioWizard?.step_one,
     studioWizard?.step_two,
