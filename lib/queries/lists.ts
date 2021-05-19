@@ -115,3 +115,29 @@ export async function removePostFromList(postId, userId) {
   console.log(querySnapshot.empty, 'esto que')
   return true
 }
+
+export async function getListsIds() {
+  const querySnapshot = await getDocs(collection(db, 'lists'))
+  const lists: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    lists.push({ id: doc.id })
+  )
+
+  return lists
+}
+
+export async function getUserListItems(listId) {
+  const q = query(collection(db, 'lists_items'), where('list_id', '==', listId))
+  const listRef = doc(collection(db, 'lists'), listId)
+
+  const docData = await getDoc(listRef)
+
+  const querySnapshot = await getDocs(q)
+  const userListItems: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return userListItems.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { userListItems, userList: docData.data() }
+}

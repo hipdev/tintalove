@@ -12,7 +12,7 @@ const ShowLists = ({ userId }) => {
 
       <div className="flex flex-col">
         {userLists.map((list) => (
-          <Link href="#" key={list.id}>
+          <Link href={`/list/${list.id}`} key={list.id}>
             <a className="py-3">{list.list_name}</a>
           </Link>
         ))}
