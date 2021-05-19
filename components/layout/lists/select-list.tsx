@@ -7,8 +7,6 @@ const SelectList = ({ userId, post }) => {
   const [lists] = useLists(userId)
   const [showForm, setShowForm] = useState(false)
 
-  console.log(lists, 'listas del usuario')
-
   const savePostOnList = (listId) => {
     console.log(listId, 'list id')
   }
