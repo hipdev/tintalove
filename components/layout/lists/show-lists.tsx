@@ -14,7 +14,7 @@ const ShowLists = ({ userId }) => {
 
   return (
     <div className="text-gray-300">
-      <h1 className="text-xl mb-5">Tus listas actuales</h1>
+      <h1 className="text-xl mb-5">Tus listas</h1>
 
       <div className="flex flex-col">
         {userLists.map((list) => (

@@ -1,11 +1,19 @@
 import Layout from 'components/layout/layout'
 
 import { useRouter } from 'next/router'
-import UserList from 'components/list/list'
+import UserList from 'components/list/user-list'
 import { getListsIds, getUserListItems } from 'lib/queries/lists'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 
 export default function ListPage({ listItemsData, listData }) {
+  if (!listData?.list_name) {
+    return (
+      <div className="h-screen flex justify-center pt-10">
+        <p className="text-gray-300 text-3xl">Ups, esta lista no existe</p>
+      </div>
+    )
+  }
+
   return (
     <>
       <Layout>
