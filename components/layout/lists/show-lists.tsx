@@ -10,13 +10,15 @@ const ShowLists = ({ userId }) => {
 
   return (
     <div className="text-gray-300">
-      <h1 className="text-xl mb-10">Tus listas actuales</h1>
+      <h1 className="text-xl mb-5">Tus listas actuales</h1>
 
-      {lists.map((list) => (
-        <Link href="#" key={list.id}>
-          <a>{list.list_name}</a>
-        </Link>
-      ))}
+      <div className="flex flex-col">
+        {lists.map((list) => (
+          <Link href="#" key={list.id}>
+            <a className="py-3">{list.list_name}</a>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }
