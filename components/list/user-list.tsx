@@ -17,25 +17,27 @@ const UserList = ({ listData, listItemsData }) => {
     500: 1,
   }
 
+  if (!state && !state.user.uid && !listData) {
+    return <span>Cargando user...</span>
+  }
   return (
-    <div className="h-screen">
-      {listData && listData.user_id != state?.user?.uid ? (
-        <ListNotPublic />
-      ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          {listItemsData.length > 0 ? (
-            listItemsData.map((post) => <ListPost key={post.id} post={post} />)
-          ) : (
-            <p className="text-white bold text-2xl mb-10">
-              Sin tattoos guardados
-            </p>
-          )}
-        </Masonry>
-      )}
+    <div className="h-screen px-20 pt-12">
+      <h2 className="mb-4 text-2xl font-semibold text-gray-300">
+        {listData.list_name} <span className="ml-3 font-medium"> (4) </span>
+      </h2>
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {listItemsData.length > 0 ? (
+          listItemsData.map((post) => <ListPost key={post.id} post={post} />)
+        ) : (
+          <p className="text-white bold text-2xl mb-10">
+            Sin tattoos guardados
+          </p>
+        )}
+      </Masonry>
     </div>
   )
 }

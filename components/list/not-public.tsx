@@ -1,5 +1,11 @@
 const ListNotPublic = () => {
-  return <p className="text-gray-300 text-3xl">Esta lista no es pública</p>
+  return (
+    <>
+      <div className="px-20 pt-10">
+        <p className="text-gray-300 text-3xl">Esta lista no es pública</p>
+      </div>
+    </>
+  )
 }
 
 export default ListNotPublic
