@@ -9,6 +9,10 @@ const SelectList = ({ userId, post }) => {
 
   console.log(lists, 'listas del usuario')
 
+  const savePostOnList = (listId) => {
+    console.log(listId, 'list id')
+  }
+
   if (!lists) return <p className="text-gray-300">Cargando listas...</p>
 
   return (
@@ -30,9 +34,14 @@ const SelectList = ({ userId, post }) => {
 
       {showForm && <NoListForm hasList />}
 
-      <div>
+      <div className="flex flex-col">
         {lists.map((list) => (
-          <button key={list.id} type="button">
+          <button
+            key={list.id}
+            type="button"
+            className="py-3 px-2 hover:bg-dark-600 text-left"
+            onClick={() => savePostOnList(list.id)}
+          >
             {list.list_name}
           </button>
         ))}
