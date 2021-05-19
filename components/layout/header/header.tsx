@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { VscMenu } from 'react-icons/vsc'
 import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
-import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
+import {
+  AiOutlineCalendar,
+  AiOutlineCamera,
+  AiOutlineMenu,
+} from 'react-icons/ai'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
 import { getUser } from 'lib/actions'
@@ -36,8 +39,8 @@ const Header = () => {
               </div>
             </a>
           </Link>
-          <span className="text-white text-2xl hidden md:block">
-            <VscMenu />
+          <span className="text-white text-3xl hidden md:block">
+            <AiOutlineMenu />
           </span>
           <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
             <input
@@ -59,7 +62,7 @@ const Header = () => {
               <BsSearch />
             </span>
             <span className="static text-white text-3xl block md:hidden">
-              <VscMenu />
+              <AiOutlineMenu />
             </span>
           </div>
         </div>
