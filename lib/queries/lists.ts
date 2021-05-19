@@ -84,8 +84,6 @@ export async function isPostListed(postId, userId) {
 
   const querySnapshotEmpty = await (await getDocs(q)).empty // is Empty == true
 
-  console.log(querySnapshotEmpty, 'empty')
-
   return { notListed: !querySnapshotEmpty }
 }
 
