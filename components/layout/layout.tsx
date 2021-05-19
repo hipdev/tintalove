@@ -2,7 +2,7 @@ import { Toaster } from 'react-hot-toast'
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
-import UserLists from './user-lists'
+import UserLists from './lists/user-lists'
 
 type Props = {
   artistData?: any
