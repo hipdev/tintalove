@@ -39,8 +39,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
     })
   }
 
-  console.log(artist, 'el artist realtime')
-
   return (
     <div className="w-4/5 mt-10">
       <Toaster
