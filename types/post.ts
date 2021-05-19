@@ -11,7 +11,7 @@ export type PostTypes = {
   description: string
   displayName: string
   image: ProfilePicture
-  picture_size: PictureSize
+  picture_size: PictureSize | string
   styles: []
   username: string
 } | null

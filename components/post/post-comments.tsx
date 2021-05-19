@@ -64,7 +64,7 @@ const PostComments = ({
   }
 
   return (
-    <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
+    <div>
       <div className="flex justify-center lg:justify-start gap-2 mb-5">
         <Link href="#">
           <a className="flex flex-shrink-0">
@@ -118,22 +118,23 @@ const PostComments = ({
           {loading ? 'Enviando...' : 'Comentar'}
         </button>
       </div>
-
-      {comments.length > 0 ? (
-        comments.map((comment) => (
-          <PostComment
-            key={comment.id}
-            comment={comment}
-            userId={userData?.uid || null}
-            postId={postId}
-            removeComment={removeComment}
-            setTotalComments={setTotalComments}
-            totalComments={totalComments}
-          />
-        ))
-      ) : (
-        <p className="text-gray-300">Sin comentarios</p>
-      )}
+      <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <PostComment
+              key={comment.id}
+              comment={comment}
+              userId={userData?.uid || null}
+              postId={postId}
+              removeComment={removeComment}
+              setTotalComments={setTotalComments}
+              totalComments={totalComments}
+            />
+          ))
+        ) : (
+          <p className="text-gray-300">Sin comentarios</p>
+        )}
+      </div>
     </div>
   )
 }
