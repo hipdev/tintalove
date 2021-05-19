@@ -1,8 +1,11 @@
 import useLists from 'hooks/use-lists'
-import Link from 'next/link'
+import { useState } from 'react'
+import { AiFillPlusCircle } from 'react-icons/ai'
+import NoListForm from './no-list-form'
 
-const SelectList = ({ userId }) => {
+const SelectList = ({ userId, post }) => {
   const [lists] = useLists(userId)
+  const [showForm, setShowForm] = useState(false)
 
   console.log(lists, 'listas del usuario')
 
@@ -10,13 +13,26 @@ const SelectList = ({ userId }) => {
 
   return (
     <div className="text-gray-300">
-      <h1 className="text-xl mb-10">Tus listas</h1>
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-xl">Selecciona tu lista</h1>
 
-      {lists.map((list) => (
-        <Link href="#" key={list.id}>
-          <a>{list.list_name}</a>
-        </Link>
-      ))}
+        <button
+          className="outline-none focus:outline-none"
+          onClick={() => setShowForm(!showForm)}
+        >
+          <AiFillPlusCircle className="text-primary text-3xl hover:text-primaryHover" />
+        </button>
+      </div>
+
+      {showForm && <NoListForm hasList />}
+
+      <div>
+        {lists.map((list) => (
+          <button key={list.id} type="button">
+            {list.list_name}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }

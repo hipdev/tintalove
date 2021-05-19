@@ -52,7 +52,7 @@ const UserLists = () => {
             {!list.post ? (
               <ShowLists userId={user?.uid} />
             ) : (
-              <SelectList userId={user?.uid} />
+              <SelectList userId={user?.uid} post={list.post} />
             )}
           </>
         ) : (
@@ -67,7 +67,7 @@ const UserLists = () => {
         <div className="fixed bottom-1/2 right-7 text-2xl z-20">
           <AiOutlineUnorderedList
             className="text-white cursor-pointer"
-            onClick={() => actions.lists({ postId: null, listOpen: true })}
+            onClick={() => actions.lists({ post: null, listOpen: true })}
           />
         </div>
       )}
