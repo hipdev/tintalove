@@ -1,20 +1,16 @@
 import { isPostListed } from 'lib/queries/lists'
-import { useEffect, useState } from 'react'
+import usePromise from 'react-use-promise'
 
 const useListed = (postId, userId) => {
-  const [listed, setListed] = useState(null)
-
-  useEffect(() => {
-    const fetch = async () => {
-      if (postId && userId) {
-        const { notListed } = await isPostListed(postId, userId)
-        setListed(notListed)
-      }
+  const fetch = async () => {
+    if (postId && userId) {
+      const { notListed } = await isPostListed(postId, userId)
+      return notListed
     }
-    fetch()
-  }, [])
+  }
+  const [result, error, state] = usePromise(fetch, [])
 
-  return { listed }
+  return { listed: result }
 }
 
 export default useListed
