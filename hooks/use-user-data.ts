@@ -34,6 +34,7 @@ export function useUserData() {
               uid: user.uid,
               photo: user.photoURL,
               ...(userData.is_artist && { is_artist: userData.is_artist }),
+              ...(userData.has_list && { has_list: userData.has_list }),
               ...(userData.is_admin && { is_admin: userData.is_admin }),
               ...(userData.artist_active && {
                 artist_active: userData.artist_active,
