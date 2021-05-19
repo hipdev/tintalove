@@ -51,10 +51,10 @@ const UserLists = () => {
       >
         {user?.has_list ? (
           <>
-            {!list.post ? (
+            {!list?.post ? (
               <ShowLists userId={user?.uid} />
             ) : (
-              <SelectList userId={user?.uid} post={list.post} />
+              <SelectList userId={user?.uid} post={list?.post} />
             )}
           </>
         ) : (

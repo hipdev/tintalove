@@ -46,6 +46,7 @@
     "react-select": "^4.3.1",
     "react-sticky-box": "^0.9.3",
     "react-stickynode": "^3.0.5",
+    "react-use-promise": "^0.3.1",
     "swiper": "^6.6.1",
     "swr": "^0.5.6",
     "use-places-autocomplete": "^1.9.2",
