@@ -1,19 +1,27 @@
 import useUser from 'hooks/use-user'
 import useUserList from 'hooks/use-user-list'
+import { useEffect, useState } from 'react'
 import Masonry from 'react-masonry-css'
 import ListPost from './list-post'
 import ListNotPublic from './not-public'
 
 const UserList = ({ listId }) => {
   const { state } = useUser()
-  const { result } = useUserList(listId)
 
-  if (!result) {
+  const { userList }: any = useUserList(listId)
+
+  console.log(userList, 'items')
+
+  if (!userList) {
     return (
       <div className="h-screen flex justify-center pt-10">
         <p className="text-gray-300 text-3xl">Ups, esta lista no existe</p>
       </div>
     )
+  }
+
+  if (!userList?.userListItems) {
+    return <div className="">Sin post guardados</div>
   }
 
   const breakpointColumnsObj = {
@@ -30,7 +38,7 @@ const UserList = ({ listId }) => {
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {result.userList.list_name}{' '}
+        {userList.userList.list_name}{' '}
         <span className="ml-3 font-medium"> (4) </span>
       </h2>
       <Masonry
@@ -38,8 +46,8 @@ const UserList = ({ listId }) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {result.userListItems.length > 0 ? (
-          result.userListItems.map((post) => (
+        {userList.userListItems.length > 0 ? (
+          userList.userListItems.map((post) => (
             <ListPost key={post.id} post={post} />
           ))
         ) : (

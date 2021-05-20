@@ -1,19 +1,21 @@
 import { getUserListItems } from 'lib/queries/lists'
-import usePromise from 'react-use-promise'
+import { useEffect, useState } from 'react'
 
 const useUserList = (listId) => {
-  console.log('entramos arriba', listId)
+  const [userList, setUserList] = useState({})
 
-  const fetch = async () => {
-    if (listId) {
-      console.log('entramos')
-      const { userListItems, userList }: any = await getUserListItems(listId)
-      return { userListItems, userList }
+  useEffect(() => {
+    console.log(listId, 'el id de la lista')
+    const fetch = async () => {
+      if (listId) {
+        const { userListItems, userList }: any = await getUserListItems(listId)
+        setUserList({ userListItems, userList })
+      }
     }
-  }
-  const [result, error, state] = usePromise(fetch, [])
+    fetch()
+  }, [listId])
 
-  return { result, state }
+  return { userList }
 }
 
 export default useUserList

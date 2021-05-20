@@ -2,9 +2,6 @@ import Layout from 'components/layout/layout'
 
 import { useRouter } from 'next/router'
 import UserList from 'components/list/user-list'
-import { getListsIds, getUserListItems } from 'lib/queries/lists'
-import { postsToJSON, postToJSON } from 'lib/firebase'
-import useUserList from 'hooks/use-user-list'
 
 export default function ListPage({ listItemsData, listData }) {
   const router = useRouter()
