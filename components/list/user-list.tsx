@@ -7,10 +7,7 @@ import ListNotPublic from './not-public'
 const UserList = ({ listId }) => {
   const { state } = useUser()
 
-  const {
-    userList: { userList, userListItems },
-    setUserList,
-  }: any = useUserList(listId)
+  const { userList, userListItems, setUserListItems }: any = useUserList(listId)
 
   console.log(userList, 'items')
 
@@ -53,7 +50,14 @@ const UserList = ({ listId }) => {
         columnClassName="my-masonry-grid_column"
       >
         {userListItems.length > 0 ? (
-          userListItems.map((post) => <ListPost key={post.id} post={post} />)
+          userListItems.map((post) => (
+            <ListPost
+              key={post.id}
+              post={post}
+              user={state?.user}
+              setUserListItems={setUserListItems}
+            />
+          ))
         ) : (
           <p className="text-white bold text-2xl mb-10">
             Sin tattoos guardados
