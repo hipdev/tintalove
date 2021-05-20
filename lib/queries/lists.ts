@@ -101,6 +101,7 @@ export async function getUserLists(userId) {
 }
 
 export async function removePostFromList(postId, userId) {
+  console.log(postId, userId, 'esto que')
   const q = query(
     collection(db, 'lists_items'),
     where('user_id', '==', userId),
