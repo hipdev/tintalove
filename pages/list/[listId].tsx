@@ -60,6 +60,6 @@ export const getStaticProps = async ({ params }) => {
       listItemsData,
       listData,
     },
-    revalidate: 50,
+    revalidate: 1,
   }
 }
