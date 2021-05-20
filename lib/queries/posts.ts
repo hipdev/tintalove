@@ -19,15 +19,16 @@ import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
 
 const db = getFirestore(firebaseApp)
-const db8 = firebase.firestore()
 
 const firebaseConfig = { projectId: 'tinta-love' }
+// firebase old 8 version
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 } else {
   firebase.app() // if already initialized, use that one
 }
-
+const db8 = firebase.firestore()
 export async function createArtistPost(
   uid,
   infoPicture,

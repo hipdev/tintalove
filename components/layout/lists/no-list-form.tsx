@@ -33,6 +33,7 @@ const NoListForm = ({ hasList }: Props) => {
               setListName('')
               actions.lists({ post: null, listOpen: false })
               list.setIsListed(true)
+              list.setListedCounter((state) => state + 1)
 
               return 'Tattoo guardado 😉'
             },
