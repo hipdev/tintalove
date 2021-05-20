@@ -102,7 +102,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
                 <RiHeart3Fill />
               </span>
             ) : (
-              <span onClick={handleList}>
+              <span className="cursor-pointer" onClick={handleList}>
                 <RiHeartLine />
               </span>
             )}
