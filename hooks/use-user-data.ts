@@ -6,7 +6,6 @@ import { login, getUser } from 'lib/actions'
 import { getUserInfo } from 'lib/queries/users'
 
 export function useUserData() {
-  const [userInfo, setUserInfo] = useState(null)
   const [triggerAuth, setTriggerAuth] = useState(null)
   const { state }: any = useStateMachine({
     login,
@@ -24,8 +23,7 @@ export function useUserData() {
             user.getIdTokenResult()
             // .then(({ claims }) => console.log(claims, 'los tokens'))
 
-            setUserInfo(user.providerData[0])
-            // console.log(userData, 'datafromuser')
+            console.log(userData, 'datafromuser')
 
             actions.getUser({
               email: user.email,
@@ -50,12 +48,10 @@ export function useUserData() {
         fetchUser()
       } else {
         actions.getUser(null)
-        // console.log(user, "sin user");
       }
     })
     return authSubs()
   }, [state.login, triggerAuth])
 
-  // console.log(userInfo, "data");
   return { user: userState, setTriggerAuth }
 }

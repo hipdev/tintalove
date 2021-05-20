@@ -20,8 +20,6 @@ const NoListForm = ({ hasList }: Props) => {
     lists,
   })
 
-  console.log(list, user, 'estados')
-
   const handleSubmit = (e) => {
     e.preventDefault()
     if (list.post?.id) {
@@ -31,10 +29,10 @@ const NoListForm = ({ hasList }: Props) => {
           toast.promise(addPostToList(user.uid, list.post, res.doc), {
             loading: 'Asignando lista...',
             success: () => {
+              setTriggerAuth(Math.random())
               setListName('')
               actions.lists({ post: null, listOpen: false })
               list.setIsListed(true)
-              setTriggerAuth(Math.random())
 
               return 'Tattoo guardado 😉'
             },

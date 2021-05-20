@@ -42,7 +42,8 @@ const UserList = ({ listId }) => {
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {userList.list_name} <span className="ml-3 font-medium"> (4) </span>
+        {userList.list_name}{' '}
+        <span className="ml-3 font-medium">({userList.total_items || 0}) </span>
       </h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
