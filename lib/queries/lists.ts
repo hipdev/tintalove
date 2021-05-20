@@ -23,6 +23,7 @@ import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
 
 const db = getFirestore(firebaseApp)
+const db8 = firebase.firestore()
 
 const firebaseConfig = { projectId: 'tinta-love' }
 if (!firebase.apps.length) {
@@ -30,7 +31,6 @@ if (!firebase.apps.length) {
 } else {
   firebase.app() // if already initialized, use that one
 }
-const db8 = firebase.firestore()
 
 export async function createList(user, list_name, isFirst) {
   if (isFirst) {
@@ -83,6 +83,10 @@ export async function addPostToList(uid, post, listId) {
 
     batch.commit()
 
+    const counter = new Counter(db8.doc(`posts/${post.id}`), 'counter_listed')
+
+    counter.incrementBy(1)
+
     return { doc: listItemRef.id, status: true }
   } catch (error) {
     throw new Error(error)
@@ -127,6 +131,13 @@ export async function removePostFromList(postId, userId) {
     await updateDoc(doc(db, 'lists', listItem.data().list_id), {
       total_items: increment(-1),
     })
+
+    const counter = new Counter(
+      db8.doc(`posts/${listItem.data().post_id}`),
+      'counter_listed'
+    )
+
+    counter.incrementBy(-1)
   })
 
   console.log(querySnapshot.empty, 'esto que')

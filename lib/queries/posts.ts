@@ -19,6 +19,7 @@ import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
 
 const db = getFirestore(firebaseApp)
+const db8 = firebase.firestore()
 
 const firebaseConfig = { projectId: 'tinta-love' }
 if (!firebase.apps.length) {
@@ -26,7 +27,6 @@ if (!firebase.apps.length) {
 } else {
   firebase.app() // if already initialized, use that one
 }
-const db8 = firebase.firestore()
 
 export async function createArtistPost(
   uid,
