@@ -13,6 +13,8 @@ import {
   deleteDoc,
   where,
   updateDoc,
+  writeBatch,
+  increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
@@ -56,24 +58,35 @@ export async function createList(user, list_name, isFirst) {
 }
 
 export async function addPostToList(uid, post, listId) {
-  const res = await addDoc(collection(db, 'lists_items'), {
-    created_at: serverTimestamp(),
-    user_id: uid,
-    list_id: listId,
-    post_id: post.id,
-    post_image: post.image.url,
-    post_picture_size: post.picture_size,
-    post_description: post.description,
-    post_artist_id: post.artist_id,
-    post_artist_name: post.displayName,
-    post_styles: post.styles,
-  })
-    .then((doc) => {
-      return { doc: doc.id, status: true }
-    })
-    .catch((error) => console.log(error))
+  try {
+    const batch = writeBatch(db)
 
-  return res
+    const listRef = doc(collection(db, 'lists'), listId)
+    const listItemRef = doc(collection(db, 'lists_items'))
+
+    batch.set(listItemRef, {
+      created_at: serverTimestamp(),
+      user_id: uid,
+      list_id: listId,
+      post_id: post.id,
+      post_image: post.image.url,
+      post_picture_size: post.picture_size,
+      post_description: post.description,
+      post_artist_id: post.artist_id,
+      post_artist_name: post.displayName,
+      post_styles: post.styles,
+    })
+
+    batch.update(listRef, {
+      total_items: increment(1),
+    })
+
+    batch.commit()
+
+    return { doc: listItemRef.id, status: true }
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 export async function isPostListed(postId, userId) {
   const q = query(
@@ -110,7 +123,10 @@ export async function removePostFromList(postId, userId) {
 
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach(async (listItem: QueryDocumentSnapshot) => {
-    return await deleteDoc(doc(db, 'lists_items', listItem.id))
+    await deleteDoc(doc(db, 'lists_items', listItem.id))
+    await updateDoc(doc(db, 'lists', listItem.data().list_id), {
+      total_items: increment(-1),
+    })
   })
 
   console.log(querySnapshot.empty, 'esto que')
