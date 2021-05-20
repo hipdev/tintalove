@@ -15,7 +15,7 @@ const useUserList = (listId) => {
     fetch()
   }, [listId])
 
-  return { userList }
+  return { userList, setUserList }
 }
 
 export default useUserList
