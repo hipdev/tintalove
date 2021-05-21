@@ -7,6 +7,7 @@ export type PostTypes = {
   city_name: string
   country: string
   counter_comments: number
+  counter_listed: number
   created_at: Timestamp
   description: string
   displayName: string

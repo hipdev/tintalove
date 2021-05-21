@@ -26,6 +26,7 @@ const SelectList = ({ userId, post }) => {
         success: (res) => {
           console.log(res, 'la res')
           list.setIsListed(true)
+          list.setListedCounter((state) => state + 1) // Sumamos localmente la lista añadida
 
           actions.lists({ post: null, listOpen: false })
 

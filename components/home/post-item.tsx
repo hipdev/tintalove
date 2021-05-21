@@ -12,6 +12,7 @@ import { removePostFromList } from 'lib/queries/lists'
 
 const PostItem = ({ post }: { post: PostTypes }) => {
   const [isListed, setIsListed] = useState(false)
+  const [listedCounter, setListedCounter] = useState(post.counter_listed || 0)
 
   const {
     state: { user },
@@ -26,6 +27,10 @@ const PostItem = ({ post }: { post: PostTypes }) => {
     setIsListed(listed)
   }, [listed])
 
+  useEffect(() => {
+    setListedCounter((state) => state) // de esta manera actualizamos el me gusta localmente
+  }, [listedCounter])
+
   const handleList = () => {
     if (!user && !user?.displayName) {
       toast('Entra para crear listas 🤩')
@@ -34,6 +39,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
         post: post,
         listOpen: true,
         setIsListed,
+        setListedCounter,
       })
     }
   }
@@ -47,6 +53,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
         loading: 'Eliminando de tu lista...',
         success: () => {
           setIsListed(false)
+          setListedCounter((state) => state - 1)
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -96,13 +103,13 @@ const PostItem = ({ post }: { post: PostTypes }) => {
             </div>
           )}
           <div className="flex items-center space-x-2 text-white">
-            <p className="">53</p>
+            <p className="">{listedCounter || 0}</p>
             {isListed ? (
               <span className="cursor-pointer" onClick={removeFromList}>
                 <RiHeart3Fill />
               </span>
             ) : (
-              <span onClick={handleList}>
+              <span className="cursor-pointer" onClick={handleList}>
                 <RiHeartLine />
               </span>
             )}
