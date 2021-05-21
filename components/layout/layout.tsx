@@ -8,15 +8,14 @@ import Header from './header/header'
 import UserLists from './lists/user-lists'
 
 type Props = {
-  artistData?: any
   children: any
   userId?: string | null
 }
 
-const Layout = ({ children, artistData }: Props) => {
+const Layout = ({ children }: Props) => {
   const { userId } = useUserId()
 
-  const { data, error } = useSWR(userId ? userId : null, getUserInfo)
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   return (
     <>
