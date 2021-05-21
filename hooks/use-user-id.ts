@@ -5,14 +5,17 @@ import { useEffect, useState } from 'react'
 const useUserId = () => {
   const [userId, setUserId] = useState(null)
 
-  useEffect(() => {
-    const authSubs = onAuthStateChanged(auth, (user: User) => {
-      if (user) {
-        setUserId(user.uid)
-      }
-    })
-    return authSubs()
-  }, [])
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // user.getIdTokenResult()
+      // .then(({ claims }) => console.log(claims, 'los tokens'))
+
+      const uid = user.uid
+      return setUserId(uid)
+    } else {
+      return setUserId(null)
+    }
+  })
 
   return { userId }
 }
