@@ -15,7 +15,6 @@ type Props = {
 }
 
 const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
-  // if (!userState) return <span>Loading</span>
   return (
     <div className="grid grid-cols-10 h-screen">
       <HeadContainer />

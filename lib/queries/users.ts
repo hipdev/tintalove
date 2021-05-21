@@ -6,8 +6,10 @@ import {
   getFirestore,
   setDoc,
   serverTimestamp,
+  DocumentSnapshot,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { UserState } from 'types/user'
 
 const db = getFirestore(firebaseApp)
 
@@ -33,11 +35,12 @@ export async function createUser(user: User) {
 
 export async function getUserInfo(uid) {
   const docRef = doc(collection(db, 'users'), uid)
-  const docSnap = await getDoc(docRef)
+  const docSnap: DocumentSnapshot<UserState> = await getDoc(docRef)
 
   if (docSnap.exists()) {
     // console.log('Document data:', docSnap.data())
-    return docSnap.data()
+    const data: UserState = { ...docSnap.data(), uid: docSnap.id }
+    return { user: data }
   } else {
     return null
   }
