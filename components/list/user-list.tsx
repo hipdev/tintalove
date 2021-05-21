@@ -4,10 +4,24 @@ import Masonry from 'react-masonry-css'
 import ListPost from './list-post'
 import ListNotPublic from './not-public'
 
-const UserList = ({ listData, listItemsData }) => {
+const UserList = ({ listId }) => {
   const { state } = useUser()
 
-  console.log(listData, listItemsData, 'esto que')
+  const { userList, userListItems, setUserListItems }: any = useUserList(listId)
+
+  console.log(userList, 'items')
+
+  if (!userList) {
+    return (
+      <div className="h-screen flex justify-center pt-10">
+        <p className="text-gray-300 text-3xl">Ups, esta lista no existe</p>
+      </div>
+    )
+  }
+
+  if (!userListItems) {
+    return <div className="">Sin post guardados</div>
+  }
 
   const breakpointColumnsObj = {
     default: 6,
@@ -17,21 +31,34 @@ const UserList = ({ listData, listItemsData }) => {
     500: 1,
   }
 
-  if (!state && !state.user.uid && !listData) {
+  if (!state && !state.user?.uid) {
     return <span>Cargando user...</span>
   }
+
+  if (userList.user_id != state?.user?.uid) {
+    return <ListNotPublic />
+  }
+
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {listData.list_name} <span className="ml-3 font-medium"> (4) </span>
+        {userList.list_name}{' '}
+        <span className="ml-3 font-medium">({userList.total_items || 0}) </span>
       </h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {listItemsData.length > 0 ? (
-          listItemsData.map((post) => <ListPost key={post.id} post={post} />)
+        {userListItems.length > 0 ? (
+          userListItems.map((post) => (
+            <ListPost
+              key={post.id}
+              post={post}
+              user={state?.user}
+              setUserListItems={setUserListItems}
+            />
+          ))
         ) : (
           <p className="text-white bold text-2xl mb-10">
             Sin tattoos guardados

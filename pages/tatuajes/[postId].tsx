@@ -129,6 +129,6 @@ export const getStaticProps = async ({ params }) => {
       commentsData,
       artistData,
     },
-    revalidate: 50,
+    revalidate: 20,
   }
 }

@@ -1,34 +1,33 @@
-import { useStateMachine } from 'little-state-machine'
 import Link from 'next/link'
 
 import { RiHeart3Fill } from 'react-icons/ri'
-import { lists } from 'lib/actions'
 import toast from 'react-hot-toast'
-import { useState } from 'react'
 
 import { removePostFromList } from 'lib/queries/lists'
 import { PostList } from 'types/post-list'
+import { UserState } from 'types/user'
 
-const ListPost = ({ post }: { post: PostList }) => {
-  const [isListed, setIsListed] = useState(false)
-
-  const {
-    state: { user },
-    actions,
-  }: any = useStateMachine({
-    lists,
-  })
-
+const ListPost = ({
+  post,
+  setUserListItems,
+  user,
+}: {
+  post: PostList
+  setUserListItems: any
+  user: UserState
+}) => {
   const removeFromList = async () => {
     if (!user && !user?.displayName) {
       toast('Ups, está no es tu lista')
     } else {
       console.log('hola')
 
-      toast.promise(removePostFromList(post.id, user.uid), {
+      toast.promise(removePostFromList(post.post_id, user.uid), {
         loading: 'Eliminando de tu lista...',
         success: () => {
-          setIsListed(false)
+          setUserListItems((state) =>
+            state.filter((item) => item.id != post.id)
+          )
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -37,6 +36,7 @@ const ListPost = ({ post }: { post: PostList }) => {
       })
     }
   }
+  console.log(post, 'el post')
 
   return (
     <div>
