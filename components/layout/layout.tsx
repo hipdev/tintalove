@@ -7,9 +7,10 @@ import UserLists from './lists/user-lists'
 type Props = {
   artistData?: any
   children: any
+  userId: string | null
 }
 
-const Layout = ({ children, artistData }: Props) => {
+const Layout = ({ children, artistData, userId }: Props) => {
   return (
     <>
       <Toaster
@@ -26,7 +27,7 @@ const Layout = ({ children, artistData }: Props) => {
         position="bottom-right"
       />
       <HeadContainer />
-      <Header />
+      <Header userId={userId} />
       <main className="bg-dark-800">{children}</main>
       <Footer />
       <UserLists />

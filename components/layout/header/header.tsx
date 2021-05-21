@@ -8,13 +8,16 @@ import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
 import { getUser } from 'lib/actions'
 import { UserState } from 'types/user'
+import useSWR from 'swr'
+import { getUserInfo } from 'lib/queries/users'
+import { DocumentData } from '@firebase/firestore'
 
-const Header = () => {
+const Header = ({ userId }) => {
   const { state }: any = useStateMachine({
     getUser,
   })
 
-  const { user }: { user: UserState } = state
+  const { data, error } = useSWR(userId, getUserInfo)
 
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
@@ -89,7 +92,7 @@ const Header = () => {
         )}
         */}
 
-        <SubMenuHeader user={user} />
+        <SubMenuHeader user={data?.user || null} />
       </div>
     </nav>
   )

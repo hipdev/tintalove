@@ -1,8 +1,6 @@
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
-
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useStateMachine } from 'little-state-machine'
