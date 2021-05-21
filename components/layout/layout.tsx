@@ -4,21 +4,18 @@ import { Toaster } from 'react-hot-toast'
 import useSWR from 'swr'
 import Footer from './footer'
 import HeadContainer from './head'
+import Header from './header/header'
 import UserLists from './lists/user-lists'
-import dynamic from 'next/dynamic'
-
-const HeaderDynamic = dynamic(() => import('./header/header'), { ssr: false })
 
 type Props = {
-  artistData?: any
   children: any
   userId?: string | null
 }
 
-const Layout = ({ children, artistData }: Props) => {
+const Layout = ({ children }: Props) => {
   const { userId } = useUserId()
 
-  const { data, error } = useSWR(userId ? userId : null, getUserInfo)
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   return (
     <>
