@@ -8,7 +8,6 @@ import useSWR from 'swr'
 
 export default function MainInfoPage() {
   const { userId } = useUserId()
-
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   if (!data && !data?.user) {
