@@ -10,7 +10,7 @@ export type UserState =
       has_studio: boolean
       is_admin: boolean
       is_artist: boolean
-      photo: string
+      photoUrl: string
       uid: string
       studio_id: string
     }

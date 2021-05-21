@@ -3,21 +3,14 @@ import Image from 'next/image'
 import { VscMenu } from 'react-icons/vsc'
 import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
-import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
 import { getUser } from 'lib/actions'
-import { UserState } from 'types/user'
-import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
-import { DocumentData } from '@firebase/firestore'
 
-const Header = ({ userId }) => {
+const Header = ({ user }) => {
   const { state }: any = useStateMachine({
     getUser,
   })
-
-  const { data, error } = useSWR(userId, getUserInfo)
 
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
@@ -92,7 +85,7 @@ const Header = ({ userId }) => {
         )}
         */}
 
-        <SubMenuHeader user={data?.user || null} />
+        <SubMenuHeader user={user || null} />
       </div>
     </nav>
   )

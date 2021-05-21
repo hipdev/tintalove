@@ -1,4 +1,7 @@
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
 import { Toaster } from 'react-hot-toast'
+import useSWR from 'swr'
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
@@ -7,10 +10,14 @@ import UserLists from './lists/user-lists'
 type Props = {
   artistData?: any
   children: any
-  userId: string | null
+  userId?: string | null
 }
 
-const Layout = ({ children, artistData, userId }: Props) => {
+const Layout = ({ children, artistData }: Props) => {
+  const { userId } = useUserId()
+
+  const { data, error } = useSWR(userId ? userId : null, getUserInfo)
+
   return (
     <>
       <Toaster
@@ -27,10 +34,10 @@ const Layout = ({ children, artistData, userId }: Props) => {
         position="bottom-right"
       />
       <HeadContainer />
-      <Header userId={userId} />
+      <Header user={data?.user || null} />
       <main className="bg-dark-800">{children}</main>
       <Footer />
-      <UserLists />
+      <UserLists user={data?.user || null} />
     </>
   )
 }

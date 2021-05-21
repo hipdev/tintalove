@@ -5,15 +5,10 @@ import { lists } from 'lib/actions'
 import NoListForm from './no-list-form'
 import ShowLists from './show-lists'
 import SelectList from './select-list'
-import useUser from 'hooks/use-user'
 
 Modal.setAppElement('#__next')
 
-const UserLists = () => {
-  const { state } = useUser()
-
-  const user = state?.user
-
+const UserLists = ({ user }) => {
   const {
     state: { list },
     actions,

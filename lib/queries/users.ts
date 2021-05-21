@@ -39,7 +39,7 @@ export async function getUserInfo(uid) {
 
   if (docSnap.exists()) {
     // console.log('Document data:', docSnap.data())
-    return { user: docSnap.data() }
+    return { user: { ...docSnap.data(), uid: docSnap.id } }
   } else {
     return null
   }
