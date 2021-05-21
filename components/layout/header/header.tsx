@@ -4,14 +4,8 @@ import { VscMenu } from 'react-icons/vsc'
 import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
-import { useStateMachine } from 'little-state-machine'
-import { getUser } from 'lib/actions'
 
 const Header = ({ user }) => {
-  const { state }: any = useStateMachine({
-    getUser,
-  })
-
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
       <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">
