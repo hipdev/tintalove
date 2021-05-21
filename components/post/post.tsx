@@ -32,7 +32,7 @@ const PostStatic = ({
   return (
     <div className="w-full container mx-auto">
       {/* Picture, comments and card block */}
-      <div className="flex lg:container-xs mx-56">
+      <div className="flex lg:container-xs mx-32">
         <div className="w-full">
           <div className="flex flex-wrap justify-center lg:justify-between mb-8 px-20">
             <div className="flex items-center gap-3">

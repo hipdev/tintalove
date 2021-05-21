@@ -70,7 +70,7 @@ const PostHorizontal = ({
                     {totalComments}
                   </p>
                 </div>
-                <p className="text-atomico text-white tracking-wide">
+                <p className="text-atomico text-black tracking-wide">
                   COMENTAR
                 </p>
               </button>

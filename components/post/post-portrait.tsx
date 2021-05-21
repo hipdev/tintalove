@@ -26,22 +26,11 @@ const PostPortrait = ({
 
   console.log(state, 'el user')
   return (
-    <div className="flex">
-      <div className="mb-5 flex justify-center">
-        <img
-          // src="https://via.placeholder.com/1100x621"
-          src={
-            postData?.image?.url
-              ? `${postData.image.url}/tr:pr-true,c-at_max,f-auto,q-100`
-              : 'https://via.placeholder.com/1100x621'
-          }
-          alt=""
-          className=" object-cover rounded-lg w-672"
-        />
-
+    <div className="flex gap-12">
+      <div className="mb-5 flex justify-center w-609">
         <div>
           <StickyBox offsetTop={0} offsetBottom={30}>
-            <aside className="z-10 ml-4">
+            <aside className="z-10 mr-4">
               <button className="block mb-2">
                 <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
                   <span className="text-2xl text-green-500">
@@ -70,7 +59,7 @@ const PostPortrait = ({
                     {totalComments}
                   </p>
                 </div>
-                <p className="text-atomico text-white tracking-wide">
+                <p className="text-atomico text-white tracking-wide flex-shrink">
                   COMENTAR
                 </p>
               </button>
@@ -87,9 +76,19 @@ const PostPortrait = ({
             </aside>
           </StickyBox>
         </div>
+        <img
+          // src="https://via.placeholder.com/1100x621"
+          src={
+            postData?.image?.url
+              ? `${postData.image.url}/tr:pr-true,c-at_max,f-auto,q-100`
+              : 'https://via.placeholder.com/1100x621'
+          }
+          alt=""
+          className=" object-cover rounded-lg max-w-xl"
+        />
       </div>
 
-      <div className="w-full flex flex-col-reverse mb-10">
+      <div className="flex flex-col-reverse self-start w-1/2">
         <PostsComments
           postId={postData.id}
           userData={state?.user}

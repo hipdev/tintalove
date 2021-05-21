@@ -65,7 +65,7 @@ const PostComments = ({
 
   return (
     <div>
-      <div className="flex justify-center lg:justify-start gap-2 mb-5">
+      <div className="flex justify-center lg:justify-between gap-2 mb-5 flex-shrink-0">
         <Link href="#">
           <a className="flex flex-shrink-0">
             <img
@@ -83,7 +83,7 @@ const PostComments = ({
           type="text"
           value={comment}
           placeholder="Escribe un comentario..."
-          className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300"
+          className="w-96 bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300 flex-shrink-0"
           onChange={(e) => setComment(e.target.value)}
         />
         <button
@@ -118,7 +118,7 @@ const PostComments = ({
           {loading ? 'Enviando...' : 'Comentar'}
         </button>
       </div>
-      <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
+      <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10 flex-shrink">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <PostComment
