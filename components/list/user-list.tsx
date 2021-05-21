@@ -1,4 +1,3 @@
-import useUser from 'hooks/use-user'
 import useUserList from 'hooks/use-user-list'
 import Masonry from 'react-masonry-css'
 import ListPost from './list-post'
