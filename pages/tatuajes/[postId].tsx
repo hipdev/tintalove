@@ -24,9 +24,6 @@ export default function TattoosPage({
 }) {
   const router = useRouter()
 
-  console.log(postsData, postData, artistData, 'toda la data')
-  console.log(router, 'router')
-
   return (
     <>
       <Layout>
