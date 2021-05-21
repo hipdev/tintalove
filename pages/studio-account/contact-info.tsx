@@ -3,43 +3,28 @@ import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
 import ContactInfoStudio from 'components/studio-account/contact-info/contact-info'
 import useScript from 'hooks/use-script'
 
-import useUser from 'hooks/use-user'
-
-const libraries = 'places'
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
+import useSWR from 'swr'
 
 export default function ContactInfoPageStudio() {
-  const { state } = useUser()
-  const hasStudio = state?.user?.has_studio || null
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const status = useScript(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places'
   )
 
-  console.log(status, hasStudio, 'status del map')
+  if (!data && !data?.user) {
+    return <IsAuth>Cargando data...</IsAuth>
+  }
 
   return (
-    <>
-      {state?.user ? (
-        <LayoutStepsStudio
-          uid={state?.user?.uid}
-          userState={state?.user || null}
-        >
-          {state && state?.user && (
-            <div>
-              {status === 'ready' && (
-                <ContactInfoStudio
-                  studioId={state?.user?.studio_id || null}
-                  hasStudio={hasStudio}
-                />
-              )}
-            </div>
-          )}
-        </LayoutStepsStudio>
-      ) : (
-        <LayoutStepsStudio>
-          <IsAuth>Cargando...</IsAuth>
-        </LayoutStepsStudio>
-      )}
-    </>
+    <LayoutStepsStudio uid={userId} userState={data.user}>
+      <ContactInfoStudio
+        hasStudio={data.user.has_studio}
+        studioId={data.user.studio_id}
+      />
+    </LayoutStepsStudio>
   )
 }

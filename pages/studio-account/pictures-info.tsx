@@ -1,32 +1,24 @@
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
-
 import IsAuth from 'components/isAuth'
-import useUser from 'hooks/use-user'
 import PicturesInfoStudio from 'components/studio-account/pictures/pictures-info'
+import useUserId from 'hooks/use-user-id'
+import useSWR from 'swr'
+import { getUserInfo } from 'lib/queries/users'
 
 export default function PictureInfoPage() {
-  const { state } = useUser()
-  const hasStudio = state?.user?.has_studio
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
+
+  if (!data && !data?.user) {
+    return <IsAuth>Cargando data...</IsAuth>
+  }
 
   return (
-    <>
-      {state?.user ? (
-        <LayoutStepsStudio
-          uid={state?.user?.uid}
-          userState={state?.user || null}
-        >
-          {state && state.user && (
-            <PicturesInfoStudio
-              studioId={state?.user?.studioId || null}
-              hasStudio={hasStudio}
-            />
-          )}
-        </LayoutStepsStudio>
-      ) : (
-        <LayoutStepsStudio>
-          <IsAuth>Cargando...</IsAuth>
-        </LayoutStepsStudio>
-      )}
-    </>
+    <LayoutStepsStudio uid={userId} userState={data.user}>
+      <PicturesInfoStudio
+        hasStudio={data.user.has_studio}
+        studioId={data.user.studio_id}
+      />
+    </LayoutStepsStudio>
   )
 }

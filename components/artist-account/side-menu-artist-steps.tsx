@@ -1,5 +1,5 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
-import { useUserData } from 'hooks/use-user-data'
+
 import { activateArtist } from 'lib/queries/artists'
 
 import Link from 'next/link'
@@ -16,7 +16,6 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
   const { artistWizard } = useArtistWizardRealtime(uid)
 
   const [loading, setLoading] = useState(false)
-  const { setTriggerAuth } = useUserData()
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
@@ -61,7 +60,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
-          setTriggerAuth(Math.random()) // reload global user state data
+          // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
           return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'

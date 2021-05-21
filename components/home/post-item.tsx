@@ -8,20 +8,22 @@ import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import useListed from 'hooks/use-listed'
-import { removePostFromList } from 'lib/queries/lists'
+import { isPostListed, removePostFromList } from 'lib/queries/lists'
+import { UserState } from 'types/user'
+import useSWR from 'swr'
 
-const PostItem = ({ post }: { post: PostTypes }) => {
+const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const [isListed, setIsListed] = useState(false)
   const [listedCounter, setListedCounter] = useState(post.counter_listed || 0)
 
-  const {
-    state: { user },
-    actions,
-  }: any = useStateMachine({
+  const { state, actions }: any = useStateMachine({
     lists,
   })
 
   const { listed } = useListed(post.id, user?.uid)
+  const { data } = useSWR(user?.uid ? [post.id, user.uid] : null, isPostListed)
+
+  console.log(data, 'data listed')
 
   useEffect(() => {
     setIsListed(listed)
@@ -104,7 +106,7 @@ const PostItem = ({ post }: { post: PostTypes }) => {
           )}
           <div className="flex items-center space-x-2 text-white">
             <p className="">{listedCounter || 0}</p>
-            {isListed ? (
+            {data?.notListed ? (
               <span className="cursor-pointer" onClick={removeFromList}>
                 <RiHeart3Fill />
               </span>

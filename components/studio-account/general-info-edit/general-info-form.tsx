@@ -1,7 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useUserData } from 'hooks/use-user-data'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -31,8 +30,6 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       bio: studio.bio,
     },
   })
-
-  const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
   const watchMultiple: any = watch()
@@ -175,7 +172,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       success: (data) => {
         setLoading(false)
         setSuccess(true)
-        setTriggerAuth(Math.random()) // reload global user state data
+        // setTriggerAuth(Math.random()) // reload global user state data
 
         return 'Estudio actualizado 😉'
       },

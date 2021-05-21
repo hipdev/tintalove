@@ -7,8 +7,6 @@ import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-
-import { useUserData } from 'hooks/use-user-data'
 import MainInfoAvailable from './general-info-edit/general-info-available'
 
 import 'microtip/microtip.css'
@@ -39,8 +37,6 @@ const GeneralInfo = ({ uid }) => {
   })
 
   const watchUsername = watch('username')
-
-  const { setTriggerAuth } = useUserData()
 
   const cityRef = useRef(null)
 
@@ -183,7 +179,7 @@ const GeneralInfo = ({ uid }) => {
       success: (data) => {
         setLoading(false)
         setSuccess(true)
-        setTriggerAuth(Math.random()) // reload global user state data
+        // setTriggerAuth(Math.random()) // reload global user state data
 
         return 'Estudio creado 😉'
       },

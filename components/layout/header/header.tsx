@@ -5,16 +5,11 @@ import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
-import { getUser } from 'lib/actions'
-import { UserState } from 'types/user'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { FiCalendar } from 'react-icons/fi'
-import useUser from 'hooks/use-user'
 
-const Header = () => {
-  const { state } = useUser()
+const Header = ({ user }) => {
 
-  const { user } = state
   return (
     <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-10 md:py-4 px-5 sm:px-10 lg:px-20">
       <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">
@@ -151,11 +146,13 @@ const Header = () => {
                 <button className="text-white font-semibold tracking-wide text-sm bg-green-600 px-7 rounded-md">
                   PUBLICAR
                 </button>
-                <SubMenuHeader user={user} />
+                <SubMenuHeader user={user || null} />
               </div>
             </div>
+
           )}
         </div>
+
       </div>
     </nav>
   )

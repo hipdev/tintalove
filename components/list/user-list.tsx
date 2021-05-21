@@ -1,12 +1,9 @@
-import useUser from 'hooks/use-user'
 import useUserList from 'hooks/use-user-list'
 import Masonry from 'react-masonry-css'
 import ListPost from './list-post'
 import ListNotPublic from './not-public'
 
-const UserList = ({ listId }) => {
-  const { state } = useUser()
-
+const UserList = ({ listId, user }) => {
   const { userList, userListItems, setUserListItems }: any = useUserList(listId)
 
   console.log(userList, 'items')
@@ -31,11 +28,11 @@ const UserList = ({ listId }) => {
     500: 1,
   }
 
-  if (!state && !state.user?.uid) {
+  if (!user?.uid) {
     return <span>Cargando user...</span>
   }
 
-  if (userList.user_id != state?.user?.uid) {
+  if (userList.user_id != user?.uid) {
     return <ListNotPublic />
   }
 
@@ -55,7 +52,7 @@ const UserList = ({ listId }) => {
             <ListPost
               key={post.id}
               post={post}
-              user={state?.user}
+              user={user}
               setUserListItems={setUserListItems}
             />
           ))
