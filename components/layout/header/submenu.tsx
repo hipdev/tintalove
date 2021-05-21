@@ -23,7 +23,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
         const user = result.user
         const res = await createUser(user)
 
-        if (res) actions.login(true)
+        // if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.
@@ -35,7 +35,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        actions.login(null)
+        // actions.login(null)
       })
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }

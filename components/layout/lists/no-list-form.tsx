@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { lists } from 'lib/actions'
 import toast from 'react-hot-toast'
 import { addPostToList, createList } from 'lib/queries/lists'
-import { useUserData } from 'hooks/use-user-data'
 
 type Props = {
   hasList?: boolean
@@ -11,7 +10,6 @@ type Props = {
 
 const NoListForm = ({ hasList }: Props) => {
   const [listName, setListName] = useState('')
-  const { setTriggerAuth } = useUserData()
 
   const {
     state: { list, user },
@@ -29,7 +27,7 @@ const NoListForm = ({ hasList }: Props) => {
           toast.promise(addPostToList(user.uid, list.post, res.doc), {
             loading: 'Asignando lista...',
             success: () => {
-              setTriggerAuth(Math.random())
+              // setTriggerAuth(Math.random())
               setListName('')
               actions.lists({ post: null, listOpen: false })
               list.setIsListed(true)
