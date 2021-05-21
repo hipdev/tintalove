@@ -5,14 +5,17 @@ import Home from 'components/home/home'
 
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import useUserId from 'hooks/use-user-id'
 // import PostStatic from 'components/post/post-static'
 
 export default function IndexPage({ postData }) {
   const router = useRouter()
 
+  const { userId } = useUserId()
+
   return (
     <>
-      <Layout>
+      <Layout userId={userId}>
         <Home posts={postData} />
       </Layout>
     </>
