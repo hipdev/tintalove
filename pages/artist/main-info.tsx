@@ -9,20 +9,14 @@ import useSWR from 'swr'
 export default function MainInfoPage() {
   const { userId } = useUserId()
 
-  const { data, error } = useSWR(userId ? userId : null, getUserInfo)
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
-  console.log(data, 'data en main-info')
-
-  if (!data) {
-    return (
-      <LayoutStepsArtist>
-        <IsAuth>Cargando data...</IsAuth>
-      </LayoutStepsArtist>
-    )
+  if (!data && !data?.user) {
+    return <IsAuth>Cargando data...</IsAuth>
   }
   return (
     <>
-      <LayoutStepsArtist uid={userId} userState={data?.user || null}>
+      <LayoutStepsArtist uid={userId} userState={data.user}>
         {data.user.is_artist ? (
           <MainInfoEdit uid={data.user.uid || null} />
         ) : (
