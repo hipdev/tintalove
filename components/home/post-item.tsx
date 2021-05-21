@@ -9,15 +9,13 @@ import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import useListed from 'hooks/use-listed'
 import { removePostFromList } from 'lib/queries/lists'
+import { UserState } from 'types/user'
 
-const PostItem = ({ post }: { post: PostTypes }) => {
+const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const [isListed, setIsListed] = useState(false)
   const [listedCounter, setListedCounter] = useState(post.counter_listed || 0)
 
-  const {
-    state: { user },
-    actions,
-  }: any = useStateMachine({
+  const { state, actions }: any = useStateMachine({
     lists,
   })
 
