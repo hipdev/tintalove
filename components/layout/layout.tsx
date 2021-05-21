@@ -1,8 +1,10 @@
 import { Toaster } from 'react-hot-toast'
 import Footer from './footer'
 import HeadContainer from './head'
-import Header from './header/header'
 import UserLists from './lists/user-lists'
+import dynamic from 'next/dynamic'
+
+const HeaderDynamic = dynamic(() => import('./header/header'), { ssr: false })
 
 type Props = {
   artistData?: any
@@ -26,7 +28,7 @@ const Layout = ({ children, artistData }: Props) => {
         position="bottom-right"
       />
       <HeadContainer />
-      <Header />
+      <HeaderDynamic />
       <main className="bg-dark-800">{children}</main>
       <Footer />
       <UserLists />

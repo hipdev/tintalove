@@ -9,18 +9,16 @@ import { getUser } from 'lib/actions'
 import { UserState } from 'types/user'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { FiCalendar } from 'react-icons/fi'
+import useUser from 'hooks/use-user'
 
 const Header = () => {
-  const { state }: any = useStateMachine({
-    getUser,
-  })
+  const { state } = useUser()
 
-  const { user }: { user: UserState } = state
-
+  const { user } = state
   return (
     <nav className="h-auto xl:h-20 w-full bg-dark-800 py-4 px-10 md:px-20">
       <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">
-        <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start gap-10">
+        <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           <Link href="/">
             <a>
               {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -129,20 +127,6 @@ const Header = () => {
             </span>
           </div>
         </div>
-
-        {/*      {user?.artist_active && (
-          <div className="text-white mr-7 flex items-center">
-            <Link href="/post/create">
-              <a className="bg-primary hover:bg-primaryHover px-2 py-1 flex items-center rounded-sm text-sm">
-                Subir post <AiOutlineCamera className="ml-2 text-lg" />
-              </a>
-            </Link>
-            <div>
-              <AiOutlineCalendar className="text-xl ml-4" />
-            </div>
-          </div>
-        )}
-        */}
       </div>
     </nav>
   )
