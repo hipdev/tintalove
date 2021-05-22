@@ -7,27 +7,21 @@ import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
-import useListed from 'hooks/use-listed'
 import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  const [isListed, setIsListed] = useState(false)
   const [listedCounter, setListedCounter] = useState(post.counter_listed || 0)
 
   const { state, actions }: any = useStateMachine({
     lists,
   })
 
-  const { listed } = useListed(post.id, user?.uid)
-  const { data } = useSWR(user?.uid ? [post.id, user.uid] : null, isPostListed)
-
-  console.log(data, 'data listed')
-
-  useEffect(() => {
-    setIsListed(listed)
-  }, [listed])
+  const { data, mutate } = useSWR(
+    user?.uid ? [post.id, user.uid] : null,
+    isPostListed
+  )
 
   useEffect(() => {
     setListedCounter((state) => state) // de esta manera actualizamos el me gusta localmente
@@ -40,13 +34,13 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       actions.lists({
         post: post,
         listOpen: true,
-        setIsListed,
         setListedCounter,
+        mutateListed: mutate,
       })
     }
   }
   const removeFromList = async () => {
-    if (!user && !user?.displayName && (!isListed || !listed)) {
+    if (!user && !user?.displayName) {
       toast('Ups, está no es tu lista')
     } else {
       console.log('hola')
@@ -54,7 +48,6 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       toast.promise(removePostFromList(post.id, user.uid), {
         loading: 'Eliminando de tu lista...',
         success: () => {
-          setIsListed(false)
           setListedCounter((state) => state - 1)
           return 'Tattoo eliminado 😉'
         },

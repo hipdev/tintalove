@@ -107,7 +107,8 @@ export async function isPostListed(postId, userId) {
   return { notListed: !querySnapshotEmpty }
 }
 
-export async function getUserLists(userId) {
+export async function getUserLists(key, userId) {
+  console.log(key, userId, 'params')
   const q = query(collection(db, 'lists'), where('user_id', '==', userId))
 
   const querySnapshot = await getDocs(q)
