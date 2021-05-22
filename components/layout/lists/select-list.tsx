@@ -1,15 +1,16 @@
-import useLists from 'hooks/use-lists'
-import { addPostToList } from 'lib/queries/lists'
+import { addPostToList, getUserLists } from 'lib/queries/lists'
 import { useStateMachine } from 'little-state-machine'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import NoListForm from './no-list-form'
 import { lists } from 'lib/actions'
+import useSWR from 'swr'
 
 const SelectList = ({ userId, post }) => {
-  const [userLists] = useLists(userId)
   const [showForm, setShowForm] = useState(false)
+
+  const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
 
   const {
     state: { list },
@@ -25,7 +26,7 @@ const SelectList = ({ userId, post }) => {
         loading: 'Agregando tattoo...',
         success: (res) => {
           console.log(res, 'la res')
-          list.setIsListed(true)
+          list.mutateListed((data) => (data.notListed = true))
           list.setListedCounter((state) => state + 1) // Sumamos localmente la lista añadida
 
           actions.lists({ post: null, listOpen: false })
@@ -41,7 +42,7 @@ const SelectList = ({ userId, post }) => {
     }
   }
 
-  if (!userLists) return <p className="text-gray-300">Cargando listas...</p>
+  if (!data) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
     <div className="text-gray-300">
@@ -63,7 +64,7 @@ const SelectList = ({ userId, post }) => {
       {showForm && <NoListForm hasList />}
 
       <div className="flex flex-col">
-        {userLists.map((list) => (
+        {data.userLists.map((list) => (
           <button
             key={list.id}
             type="button"
