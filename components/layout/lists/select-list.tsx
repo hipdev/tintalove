@@ -26,8 +26,15 @@ const SelectList = ({ userId, post }) => {
         loading: 'Agregando tattoo...',
         success: (res) => {
           console.log(res, 'la res')
-          list.mutateListed((data) => (data.notListed = true))
-          list.setListedCounter((state) => state + 1) // Sumamos localmente la lista añadida
+          list.mutateListed({ listed: true }, false)
+          list.mutatePost((data) => {
+            return {
+              post: {
+                ...data.post,
+                counter_listed: data.post.counter_listed + 1,
+              },
+            }
+          }, false)
 
           actions.lists({ post: null, listOpen: false })
 

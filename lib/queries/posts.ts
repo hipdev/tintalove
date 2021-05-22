@@ -11,12 +11,15 @@ import {
   orderBy,
   limit,
   deleteDoc,
+  DocumentSnapshot,
+  DocumentData,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
 
 import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
+import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
 
@@ -84,12 +87,15 @@ export async function getPostsIds() {
   return posts
 }
 
-export async function getPostDataById(id) {
-  const docRef = doc(collection(db, 'posts'), id)
-  const docSnap = await getDoc(docRef)
+export async function getPostDataById(key, postId) {
+  const docRef = doc(collection(db, 'posts'), postId)
+  const docSnap: DocumentSnapshot<PostTypes | DocumentData> = await getDoc(
+    docRef
+  )
 
   if (docSnap.exists()) {
-    return { post: { ...docSnap.data(), id: docSnap.id } }
+    const data: PostTypes | DocumentData = { ...docSnap.data(), id: docSnap.id }
+    return { post: data }
   } else {
     return { post: null }
   }

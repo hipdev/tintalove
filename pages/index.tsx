@@ -5,11 +5,9 @@ import Home from 'components/home/home'
 
 export default function IndexPage({ postData }) {
   return (
-    <>
-      <Layout>
-        <Home posts={postData} />
-      </Layout>
-    </>
+    <Layout>
+      <Home posts={postData} />
+    </Layout>
   )
 }
 

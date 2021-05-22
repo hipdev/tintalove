@@ -26,14 +26,6 @@ const PostListHome = ({ posts }) => {
           </button>
           <button className="text-white pb-2">MÁS RECIENTE</button>
         </div>
-        <div className="flex space-x-5">
-          <button className="flex items-center text-white border border-gray-100 px-5 py-3 rounded-lg focus:outline-none">
-            <span className="mr-2 text-xl">
-              <MdFilterList />
-            </span>
-            Filtros
-          </button>
-        </div>
       </div>
 
       <Masonry

@@ -1,62 +1,16 @@
-import { useStateMachine } from 'little-state-machine'
 import Link from 'next/link'
-
 import { FaRegCommentDots } from 'react-icons/fa'
-import { RiHeart3Fill, RiHeartLine } from 'react-icons/ri'
-import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
-import toast from 'react-hot-toast'
-import { useEffect, useState } from 'react'
-import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
+import PostItemListed from './post-item-listed'
+import { getPostDataById } from 'lib/queries/posts'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  const [listedCounter, setListedCounter] = useState(post.counter_listed || 0)
-
-  const { state, actions }: any = useStateMachine({
-    lists,
-  })
-
   const { data, mutate } = useSWR(
-    user?.uid ? [post.id, user.uid] : null,
-    isPostListed
+    post ? ['get-post', post.id] : null,
+    getPostDataById
   )
-
-  useEffect(() => {
-    setListedCounter((state) => state) // de esta manera actualizamos el me gusta localmente
-  }, [listedCounter])
-
-  const handleList = () => {
-    if (!user && !user?.displayName) {
-      toast('Entra para crear listas 🤩')
-    } else {
-      actions.lists({
-        post: post,
-        listOpen: true,
-        setListedCounter,
-        mutateListed: mutate,
-      })
-    }
-  }
-  const removeFromList = async () => {
-    if (!user && !user?.displayName) {
-      toast('Ups, está no es tu lista')
-    } else {
-      console.log('hola')
-
-      toast.promise(removePostFromList(post.id, user.uid), {
-        loading: 'Eliminando de tu lista...',
-        success: () => {
-          setListedCounter((state) => state - 1)
-          return 'Tattoo eliminado 😉'
-        },
-        error: (err) => {
-          return `${err.toString()}`
-        },
-      })
-    }
-  }
 
   return (
     <div>
@@ -98,16 +52,8 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             </div>
           )}
           <div className="flex items-center space-x-2 text-white">
-            <p className="">{listedCounter || 0}</p>
-            {data?.notListed ? (
-              <span className="cursor-pointer" onClick={removeFromList}>
-                <RiHeart3Fill />
-              </span>
-            ) : (
-              <span className="cursor-pointer" onClick={handleList}>
-                <RiHeartLine />
-              </span>
-            )}
+            {data?.post && <p>{data.post.counter_listed}</p>}
+            <PostItemListed user={user} post={post} mutatePost={mutate} />
           </div>
         </div>
       </div>
