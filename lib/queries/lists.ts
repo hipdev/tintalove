@@ -104,7 +104,7 @@ export async function isPostListed(postId, userId) {
 
   const querySnapshotEmpty = await (await getDocs(q)).empty // is Empty == true
 
-  return { notListed: !querySnapshotEmpty }
+  return { listed: !querySnapshotEmpty }
 }
 
 export async function getUserLists(key, userId) {
