@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { VscMenu } from 'react-icons/vsc'
-import { BsSearch } from 'react-icons/bs'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
@@ -10,14 +9,16 @@ import { UserState } from 'types/user'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { FiCalendar } from 'react-icons/fi'
 import useUser from 'hooks/use-user'
+import { GoSearch } from 'react-icons/go'
+import { AiOutlineCamera } from 'react-icons/ai'
 
 const Header = () => {
   const { state } = useUser()
 
   const { user } = state
   return (
-    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-10 md:py-4 px-5 sm:px-10 lg:px-20">
-      <div className="flex flex-wrap md:flex-nowrap justify-center xl:justify-between">
+    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20">
+      <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (
             <>
@@ -38,8 +39,8 @@ const Header = () => {
                 </Link>
                 {/*New elements for tablet resolution*/}
                 <div className="flex items-center">
-                  <span className="text-white text-2xl block lg:hidden px-10">
-                    <BsSearch />
+                  <span className="relative top-0 text-white text-2xl block lg:hidden px-6">
+                    <GoSearch />
                   </span>
                   <span className="text-white text-3xl block lg:hidden">
                     <VscMenu />
@@ -59,7 +60,7 @@ const Header = () => {
                     className="w-14 h-12 bg-green-500 rounded-r-lg"
                   >
                     <span className="text-xl text-white flex justify-center">
-                      <BsSearch />
+                      <GoSearch />
                     </span>
                   </button>
                 </div>
@@ -82,8 +83,8 @@ const Header = () => {
             </>
           )}
           {user?.is_artist && (
-            <div className="flex flex-wrap xl:flex-nowrap justify-between md:justify-center xl:justify-between w-full">
-              <div className="flex items-center mb-0 md:mb-5 xl:mb-0">
+            <div className="flex  items-center justify-between w-full">
+              <div className="flex items-center">
                 <Link href="/">
                   <a>
                     {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -101,14 +102,14 @@ const Header = () => {
                 <span className="text-white text-2xl hidden md:block px-10">
                   <VscMenu />
                 </span>
-                <div className="w-28 items-center gap-3 hidden md:flex">
-                  <span className="text-white text-xl">
-                    <BsSearch />
+                <div className="w-10 xl:w-28 items-center gap-3 hidden md:flex">
+                  <span className="text-white text-2xl">
+                    <GoSearch />
                   </span>
                   <input
                     type="text"
                     placeholder="BUSCAR"
-                    className="placeholder-white text-white bg-transparent w-28 truncate "
+                    className="placeholder-white text-white bg-transparent w-0 xl:w-28 truncate hidden xl:block"
                   />
                 </div>
                 <div className="items-center space-x-2 ml- md:ml-6 lg:ml-0 hidden md:flex">
@@ -118,7 +119,7 @@ const Header = () => {
                   <select
                     name=""
                     id=""
-                    className="bg-transparent text-white font-light font-raleway focus:outline-none"
+                    className="bg-transparent text-white font-light font-raleway focus:outline-none hidden xl:block"
                   >
                     <option value="">TODO COLOMBIA</option>
                   </select>
@@ -127,7 +128,7 @@ const Header = () => {
               {/*New elements for tablet resolution*/}
               <div className="flex items-center">
                 <span className="text-white text-2xl block md:hidden px-0 md:px-10 pr-10 md:pr-0">
-                  <BsSearch />
+                  <GoSearch />
                 </span>
                 <span className="text-white text-3xl block md:hidden">
                   <VscMenu />
@@ -135,11 +136,11 @@ const Header = () => {
               </div>
               <div className="gap-3 ml-2 hidden md:flex">
                 <div className="ml-10">
-                  <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-1 rounded-md">
+                  <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md">
                     <span className="text-green-500 text-2xl">
                       <FiCalendar />
                     </span>
-                    <div className="leading-tight">
+                    <div className="leading-tight hidden xl:block">
                       <p className="text-white">Disponibilidad</p>
                       <p className="text-light-200">En 2 meses</p>
                     </div>
@@ -148,8 +149,11 @@ const Header = () => {
                     </span>
                   </div>
                 </div>
-                <button className="text-white font-semibold tracking-wide text-sm bg-green-600 px-7 rounded-md">
-                  PUBLICAR
+                <button className="text-white font-semibold tracking-wide text-sm bg-green-600 px-4 xl:px-7 rounded-md flex items-center justify-center">
+                  <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                    <AiOutlineCamera />
+                  </span>
+                  <span className="hidden xl:block">PUBLICAR</span>
                 </button>
                 <SubMenuHeader user={user} />
               </div>
