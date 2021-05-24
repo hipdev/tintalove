@@ -8,6 +8,7 @@ import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import useUser from 'hooks/use-user'
 import { useState } from 'react'
+import { BsArrowLeft } from 'react-icons/bs'
 
 const PostPortrait = ({
   postData,
@@ -26,8 +27,8 @@ const PostPortrait = ({
 
   console.log(state, 'el user')
   return (
-    <div className="flex gap-12">
-      <div className="mb-5 flex justify-center w-609">
+    <div className="flex flex-col xl:flex-row items-center xl:justify-between">
+      <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
         <div>
           <StickyBox offsetTop={0} offsetBottom={30}>
             <aside className="z-10 mr-4">
@@ -84,11 +85,11 @@ const PostPortrait = ({
               : 'https://via.placeholder.com/1100x621'
           }
           alt=""
-          className=" object-cover rounded-lg max-w-xl"
+          className=" object-cover rounded-lg max-w-md md:max-w-lg lg:max-w-2xl"
         />
       </div>
 
-      <div className="flex flex-col-reverse self-start w-1/2">
+      <div className="flex flex-grow flex-col-reverse self-center xl:self-start w-full xl:w-1/2 ml-0 xl:ml-44 overflow-hidden overflow-ellipsis">
         <PostsComments
           postId={postData.id}
           userData={state?.user}
@@ -97,6 +98,7 @@ const PostPortrait = ({
           totalComments={totalComments}
         />
       </div>
+      <div className="fixed bottom-0 bg-ocean_blue-300 w-full">wsffdgh</div>
     </div>
   )
 }
