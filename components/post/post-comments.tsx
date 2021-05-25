@@ -1,5 +1,4 @@
 import { addComment } from 'lib/queries/posts'
-import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -65,29 +64,31 @@ const PostComments = ({
 
   return (
     <div>
-      <div className="flex justify-center lg:justify-between gap-2 mb-5 flex-shrink-0">
-        <Link href="#">
-          <a className="flex flex-shrink-0">
-            <img
-              // src="https://via.placeholder.com/45x45"
-              src={
-                userData?.profile_picture?.url
-                  ? `${userData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
-                  : 'https://via.placeholder.com/45x45'
-              }
-              className="object-cover w-12 h-12 rounded-md overflow-hidden"
-            />
-          </a>
-        </Link>
-        <input
-          type="text"
-          value={comment}
-          placeholder="Escribe un comentario..."
-          className="w-96 bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300 flex-shrink-0"
-          onChange={(e) => setComment(e.target.value)}
-        />
+      <div className="w-full flex flex-shrink mb-5">
+        <div className="w-4/5 flex items-center">
+          <Link href="#">
+            <a className="flex flex-shrink-0 mr-3">
+              <img
+                // src="https://via.placeholder.com/45x45"
+                src={
+                  userData?.profile_picture?.url
+                    ? `${userData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
+                    : 'https://via.placeholder.com/45x45'
+                }
+                className="object-cover w-12 h-12 rounded-md overflow-hidden"
+              />
+            </a>
+          </Link>
+          <input
+            type="text"
+            value={comment}
+            placeholder="Escribe un comentario..."
+            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300 flex-shrink truncate"
+            onChange={(e) => setComment(e.target.value)}
+          />
+        </div>
         <button
-          className="flex items-center gap-2 btn-primary px-4 py-1"
+          className="flex items-center btn-primary px-4 py-1 ml-2 space-x-4"
           onClick={sendComment}
           disabled={loading}
         >
@@ -95,7 +96,7 @@ const PostComments = ({
 
           {loading && (
             <svg
-              className="animate-spin  ml-3 h-5 w-5 text-white"
+              className="block animate-spin  ml-3 h-5 w-5 text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -115,10 +116,10 @@ const PostComments = ({
               ></path>
             </svg>
           )}
-          {loading ? 'Enviando...' : 'Comentar'}
+          <span>{loading ? 'Enviando...' : 'Comentar'}</span>
         </button>
       </div>
-      <div className="mb-4 w-full max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10 flex-shrink">
+      <div className="mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <PostComment

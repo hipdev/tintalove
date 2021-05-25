@@ -44,7 +44,7 @@ const PostComment = ({
         />
       </div>
       <div>
-        <div className="flex items-end ">
+        <div className="flex items-end">
           <h4 className="text-gray-200 font-raleway font-semibold tracking-wide">
             {comment.displayName}{' '}
           </h4>
