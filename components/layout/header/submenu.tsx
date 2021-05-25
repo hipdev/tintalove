@@ -1,8 +1,6 @@
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
-
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useStateMachine } from 'little-state-machine'
@@ -25,7 +23,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
         const user = result.user
         const res = await createUser(user)
 
-        if (res) actions.login(true)
+        // if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.
@@ -37,7 +35,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        actions.login(null)
+        // actions.login(null)
       })
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
@@ -64,7 +62,10 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                   <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
                     <VscChevronDown className="text-2xl mr-3 " />
                     <span>{user.displayName}</span>
-                    <img className="w-12 rounded-full ml-3" src={user.photo} />
+                    <img
+                      className="w-12 rounded-full ml-3"
+                      src={user.photoUrl}
+                    />
                   </Menu.Button>
 
                   <Transition
