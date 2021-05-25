@@ -59,7 +59,7 @@ const UserLists = ({ user }) => {
         ) : (
           <>
             <p className="text-gray-300">Post: {list?.post?.id || 'Sin Id'}</p>
-            <NoListForm />
+            <NoListForm user={user || null} />
           </>
         )}
       </Modal>

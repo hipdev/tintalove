@@ -3,16 +3,18 @@ import { useState } from 'react'
 import { lists } from 'lib/actions'
 import toast from 'react-hot-toast'
 import { addPostToList, createList } from 'lib/queries/lists'
+import { UserState } from 'types/user'
 
 type Props = {
   hasList?: boolean
+  user: UserState
 }
 
-const NoListForm = ({ hasList }: Props) => {
+const NoListForm = ({ hasList, user }: Props) => {
   const [listName, setListName] = useState('')
 
   const {
-    state: { list, user },
+    state: { list },
     actions,
   }: any = useStateMachine({
     lists,
@@ -30,8 +32,16 @@ const NoListForm = ({ hasList }: Props) => {
               // setTriggerAuth(Math.random())
               setListName('')
               actions.lists({ post: null, listOpen: false })
-              list.setIsListed(true)
-              list.setListedCounter((state) => state + 1)
+
+              list.mutateListed({ listed: true }, false)
+              list.mutatePost((data) => {
+                return {
+                  post: {
+                    ...data.post,
+                    counter_listed: data.post.counter_listed + 1,
+                  },
+                }
+              }, false)
 
               return 'Tattoo guardado 😉'
             },
