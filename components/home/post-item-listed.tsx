@@ -71,7 +71,6 @@ const PostItemListed = ({
       })
     }
   }
-  if (!data) return null
 
   return (
     <>
@@ -113,7 +112,7 @@ const PostItemListed = ({
             >
               Eliminar
             </button>
-            <button>Cancelar</button>
+            <button onClick={() => setIsOpen(false)}>Cancelar</button>
           </div>
         </div>
       </Modal>
