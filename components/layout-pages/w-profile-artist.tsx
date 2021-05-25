@@ -180,6 +180,29 @@ const ProfileArtist = () => {
                 </div>
                 <div className="overflow-hidden rounded-xl mb-5">
                   <img
+                    src="galaxy6.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy4.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full">
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy3.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
                     src="galaxy2.jpg"
                     alt=""
                     className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
@@ -234,6 +257,75 @@ const ProfileArtist = () => {
                 <div className="overflow-hidden rounded-xl mb-5">
                   <img
                     src="galaxy3.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full">
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy3.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy6.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy4.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full">
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy5.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy2.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy3.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+              </div>
+              <div className="w-full h-full">
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy3.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy6.jpg"
+                    alt=""
+                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl mb-5">
+                  <img
+                    src="galaxy4.jpg"
                     alt=""
                     className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
                   />

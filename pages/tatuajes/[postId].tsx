@@ -24,9 +24,6 @@ export default function TattoosPage({
 }) {
   const router = useRouter()
 
-  console.log(postsData, postData, artistData, 'toda la data')
-  console.log(router, 'router')
-
   return (
     <>
       <Layout>
@@ -108,7 +105,7 @@ export const getStaticProps = async ({ params }) => {
 
   if (params.postId != 'all') {
     try {
-      const dataPost: any = await getPostDataById(params.postId)
+      const dataPost: any = await getPostDataById('get-post', params.postId)
       const dataArtist = await getArtistInfo(dataPost.post.artist_id)
       const dataComments = await getPostComments(params.postId)
 

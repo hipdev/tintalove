@@ -4,18 +4,14 @@ import { VscMenu } from 'react-icons/vsc'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
 import { useStateMachine } from 'little-state-machine'
-import { getUser } from 'lib/actions'
-import { UserState } from 'types/user'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { FiCalendar } from 'react-icons/fi'
-import useUser from 'hooks/use-user'
 import { GoSearch } from 'react-icons/go'
 import { AiOutlineCamera } from 'react-icons/ai'
 
-const Header = () => {
-  const { state } = useUser()
 
-  const { user } = state
+const Header = ({ user }) => {
+
   return (
     <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20">
       <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
@@ -155,11 +151,13 @@ const Header = () => {
                   </span>
                   <span className="hidden xl:block">PUBLICAR</span>
                 </button>
-                <SubMenuHeader user={user} />
+                <SubMenuHeader user={user || null} />
               </div>
             </div>
+
           )}
         </div>
+
       </div>
     </nav>
   )
