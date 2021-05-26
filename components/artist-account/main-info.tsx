@@ -191,7 +191,7 @@ const MainInfo = ({ uid }) => {
         }}
         position="bottom-right"
       />
-      <div className="w-4/5 mt-10">
+      <div className="w-full lg:w-4/5 mt-10">
         <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
           Información personal
         </h1>
