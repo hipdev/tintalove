@@ -13,6 +13,7 @@ import {
   deleteDoc,
   DocumentSnapshot,
   DocumentData,
+  where,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
@@ -67,7 +68,9 @@ export async function createArtistPost(
 }
 
 export async function getPostsInfo() {
-  const querySnapshot = await getDocs(collection(db, 'posts'))
+  const q = query(collection(db, 'posts'), where('is_active', '==', true))
+
+  const querySnapshot = await getDocs(q)
   const posts: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     // console.log('consultando artistas', doc.data())

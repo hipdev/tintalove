@@ -7,7 +7,7 @@ import NoListForm from './no-list-form'
 import { lists } from 'lib/actions'
 import useSWR from 'swr'
 
-const SelectList = ({ userId, post }) => {
+const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
 
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
@@ -68,7 +68,7 @@ const SelectList = ({ userId, post }) => {
         </button>
       </div>
 
-      {showForm && <NoListForm hasList />}
+      {showForm && <NoListForm user={user} hasList />}
 
       <div className="flex flex-col">
         {data.userLists.map((list) => (

@@ -53,7 +53,7 @@ const UserLists = ({ user }) => {
             {!list?.post ? (
               <ShowLists userId={user?.uid} />
             ) : (
-              <SelectList userId={user?.uid} post={list?.post} />
+              <SelectList user={user} userId={user?.uid} post={list?.post} />
             )}
           </>
         ) : (
