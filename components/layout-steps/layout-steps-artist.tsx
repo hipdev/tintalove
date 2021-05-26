@@ -10,14 +10,15 @@ import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
 import { FiCalendar } from 'react-icons/fi'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { VscMenu } from 'react-icons/vsc'
+import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
 type Props = {
   uid?: string
   children
-  userState?: UserState
+  user?: UserState
 }
 
-const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
+const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:h-screen">
@@ -37,14 +38,12 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
             </a>
           </Link>
         </div>
-        {userState && userState?.artist_active && (
-          <SideMenuArtist username={userState?.username || null} />
+        {user && user?.artist_active && (
+          <SideMenuArtist username={user?.username || null} />
         )}
 
-        {!userState ||
-          (userState && !userState?.artist_active && (
-            <SideMenuArtistSteps uid={uid} />
-          ))}
+        {!user ||
+          (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
       <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 text-white">
         <header className="flex justify-between pt-6  pr-0 sm:pr-10">
@@ -76,7 +75,7 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
             </div>
           </div>
           <div className="flex">
-            {userState?.artist_active && (
+            {user?.artist_active && (
               <div className="text-white mr-7 items-center hidden md:flex">
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
@@ -86,18 +85,7 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
                     <span className="hidden xl:block">PUBLICAR</span>
                   </a>
                 </Link>
-                <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md ml-2">
-                  <span className="text-green-500 text-2xl">
-                    <FiCalendar />
-                  </span>
-                  <div className="leading-tight hidden xl:block">
-                    <p className="text-white">Disponibilidad</p>
-                    <p className="text-light-200">En 15 días</p>
-                  </div>
-                  <span className="text-white text-2xl">
-                    <MdKeyboardArrowDown />
-                  </span>
-                </div>
+                <WrapperAvailability user={user} />
               </div>
             )}
             <StepNav />
