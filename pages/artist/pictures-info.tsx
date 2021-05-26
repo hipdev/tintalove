@@ -16,7 +16,7 @@ export default function PictureInfoPage() {
   }
 
   return (
-    <LayoutStepsArtist uid={userId} userState={data.user}>
+    <LayoutStepsArtist uid={userId} user={data.user}>
       <PicturesInfo
         uid={data.user.uid || null}
         isArtist={data.user.is_artist}
