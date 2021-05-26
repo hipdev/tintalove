@@ -1,14 +1,7 @@
-import { FiBookmark } from 'react-icons/fi'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import { FaRegCommentDots } from 'react-icons/fa'
-import { RiHeartLine } from 'react-icons/ri'
-import { FiSend } from 'react-icons/fi'
-import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import useUser from 'hooks/use-user'
-import { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
 import PostPortrait from './post-portrait'
 import PostHorizontal from './post-horizontal'
@@ -22,13 +15,6 @@ const PostStatic = ({
   artistData: ArtistTypes
   commentsData: any
 }) => {
-  const { state } = useUser()
-
-  const [totalComments, setTotalComments] = useState(
-    postData.counter_comments || 0
-  )
-
-  console.log(state, 'el user')
   return (
     <div className="w-full container mx-auto mt-20">
       <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
