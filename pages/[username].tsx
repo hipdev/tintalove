@@ -22,7 +22,7 @@ export default function index({ artistId, artistData }: any) {
   console.log(artistData, artistId, 'el artista info')
 
   return (
-    <Layout artistData={artistData || null}>
+    <Layout>
       <ArtistProfile artistData={artistData || null} />
     </Layout>
   )

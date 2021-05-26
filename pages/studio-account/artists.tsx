@@ -1,36 +1,25 @@
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
 import Artists from 'components/studio-account/artists/artists'
-import useStudio from 'hooks/use-studio'
-
-import useUser from 'hooks/use-user'
-import { UserState } from 'types/user'
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
+import useSWR from 'swr'
 
 export default function StudioArtists({ studioId }) {
-  const { state }: { state: { user: UserState } } = useUser()
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
-  const isArtist = state?.user?.is_artist
+  if (!data && !data?.user) {
+    return <IsAuth>Cargando data...</IsAuth>
+  }
 
   return (
-    <>
-      {state?.user ? (
-        <LayoutStepsStudio
-          uid={state?.user?.uid}
-          userState={state?.user || null}
-        >
-          {state && state.user && (
-            <Artists
-              uid={state?.user?.uid || null}
-              hasStudio={state?.user?.has_studio}
-              studioId={state?.user?.studio_id}
-            />
-          )}
-        </LayoutStepsStudio>
-      ) : (
-        <LayoutStepsStudio>
-          <IsAuth>Cargando...</IsAuth>
-        </LayoutStepsStudio>
-      )}
-    </>
+    <LayoutStepsStudio uid={userId} userState={data.user}>
+      <Artists
+        uid={data.user.uid || null}
+        hasStudio={data.user.has_studio}
+        studioId={data.user.studio_id}
+      />
+    </LayoutStepsStudio>
   )
 }

@@ -13,6 +13,8 @@ import {
   deleteDoc,
   where,
   updateDoc,
+  writeBatch,
+  increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
@@ -23,6 +25,9 @@ import 'firebase-8/firestore'
 const db = getFirestore(firebaseApp)
 
 const firebaseConfig = { projectId: 'tinta-love' }
+
+// firebase old 8 version
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 } else {
@@ -56,24 +61,39 @@ export async function createList(user, list_name, isFirst) {
 }
 
 export async function addPostToList(uid, post, listId) {
-  const res = await addDoc(collection(db, 'lists_items'), {
-    created_at: serverTimestamp(),
-    user_id: uid,
-    list_id: listId,
-    post_id: post.id,
-    post_image: post.image.url,
-    post_picture_size: post.picture_size,
-    post_description: post.description,
-    post_artist_id: post.artist_id,
-    post_artist_name: post.displayName,
-    post_styles: post.styles,
-  })
-    .then((doc) => {
-      return { doc: doc.id, status: true }
-    })
-    .catch((error) => console.log(error))
+  try {
+    const batch = writeBatch(db)
 
-  return res
+    const listRef = doc(collection(db, 'lists'), listId)
+    const listItemRef = doc(collection(db, 'lists_items'))
+
+    batch.set(listItemRef, {
+      created_at: serverTimestamp(),
+      user_id: uid,
+      list_id: listId,
+      post_id: post.id,
+      post_image: post.image.url,
+      post_picture_size: post.picture_size,
+      post_description: post.description,
+      post_artist_id: post.artist_id,
+      post_artist_name: post.displayName,
+      post_styles: post.styles,
+    })
+
+    batch.update(listRef, {
+      total_items: increment(1),
+    })
+
+    batch.commit()
+
+    const counter = new Counter(db8.doc(`posts/${post.id}`), 'counter_listed')
+
+    counter.incrementBy(1)
+
+    return { doc: listItemRef.id, status: true }
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 export async function isPostListed(postId, userId) {
   const q = query(
@@ -84,10 +104,11 @@ export async function isPostListed(postId, userId) {
 
   const querySnapshotEmpty = await (await getDocs(q)).empty // is Empty == true
 
-  return { notListed: !querySnapshotEmpty }
+  return { listed: !querySnapshotEmpty }
 }
 
-export async function getUserLists(userId) {
+export async function getUserLists(key, userId) {
+  console.log(key, userId, 'params')
   const q = query(collection(db, 'lists'), where('user_id', '==', userId))
 
   const querySnapshot = await getDocs(q)
@@ -101,6 +122,7 @@ export async function getUserLists(userId) {
 }
 
 export async function removePostFromList(postId, userId) {
+  console.log(postId, userId, 'esto que')
   const q = query(
     collection(db, 'lists_items'),
     where('user_id', '==', userId),
@@ -109,7 +131,17 @@ export async function removePostFromList(postId, userId) {
 
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach(async (listItem: QueryDocumentSnapshot) => {
-    return await deleteDoc(doc(db, 'lists_items', listItem.id))
+    await deleteDoc(doc(db, 'lists_items', listItem.id))
+    await updateDoc(doc(db, 'lists', listItem.data().list_id), {
+      total_items: increment(-1),
+    })
+
+    const counter = new Counter(
+      db8.doc(`posts/${listItem.data().post_id}`),
+      'counter_listed'
+    )
+
+    counter.incrementBy(-1)
   })
 
   console.log(querySnapshot.empty, 'esto que')

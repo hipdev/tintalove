@@ -3,15 +3,17 @@ import { Timestamp } from '@firebase/firestore/dist/lite'
 export type PostTypes = {
   id: string
   artist_id: string
+  is_active: boolean
   artist_picture: string
   city_name: string
   country: string
   counter_comments: number
+  counter_listed: number
   created_at: Timestamp
   description: string
   displayName: string
   image: ProfilePicture
-  picture_size: PictureSize
+  picture_size: PictureSize | string
   styles: []
   username: string
 } | null
