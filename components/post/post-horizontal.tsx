@@ -6,8 +6,10 @@ import PostsComments from './post-comments'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import useUser from 'hooks/use-user'
 import { useState } from 'react'
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
+import useSWR from 'swr'
 
 const PostHorizontal = ({
   postData,
@@ -18,13 +20,13 @@ const PostHorizontal = ({
   artistData: ArtistTypes
   commentsData: any
 }) => {
-  const { state } = useUser()
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
 
-  console.log(state, 'el user')
   return (
     <>
       <div className="mb-5 flex justify-center">
@@ -92,7 +94,7 @@ const PostHorizontal = ({
       <div className="w-full flex flex-col-reverse mb-10">
         <PostsComments
           postId={postData.id}
-          userData={state?.user}
+          user={data?.user}
           commentsData={commentsData}
           setTotalComments={setTotalComments}
           totalComments={totalComments}
