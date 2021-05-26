@@ -3,16 +3,15 @@ import Select from 'react-select'
 import CreatePostPicture from './create-post-picture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
-import { BsSquare } from 'react-icons/bs'
 import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
 
-const CreatePost = ({ uid }) => {
+const CreatePost = ({ user }) => {
   const [description, setDescription] = useState('')
   const [styles, setStyles] = useState([])
   const [withPicture, setWithPicture] = useState(false)
   const [pictureSize, setPictureSize] = useState('portrait')
 
-  const { artist } = useArtist(uid)
+  const { artist } = useArtist(user.uid)
 
   const options = artist?.styles.map((style) => {
     return { value: style, label: style }
@@ -27,7 +26,7 @@ const CreatePost = ({ uid }) => {
       <div className="bg-dark-500 container mx-auto flex flex-col md:flex-row  w-4/5 xl:w-3/5  py-5 md:py-12 px-5 md:px-10  relative pb-40 md:pb-12">
         <div className="w-full md:w-2/3  pr-0 md:pr-10">
           <CreatePostPicture
-            uid={uid}
+            uid={user.uid}
             dataForm={{ description, styles }}
             setWithPicture={setWithPicture}
             pictureSize={pictureSize}

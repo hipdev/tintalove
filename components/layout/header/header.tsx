@@ -9,9 +9,7 @@ import { FiCalendar } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { AiOutlineCamera } from 'react-icons/ai'
 
-
 const Header = ({ user }) => {
-
   return (
     <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20">
       <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
@@ -145,19 +143,21 @@ const Header = ({ user }) => {
                     </span>
                   </div>
                 </div>
-                <button className="text-white font-semibold tracking-wide text-sm bg-green-600 px-4 xl:px-7 rounded-md flex items-center justify-center">
-                  <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                    <AiOutlineCamera />
-                  </span>
-                  <span className="hidden xl:block">PUBLICAR</span>
-                </button>
+
+                <Link href="/post/new-post">
+                  <a className="text-white font-semibold tracking-wide text-sm bg-primary hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                    <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                      <AiOutlineCamera />
+                    </span>
+                    <span className="hidden xl:block">PUBLICAR</span>
+                  </a>
+                </Link>
+
                 <SubMenuHeader user={user || null} />
               </div>
             </div>
-
           )}
         </div>
-
       </div>
     </nav>
   )
