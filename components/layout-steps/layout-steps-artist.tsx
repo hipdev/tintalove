@@ -10,14 +10,22 @@ import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
 import { FiCalendar } from 'react-icons/fi'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { VscMenu } from 'react-icons/vsc'
+<<<<<<< HEAD
+=======
+import WrapperAvailability from 'components/layout/header/wrapper-availability'
+>>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
 
 type Props = {
   uid?: string
   children
-  userState?: UserState
+  user?: UserState
 }
 
+<<<<<<< HEAD
 const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
+=======
+const LayoutStepsArtist = ({ children, uid, user }: Props) => {
+>>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
   // if (!userState) return <span>Loading</span>
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:h-screen">
@@ -37,22 +45,29 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
             </a>
           </Link>
         </div>
-        {userState && userState?.artist_active && (
-          <SideMenuArtist username={userState?.username || null} />
+        {user && user?.artist_active && (
+          <SideMenuArtist username={user?.username || null} />
         )}
 
-        {!userState ||
-          (userState && !userState?.artist_active && (
-            <SideMenuArtistSteps uid={uid} />
-          ))}
+        {!user ||
+          (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
       <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 text-white">
+<<<<<<< HEAD
         <header className="flex justify-between pt-6 pr-0  sm:pr-10 ">
           <div className="flex items-center w-full justify-between">
             <Link href="/">
               <a className=" block lg:hidden mr-5 ">
                 {/* <img className="w-52" src="/short-logo.png" /> */}
                 <div className="w-40 relative h-9 mt-2  ">
+=======
+        <header className="flex justify-between pt-6  pr-0 sm:pr-10">
+          <div className="flex items-center justify-between w-full">
+            <Link href="/">
+              <a className="block lg:hidden mr-5">
+                {/* <img className="w-52" src="/short-logo.png" /> */}
+                <div className="w-40 relative h-9 mt-2">
+>>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
                   <Image
                     // layout="fill"
                     width={180}
@@ -76,7 +91,11 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
             </div>
           </div>
           <div className="flex">
+<<<<<<< HEAD
             {userState?.artist_active && (
+=======
+            {user?.artist_active && (
+>>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
               <div className="text-white mr-7 items-center hidden md:flex">
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
@@ -86,6 +105,7 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
                     <span className="hidden xl:block">PUBLICAR</span>
                   </a>
                 </Link>
+<<<<<<< HEAD
                 <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md ml-2">
                   <span className="text-green-500 text-2xl">
                     <FiCalendar />
@@ -98,6 +118,9 @@ const LayoutStepsArtist = ({ children, uid, userState }: Props) => {
                     <MdKeyboardArrowDown />
                   </span>
                 </div>
+=======
+                <WrapperAvailability user={user} />
+>>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
               </div>
             )}
             <StepNav />

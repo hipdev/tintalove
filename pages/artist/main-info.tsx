@@ -15,7 +15,7 @@ export default function MainInfoPage() {
   }
   return (
     <>
-      <LayoutStepsArtist uid={userId} userState={data.user}>
+      <LayoutStepsArtist uid={userId} user={data.user}>
         {data.user.is_artist ? (
           <MainInfoEdit uid={data.user.uid || null} />
         ) : (

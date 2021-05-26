@@ -14,7 +14,7 @@ export default function WorkingInfopage() {
   }
 
   return (
-    <LayoutStepsArtist uid={userId} userState={data.user}>
+    <LayoutStepsArtist uid={userId} user={data.user}>
       <WorkingInfo uid={data.user.uid || null} isArtist={data.user.is_artist} />
     </LayoutStepsArtist>
   )

@@ -1,6 +1,6 @@
 import { onAuthStateChanged, User } from '@firebase/auth'
 import { auth } from 'lib/firebase'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const useUserId = () => {
   const [userId, setUserId] = useState(null)
