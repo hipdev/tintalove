@@ -7,14 +7,23 @@ import toast, { CheckmarkIcon } from 'react-hot-toast'
 import { updateAvailability } from 'lib/queries/artists'
 
 const agenda = [
-  { id: 1, label: 'En una semana' },
-  { id: 2, label: 'En 15 días' },
-  { id: 3, label: 'En un mes' },
-  { id: 4, label: 'Dos meses o mas' },
+  { id: 0, label: 'En una semana' },
+  { id: 1, label: 'En 15 días' },
+  { id: 2, label: 'En un mes' },
+  { id: 3, label: 'Dos meses o mas' },
 ]
 
-const Availability = ({ user }: { user: UserState }) => {
-  const [selected, setSelected] = useState(agenda[0])
+const Availability = ({
+  user,
+  availableId,
+}: {
+  user: UserState
+  availableId: number
+}) => {
+  console.log(availableId, 'esto')
+  const [selected, setSelected] = useState(
+    availableId ? agenda[availableId] : agenda[0]
+  )
 
   const handleAvailability = (selected) => {
     console.log(selected, 'el item')
@@ -22,7 +31,7 @@ const Availability = ({ user }: { user: UserState }) => {
     toast.promise(updateAvailability(user.uid, selected), {
       loading: 'Actualizando...',
       success: () => {
-        setSelected(agenda[selected.id - 1])
+        setSelected(agenda[selected.id])
 
         return 'Gracias por actualizar tu disponibilidad 😉'
       },

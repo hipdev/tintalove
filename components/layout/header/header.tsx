@@ -3,13 +3,10 @@ import Image from 'next/image'
 import { VscMenu } from 'react-icons/vsc'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
-import { useStateMachine } from 'little-state-machine'
-import { MdKeyboardArrowDown } from 'react-icons/md'
-import { FiCalendar } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { UserState } from 'types/user'
-import Availability from './availability'
+import WrapperAvailability from './wrapper-availability'
 
 const Header = ({ user }: { user: UserState }) => {
   return (
@@ -131,7 +128,7 @@ const Header = ({ user }: { user: UserState }) => {
                 </span>
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center">
-                <Availability user={user} />
+                <WrapperAvailability user={user} />
 
                 {user?.artist_active && (
                   <Link href="/post/new-post">
