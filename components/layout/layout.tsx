@@ -6,6 +6,7 @@ import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
 import UserLists from './lists/user-lists'
+import NavFooter from './nav-footer'
 
 type Props = {
   children: any
@@ -37,6 +38,8 @@ const Layout = ({ children }: Props) => {
       <main className="bg-dark-800">{children}</main>
       <Footer />
       <UserLists user={data?.user || null} />
+
+      <NavFooter />
     </>
   )
 }
