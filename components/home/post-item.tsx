@@ -43,14 +43,14 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
           </p>
         </div>
         <div className="flex space-x-5">
-          {post.counter_comments && (
-            <div className="flex items-center space-x-2 text-white">
-              <p className="">{post.counter_comments || 0}</p>
+          {post.counter_comments ? (
+            <div className="flex items-center hola space-x-2 text-white">
+              <p className="">{post.counter_comments || 12}</p>
               <span>
                 <FaRegCommentDots />
               </span>
             </div>
-          )}
+          ) : null}
           <div className="flex items-center space-x-2 text-white">
             {data?.post && <p>{data.post.counter_listed}</p>}
             <PostItemListed user={user} post={post} mutatePost={mutate} />
