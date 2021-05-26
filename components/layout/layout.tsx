@@ -1,11 +1,16 @@
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
+import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
+import { AiOutlineUnorderedList } from 'react-icons/ai'
+import { GoSearch } from 'react-icons/go'
+import { RiHome4Line } from 'react-icons/ri'
 import useSWR from 'swr'
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
 import UserLists from './lists/user-lists'
+import NavFooter from './nav-footer'
 
 type Props = {
   children: any
@@ -37,6 +42,8 @@ const Layout = ({ children }: Props) => {
       <main className="bg-dark-800">{children}</main>
       <Footer />
       <UserLists user={data?.user || null} />
+
+      <NavFooter />
     </>
   )
 }

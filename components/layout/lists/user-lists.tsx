@@ -65,7 +65,7 @@ const UserLists = ({ user }) => {
       </Modal>
 
       {user?.has_list && (
-        <div className="fixed bottom-1/2 right-7 text-2xl z-20">
+        <div className="fixed bottom-1/2  md:right-2 lg:right-7 text-2xl z-20 hidden md:block">
           <AiOutlineUnorderedList
             className="text-white cursor-pointer"
             onClick={() => actions.lists({ post: null, listOpen: true })}
