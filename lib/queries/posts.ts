@@ -11,23 +11,28 @@ import {
   orderBy,
   limit,
   deleteDoc,
+  DocumentSnapshot,
+  DocumentData,
+  where,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
 
 import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
+import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
 
 const firebaseConfig = { projectId: 'tinta-love' }
+// firebase old 8 version
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 } else {
   firebase.app() // if already initialized, use that one
 }
 const db8 = firebase.firestore()
-
 export async function createArtistPost(
   uid,
   infoPicture,
@@ -63,7 +68,9 @@ export async function createArtistPost(
 }
 
 export async function getPostsInfo() {
-  const querySnapshot = await getDocs(collection(db, 'posts'))
+  const q = query(collection(db, 'posts'), where('is_active', '==', true))
+
+  const querySnapshot = await getDocs(q)
   const posts: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     // console.log('consultando artistas', doc.data())
@@ -83,12 +90,15 @@ export async function getPostsIds() {
   return posts
 }
 
-export async function getPostDataById(id) {
-  const docRef = doc(collection(db, 'posts'), id)
-  const docSnap = await getDoc(docRef)
+export async function getPostDataById(key, postId) {
+  const docRef = doc(collection(db, 'posts'), postId)
+  const docSnap: DocumentSnapshot<PostTypes | DocumentData> = await getDoc(
+    docRef
+  )
 
   if (docSnap.exists()) {
-    return { post: { ...docSnap.data(), id: docSnap.id } }
+    const data: PostTypes | DocumentData = { ...docSnap.data(), id: docSnap.id }
+    return { post: data }
   } else {
     return { post: null }
   }
@@ -106,7 +116,7 @@ export async function addComment(comment, postId, userData) {
     comment,
     created_at: serverTimestamp(),
     displayName: userData.displayName,
-    user_picture: userData.photo,
+    user_picture: userData.photoUrl,
     user_id: userData.uid,
   })
     .then((docRef) => {

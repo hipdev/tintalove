@@ -1,5 +1,5 @@
 import { addComment } from 'lib/queries/posts'
-import Head from 'next/head'
+import Link from 'next/link'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
@@ -7,7 +7,7 @@ import PostComment from './post-comment'
 
 const PostComments = ({
   postId,
-  userData,
+  user,
   commentsData,
   setTotalComments,
   totalComments,
@@ -24,23 +24,23 @@ const PostComments = ({
   const sendComment = () => {
     setLoading(true)
 
-    if (!userData) {
+    if (!user) {
       toast('Ingresa para hacer un comentario')
       setLoading(false)
       return
     }
     if (comment != '') {
-      toast.promise(addComment(comment, postId, userData), {
+      toast.promise(addComment(comment, postId, user), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
           setComments([
             {
-              displayName: userData.displayName,
+              displayName: user.displayName,
               created_at: Date.now(),
               comment,
-              user_id: userData.uid,
+              user_id: user.uid,
               id: data.commentId,
-              user_picture: userData.photo,
+              user_picture: user.photoUrl,
             },
             ...comments,
           ])
@@ -63,17 +63,32 @@ const PostComments = ({
   }
 
   return (
-    <div className="mb-4 w-2/3 max-h-96 overflow-hidden overflow-y-auto nice_scroll mr-10">
-      <div className="flex justify-center lg:justify-start gap-2 mb-5">
-        <input
-          type="text"
-          value={comment}
-          placeholder="Escribe algo..."
-          className="w-3/5 bg-ocean_blue-200 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300"
-          onChange={(e) => setComment(e.target.value)}
-        />
+    <div>
+      <div className="w-full flex flex-shrink mb-5">
+        <div className="w-4/5 flex items-center">
+          <Link href="#">
+            <a className="flex flex-shrink-0 mr-3">
+              <img
+                // src="https://via.placeholder.com/45x45"
+                src={
+                  user?.photoUrl
+                    ? `${user.photoUrl}`
+                    : 'https://via.placeholder.com/45x45'
+                }
+                className="object-cover w-12 h-12 rounded-full overflow-hidden"
+              />
+            </a>
+          </Link>
+          <input
+            type="text"
+            value={comment}
+            placeholder="Escribe un comentario..."
+            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg focus:outline-none text-gray-300 flex-shrink truncate"
+            onChange={(e) => setComment(e.target.value)}
+          />
+        </div>
         <button
-          className="flex items-center gap-2 btn-primary px-4 py-3"
+          className="flex items-center btn-primary px-4 py-1 ml-2 space-x-4"
           onClick={sendComment}
           disabled={loading}
         >
@@ -81,7 +96,7 @@ const PostComments = ({
 
           {loading && (
             <svg
-              className="animate-spin  ml-3 h-5 w-5 text-white"
+              className="block animate-spin  ml-3 h-5 w-5 text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -101,25 +116,26 @@ const PostComments = ({
               ></path>
             </svg>
           )}
-          {loading ? 'Enviando...' : 'Comentar'}
+          <span>{loading ? 'Enviando...' : 'Comentar'}</span>
         </button>
       </div>
-
-      {comments.length > 0 ? (
-        comments.map((comment) => (
-          <PostComment
-            key={comment.id}
-            comment={comment}
-            userId={userData?.uid || null}
-            postId={postId}
-            removeComment={removeComment}
-            setTotalComments={setTotalComments}
-            totalComments={totalComments}
-          />
-        ))
-      ) : (
-        <p className="text-gray-300">Sin comentarios</p>
-      )}
+      <div className="mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10">
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <PostComment
+              key={comment.id}
+              comment={comment}
+              userId={user?.uid || null}
+              postId={postId}
+              removeComment={removeComment}
+              setTotalComments={setTotalComments}
+              totalComments={totalComments}
+            />
+          ))
+        ) : (
+          <p className="text-gray-300">Sin comentarios</p>
+        )}
+      </div>
     </div>
   )
 }

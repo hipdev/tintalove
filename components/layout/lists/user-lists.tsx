@@ -8,9 +8,9 @@ import SelectList from './select-list'
 
 Modal.setAppElement('#__next')
 
-const UserLists = () => {
+const UserLists = ({ user }) => {
   const {
-    state: { list, user },
+    state: { list },
     actions,
   }: any = useStateMachine({
     lists,
@@ -53,13 +53,13 @@ const UserLists = () => {
             {!list?.post ? (
               <ShowLists userId={user?.uid} />
             ) : (
-              <SelectList userId={user?.uid} post={list?.post} />
+              <SelectList user={user} userId={user?.uid} post={list?.post} />
             )}
           </>
         ) : (
           <>
             <p className="text-gray-300">Post: {list?.post?.id || 'Sin Id'}</p>
-            <NoListForm />
+            <NoListForm user={user || null} />
           </>
         )}
       </Modal>

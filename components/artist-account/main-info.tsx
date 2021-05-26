@@ -6,8 +6,6 @@ import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-
-import { useUserData } from 'hooks/use-user-data'
 import MainInfoAvailable from './main-info-edit/main-info-available'
 
 import 'microtip/microtip.css'
@@ -29,8 +27,6 @@ const MainInfo = ({ uid }) => {
       bio: '',
     },
   })
-
-  const { setTriggerAuth } = useUserData()
 
   const cityRef = useRef(null)
 
@@ -162,7 +158,7 @@ const MainInfo = ({ uid }) => {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
-          setTriggerAuth(Math.random()) // reload global user state data
+          // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
           return 'Artista creado 😉'
@@ -175,7 +171,7 @@ const MainInfo = ({ uid }) => {
       .then((res) => {
         if (res) {
           router.push('/artist/working-info')
-          setTriggerAuth(Math.random())
+          // setTriggerAuth(Math.random())
         }
       })
   }

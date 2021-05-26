@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce'
 import toast, { Toaster } from 'react-hot-toast'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useUserData } from 'hooks/use-user-data'
+import React, { useCallback, useRef, useState } from 'react'
+
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -31,8 +31,6 @@ const MainInfoForm = ({ uid, artist }) => {
       bio: artist.bio,
     },
   })
-
-  const { setTriggerAuth } = useUserData()
 
   const watchUserName = watch('username')
   const watchMultiple: any = watch()
@@ -163,7 +161,7 @@ const MainInfoForm = ({ uid, artist }) => {
       loading: 'Actualizando...',
       success: (data) => {
         setLoading(false)
-        setTriggerAuth(Math.random()) // reload global user state data
+        // setTriggerAuth(Math.random()) // reload global user state data
         router.push('/artist/working-info')
         return 'Artista actualizado 😉'
       },

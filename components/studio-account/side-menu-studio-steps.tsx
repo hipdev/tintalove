@@ -1,8 +1,5 @@
-import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 import useStudioWizardRealtime from 'hooks/realtime/use-studio-wizard'
-import { useUserData } from 'hooks/use-user-data'
 import { activateArtist } from 'lib/queries/artists'
-
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -18,7 +15,6 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
   const { studioWizard } = useStudioWizardRealtime(studioId)
 
   const [loading, setLoading] = useState(false)
-  const { setTriggerAuth } = useUserData()
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
@@ -63,7 +59,7 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
-          setTriggerAuth(Math.random()) // reload global user state data
+          // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
           return 'Estudio activado, serás redireccionado a tu perfil en unos segundos... 🥳'

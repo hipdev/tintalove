@@ -302,3 +302,36 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
 
   return true
 }
+
+export async function updateAvailability(uid, selected) {
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(artistRef, {
+      available_id: selected.id,
+      available_label: selected.label,
+      available_updated: serverTimestamp(),
+    })
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function getArtistAvailability(key, uid) {
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    return {
+      available_id: docSnap.data().available_id,
+      available_label: docSnap.data().available_label,
+    }
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
