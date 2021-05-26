@@ -22,8 +22,6 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
-
-        // if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.

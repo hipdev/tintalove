@@ -1,31 +1,24 @@
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
-
-import { useStateMachine } from 'little-state-machine'
-import { getUser, login } from 'lib/actions'
-import React from 'react'
-import { createUser } from 'lib/queries/users'
+import { createUser, getUserInfo } from 'lib/queries/users'
+import useUserId from 'hooks/use-user-id'
+import useSWR from 'swr'
+import toast from 'react-hot-toast'
 
 const provider = new GoogleAuthProvider()
 
 const StepNav = () => {
-  const { state }: any = useStateMachine({
-    getUser,
-  })
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  })
+  const { userId } = useUserId()
 
-  const { user } = state
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        actions.login(null)
+        toast('Vuelve pronto 😁')
       })
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
@@ -34,8 +27,6 @@ const StepNav = () => {
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
-
-        if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.
@@ -47,7 +38,7 @@ const StepNav = () => {
   return (
     <nav className="flex flex-col lg:flex-row">
       <div className="flex flex-col md:flex-row items-center">
-        {!user && (
+        {!data?.user && (
           <>
             <button
               onClick={handleLogin}
@@ -57,7 +48,7 @@ const StepNav = () => {
             </button>
           </>
         )}
-        {user && (
+        {data?.user && (
           <>
             <div className="relative text-left z-10">
               <Menu>
@@ -65,10 +56,10 @@ const StepNav = () => {
                   <>
                     <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
                       <VscChevronDown className="text-2xl mr-1" />
-                      <span>{user.displayName}</span>
+                      <span>{data.user.displayName}</span>
                       <img
                         className="w-12 rounded-full ml-3"
-                        src={user.photo}
+                        src={data.user.photoUrl}
                       />
                     </Menu.Button>
 
@@ -88,7 +79,7 @@ const StepNav = () => {
                         <div className="px-4 py-3">
                           <p className="text-sm leading-5">Hola!</p>
                           <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                            {user.email}
+                            {data.user.email}
                           </p>
                         </div>
 
