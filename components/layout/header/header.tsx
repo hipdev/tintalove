@@ -9,6 +9,7 @@ import { FiCalendar } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { UserState } from 'types/user'
+import Availability from './availability'
 
 const Header = ({ user }: { user: UserState }) => {
   return (
@@ -129,25 +130,12 @@ const Header = ({ user }: { user: UserState }) => {
                   <VscMenu />
                 </span>
               </div>
-              <div className="gap-3 ml-2 hidden md:flex">
-                <div className="ml-10">
-                  <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md">
-                    <span className="text-green-500 text-2xl">
-                      <FiCalendar />
-                    </span>
-                    <div className="leading-tight hidden xl:block">
-                      <p className="text-white">Disponibilidad</p>
-                      <p className="text-light-200">En 2 meses</p>
-                    </div>
-                    <span className="text-white text-2xl">
-                      <MdKeyboardArrowDown />
-                    </span>
-                  </div>
-                </div>
+              <div className="gap-3 ml-2 hidden md:flex items-center">
+                <Availability user={user} />
 
                 {user?.artist_active && (
                   <Link href="/post/new-post">
-                    <a className="text-white font-semibold tracking-wide text-sm bg-primary hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                    <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
                       <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                         <AiOutlineCamera />
                       </span>
