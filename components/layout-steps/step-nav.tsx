@@ -50,7 +50,7 @@ const StepNav = () => {
         )}
         {data?.user && (
           <>
-            <div className="relative text-left z-10">
+            <div className="relative text-left z-10 hidden md:block ">
               <Menu>
                 {({ open }) => (
                   <>
