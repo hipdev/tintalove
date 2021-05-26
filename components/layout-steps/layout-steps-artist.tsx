@@ -77,15 +77,15 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           <div className="flex">
             {user?.artist_active && (
               <div className="text-white mr-7 items-center hidden md:flex">
+                <WrapperAvailability user={user} />
                 <Link href="/post/new-post">
-                  <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                  <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
                     <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                       <AiOutlineCamera />
                     </span>
                     <span className="hidden xl:block">PUBLICAR</span>
                   </a>
                 </Link>
-                <WrapperAvailability user={user} />
               </div>
             )}
             <StepNav />

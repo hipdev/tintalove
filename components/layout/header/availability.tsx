@@ -79,7 +79,7 @@ const Availability = ({
                             ? 'text-amber-900 bg-amber-100'
                             : 'text-gray-900'
                         }
-                          cursor-pointer select-none relative py-2 pl-10 pr-4 hover:bg-gray-100`
+                          cursor-pointer select-none relative py-2 pl-10 pr-4`
                       }
                       value={item}
                     >
