@@ -7,7 +7,7 @@ import PostComment from './post-comment'
 
 const PostComments = ({
   postId,
-  userData,
+  user,
   commentsData,
   setTotalComments,
   totalComments,
@@ -24,23 +24,23 @@ const PostComments = ({
   const sendComment = () => {
     setLoading(true)
 
-    if (!userData) {
+    if (!user) {
       toast('Ingresa para hacer un comentario')
       setLoading(false)
       return
     }
     if (comment != '') {
-      toast.promise(addComment(comment, postId, userData), {
+      toast.promise(addComment(comment, postId, user), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
           setComments([
             {
-              displayName: userData.displayName,
+              displayName: user.displayName,
               created_at: Date.now(),
               comment,
-              user_id: userData.uid,
+              user_id: user.uid,
               id: data.commentId,
-              user_picture: userData.photo,
+              user_picture: user.photoUrl,
             },
             ...comments,
           ])
@@ -71,11 +71,11 @@ const PostComments = ({
               <img
                 // src="https://via.placeholder.com/45x45"
                 src={
-                  userData?.profile_picture?.url
-                    ? `${userData.profile_picture.url}/tr:pr-true,c-at_max,f-auto,q-100,w-80`
+                  user?.photoUrl
+                    ? `${user.photoUrl}`
                     : 'https://via.placeholder.com/45x45'
                 }
-                className="object-cover w-12 h-12 rounded-md overflow-hidden"
+                className="object-cover w-12 h-12 rounded-full overflow-hidden"
               />
             </a>
           </Link>
@@ -125,7 +125,7 @@ const PostComments = ({
             <PostComment
               key={comment.id}
               comment={comment}
-              userId={userData?.uid || null}
+              userId={user?.uid || null}
               postId={postId}
               removeComment={removeComment}
               setTotalComments={setTotalComments}
