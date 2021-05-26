@@ -16,7 +16,11 @@ export default function PostCreatePage() {
       {data?.user.artist_active ? (
         <CreatePost user={data?.user} />
       ) : (
-        <p>Primero debes ser un artista activo</p>
+        <div className="h-screen flex justify-center">
+          <p className="text-3xl text-gray-300 mt-20">
+            Primero debes ser un artista activo
+          </p>
+        </div>
       )}
     </Layout>
   )
