@@ -9,6 +9,9 @@ import { ArtistTypes } from 'types/artist'
 import useUser from 'hooks/use-user'
 import { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
+import useUserId from 'hooks/use-user-id'
+import useSWR from 'swr'
+import { getUserInfo } from 'lib/queries/users'
 
 const PostPortrait = ({
   postData,
@@ -19,13 +22,13 @@ const PostPortrait = ({
   artistData: ArtistTypes
   commentsData: any
 }) => {
-  const { state } = useUser()
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
-
-  console.log(state, 'el user')
+  console.log(data, 'la data user')
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
       <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
@@ -92,7 +95,7 @@ const PostPortrait = ({
       <div className="flex flex-grow flex-col-reverse self-center xl:self-start w-full xl:w-1/2 ml-0 xl:ml-44 overflow-hidden overflow-ellipsis">
         <PostsComments
           postId={postData.id}
-          userData={state?.user}
+          user={data?.user || null}
           commentsData={commentsData}
           setTotalComments={setTotalComments}
           totalComments={totalComments}

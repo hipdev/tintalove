@@ -116,7 +116,7 @@ export async function addComment(comment, postId, userData) {
     comment,
     created_at: serverTimestamp(),
     displayName: userData.displayName,
-    user_picture: userData.photo,
+    user_picture: userData.photoUrl,
     user_id: userData.uid,
   })
     .then((docRef) => {
