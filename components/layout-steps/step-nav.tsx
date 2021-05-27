@@ -50,11 +50,7 @@ const StepNav = () => {
         )}
         {data?.user && (
           <>
-<<<<<<< HEAD
-            <div className="relative text-left z-10 hidden md:block ">
-=======
             <div className="relative text-left z-10 hidden md:block">
->>>>>>> 00a03a1c45cfa01887ef360d39b572d37046236b
               <Menu>
                 {({ open }) => (
                   <>

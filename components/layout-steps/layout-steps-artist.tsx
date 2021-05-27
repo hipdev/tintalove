@@ -7,8 +7,6 @@ import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/artist-account/side-menu-artist'
 import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
-import { FiCalendar } from 'react-icons/fi'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
