@@ -51,7 +51,6 @@
     "react-cropper": "^2.1.7",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
-    "react-google-places-autocomplete": "^3.3.1",
     "react-hook-form": "^7.6.8",
     "react-hot-toast": "^1.0.2",
     "react-icons": "^4.2.0",
@@ -61,9 +60,6 @@
     "react-phone-input-2": "^2.14.0",
     "react-select": "^4.3.1",
     "react-sticky-box": "^0.9.3",
-    "react-stickynode": "^3.0.5",
-    "react-use-promise": "^0.3.1",
-    "swiper": "^6.6.2",
     "swr": "^0.5.6",
     "use-places-autocomplete": "^1.9.3",
     "uuid": "^8.3.2"
