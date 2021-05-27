@@ -5,7 +5,7 @@ const MainInfoEdit = ({ studioId, uid }) => {
   const { studio } = useStudio(studioId)
 
   return (
-    <div className="w-4/5 mt-10">
+    <div className="w-full lg:w-4/5 mt-10 pr-7 sm:pr-14">
       <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información general
       </h1>
