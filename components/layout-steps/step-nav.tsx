@@ -87,7 +87,11 @@ const StepNav = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#account-settings"
+                                href={
+                                  data?.user?.artist_active
+                                    ? '/artist/main-info'
+                                    : '/user/profile'
+                                }
                                 className={`${
                                   active
                                     ? 'bg-gray-100 text-gray-900'
@@ -98,6 +102,24 @@ const StepNav = () => {
                               </a>
                             )}
                           </Menu.Item>
+
+                          {data?.user?.has_studio && (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="/studio-account/general"
+                                  className={`${
+                                    active
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700'
+                                  } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                                >
+                                  Administrar estudio
+                                </a>
+                              )}
+                            </Menu.Item>
+                          )}
+
                           <Menu.Item>
                             {({ active }) => (
                               <a
