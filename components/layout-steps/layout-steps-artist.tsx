@@ -6,9 +6,7 @@ import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/artist-account/side-menu-artist'
-import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
-import { FiCalendar } from 'react-icons/fi'
-import { MdKeyboardArrowDown } from 'react-icons/md'
+import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
@@ -21,7 +19,7 @@ type Props = {
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:h-screen">
+    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
 
       <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">

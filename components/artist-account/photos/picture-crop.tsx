@@ -1,5 +1,3 @@
-import axios from 'axios'
-import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
 import { useState } from 'react'
 import { Cropper } from 'react-cropper'
@@ -41,16 +39,21 @@ const PictureCrop = ({
 
       const dataFile: any = new FormData()
 
-      dataFile.append('fileName', (file && file.name) || 'cropped')
+      dataFile.append('fileName', uid || 'cropped')
       dataFile.append('file', file)
       dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
       dataFile.append('signature', data.signature)
       dataFile.append('expire', data.expire)
       dataFile.append('token', data.token)
 
-      await axios
-        .post('https://upload.imagekit.io/api/v1/files/upload', dataFile)
-        .then(async ({ data: fileImagekit }: any) => {
+      const options = {
+        method: 'POST',
+        body: dataFile,
+      }
+
+      await fetch('https://upload.imagekit.io/api/v1/files/upload', options)
+        .then((response) => response.json())
+        .then(async (fileImagekit) => {
           const content = {
             filePath: fileImagekit.filePath,
             size: fileImagekit.size,
