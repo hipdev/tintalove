@@ -82,12 +82,12 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
         toastOptions={{
           className: 'bg-red-600',
           style: {
-            background: '#ef3e30',
+            background: '#158e72',
             border: 'none',
             borderRadius: '3px',
             color: '#fff',
           },
-          duration: 20000,
+          duration: 2000,
         }}
         position="bottom-right"
       />

@@ -3,7 +3,7 @@ import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
 import { useState } from 'react'
 import { Cropper } from 'react-cropper'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import 'cropperjs/dist/cropper.css'
 import { updateArtistMainProfilePicture } from 'lib/queries/artists'
@@ -91,19 +91,6 @@ const PictureCrop = ({
 
   return (
     <div className="flex flex-col ">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <p className="text-sm mb-3 mt-5">
         Puedes mover y hacer zoom con la foto, el cuadrado indica las
         proporciones requeridas para la foto de perfil.

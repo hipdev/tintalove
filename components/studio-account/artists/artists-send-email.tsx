@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 const ArtistsSendEmail = ({ studioInfo }) => {
   const [loading, setLoading] = useState(false)
@@ -45,19 +45,6 @@ const ArtistsSendEmail = ({ studioInfo }) => {
 
   return (
     <div className="mt-12">
-      <Toaster
-        toastOptions={{
-          className: 'bg-primary',
-          style: {
-            background: '#158e72',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <h2 className="text-xl font-semibold">Invitar un artista</h2>
       {studioInfo?.studio_active ? (
         <>

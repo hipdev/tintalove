@@ -1,7 +1,6 @@
 import Compressor from 'compressorjs'
 import useArtistRealtime from 'hooks/realtime/use-artist'
 import { useState } from 'react'
-import { Toaster } from 'react-hot-toast'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 
@@ -41,19 +40,6 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
   return (
     <div className="w-4/5 mt-10">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <div className="flex justify-between">
         {picture && (
           <label className="text-white tracking-wide flex items-center cursor-pointer">

@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import React, { useCallback, useRef, useState } from 'react'
 
 import { capitalizeAllWords } from 'lib/utils'
@@ -176,19 +176,6 @@ const MainInfoForm = ({ uid, artist }) => {
 
   return (
     <>
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <form className="relative" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6 tooltipBox">
           <div className="col-span-6 md:col-span-3">

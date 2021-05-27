@@ -1,7 +1,7 @@
 import axios from 'axios'
 import fetcher from 'lib/fetcher'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -149,19 +149,6 @@ const CreatePostCrop = ({
 
   return (
     <div className="flex flex-col ">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <p className="text-sm mb-3 mt-5 text-gray-400">
         Puedes mover y hacer zoom con la foto, el cuadrado indica las
         proporciones requeridas para la foto de perfil.

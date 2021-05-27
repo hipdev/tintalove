@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './contact-info-location'
@@ -87,20 +87,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   }
 
   return (
-    <div className="w-full mt-10 pr-10">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
+    <div className="w-full mt-10 pr-10 text-gray-200">
       <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información de Contacto
       </h1>

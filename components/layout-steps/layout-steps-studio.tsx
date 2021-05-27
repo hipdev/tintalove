@@ -8,8 +8,6 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
 import SideMenuStudio from 'components/studio-account/side-menu-studio'
 import { VscMenu } from 'react-icons/vsc'
-import { FiCalendar } from 'react-icons/fi'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
 type Props = {
@@ -21,7 +19,7 @@ type Props = {
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:h-screen">
+    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
 
       <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
