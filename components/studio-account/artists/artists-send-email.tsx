@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -33,12 +32,22 @@ const ArtistsSendEmail = ({ studioInfo }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    axios.post('/api/emails/invitation-artist', data).then((res) => {
-      if (res?.status == 200) {
-        reset()
-        toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
-      }
-    })
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    fetch('/api/emails/invitation-artist', options)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res?.status == 200) {
+          reset()
+          toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
+        }
+      })
 
     setLoading(false)
   }
