@@ -45,8 +45,8 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
         {!user ||
           (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
-      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 text-white">
-        <header className="flex justify-between pt-6  pr-0 sm:pr-10">
+      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500">
+        <header className="flex justify-between pt-6 pr-0 sm:pr-14">
           <div className="flex items-center justify-between w-full">
             <Link href="/">
               <a className="block lg:hidden mr-5">
@@ -67,7 +67,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
                 <VscMenu />
               </span>
               <Link href="/">
-                <a className="flex items-center text-2xl md:text-lg">
+                <a className="flex items-center text-2xl md:text-lg text-gray-200">
                   <RiArrowGoBackFill className="mr-5" />
                   <span className="hidden md:block mr-3">Volver al inicio</span>
                 </a>
@@ -76,7 +76,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           </div>
           <div className="flex">
             {user?.artist_active && (
-              <div className="text-white mr-7 items-center hidden md:flex">
+              <div className="mr-7 items-center hidden md:flex">
                 <WrapperAvailability user={user} />
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
