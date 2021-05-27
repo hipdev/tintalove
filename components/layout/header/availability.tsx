@@ -5,6 +5,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md'
 import { Fragment, useState } from 'react'
 import toast, { CheckmarkIcon } from 'react-hot-toast'
 import { updateAvailability } from 'lib/queries/artists'
+import { mutate } from 'swr'
 
 const agenda = [
   { id: 0, label: 'En una semana' },
@@ -32,6 +33,7 @@ const Availability = ({
       loading: 'Actualizando...',
       success: () => {
         setSelected(agenda[selected.id])
+        mutate(['get-availability', user.uid])
 
         return 'Gracias por actualizar tu disponibilidad 😉'
       },
