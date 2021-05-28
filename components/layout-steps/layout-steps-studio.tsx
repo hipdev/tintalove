@@ -4,19 +4,12 @@ import StepNav from './step-nav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
-<<<<<<< HEAD
-import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
-import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
-import SideMenuStudio from 'components/studio-account/side-menu-studio'
-import { VscMenu } from 'react-icons/vsc'
-=======
 import { AiOutlineCamera } from 'react-icons/ai'
 import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
 import SideMenuStudio from 'components/studio-account/side-menu-studio'
 import { VscMenu } from 'react-icons/vsc'
 import { FiCalendar } from 'react-icons/fi'
 import { MdKeyboardArrowDown } from 'react-icons/md'
->>>>>>> 70ade43d880d09a3eaa8ed12239aed9a288c1751
 
 type Props = {
   uid?: string
@@ -84,11 +77,6 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
           </div>
           <div className="flex">
             {userState?.artist_active && (
-<<<<<<< HEAD
-              <div className="text-white mr-7 flex items-center">
-                <Link href="#">
-                  <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
-=======
               <div className="text-white mr-7 items-center hidden md:flex">
                 <div className="">
                   <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md">
@@ -106,7 +94,6 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
                 </div>
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
->>>>>>> 70ade43d880d09a3eaa8ed12239aed9a288c1751
                     <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                       <AiOutlineCamera />
                     </span>
