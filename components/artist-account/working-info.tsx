@@ -81,7 +81,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
   }
 
   return uid ? (
-    <div className="w-4/5 mt-10">
+    <div className="w-full lg:4/5 pr-7 sm:pr-14 mt-10">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
