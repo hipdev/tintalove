@@ -19,10 +19,11 @@ type Props = {
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
-      <HeadContainer />
 
-      <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
+    <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto lg:h-screen">
+
+      <HeadContainer />
+      <div className="w-full lg:w-448  sm:h-auto bg-dark-500 pl-0 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
           <Link href="/">
             <a>
@@ -74,6 +75,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           </div>
           <div className="flex">
             {user?.artist_active && (
+
               <div className="mr-7 items-center hidden md:flex">
                 <WrapperAvailability user={user} />
                 <Link href="/post/new-post">
