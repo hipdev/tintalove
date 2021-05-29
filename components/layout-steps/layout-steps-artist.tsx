@@ -6,7 +6,7 @@ import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/artist-account/side-menu-artist'
-import { AiOutlineCalendar, AiOutlineCamera } from 'react-icons/ai'
+import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
@@ -19,7 +19,9 @@ type Props = {
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
+
     <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto lg:h-screen">
+
       <HeadContainer />
       <div className="w-full lg:w-448  sm:h-auto bg-dark-500 pl-0 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
@@ -42,8 +44,8 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
         {!user ||
           (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
-      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 text-white">
-        <header className="flex justify-between pt-6  pr-0 sm:pr-10">
+      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500">
+        <header className="flex justify-between pt-6 pr-0 sm:pr-14">
           <div className="flex items-center justify-between w-full">
             <Link href="/">
               <a className="block lg:hidden mr-5">
@@ -64,7 +66,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
                 <VscMenu />
               </span>
               <Link href="/">
-                <a className="flex items-center text-2xl md:text-lg">
+                <a className="flex items-center text-2xl md:text-lg text-gray-200">
                   <RiArrowGoBackFill className="mr-5" />
                   <span className="hidden md:block mr-3">Volver al inicio</span>
                 </a>
@@ -73,7 +75,8 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           </div>
           <div className="flex">
             {user?.artist_active && (
-              <div className="text-white mr-7 items-center hidden md:flex">
+
+              <div className="mr-7 items-center hidden md:flex">
                 <WrapperAvailability user={user} />
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">

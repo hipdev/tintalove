@@ -8,19 +8,19 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
 import SideMenuStudio from 'components/studio-account/side-menu-studio'
 import { VscMenu } from 'react-icons/vsc'
-import { FiCalendar } from 'react-icons/fi'
-import { MdKeyboardArrowDown } from 'react-icons/md'
+import WrapperAvailability from 'components/layout/header/wrapper-availability'
 
 type Props = {
   uid?: string
   children
-  userState?: UserState
+  user?: UserState
 }
 
-const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
+const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:h-screen">
+
+    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
 
       <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
@@ -37,16 +37,18 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
             </a>
           </Link>
         </div>
-        {userState && userState?.studio_active && (
-          <SideMenuStudio username={userState?.username || null} />
+        {user && user?.studio_active && (
+          <SideMenuStudio username={user?.username || null} />
         )}
 
-        {!userState ||
-          (userState && !userState?.studio_active && (
-            <SideMenuStudioSteps studioId={userState.studio_id} />
+        {!user ||
+          (user && !user?.studio_active && (
+            <SideMenuStudioSteps studioId={user.studio_id} />
           ))}
       </div>
-      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 text-white">
+
+      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 ">
+
         <header className="flex justify-between pt-6  pr-0 sm:pr-10">
           <div className="flex items-center justify-between w-full">
             <Link href="/">
@@ -68,7 +70,8 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
                 <VscMenu />
               </span>
               <Link href="/">
-                <a className="flex items-center text-2xl md:text-lg">
+
+                <a className="flex items-center text-2xl md:text-lg text-white">
                   <RiArrowGoBackFill className="mr-5" />
                   <span className="hidden md:block mr-3">Volver al inicio</span>
                 </a>
@@ -76,22 +79,9 @@ const LayoutStepsStudio = ({ children, uid, userState }: Props) => {
             </div>
           </div>
           <div className="flex">
-            {userState?.artist_active && (
-              <div className="text-white mr-7 items-center hidden md:flex">
-                <div className="">
-                  <div className="flex items-center gap-2 bg-ocean_blue-300 px-2 py-3 xl:py-1 rounded-md">
-                    <span className="text-green-500 text-2xl">
-                      <FiCalendar />
-                    </span>
-                    <div className="leading-tight hidden xl:block">
-                      <p className="text-white">Disponibilidad</p>
-                      <p className="text-light-200">En un mes</p>
-                    </div>
-                    <span className="text-white text-2xl">
-                      <MdKeyboardArrowDown />
-                    </span>
-                  </div>
-                </div>
+            {user?.artist_active && (
+              <div className="mr-7 items-center hidden md:flex">
+                <WrapperAvailability user={user} />
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
                     <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">

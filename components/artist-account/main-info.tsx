@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 import React, { useCallback, useRef, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
@@ -178,19 +178,6 @@ const MainInfo = ({ uid }) => {
 
   return (
     <>
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <div className="w-full lg:w-4/5 mt-10">
         <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
           Información personal

@@ -1,8 +1,7 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 const ArtistsSendEmail = ({ studioInfo }) => {
   const [loading, setLoading] = useState(false)
@@ -33,31 +32,28 @@ const ArtistsSendEmail = ({ studioInfo }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    axios.post('/api/emails/invitation-artist', data).then((res) => {
-      if (res?.status == 200) {
-        reset()
-        toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
-      }
-    })
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    fetch('/api/emails/invitation-artist', options)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res?.status == 200) {
+          reset()
+          toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
+        }
+      })
 
     setLoading(false)
   }
 
   return (
     <div className="mt-12">
-      <Toaster
-        toastOptions={{
-          className: 'bg-primary',
-          style: {
-            background: '#158e72',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <h2 className="text-xl font-semibold">Invitar un artista</h2>
       {studioInfo?.studio_active ? (
         <>

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   collection,
   doc,
@@ -214,8 +213,16 @@ export async function updateArtistMainProfilePicture(
   const artistRef = doc(collection(db, 'artists'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
+  const options = {
+    method: 'DELETE',
+    body: JSON.stringify({ data: { imageId } }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
   if (update) {
-    await axios.delete('/api/profile/delete-image', { data: { imageId } })
+    await fetch('/api/profile/delete-image', options)
   }
 
   const dataForm = {

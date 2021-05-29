@@ -1,4 +1,3 @@
-import { Transition, Listbox } from '@headlessui/react'
 import { getArtistAvailability } from 'lib/queries/artists'
 import useSWR from 'swr'
 import { UserState } from 'types/user'
@@ -10,7 +9,6 @@ const WrapperAvailability = ({ user }: { user: UserState }) => {
     getArtistAvailability
   )
 
-  console.log(data, 'hpta malparido')
   if (!data) return <span>...</span>
 
   return (

@@ -20,7 +20,7 @@ export default function ContactInfoPageStudio() {
   }
 
   return (
-    <LayoutStepsStudio uid={userId} userState={data.user}>
+    <LayoutStepsStudio uid={userId} user={data.user}>
       <ContactInfoStudio
         hasStudio={data.user.has_studio}
         studioId={data.user.studio_id}

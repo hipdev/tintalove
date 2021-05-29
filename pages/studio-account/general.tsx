@@ -19,7 +19,7 @@ export default function MainInfoPage() {
   }
 
   return (
-    <LayoutStepsStudio uid={userId} userState={data.user}>
+    <LayoutStepsStudio uid={userId} user={data.user}>
       {data.user.has_studio ? (
         <div>
           {status === 'ready' && (

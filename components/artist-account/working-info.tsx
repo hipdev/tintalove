@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
@@ -81,20 +81,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
   }
 
   return uid ? (
+
     <div className="w-full lg:4/5 pr-7 sm:pr-14 mt-10">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#ef3e30',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 5000,
-        }}
-        position="bottom-right"
-      />
       <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
         Información laboral
       </h1>
