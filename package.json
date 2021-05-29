@@ -4,23 +4,38 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prettier-fix": "prettier --write ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.{md,mdx,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "^1.0.1",
-    "@algolia/autocomplete-theme-classic": "^1.0.1",
+    "@algolia/autocomplete-js": "^1.1.0",
+    "@algolia/autocomplete-theme-classic": "^1.1.0",
     "@headlessui/react": "^1.2.0",
-    "@react-google-maps/api": "^2.1.1",
+    "@react-google-maps/api": "^2.2.0",
     "@sendgrid/mail": "^7.4.4",
-    "@tailwindcss/aspect-ratio": "^0.2.0",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.2",
     "algoliasearch": "^4.9.1",
-    "axios": "^0.21.1",
     "compressorjs": "^1.0.7",
     "date-fns": "^2.21.3",
     "draft-js": "^0.11.7",
     "firebase": "^9.0.0-beta.1",
-    "firebase-8": "npm:firebase@^8.6.1",
+    "firebase-8": "npm:firebase@^8.6.2",
     "geofire-common": "^5.2.0",
     "imagekit": "^3.1.2",
     "isomorphic-unfetch": "^3.1.0",
@@ -28,15 +43,14 @@
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
     "microtip": "^0.2.2",
-    "next": "^10.2.0",
+    "next": "^10.2.3",
     "next-pwa": "^5.2.21",
     "react": "^17.0.2",
     "react-cool-onclickoutside": "^1.6.2",
     "react-cropper": "^2.1.7",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
-    "react-google-places-autocomplete": "^3.3.1",
-    "react-hook-form": "^7.6.2",
+    "react-hook-form": "^7.6.8",
     "react-hot-toast": "^1.0.2",
     "react-icons": "^4.2.0",
     "react-image-crop": "^8.6.9",
@@ -45,25 +59,24 @@
     "react-phone-input-2": "^2.14.0",
     "react-select": "^4.3.1",
     "react-sticky-box": "^0.9.3",
-    "react-stickynode": "^3.0.5",
-    "react-use-promise": "^0.3.1",
-    "swiper": "^6.6.1",
     "swr": "^0.5.6",
-    "use-places-autocomplete": "^1.9.2",
+    "use-places-autocomplete": "^1.9.3",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/googlemaps": "^3.43.3",
-    "@types/node": "^15.3.0",
-    "@types/react": "^17.0.6",
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
     "@types/react-modal": "^3.12.0",
     "@types/react-select": "^4.0.15",
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.2.15",
+    "autoprefixer": "^10.2.6",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "postcss": "^8.3.0",
     "postcss-flexbugs-fixes": "5.0.2",
     "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.3.0",
     "tailwindcss": "^2.1.2",
-    "typescript": "^4.2.4"
-  },
-  "license": "MIT"
+    "typescript": "^4.3.2"
+  }
 }

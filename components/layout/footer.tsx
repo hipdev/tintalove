@@ -43,13 +43,13 @@ const Footer = () => {
                 </a>
               </Link>
 
-              <Link href="/">
+              <Link href="/artist/main-info">
                 <a className="text-sm sm:text-base text-white mx-3">
                   Soy un artista
                 </a>
               </Link>
 
-              <Link href="/">
+              <Link href="/studio-account/general">
                 <a className="text-sm sm:text-base text-white mx-3">
                   Para estudios
                 </a>

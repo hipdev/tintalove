@@ -128,7 +128,7 @@ const Header = ({ user }: { user: UserState }) => {
                 </span>
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center">
-                <WrapperAvailability user={user} />
+                {user?.artist_active && <WrapperAvailability user={user} />}
 
                 {user?.artist_active && (
                   <Link href="/post/new-post">

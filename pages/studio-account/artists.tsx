@@ -14,7 +14,7 @@ export default function StudioArtists({ studioId }) {
   }
 
   return (
-    <LayoutStepsStudio uid={userId} userState={data.user}>
+    <LayoutStepsStudio uid={userId} user={data.user}>
       <Artists
         uid={data.user.uid || null}
         hasStudio={data.user.has_studio}
