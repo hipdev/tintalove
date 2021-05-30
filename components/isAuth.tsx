@@ -4,7 +4,6 @@ import { login } from 'lib/actions'
 import { auth } from 'lib/firebase'
 import { provider } from './layout/header/submenu'
 import { createUser } from 'lib/queries/users'
-import Layout from './layout/layout'
 import useUserId from 'hooks/use-user-id'
 
 export default function IsAuth({ children }) {

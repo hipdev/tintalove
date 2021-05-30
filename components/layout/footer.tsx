@@ -55,11 +55,15 @@ const Footer = () => {
                 </a>
               </Link>
 
-              <Link href="/">
-                <a className="text-white text-2xl mx-3">
-                  <AiOutlineInstagram />
-                </a>
-              </Link>
+              <a
+                className="text-white text-2xl mx-3"
+                href="https://www.instagram.com/tinta.love/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <AiOutlineInstagram />
+              </a>
+
               <Link href="/">
                 <a className="text-white text-2xl mx-3">
                   <FaFacebookSquare />
