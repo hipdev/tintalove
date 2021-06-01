@@ -4,13 +4,21 @@ import { VscChevronDown, VscMenu } from 'react-icons/vsc'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
 
-import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
-import WrapperAvailability from './wrapper-availability'
+
 import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
+import { useStateMachine } from 'little-state-machine'
+import { lists } from 'lib/actions'
 
 const Header = ({ user }: { user: UserState }) => {
+  const {
+    state: { list },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
   return (
     <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20 fixed">
       <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
@@ -106,17 +114,22 @@ const Header = ({ user }: { user: UserState }) => {
                   />
                   <button
                     type="submit"
-                    className="w-14 h-12 bg-primary hover:bg-primaryHover rounded-r-lg flex-shrink-0"
+                    className="w-14 h-12 bg-primary hover:bg-primaryHover focus:outline-none rounded-r-lg flex-shrink-0"
                   >
                     <span className="text-2xl text-white flex justify-center">
                       <AiOutlineSearch />
                     </span>
                   </button>
-                   <button className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover">
-              <span className="text-xl"><FiHeart/></span>
-                   </button>
+                  <button className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none">
+                    <span className="text-xl ">
+                      <FiHeart
+                        onClick={() =>
+                          actions.lists({ post: null, listOpen: true })
+                        }
+                      />
+                    </span>
+                  </button>
                 </div>
-              
               </div>
               {/*New elements for tablet resolution*/}
               <div className="flex items-center">
@@ -128,8 +141,6 @@ const Header = ({ user }: { user: UserState }) => {
                 </span>
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
-               
-
                 <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
                   <span className="text-3xl text-primary">
                     <TiLocationOutline />
@@ -140,7 +151,6 @@ const Header = ({ user }: { user: UserState }) => {
                     className="bg-transparent text-white font-medium  focus:outline-none underline appearance-none "
                   >
                     <option value="">TODO COLOMBIA</option>
-                     
                   </select>
                   <VscChevronDown className="text-2xl mr-3 text-white" />
                 </div>
