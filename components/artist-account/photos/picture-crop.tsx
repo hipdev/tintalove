@@ -76,6 +76,7 @@ const PictureCrop = ({
                 success: () => {
                   setLoading(false)
                   setPicture(null)
+                  mutate(uid)
 
                   return 'Foto actualizada 😉'
                 },
