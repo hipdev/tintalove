@@ -19,6 +19,7 @@ type Props = {
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
+
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
 
@@ -45,7 +46,9 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             <SideMenuStudioSteps studioId={user.studio_id} />
           ))}
       </div>
+
       <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 ">
+
         <header className="flex justify-between pt-6  pr-0 sm:pr-10">
           <div className="flex items-center justify-between w-full">
             <Link href="/">
@@ -67,6 +70,7 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
                 <VscMenu />
               </span>
               <Link href="/">
+
                 <a className="flex items-center text-2xl md:text-lg text-white">
                   <RiArrowGoBackFill className="mr-5" />
                   <span className="hidden md:block mr-3">Volver al inicio</span>
