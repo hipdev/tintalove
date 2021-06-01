@@ -6,6 +6,9 @@ import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import NoListForm from './no-list-form'
 import { lists } from 'lib/actions'
 import useSWR from 'swr'
+import { FiPlus } from 'react-icons/fi'
+import { VscClose } from 'react-icons/vsc'
+import Link from 'next/link'
 
 const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
@@ -53,33 +56,46 @@ const SelectList = ({ userId, post, user }) => {
 
   return (
     <div className="text-gray-300">
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-xl">Selecciona tu lista</h1>
-
-        <button
-          className="outline-none focus:outline-none"
-          onClick={() => setShowForm(!showForm)}
-        >
+      <div className="flex justify-between items-center ">
+        <div className="bg-ocean_blue-300 w-full h-24 flex items-center justify-around mb-6">
+          <h1 className="text-white text-2xl font-semibold">Mis favoritos</h1>
           {showForm ? (
-            <AiFillMinusCircle className="text-primary text-3xl hover:text-primaryHover" />
+            <button
+              className="bg-light-600 hover:bg-light-900 p-2 rounded-md focus:outline-none"
+              onClick={() => setShowForm(!showForm)}
+            >
+              <VscClose className="text-white text-3xl bg-light-600" />
+            </button>
           ) : (
-            <AiFillPlusCircle className="text-primary text-3xl hover:text-primaryHover" />
+            <button
+              className="bg-primary hover:bg-primaryHover p-2 rounded-md focus:outline-none"
+              onClick={() => setShowForm(!showForm)}
+            >
+              <FiPlus className="text-white text-3xl" />
+            </button>
           )}
-        </button>
+        </div>
       </div>
 
       {showForm && <NoListForm user={user} hasList />}
 
-      <div className="flex flex-col">
+      <div>
         {data.userLists.map((list) => (
-          <button
-            key={list.id}
-            type="button"
-            className="py-3 px-2 hover:bg-dark-600 text-left"
-            onClick={() => savePostOnList(list.id)}
-          >
-            {list.list_name}
-          </button>
+          <div className="flex items-center mb-5 bg-ocean_blue-300 p-4 rounded-md">
+            <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
+
+            <button
+              className="w-full flex flex-col focus:outline-none"
+              key={list.id}
+              type="button"
+              onClick={() => savePostOnList(list.id)}
+            >
+              {list.list_name}
+              <span className="text-light-600 text-sm align-top">
+                1 publicación
+              </span>
+            </button>
+          </div>
         ))}
       </div>
     </div>
