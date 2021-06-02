@@ -36,7 +36,7 @@ const StepNav = () => {
   }
 
   return (
-    <nav className="  lg:flex-row hidden sm:flex flex-col">
+    <nav className="lg:flex-row hidden sm:flex flex-col">
       {!data?.user && (
         <>
           <button
