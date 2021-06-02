@@ -20,7 +20,7 @@ const Header = ({ user }: { user: UserState }) => {
     lists,
   })
   return (
-    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20 fixed">
+    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 fixed">
       <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (
@@ -120,13 +120,14 @@ const Header = ({ user }: { user: UserState }) => {
                       <AiOutlineSearch />
                     </span>
                   </button>
-                  <button className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none">
+                  <button
+                    className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none"
+                    onClick={() =>
+                      actions.lists({ post: null, listOpen: true })
+                    }
+                  >
                     <span className="text-xl ">
-                      <FiHeart
-                        onClick={() =>
-                          actions.lists({ post: null, listOpen: true })
-                        }
-                      />
+                      <FiHeart />
                     </span>
                   </button>
                 </div>
