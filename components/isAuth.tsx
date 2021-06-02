@@ -1,6 +1,4 @@
 import { signInWithPopup } from '@firebase/auth'
-import { useStateMachine } from 'little-state-machine'
-import { login } from 'lib/actions'
 import { auth } from 'lib/firebase'
 import { provider } from './layout/header/submenu'
 import { createUser } from 'lib/queries/users'
@@ -9,17 +7,11 @@ import useUserId from 'hooks/use-user-id'
 export default function IsAuth({ children }) {
   const { userId } = useUserId()
 
-  const { state, actions } = useStateMachine({
-    login,
-  })
-
   const handleLogin = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
-
-        if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.
