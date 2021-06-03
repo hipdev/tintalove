@@ -35,7 +35,7 @@ const Header = ({ user }: { user: UserState }) => {
                         width={180}
                         height={35}
                         src="/short-logo.png"
-                        alt="Picture of the author"
+                        alt="Logo Tinta Love"
                       />
                     </div>
                   </a>

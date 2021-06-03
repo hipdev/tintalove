@@ -211,19 +211,21 @@ export async function updateArtistMainProfilePicture(
   wizard
 ) {
   const artistRef = doc(collection(db, 'artists'), uid)
+  const userRef = doc(collection(db, 'users'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
-  const options = {
-    method: 'DELETE',
-    body: JSON.stringify({ data: { imageId } }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
+  // Dont delete pictures from Imagekit anymore
+  // const options = {
+  //   method: 'DELETE',
+  //   body: JSON.stringify({ data: { imageId } }),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
 
-  if (update) {
-    await fetch('/api/profile/delete-image', options)
-  }
+  // if (update) {
+  //   await fetch('/api/profile/delete-image', options)
+  // }
 
   const dataForm = {
     profile_picture: data,
@@ -234,6 +236,7 @@ export async function updateArtistMainProfilePicture(
 
   if (docSnap.exists()) {
     await updateDoc(artistRef, dataForm)
+    await updateDoc(userRef, { photoUrl: data.url })
 
     if (wizard) {
       updateDoc(artistWizardRef, { step_four: true })

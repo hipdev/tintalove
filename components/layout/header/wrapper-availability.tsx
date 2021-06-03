@@ -11,11 +11,7 @@ const WrapperAvailability = ({ user }: { user: UserState }) => {
 
   if (!data) return <span>...</span>
 
-  return (
-    <>
-      <Availability user={user} availableId={data?.available_id} />
-    </>
-  )
+  return <Availability user={user} availableId={data?.available_id} />
 }
 
 export default WrapperAvailability
