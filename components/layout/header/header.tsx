@@ -1,16 +1,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { VscMenu } from 'react-icons/vsc'
+import { VscChevronDown, VscMenu } from 'react-icons/vsc'
 import { TiLocationOutline } from 'react-icons/ti'
 import SubMenuHeader from './submenu'
-import { GoSearch } from 'react-icons/go'
-import { AiOutlineCamera } from 'react-icons/ai'
+
+import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
-import WrapperAvailability from './wrapper-availability'
+
+import { GoSearch } from 'react-icons/go'
+import { FiHeart } from 'react-icons/fi'
+import { useStateMachine } from 'little-state-machine'
+import { lists } from 'lib/actions'
 
 const Header = ({ user }: { user: UserState }) => {
+  const {
+    state: { list },
+    actions,
+  }: any = useStateMachine({
+    lists,
+  })
   return (
-    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-6 md:py-4 px-5 sm:px-10 lg:px-20">
+    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 fixed">
       <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (
@@ -52,7 +62,7 @@ const Header = ({ user }: { user: UserState }) => {
                     type="submit"
                     className="w-14 h-12 bg-green-500 rounded-r-lg"
                   >
-                    <span className="text-xl text-white flex justify-center">
+                    <span className="text-2xl text-white flex justify-center">
                       <GoSearch />
                     </span>
                   </button>
@@ -77,7 +87,7 @@ const Header = ({ user }: { user: UserState }) => {
           )}
           {user?.is_artist && (
             <div className="flex  items-center justify-between w-full">
-              <div className="flex items-center">
+              <div className="flex items-center w-7/12 xl:w-4/5">
                 <Link href="/">
                   <a>
                     {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -92,30 +102,34 @@ const Header = ({ user }: { user: UserState }) => {
                     </div>
                   </a>
                 </Link>
-                <span className="text-white text-2xl hidden md:block px-10">
+                <span className="text-white text-3xl hidden md:block px-10">
                   <VscMenu />
                 </span>
-                <div className="w-10 xl:w-28 items-center gap-3 hidden md:flex">
-                  <span className="text-white text-2xl">
-                    <GoSearch />
-                  </span>
+                <div className="lg:w-full xl:w-9/12 relative hidden lg:flex items-center">
                   <input
-                    type="text"
-                    placeholder="BUSCAR"
-                    className="placeholder-white text-white bg-transparent w-0 xl:w-28 truncate hidden xl:block"
+                    type="search"
+                    placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
+                    className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
+                    "
                   />
-                </div>
-                <div className="items-center space-x-2 ml- md:ml-6 lg:ml-0 hidden md:flex">
-                  <span className="text-3xl text-white">
-                    <TiLocationOutline />
-                  </span>
-                  <select
-                    name=""
-                    id=""
-                    className="bg-transparent text-white font-light font-raleway focus:outline-none hidden xl:block"
+                  <button
+                    type="submit"
+                    className="w-14 h-12 bg-primary hover:bg-primaryHover focus:outline-none rounded-r-lg flex-shrink-0"
                   >
-                    <option value="">TODO COLOMBIA</option>
-                  </select>
+                    <span className="text-2xl text-white flex justify-center">
+                      <AiOutlineSearch />
+                    </span>
+                  </button>
+                  <button
+                    className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none"
+                    onClick={() =>
+                      actions.lists({ post: null, listOpen: true })
+                    }
+                  >
+                    <span className="text-xl ">
+                      <FiHeart />
+                    </span>
+                  </button>
                 </div>
               </div>
               {/*New elements for tablet resolution*/}
@@ -127,20 +141,20 @@ const Header = ({ user }: { user: UserState }) => {
                   <VscMenu />
                 </span>
               </div>
-              <div className="gap-3 ml-2 hidden md:flex items-center">
-                {user?.artist_active && <WrapperAvailability user={user} />}
-
-                {user?.artist_active && (
-                  <Link href="/post/new-post">
-                    <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
-                      <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                        <AiOutlineCamera />
-                      </span>
-                      <span className="hidden xl:block">PUBLICAR</span>
-                    </a>
-                  </Link>
-                )}
-
+              <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
+                <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
+                  <span className="text-3xl text-primary">
+                    <TiLocationOutline />
+                  </span>
+                  <select
+                    name=""
+                    id=""
+                    className="bg-transparent text-white font-medium  focus:outline-none underline appearance-none "
+                  >
+                    <option value="">TODO COLOMBIA</option>
+                  </select>
+                  <VscChevronDown className="text-2xl mr-3 text-white" />
+                </div>
                 <SubMenuHeader user={user || null} />
               </div>
             </div>
