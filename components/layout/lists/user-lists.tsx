@@ -31,7 +31,7 @@ const UserLists = ({ user }) => {
             zIndex: 100,
           },
           content: {
-            background: 'rgb(6 7 12)',
+            background: 'rgba(17, 19, 25)',
             position: 'fixed',
             border: 'none',
             // inset: 'auto',
@@ -39,10 +39,9 @@ const UserLists = ({ user }) => {
             left: 'auto',
             top: 0,
             height: '100%',
-            width: '315px',
+            width: '608px',
             borderRadius: '0',
             boxShadow: '0px 1px 4px #000000',
-            paddingTop: '1.7rem',
           },
         }}
         onRequestClose={() => actions.lists({ postId: null, listOpen: false })}
@@ -63,15 +62,6 @@ const UserLists = ({ user }) => {
           </>
         )}
       </Modal>
-
-      {user?.has_list && (
-        <div className="fixed bottom-1/2  md:right-2 lg:right-7 text-2xl z-20 hidden md:block">
-          <AiOutlineUnorderedList
-            className="text-white cursor-pointer"
-            onClick={() => actions.lists({ post: null, listOpen: true })}
-          />
-        </div>
-      )}
     </>
   )
 }
