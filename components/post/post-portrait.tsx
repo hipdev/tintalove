@@ -10,6 +10,7 @@ import { useState } from 'react'
 import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
+import PostAside from './create/post-aside'
 
 const PostPortrait = ({
   postData,
@@ -30,53 +31,8 @@ const PostPortrait = ({
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
       <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
-        <div>
-          <StickyBox offsetTop={0} offsetBottom={30}>
-            <aside className="z-10 mr-4">
-              <button className="block mb-2">
-                <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                  <span className="text-2xl text-green-500">
-                    <FiBookmark />
-                  </span>
-                </div>
-                <p className="text-atomico text-white tracking-wide">GUARDAR</p>
-              </button>
-              <button className="block mb-2">
-                <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                  <span className="text-2xl text-green-500">
-                    <RiHeartLine />
-                  </span>
-                  <p className="text-xs text-white font-raleway">74</p>
-                </div>
-                <p className="text-atomico text-white tracking-wide">
-                  ME GUSTA
-                </p>
-              </button>
-              <button className="block mb-2">
-                <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                  <span className="text-2xl text-green-500">
-                    <FaRegCommentDots />
-                  </span>
-                  <p className="text-xs text-white font-raleway">
-                    {totalComments}
-                  </p>
-                </div>
-                <p className="text-atomico text-white tracking-wide flex-shrink">
-                  COMENTAR
-                </p>
-              </button>
-              <button className="block mb-2">
-                <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-                  <span className="text-2xl text-green-500">
-                    <FiSend />
-                  </span>
-                </div>
-                <p className="text-atomico text-white tracking-wide">
-                  COMPARTIR
-                </p>
-              </button>
-            </aside>
-          </StickyBox>
+        <div className="mr-3">
+          <PostAside postData={postData} />
         </div>
         <img
           // src="https://via.placeholder.com/1100x621"

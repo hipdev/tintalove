@@ -30,15 +30,13 @@ export default function TattoosPage({
         {postData && artistData && (
           <Modal
             isOpen={!(router.query.postId == 'all')}
+            overlayClassName="fixed left-0 right-0 bottom-0"
+            className="bg-transparent absolute overflow-auto sm:inset-8 inset-4 "
             // style={customStyles}
             style={{
               overlay: {
-                position: 'fixed',
                 backgroundColor: 'rgb(8 10 18 / 98%)',
                 top: 80,
-                right: 0,
-                left: 0,
-                bottom: 0,
                 zIndex: 10,
               },
               content: {
