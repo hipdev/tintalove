@@ -36,8 +36,9 @@ const PostHorizontal = ({
           alt=""
           className=" object-cover rounded-lg w-672"
         />
-
-        <PostAside postData={postData} />
+        <div className="mr-3 hidden sm:block">
+          <PostAside postData={postData} />
+        </div>
       </div>
 
       <div className="w-full flex flex-col-reverse mb-10">

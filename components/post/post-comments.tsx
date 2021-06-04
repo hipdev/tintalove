@@ -13,6 +13,7 @@ const PostComments = ({
   totalComments,
 }) => {
   const [comment, setComment] = useState('')
+  const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
 
@@ -121,7 +122,23 @@ const PostComments = ({
           </span>
         </button>
       </div>
-      <div className="mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10 hidden sm:block">
+
+      <div className={showComments ? 'hidden' : 'block'}>
+        <div className="flex justify-end mb-4 mr-2">
+          <button
+            onClick={() => setShowComments(true)}
+            className="text-gray-300"
+          >
+            Ver comentarios
+          </button>
+        </div>
+      </div>
+      <div
+        className={
+          'mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          (showComments ? 'block' : 'hidden')
+        }
+      >
         {comments.length > 0 ? (
           comments.map((comment) => (
             <PostComment
