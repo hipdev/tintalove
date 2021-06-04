@@ -31,7 +31,7 @@ const PostPortrait = ({
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
       <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
-        <div className="mr-3">
+        <div className="mr-3 hidden">
           <PostAside postData={postData} />
         </div>
         <img
@@ -42,7 +42,7 @@ const PostPortrait = ({
               : 'https://via.placeholder.com/1100x621'
           }
           alt=""
-          className=" object-cover rounded-lg max-w-md md:max-w-lg lg:max-w-2xl"
+          className=" object-cover rounded-lg  md:max-w-lg lg:max-w-2xl"
         />
       </div>
 

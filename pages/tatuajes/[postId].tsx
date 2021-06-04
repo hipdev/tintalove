@@ -31,7 +31,7 @@ export default function TattoosPage({
           <Modal
             isOpen={!(router.query.postId == 'all')}
             overlayClassName="fixed left-0 right-0 bottom-0"
-            className="bg-transparent absolute overflow-auto sm:inset-8 inset-4 "
+            className="bg-transparent  overflow-auto sm:inset-8 inset-2 w-full px-3 absolute"
             // style={customStyles}
             style={{
               overlay: {
@@ -43,7 +43,6 @@ export default function TattoosPage({
                 background: 'transparent',
                 border: 'none',
                 top: 0,
-                inset: '0px 65px 40px',
               },
             }}
             onRequestClose={() => {
