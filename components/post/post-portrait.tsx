@@ -30,8 +30,8 @@ const PostPortrait = ({
   console.log(data, 'la data user')
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
-      <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
-        <div className="mr-3 hidden">
+      <div className="mb-5 flex justify-center xl:justify-start w-full sm:w-609 md:w-609">
+        <div className="mr-3 hidden sm:block">
           <PostAside postData={postData} />
         </div>
         <img
@@ -55,7 +55,6 @@ const PostPortrait = ({
           totalComments={totalComments}
         />
       </div>
-      <div className="fixed bottom-0 bg-ocean_blue-300 w-full">wsffdgh</div>
     </div>
   )
 }

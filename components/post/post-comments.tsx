@@ -116,10 +116,12 @@ const PostComments = ({
               ></path>
             </svg>
           )}
-          <span>{loading ? 'Enviando...' : 'Comentar'}</span>
+          <span className="hidden sm:block">
+            {loading ? 'Enviando...' : 'Comentar'}
+          </span>
         </button>
       </div>
-      <div className="mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10">
+      <div className="mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10 hidden sm:block">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <PostComment
