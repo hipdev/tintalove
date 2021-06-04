@@ -36,8 +36,8 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         <div className="flex items-center space-x-2">
           <img
             src={
-              user
-                ? `${user?.photoUrl}/tr:pr-true,c-at_max,f-auto,h-32,q-100`
+              post
+                ? `${post?.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`
                 : null
             }
             className="w-7 h-7 bg-primary rounded-full"
