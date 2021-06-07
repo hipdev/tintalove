@@ -24,6 +24,20 @@ export default function TattoosPage({
 }) {
   const router = useRouter()
 
+  const closeModal = () => {
+    if (router.query.listId) {
+      router.push(`/list/${router.query.listId}`, '', {
+        scroll: false,
+        shallow: true,
+      })
+    } else {
+      router.push('/tatuajes/all', '', {
+        scroll: false,
+        shallow: true,
+      })
+    }
+  }
+
   return (
     <>
       <Layout>
@@ -45,25 +59,14 @@ export default function TattoosPage({
                 top: 0,
               },
             }}
-            onRequestClose={() => {
-              if (router.query.listId) {
-                router.push(`/list/${router.query.listId}`, '', {
-                  scroll: false,
-                  shallow: true,
-                })
-              } else {
-                router.push('/tatuajes/all', '', {
-                  scroll: false,
-                  shallow: true,
-                })
-              }
-            }}
+            onRequestClose={closeModal}
             contentLabel="Post modal"
           >
             <Post
               postData={postData}
               artistData={artistData}
               commentsData={commentsData}
+              closeModal={closeModal}
             />
           </Modal>
         )}
