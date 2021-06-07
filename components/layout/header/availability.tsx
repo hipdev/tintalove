@@ -3,9 +3,11 @@ import { UserState } from 'types/user'
 import { FiCalendar } from 'react-icons/fi'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { Fragment, useState } from 'react'
-import toast, { CheckmarkIcon } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { updateAvailability } from 'lib/queries/artists'
 import { mutate } from 'swr'
+import { IoMdCheckmarkCircle } from 'react-icons/io'
+import { RiCheckboxCircleFill } from 'react-icons/ri'
 
 const agenda = [
   { id: 0, label: 'En una semana' },
@@ -34,6 +36,7 @@ const Availability = ({
       success: () => {
         setSelected(agenda[selected.id])
         mutate(['get-availability', user.uid])
+        console.log('disponiblidad actualizada')
 
         return 'Gracias por actualizar tu disponibilidad 😉'
       },
@@ -101,8 +104,8 @@ const Availability = ({
                               }
                                 absolute inset-y-0 left-0 flex items-center pl-3`}
                             >
-                              <CheckmarkIcon
-                                className="w-5 h-5"
+                              <RiCheckboxCircleFill
+                                className="w-5 h-5 text-primary"
                                 aria-hidden="true"
                               />
                             </span>
