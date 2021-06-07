@@ -11,10 +11,12 @@ const PostStatic = ({
   postData,
   artistData,
   commentsData,
+  closeModal,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
   commentsData: any
+  closeModal: any
 }) => {
   return (
     <div className="w-full container mx-auto mt-3 md:mt-20">
@@ -29,7 +31,10 @@ const PostStatic = ({
             </p>
           </div>
         </div>
-        <button className="flex items-center gap-3 text-white">
+        <button
+          className="flex items-center gap-3 text-white focus:outline-none"
+          onClick={closeModal}
+        >
           <span className="text-3xl">
             <BsArrowLeft />
           </span>
