@@ -28,7 +28,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'https://via.placeholder.com/309x234'
             }
             alt=""
-            className="w-full rounded-sm  object-cover"
+            className="w-full rounded-md  object-cover"
           />
         </a>
       </Link>
