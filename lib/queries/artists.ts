@@ -67,14 +67,14 @@ export async function getArtistsInfo() {
 }
 
 export async function createArtist(uid, data, wizard) {
-  const citiesRef = doc(collection(db, 'cities'), data.city_hash) // El hash es un valor único por ciudad
+  const cityRef = doc(collection(db, 'cities'), data.city_hash) // El hash es un valor único por ciudad
   const usernameRef = doc(collection(db, 'usernames'), data.username)
   const artistRef = doc(collection(db, 'artists'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const userRef = doc(collection(db, 'users'), uid)
 
-  const citySnap = await getDoc(citiesRef)
+  const citySnap = await getDoc(cityRef)
   const usernameSnap = await getDoc(usernameRef)
   const docSnap = await getDoc(artistRef)
 
@@ -82,7 +82,7 @@ export async function createArtist(uid, data, wizard) {
     throw new Error('El nombre de usuario ya existe')
   }
   if (!citySnap.exists()) {
-    await setDoc(citiesRef, {
+    await setDoc(cityRef, {
       city_hash: data.city_hash,
       country: 'Colombia',
       created_by: uid,
@@ -129,10 +129,23 @@ export async function createArtist(uid, data, wizard) {
 
 export async function updateArtistMainInfo(uid, data) {
   const artistRef = doc(collection(db, 'artists'), uid)
+  const cityRef = doc(collection(db, 'cities'), data.city_hash)
 
   const userRef = doc(collection(db, 'users'), uid)
 
+  const citySnap = await getDoc(cityRef)
   const docSnap = await getDoc(artistRef)
+
+  if (!citySnap.exists()) {
+    await setDoc(cityRef, {
+      city_hash: data.city_hash,
+      country: 'Colombia',
+      created_by: uid,
+      formatted_address: data.formatted_address,
+      province: data.province,
+      city_name: data.city_name,
+    })
+  }
 
   if (docSnap.exists()) {
     const batch = writeBatch(db)
