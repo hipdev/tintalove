@@ -1,12 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { VscChevronDown, VscMenu } from 'react-icons/vsc'
-import { TiLocationOutline } from 'react-icons/ti'
+import { VscMenu } from 'react-icons/vsc'
 import SubMenuHeader from './submenu'
-
 import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
-
 import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
 import { useStateMachine } from 'little-state-machine'
@@ -21,8 +18,8 @@ const Header = ({ user }: { user: UserState }) => {
     lists,
   })
   return (
-    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 fixed">
-      <div className="flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
+    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 fixed z-20">
+      <div className="relative flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (
             <>
@@ -71,9 +68,6 @@ const Header = ({ user }: { user: UserState }) => {
               </div>
               <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden lg:flex">
                 <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <span className="text-3xl text-primary">
-                    <TiLocationOutline />
-                  </span>
                   <SelectCity />
                 </div>
                 <SubMenuHeader user={user} />
@@ -138,9 +132,6 @@ const Header = ({ user }: { user: UserState }) => {
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
                 <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <span className="text-3xl text-primary">
-                    <TiLocationOutline />
-                  </span>
                   <SelectCity />
                 </div>
                 <SubMenuHeader user={user || null} />
