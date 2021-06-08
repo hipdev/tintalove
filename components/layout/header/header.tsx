@@ -11,6 +11,7 @@ import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
+import SelectCity from './select-city'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -73,13 +74,7 @@ const Header = ({ user }: { user: UserState }) => {
                   <span className="text-3xl text-primary">
                     <TiLocationOutline />
                   </span>
-                  <select
-                    name=""
-                    id=""
-                    className="bg-transparent text-white font-light font-raleway underline focus:outline-none"
-                  >
-                    <option value="">TODO COLOMBIA</option>
-                  </select>
+                  <SelectCity />
                 </div>
                 <SubMenuHeader user={user} />
               </div>
@@ -146,14 +141,7 @@ const Header = ({ user }: { user: UserState }) => {
                   <span className="text-3xl text-primary">
                     <TiLocationOutline />
                   </span>
-                  <select
-                    name=""
-                    id=""
-                    className="bg-transparent text-white font-medium  focus:outline-none underline appearance-none "
-                  >
-                    <option value="">TODO COLOMBIA</option>
-                  </select>
-                  <VscChevronDown className="text-2xl mr-3 text-white" />
+                  <SelectCity />
                 </div>
                 <SubMenuHeader user={user || null} />
               </div>
