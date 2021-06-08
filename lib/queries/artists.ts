@@ -67,59 +67,64 @@ export async function getArtistsInfo() {
 }
 
 export async function createArtist(uid, data, wizard) {
-  const citiesRef = doc(collection(db, 'cities'), data.username)
+  const citiesRef = doc(collection(db, 'cities'), data.city_hash) // El hash es un valor único por ciudad
+  const usernameRef = doc(collection(db, 'usernames'), data.username)
+  const artistRef = doc(collection(db, 'artists'), uid)
+  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
-  console.log(data, 'data from createArtist')
-  // const usernameRef = doc(collection(db, 'usernames'), data.username)
-  // const artistRef = doc(collection(db, 'artists'), uid)
-  // const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
+  const userRef = doc(collection(db, 'users'), uid)
 
-  // const userRef = doc(collection(db, 'users'), uid)
+  const citySnap = await getDoc(citiesRef)
+  const usernameSnap = await getDoc(usernameRef)
+  const docSnap = await getDoc(artistRef)
 
-  // const citySnap = await getDoc(citiesRef)
-  // const usernameSnap = await getDoc(usernameRef)
-  // const docSnap = await getDoc(artistRef)
+  if (usernameSnap.exists()) {
+    throw new Error('El nombre de usuario ya existe')
+  }
+  if (!citySnap.exists()) {
+    await setDoc(citiesRef, {
+      city_hash: data.city_hash,
+      country: 'Colombia',
+      created_by: uid,
+      formatted_address: data.formatted_address,
+      province: data.province,
+      city_name: data.city_name,
+    })
+  }
 
-  // if (usernameSnap.exists()) {
-  //   throw new Error('El nombre de usuario ya existe')
-  // }
-  // if (!citySnap.exists()) {
-  //   // Se crea la ciudad si no existe para el buscador de ciudades
-  // }
+  if (docSnap.exists()) {
+    throw new Error('Ya estas registrado como artista')
+  } else {
+    const batch = writeBatch(db)
 
-  // if (docSnap.exists()) {
-  //   throw new Error('Ya estas registrado como artista')
-  // } else {
-  //   const batch = writeBatch(db)
+    batch.set(usernameRef, {
+      uid,
+    })
 
-  //   batch.set(usernameRef, {
-  //     uid,
-  //   })
+    batch.set(artistRef, {
+      created_at: serverTimestamp(),
+      ...data,
+    })
 
-  //   batch.set(artistRef, {
-  //     created_at: serverTimestamp(),
-  //     ...data,
-  //   })
+    batch.set(
+      userRef,
+      {
+        displayName: data.displayName.trim(),
+        is_artist: true,
+        username: data.username,
+        updated_at: serverTimestamp(),
+      },
+      { merge: true }
+    )
 
-  //   batch.set(
-  //     userRef,
-  //     {
-  //       displayName: data.displayName.trim(),
-  //       is_artist: true,
-  //       username: data.username,
-  //       updated_at: serverTimestamp(),
-  //     },
-  //     { merge: true }
-  //   )
+    await batch.commit()
 
-  //   await batch.commit()
+    if (wizard) {
+      setDoc(artistWizardRef, { step_one: true }, { merge: true })
+    }
 
-  //   if (wizard) {
-  //     setDoc(artistWizardRef, { step_one: true }, { merge: true })
-  //   }
-
-  //   return true
-  // }
+    return true
+  }
 }
 
 export async function updateArtistMainInfo(uid, data) {
