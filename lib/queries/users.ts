@@ -51,7 +51,11 @@ export async function updateUserSearchCity(uid, data) {
   const userRef = doc(collection(db, 'users'), uid)
 
   const dataForm = {
-    searching_city: { city_name: data.city_name, city_hash: data.city_hash },
+    searching_city: {
+      city_name: data.city_name,
+      city_hash: data.city_hash,
+      province: data.province,
+    },
     updated_at: serverTimestamp(),
   }
 

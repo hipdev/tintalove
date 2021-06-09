@@ -19,8 +19,8 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   return (
     <div>
       <Link
-        href={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
-        as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
+        href={`/tatuajes/${post.id}/${user?.searching_city?.city_name}-${user?.searching_city?.province}-${user?.searching_city?.city_hash}`}
+        // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
         scroll={false}
       >
         <a>
