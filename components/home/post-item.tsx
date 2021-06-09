@@ -5,18 +5,22 @@ import { UserState } from 'types/user'
 import useSWR from 'swr'
 import PostItemListed from './post-item-listed'
 import { getPostDataById } from 'lib/queries/posts'
+import { useRouter } from 'next/router'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
+  const router = useRouter()
   const { data, mutate } = useSWR(
     post ? ['get-post', post.id] : null,
     getPostDataById
   )
 
+  // console.log(user.searching_city.city_name, 'la ruta')
+
   return (
     <div>
       <Link
-        href={`/tatuajes/${post.id}`}
-        as={`/tatuajes/${post.id}`}
+        href={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
+        as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
         scroll={false}
       >
         <a>

@@ -6,8 +6,10 @@ import { AiOutlineCheck } from 'react-icons/ai'
 import { TiLocationOutline } from 'react-icons/ti'
 import toast from 'react-hot-toast'
 import { updateUserSearchCity } from 'lib/queries/users'
+import { useRouter } from 'next/router'
 
 const SelectCity = ({ user, cities }) => {
+  const router = useRouter()
   const [selected, setSelected] = useState(
     user
       ? cities.find((city) => city.city_hash == user.searching_city.city_hash)
@@ -21,6 +23,8 @@ const SelectCity = ({ user, cities }) => {
         success: () => {
           setSelected(select)
           mutate(user.uid)
+          router.push(`/tatuajes/all/${select.city_name}-${select.province}`)
+
           return 'Ciudad actualizada 😉'
         },
         error: (err) => {
