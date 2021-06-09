@@ -23,7 +23,9 @@ const SelectCity = ({ user, cities }) => {
         success: () => {
           setSelected(select)
           mutate(user.uid)
-          router.push(`/tatuajes/all/${select.city_name}-${select.province}`)
+          router.push(
+            `/tatuajes/all/${select.city_name}-${select.province}-${select.city_hash}`
+          )
 
           return 'Ciudad actualizada 😉'
         },
