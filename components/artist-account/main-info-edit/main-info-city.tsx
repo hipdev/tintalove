@@ -69,6 +69,10 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
         place_id: results[0].place_id,
         formatted_address: results[0].formatted_address,
         city_name,
+        _geoloc: {
+          lat,
+          lng,
+        },
         city_hash: cityHash,
         province,
         country,
