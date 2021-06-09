@@ -12,23 +12,28 @@ const SelectCity = () => {
 
   const [selected, setSelected] = useState()
 
+  const changeCity = (data) => {
+    console.log(data, 'ok')
+    setSelected(data.city_name)
+  }
+
   if (!data) return <span>...</span>
 
   return (
     data && (
       <>
-        <Listbox value={selected} onChange={setSelected}>
+        <Listbox value={selected} onChange={changeCity}>
           {({ open }) => (
             <>
               <Listbox.Label className="block text-sm font-medium">
                 <TiLocationOutline className="text-3xl text-primary" />
               </Listbox.Label>
-              <div className="mt-1 relative">
+              <div className="mt-1 relative w-44">
                 <Listbox.Button
                   className="bg-transparent relative w-full rounded-md text-gray-200
                 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                 >
-                  <span className="block truncate">Todo Colombia</span>
+                  <span className="block truncate">{selected}</span>
                   <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <HiOutlineSelector
                       className="h-5 w-5 text-gray-400"
