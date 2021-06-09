@@ -21,3 +21,13 @@ export async function getCities(key, country) {
 
   return { cities }
 }
+
+export async function getCitiesIds() {
+  const querySnapshot = await getDocs(collection(db, 'cities'))
+  const cities: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
+    cities.push({ id: doc.id })
+  )
+
+  return cities
+}

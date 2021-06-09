@@ -11,6 +11,7 @@ import Modal from 'react-modal'
 
 import { useRouter } from 'next/router'
 
+import { getCitiesIds } from 'lib/queries/general'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
 
@@ -23,7 +24,6 @@ export default function TattoosPage({
   commentsData,
 }) {
   const router = useRouter()
-  console.log(router, 'el router aqui')
 
   const closeModal = () => {
     if (router.query.listId) {
@@ -86,13 +86,28 @@ export default function TattoosPage({
 
 export async function getStaticPaths() {
   const postList = await getPostsIds()
+  const citiesIds = await getCitiesIds()
 
   const paths = postList.map((doc: any) => ({
     params: {
       postId: doc.id,
+      location: 'all-colombia',
     },
   }))
-  const withAll = [...paths, { params: { postId: 'all' } }]
+
+  const pathsLocations = citiesIds.map((doc: any) => ({
+    params: {
+      postId: 'all',
+      location: doc.id,
+    },
+  }))
+
+  const withAll = [
+    ...paths,
+    ...pathsLocations,
+    { params: { postId: 'all', location: 'all-colombia' } },
+  ]
+  console.log(withAll, 'esto es all')
 
   return {
     paths: withAll,
