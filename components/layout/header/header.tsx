@@ -68,7 +68,7 @@ const Header = ({ user }: { user: UserState }) => {
               </div>
               <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden lg:flex">
                 <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <SelectCity />
+                  <SelectCity user={user} />
                 </div>
                 <SubMenuHeader user={user} />
               </div>
@@ -132,7 +132,7 @@ const Header = ({ user }: { user: UserState }) => {
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
                 <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <SelectCity />
+                  <SelectCity user={user} />
                 </div>
                 <SubMenuHeader user={user || null} />
               </div>
