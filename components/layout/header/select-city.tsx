@@ -2,22 +2,39 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 import { getCities } from 'lib/queries/general'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { HiOutlineSelector } from 'react-icons/hi'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { TiLocationOutline } from 'react-icons/ti'
+import toast from 'react-hot-toast'
+import { updateUserSearchCity } from 'lib/queries/users'
 
-const SelectCity = () => {
+const SelectCity = ({ user }) => {
   const { data } = useSWR(['get-cities', 'Colombia'], getCities)
 
-  const [selected, setSelected] = useState()
+  const [selected, setSelected] = useState(
+    data ? data.cities.find((city) => city.city_hash == 'all-colombia') : null
+  )
 
-  const changeCity = (data) => {
-    console.log(data, 'ok')
-    setSelected(data.city_name)
+  const changeCity = (select) => {
+    if (user) {
+      toast.promise(updateUserSearchCity(user.uid, select), {
+        loading: 'Cambiando...',
+        success: () => {
+          setSelected(select)
+          mutate(user.uid)
+          return 'Ciudad actualizada 😉'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      })
+    }
   }
 
   if (!data) return <span>...</span>
+
+  console.log(user, 'el usuario')
 
   return (
     data && (
@@ -33,7 +50,9 @@ const SelectCity = () => {
                   className="bg-transparent relative w-full rounded-md text-gray-200
                 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                 >
-                  <span className="block truncate">{selected}</span>
+                  <span className="block truncate">
+                    {selected?.city_name || 'Todo Colombia'}
+                  </span>
                   <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <HiOutlineSelector
                       className="h-5 w-5 text-gray-400"
