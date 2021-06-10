@@ -9,11 +9,11 @@ import { UserState } from 'types/user'
 
 const ListPost = ({
   post,
-  setUserListItems,
+  mutateList,
   user,
 }: {
   post: PostList
-  setUserListItems: any
+  mutateList: any
   user: UserState
 }) => {
   const removeFromList = async () => {
@@ -25,9 +25,7 @@ const ListPost = ({
       toast.promise(removePostFromList(post.post_id, user.uid), {
         loading: 'Eliminando de tu lista...',
         success: () => {
-          setUserListItems((state) =>
-            state.filter((item) => item.id != post.id)
-          )
+          mutateList()
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
