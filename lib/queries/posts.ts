@@ -112,29 +112,38 @@ export async function addComment(comment, postId, userData) {
 
   // Initialize Firebase 8.
 
-  const res = await addDoc(postsRef, {
-    comment,
-    created_at: serverTimestamp(),
-    displayName: userData.displayName,
-    user_picture: userData.photoUrl,
-    user_id: userData.uid,
-  })
-    .then((docRef) => {
-      const counter = new Counter(
-        db8.doc(`posts/${postId}`),
-        'counter_comments'
-      )
-
-      counter.incrementBy(1)
-
-      return { commentId: docRef.id }
+  try {
+    const res = await addDoc(postsRef, {
+      comment,
+      created_at: serverTimestamp(),
+      displayName: userData.displayName,
+      user_picture: userData.photoUrl,
+      user_id: userData.uid,
     })
-    .catch((error) => {
-      console.log(error, 'error creando el comentario')
-      return false
-    })
+      .then((docRef) => {
+        const counter = new Counter(
+          db8.doc(`posts/${postId}`),
+          'counter_comments'
+        )
 
-  return res
+        counter.incrementBy(1)
+
+        return { commentId: docRef.id }
+      })
+      .catch((error) => {
+        console.log(error, 'error creando el comentario')
+        return false
+      })
+
+    console.log(res, 'la res')
+    if (res) {
+      return true
+    } else {
+      throw new Error('Creando el comentario')
+    }
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export async function getPostComments(postId) {

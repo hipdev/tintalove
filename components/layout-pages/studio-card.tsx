@@ -1,5 +1,5 @@
 import { AiOutlineCalendar } from 'react-icons/ai'
-import { StudioTypes } from 'types/studios'
+import { StudioTypes } from 'types/studio'
 
 const StudioCard = ({ studios }: { studios: StudioTypes }) => {
   return (
