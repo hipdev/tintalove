@@ -158,7 +158,7 @@ const MainInfoForm = ({ uid, artist }) => {
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
     toast.promise(updateArtistMainInfo(uid, formData), {
-      loading: 'Actualizando...',
+      loading: 'Actualizando artista...',
       success: (data) => {
         setLoading(false)
         // setTriggerAuth(Math.random()) // reload global user state data
