@@ -19,7 +19,11 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   return (
     <div>
       <Link
-        href={`/tatuajes/${post.id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.city_hash}`}
+        href={
+          user?.searching_city
+            ? `/tatuajes/${post.id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.city_hash}`
+            : `/tatuajes/${post.id}/Todo-Colombia--país--colombia`
+        }
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
         scroll={false}
       >

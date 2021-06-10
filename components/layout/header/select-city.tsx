@@ -24,7 +24,7 @@ const SelectCity = ({ user, cities }) => {
           setSelected(select)
           mutate(user.uid)
           router.push(
-            `/tatuajes/all/${select.city_name}-${select.province}-${select.city_hash}`
+            `/tatuajes/all/${select.city_name}--${select.province}--${select.city_hash}`
           )
 
           return 'Ciudad actualizada 😉'
@@ -33,6 +33,11 @@ const SelectCity = ({ user, cities }) => {
           return `${err.toString()}`
         },
       })
+    } else {
+      setSelected(select)
+      router.push(
+        `/tatuajes/all/${select.city_name}--${select.province}--${select.city_hash}`
+      )
     }
   }
 
@@ -71,7 +76,7 @@ const SelectCity = ({ user, cities }) => {
               >
                 <Listbox.Options
                   static
-                  className="absolute z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                  className="absolute z-30 mt-1 w-60 bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                 >
                   {cities.map((city) => (
                     <Listbox.Option
@@ -84,13 +89,23 @@ const SelectCity = ({ user, cities }) => {
                     >
                       {({ selected, active }) => (
                         <>
-                          <span
-                            className={
-                              (selected ? 'font-semibold' : 'font-normal') +
-                              ' block truncate'
-                            }
-                          >
-                            {city.city_name}
+                          <span className="w-full inline-flex truncate items-end">
+                            <span
+                              className={
+                                (selected ? 'font-semibold' : 'font-normal') +
+                                ' block '
+                              }
+                            >
+                              {city.city_name}
+                            </span>
+                            <span
+                              className={
+                                (active ? 'text-white' : 'text-gray-500') +
+                                ' ml-4 relative bottom-[1px] truncate text-xs capitalize'
+                              }
+                            >
+                              {city.province}
+                            </span>
                           </span>
 
                           {selected ? (
