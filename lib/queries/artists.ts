@@ -1,3 +1,4 @@
+var slugify = require('slugify')
 import {
   collection,
   doc,
@@ -67,10 +68,11 @@ export async function getArtistsInfo() {
 }
 
 export async function createArtist(uid, data, wizard) {
-  const cityRef = doc(
-    collection(db, 'cities'),
-    data.city_name + '--' + data.province + '--' + data.city_hash
-  ) // El hash es un valor único por ciudad
+  const cityId = slugify(
+    data.city_name + '-' + data.province + '-' + data.city_hash
+  )
+
+  const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
   const usernameRef = doc(collection(db, 'usernames'), data.username)
   const artistRef = doc(collection(db, 'artists'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
@@ -131,11 +133,12 @@ export async function createArtist(uid, data, wizard) {
 }
 
 export async function updateArtistMainInfo(uid, data) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const cityRef = doc(
-    collection(db, 'cities'),
-    data.city_name + '--' + data.province + '--' + data.city_hash
+  const cityId = slugify(
+    data.city_name + '-' + data.province + '-' + data.city_hash
   )
+
+  const artistRef = doc(collection(db, 'artists'), uid)
+  const cityRef = doc(collection(db, 'cities'), cityId)
 
   const userRef = doc(collection(db, 'users'), uid)
 
