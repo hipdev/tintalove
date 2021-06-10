@@ -59,6 +59,7 @@
     "react-phone-input-2": "^2.14.0",
     "react-select": "^4.3.1",
     "react-sticky-box": "^0.9.3",
+    "slugify": "^1.5.3",
     "swr": "^0.5.6",
     "use-places-autocomplete": "^1.9.3",
     "uuid": "^8.3.2"
