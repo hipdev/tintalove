@@ -69,7 +69,7 @@ export async function getArtistsInfo() {
 export async function createArtist(uid, data, wizard) {
   const cityRef = doc(
     collection(db, 'cities'),
-    data.city_name + '-' + data.province + '-' + data.city_hash
+    data.city_name + '--' + data.province + '--' + data.city_hash
   ) // El hash es un valor único por ciudad
   const usernameRef = doc(collection(db, 'usernames'), data.username)
   const artistRef = doc(collection(db, 'artists'), uid)
@@ -134,7 +134,7 @@ export async function updateArtistMainInfo(uid, data) {
   const artistRef = doc(collection(db, 'artists'), uid)
   const cityRef = doc(
     collection(db, 'cities'),
-    data.city_name + '-' + data.province + '-' + data.city_hash
+    data.city_name + '--' + data.province + '--' + data.city_hash
   )
 
   const userRef = doc(collection(db, 'users'), uid)
@@ -149,6 +149,7 @@ export async function updateArtistMainInfo(uid, data) {
       created_by: uid,
       formatted_address: data.formatted_address,
       province: data.province,
+      _geoloc: data._geoloc,
       city_name: data.city_name,
     })
   }

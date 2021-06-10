@@ -56,6 +56,7 @@ export async function updateUserSearchCity(uid, data) {
       city_name: data.city_name,
       city_hash: data.city_hash,
       province: data.province,
+      _geoloc: data._geoloc || null,
     },
     updated_at: serverTimestamp(),
   }
