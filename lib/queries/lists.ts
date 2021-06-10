@@ -158,7 +158,7 @@ export async function getListsIds() {
   return lists
 }
 
-export async function getUserListItems(listId) {
+export async function getUserListItems(key, listId) {
   const q = query(collection(db, 'lists_items'), where('list_id', '==', listId))
   const listRef = doc(collection(db, 'lists'), listId)
 
