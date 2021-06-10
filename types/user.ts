@@ -13,6 +13,13 @@ export type UserState =
       photoUrl: string
       uid: string
       studio_id: string
+      searching_city: City
     }
   | null
   | DocumentData
+
+type City = {
+  city_hash: string
+  city_name: string
+  province: string
+}

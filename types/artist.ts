@@ -23,6 +23,7 @@ export type ArtistTypes = {
   facebook: string
   instagram: string
   work_as: string
+  _geoloc: AlgoliaGeolocation
 } | null
 
 type ProfilePicture = {
@@ -32,4 +33,8 @@ type ProfilePicture = {
   size: number
   thumbnailUrl: string
   url: string
+}
+type AlgoliaGeolocation = {
+  lat: number
+  lng: number
 }

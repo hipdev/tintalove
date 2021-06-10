@@ -76,8 +76,8 @@ const Footer = () => {
 
       <div
         className={`${
-          !showFooter ? 'block' : 'hidden'
-        } } fixed bottom-5 right-5 text-gray-200 text-4xl cursor-pointer `}
+          !showFooter ? 'sm:block' : 'hidden'
+        } } fixed bottom-5 right-5 text-gray-200 text-4xl cursor-pointer hidden`}
         onClick={() => setShowFooter(!showFooter)}
       >
         <MdHelpOutline />

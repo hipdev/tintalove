@@ -5,15 +5,18 @@ import { ArtistTypes } from 'types/artist'
 import { BsArrowLeft } from 'react-icons/bs'
 import PostPortrait from './post-portrait'
 import PostHorizontal from './post-horizontal'
+import Link from 'next/link'
 
 const PostStatic = ({
   postData,
   artistData,
   commentsData,
+  closeModal,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
   commentsData: any
+  closeModal: any
 }) => {
   return (
     <div className="w-full container mx-auto mt-3 md:mt-20">
@@ -28,7 +31,10 @@ const PostStatic = ({
             </p>
           </div>
         </div>
-        <button className="flex items-center gap-3 text-white">
+        <button
+          className="flex items-center gap-3 text-white focus:outline-none"
+          onClick={closeModal}
+        >
           <span className="text-3xl">
             <BsArrowLeft />
           </span>
@@ -56,16 +62,18 @@ const PostStatic = ({
 
       <div className="w-full ">
         <div className="border-t-2 border-b-2 border-light-800 py-5">
-          <div className="flex flex-wrap justify-center sm:justify-between mb-5">
+          <div className="flex flex-wrap justify-between sm:justify-between mb-5">
             <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
               Más de {artistData.displayName}
             </h1>
-            <button className="flex items-center text-white font-raleway tracking-wide">
-              Visitar perfil
-              <span className="text-green-600 text-2xl pl-2">
-                <HiArrowNarrowRight />
-              </span>
-            </button>
+            <Link href={`/${postData.username}`}>
+              <a className="flex items-center text-white font-raleway tracking-wide">
+                Visitar perfil
+                <span className="text-green-600 text-2xl pl-2">
+                  <HiArrowNarrowRight />
+                </span>
+              </a>
+            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
             <div>

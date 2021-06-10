@@ -9,6 +9,7 @@ import SideMenuArtist from 'components/artist-account/side-menu-artist'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/wrapper-availability'
+import { Toaster } from 'react-hot-toast'
 
 type Props = {
   uid?: string
@@ -20,6 +21,19 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto lg:h-screen">
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600',
+          style: {
+            background: '#158e72',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 3000,
+        }}
+        position="bottom-right"
+      />
       <HeadContainer />
       <div className="w-full lg:w-448  sm:h-auto bg-dark-500 pl-7 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">

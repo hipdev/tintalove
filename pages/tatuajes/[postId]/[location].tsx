@@ -11,6 +11,7 @@ import Modal from 'react-modal'
 
 import { useRouter } from 'next/router'
 
+import { getCitiesIds } from 'lib/queries/general'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
 
@@ -24,14 +25,35 @@ export default function TattoosPage({
 }) {
   const router = useRouter()
 
+  const closeModal = () => {
+    if (router.query.listId) {
+      router.push(`/list/${router.query.listId}`, '', {
+        scroll: false,
+        shallow: true,
+      })
+    } else {
+      if (router.query.location) {
+        router.push(`/tatuajes/all/${router.query.location}`, '', {
+          scroll: false,
+          shallow: true,
+        })
+      } else {
+        router.push('/tatuajes/all', '', {
+          scroll: false,
+          shallow: true,
+        })
+      }
+    }
+  }
+
   return (
     <>
       <Layout>
         {postData && artistData && (
           <Modal
             isOpen={!(router.query.postId == 'all')}
-            overlayClassName="fixed left-0 right-0 bottom-0"
-            className="bg-transparent absolute overflow-auto sm:inset-8 inset-4 "
+            overlayClassName="fixed left-0 right-0 bottom-0 overflow-auto"
+            className="bg-transparent  overflow-auto w-full px-3 sm:px-7 absolute"
             // style={customStyles}
             style={{
               overlay: {
@@ -43,28 +65,16 @@ export default function TattoosPage({
                 background: 'transparent',
                 border: 'none',
                 top: 0,
-                inset: '0px 65px 40px',
               },
             }}
-            onRequestClose={() => {
-              if (router.query.listId) {
-                router.push(`/list/${router.query.listId}`, '', {
-                  scroll: false,
-                  shallow: true,
-                })
-              } else {
-                router.push('/tatuajes/all', '', {
-                  scroll: false,
-                  shallow: true,
-                })
-              }
-            }}
+            onRequestClose={closeModal}
             contentLabel="Post modal"
           >
             <Post
               postData={postData}
               artistData={artistData}
               commentsData={commentsData}
+              closeModal={closeModal}
             />
           </Modal>
         )}
@@ -76,13 +86,28 @@ export default function TattoosPage({
 
 export async function getStaticPaths() {
   const postList = await getPostsIds()
+  const citiesIds = await getCitiesIds()
 
   const paths = postList.map((doc: any) => ({
     params: {
       postId: doc.id,
+      location: 'all-colombia',
     },
   }))
-  const withAll = [...paths, { params: { postId: 'all' } }]
+
+  const pathsLocations = citiesIds.map((doc: any) => ({
+    params: {
+      postId: 'all',
+      location: doc.id,
+    },
+  }))
+
+  const withAll = [
+    ...paths,
+    ...pathsLocations,
+    { params: { postId: 'all', location: 'all-colombia' } },
+  ]
+  console.log(withAll, 'esto es all')
 
   return {
     paths: withAll,

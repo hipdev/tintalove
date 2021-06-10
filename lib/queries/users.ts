@@ -7,6 +7,7 @@ import {
   setDoc,
   serverTimestamp,
   DocumentSnapshot,
+  updateDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { UserState } from 'types/user'
@@ -43,5 +44,30 @@ export async function getUserInfo(uid) {
     return { user: data }
   } else {
     return null
+  }
+}
+
+export async function updateUserSearchCity(uid, data) {
+  console.log(data, 'selected')
+  const userRef = doc(collection(db, 'users'), uid)
+
+  const dataForm = {
+    searching_city: {
+      city_name: data.city_name,
+      city_hash: data.city_hash,
+      province: data.province,
+      _geoloc: data._geoloc || null,
+    },
+    updated_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(userRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(userRef, dataForm)
+
+    return true
+  } else {
+    throw new Error('No estas registrado como usuario')
   }
 }

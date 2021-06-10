@@ -30,8 +30,8 @@ const PostPortrait = ({
   console.log(data, 'la data user')
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
-      <div className="mb-5 flex justify-center xl:justify-start w-full md:w-609">
-        <div className="mr-3">
+      <div className="mb-5 flex justify-center xl:justify-start w-full sm:w-609 md:w-609">
+        <div className="mr-3 hidden sm:block">
           <PostAside postData={postData} />
         </div>
         <img
@@ -42,8 +42,15 @@ const PostPortrait = ({
               : 'https://via.placeholder.com/1100x621'
           }
           alt=""
-          className=" object-cover rounded-lg max-w-md md:max-w-lg lg:max-w-2xl"
+          className=" object-cover rounded-lg  md:max-w-lg lg:max-w-2xl"
         />
+        {/* <img
+          alt=" "
+          className=""
+          loading="lazy"
+          src="https://i.pinimg.com/236x/fb/d6/ce/fbd6ce4c83fd8d13dcdac1a9b72595b0.jpg"
+          srcset="https://i.pinimg.com/236x/fb/d6/ce/fbd6ce4c83fd8d13dcdac1a9b72595b0.jpg 1x, https://i.pinimg.com/474x/fb/d6/ce/fbd6ce4c83fd8d13dcdac1a9b72595b0.jpg 2x, https://i.pinimg.com/736x/fb/d6/ce/fbd6ce4c83fd8d13dcdac1a9b72595b0.jpg 3x, https://i.pinimg.com/originals/fb/d6/ce/fbd6ce4c83fd8d13dcdac1a9b72595b0.jpg 4x"
+        /> */}
       </div>
 
       <div className="flex flex-grow flex-col-reverse self-center xl:self-start w-full xl:w-1/2 ml-0 xl:ml-44 overflow-hidden overflow-ellipsis">
@@ -55,7 +62,6 @@ const PostPortrait = ({
           totalComments={totalComments}
         />
       </div>
-      <div className="fixed bottom-0 bg-ocean_blue-300 w-full">wsffdgh</div>
     </div>
   )
 }
