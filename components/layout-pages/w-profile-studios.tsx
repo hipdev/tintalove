@@ -3,7 +3,7 @@ import { RiMessengerLine } from 'react-icons/ri'
 import { FaInstagram } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
 import StudioCard from './studio-card'
-import { StudioTypes } from 'types/studios'
+import { StudioTypes } from 'types/studio'
 import Link from 'next/link'
 
 const ProfileStudio = ({ studioData }) => {
