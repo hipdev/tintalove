@@ -14,7 +14,7 @@ const SelectCity = ({ user, cities }) => {
     user
       ? cities.find(
           (city) =>
-            city.city_hash == user?.searching_city?.city_hash || 'colombia'
+            city.city_hash == (user?.searching_city?.city_hash || 'colombia')
         )
       : cities.find((city) => city.city_hash == 'colombia')
   )
