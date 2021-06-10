@@ -41,8 +41,11 @@ const ListPost = ({
   return (
     <div>
       <Link
-        href={`/tatuajes/${post.post_id}?listId=${post.list_id}`}
-        // as={`/tatuajes/${post.post_id}`}
+        href={
+          user?.searching_city
+            ? `/tatuajes/${post.post_id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.city_hash}/?listId=${post.list_id}`
+            : `/tatuajes/${post.post_id}/Todo-Colombia--país--colombia/?listId=${post.list_id}`
+        }
         scroll={false}
       >
         <a>
