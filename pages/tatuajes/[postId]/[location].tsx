@@ -11,7 +11,7 @@ import Modal from 'react-modal'
 
 import { useRouter } from 'next/router'
 
-import { getCitiesIds } from 'lib/queries/general'
+import { getCitiesPaths } from 'lib/queries/general'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
 
@@ -47,46 +47,44 @@ export default function TattoosPage({
   }
 
   return (
-    <>
-      <Layout>
-        {postData && artistData && (
-          <Modal
-            isOpen={!(router.query.postId == 'all')}
-            overlayClassName="fixed left-0 right-0 bottom-0 overflow-auto"
-            className="bg-transparent  overflow-auto w-full px-3 sm:px-7 absolute"
-            // style={customStyles}
-            style={{
-              overlay: {
-                backgroundColor: 'rgb(8 10 18 / 98%)',
-                top: 80,
-                zIndex: 10,
-              },
-              content: {
-                background: 'transparent',
-                border: 'none',
-                top: 0,
-              },
-            }}
-            onRequestClose={closeModal}
-            contentLabel="Post modal"
-          >
-            <Post
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-              closeModal={closeModal}
-            />
-          </Modal>
-        )}
-        {postsData && <Home posts={postsData} />}
-      </Layout>
-    </>
+    <Layout>
+      {postData && artistData && (
+        <Modal
+          isOpen={!(router.query.postId == 'all')}
+          overlayClassName="fixed left-0 right-0 bottom-0 overflow-auto"
+          className="bg-transparent  overflow-auto w-full px-3 sm:px-7 absolute"
+          // style={customStyles}
+          style={{
+            overlay: {
+              backgroundColor: 'rgb(8 10 18 / 98%)',
+              top: 80,
+              zIndex: 10,
+            },
+            content: {
+              background: 'transparent',
+              border: 'none',
+              top: 0,
+            },
+          }}
+          onRequestClose={closeModal}
+          contentLabel="Post modal"
+        >
+          <Post
+            postData={postData}
+            artistData={artistData}
+            commentsData={commentsData}
+            closeModal={closeModal}
+          />
+        </Modal>
+      )}
+      {postsData && <Home posts={postsData} />}
+    </Layout>
   )
 }
 
 export async function getStaticPaths() {
   const postList = await getPostsIds()
-  const citiesIds = await getCitiesIds()
+  const citiesIds = await getCitiesPaths()
 
   const paths = postList.map((doc: any) => ({
     params: {

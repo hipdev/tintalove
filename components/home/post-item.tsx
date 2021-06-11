@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import PostItemListed from './post-item-listed'
 import { getPostDataById } from 'lib/queries/posts'
 import { useRouter } from 'next/router'
+import slugify from 'slugify'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const router = useRouter()
@@ -16,13 +17,14 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
 
   // console.log(user.searching_city.city_name, 'la ruta')
 
+  const url = `${user?.searching_city?.city_name}-${user?.searching_city?.province}~${user?.searching_city?._geoloc.lat}~${user?.searching_city?._geoloc.lng}`
   return (
     <div>
       <Link
         href={
           user?.searching_city
-            ? `/tatuajes/${post.id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.city_hash}`
-            : `/tatuajes/${post.id}/Todo-Colombia--país--colombia`
+            ? `/tatuajes/${post.id}/${url}`
+            : `/tatuajes/${post.id}/all-colombia`
         }
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
         scroll={false}
