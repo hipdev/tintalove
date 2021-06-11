@@ -89,12 +89,13 @@ export async function createArtist(uid, data, wizard) {
   }
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      city_hash: data.city_hash,
+      geohash: data.city_hash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,
       province: data.province,
       city_name: data.city_name,
+      _geoloc: data._geoloc,
     })
   }
 
@@ -149,7 +150,7 @@ export async function updateArtistMainInfo(uid, data) {
 
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      city_hash: data.city_hash,
+      geohash: data.city_hash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,
