@@ -28,7 +28,7 @@ const SelectCity = ({ user, cities }) => {
           mutate(user.uid)
           const url =
             select.city_name == 'Todo Colombia'
-              ? 'all-colombia'
+              ? '/tatuajes/all/all-colombia'
               : `/tatuajes/all/${select.city_name}-${select.province}-~${select._geoloc.lat}~${select._geoloc.lng}`
           router.push(url)
 
