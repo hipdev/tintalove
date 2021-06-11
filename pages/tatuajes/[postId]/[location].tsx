@@ -106,7 +106,7 @@ export async function getStaticPaths() {
     ...pathsLocations,
     { params: { postId: 'all', location: 'all-colombia' } },
   ]
-  // console.log(withAll, 'esto es all')
+  console.log(withAll, 'esto es all')
 
   return {
     paths: withAll,
