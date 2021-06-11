@@ -3,7 +3,6 @@ import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
   getPostComments,
   getPostDataById,
-  getPostsByCity,
   getPostsIds,
   getPostsInfo,
 } from 'lib/queries/posts'
@@ -15,6 +14,7 @@ import { useRouter } from 'next/router'
 import { getCitiesPaths } from 'lib/queries/general'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
+import { getPostsByCity } from 'lib/queries/geo'
 
 // Modal.setAppElement('#__next')
 
@@ -123,7 +123,7 @@ export const getStaticProps = async ({ params }) => {
   // console.log(params, 'params')
 
   const splitLocation = params.location.split('~')
-  const latLng = [parseInt(splitLocation[1]), parseInt(splitLocation[2])]
+  const latLng = [parseFloat(splitLocation[1]), parseFloat(splitLocation[2])]
 
   // console.log(latLng, 'lat y lng')
 
@@ -133,9 +133,10 @@ export const getStaticProps = async ({ params }) => {
   }
 
   if (latLng[0] && latLng[1]) {
-    const { matchingDocs } = await getPostsByCity(latLng)
-    console.log(matchingDocs, 'los posts!')
-    // postsData = postsToJSON(matchingDocs)
+    console.log(latLng, 'la latitud')
+    const { posts } = await getPostsByCity(latLng)
+    console.log(posts, 'los posts!')
+    postsData = postsToJSON(posts)
   }
 
   if (params.postId != 'all') {
