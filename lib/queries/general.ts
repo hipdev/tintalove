@@ -22,11 +22,15 @@ export async function getCities(key, country) {
   return { cities }
 }
 
-export async function getCitiesIds() {
+export async function getCitiesPaths() {
   const querySnapshot = await getDocs(collection(db, 'cities'))
   const cities: any = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    cities.push({ id: doc.id })
+    cities.push({
+      id: `${doc.data().city_name}-${doc.data().province}~${
+        doc.data()._geoloc.lat
+      }~${doc.data()._geoloc.lng}`,
+    })
   )
 
   return cities
