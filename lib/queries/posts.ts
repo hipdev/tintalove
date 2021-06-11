@@ -63,6 +63,8 @@ export async function createArtistPost(
     styles,
     description: dataForm.description,
     picture_size,
+    _geoloc: artist._geoloc,
+    geohash: artist.geohash || artist.city_hash,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }
