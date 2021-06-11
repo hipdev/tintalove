@@ -16,6 +16,8 @@ export type PostTypes = {
   picture_size: PictureSize | string
   styles: []
   username: string
+  _geoloc: LatLng
+  geohash: string
 } | null
 
 type ProfilePicture = {
@@ -25,6 +27,11 @@ type ProfilePicture = {
   size: number
   thumbnailUrl: string
   url: string
+}
+
+type LatLng = {
+  lat: string
+  lng: string
 }
 
 enum PictureSize {

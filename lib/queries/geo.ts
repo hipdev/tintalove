@@ -39,15 +39,15 @@ export async function getPostsByCity(latLng) {
 
     for (const snap of snapshots) {
       for (const doc of snap.docs) {
-        const lat = doc.get('lat')
-        const lng = doc.get('lng')
+        const lat = doc.data()._geoloc.lat
+        const lng = doc.data()._geoloc.lng
 
         // We have to filter out a few false positives due to GeoHash
         // accuracy, but most will match
         const distanceInKm = distanceBetween([lat, lng], latLng)
         const distanceInM = distanceInKm * 1000
         if (distanceInM <= radiusInM) {
-          matchingDocs.push(doc.data())
+          matchingDocs.push({ ...doc.data(), id: doc.id })
         }
       }
     }
