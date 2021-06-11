@@ -17,7 +17,10 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
 
   // console.log(user.searching_city.city_name, 'la ruta')
 
-  const url = `${user?.searching_city?.city_name}-${user?.searching_city?.province}~${user?.searching_city?._geoloc.lat}~${user?.searching_city?._geoloc.lng}`
+  const url =
+    user?.searching_city?.city_name == 'Todo Colombia'
+      ? 'all-colombia'
+      : `${user?.searching_city?.city_name}-${user?.searching_city?.province}~${user?.searching_city?._geoloc.lat}~${user?.searching_city?._geoloc.lng}`
   return (
     <div>
       <Link

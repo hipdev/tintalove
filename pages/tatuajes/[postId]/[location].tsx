@@ -3,6 +3,7 @@ import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
   getPostComments,
   getPostDataById,
+  getPostsByCity,
   getPostsIds,
   getPostsInfo,
 } from 'lib/queries/posts'
@@ -105,7 +106,7 @@ export async function getStaticPaths() {
     ...pathsLocations,
     { params: { postId: 'all', location: 'all-colombia' } },
   ]
-  console.log(withAll, 'esto es all')
+  // console.log(withAll, 'esto es all')
 
   return {
     paths: withAll,
@@ -119,10 +120,23 @@ export const getStaticProps = async ({ params }) => {
   let postData = null
   let artistData = null
 
-  console.log(params, 'params')
+  // console.log(params, 'params')
 
-  const { posts } = await getPostsInfo()
-  postsData = postsToJSON(posts)
+  const splitLocation = params.location.split('~')
+  const latLng = [parseInt(splitLocation[1]), parseInt(splitLocation[2])]
+
+  // console.log(latLng, 'lat y lng')
+
+  if (params.location == 'all-colombia') {
+    const { posts } = await getPostsInfo()
+    postsData = postsToJSON(posts)
+  }
+
+  if (latLng[0] && latLng[1]) {
+    const { matchingDocs } = await getPostsByCity(latLng)
+    console.log(matchingDocs, 'los posts!')
+    // postsData = postsToJSON(matchingDocs)
+  }
 
   if (params.postId != 'all') {
     try {
@@ -130,7 +144,7 @@ export const getStaticProps = async ({ params }) => {
       const dataArtist = await getArtistInfo(dataPost.post.artist_id)
       const dataComments = await getPostComments(params.postId)
 
-      console.log(dataComments, 'los comments')
+      // console.log(dataComments, 'los comments')
 
       postData = postToJSON(dataPost?.post)
       artistData = postToJSON(dataArtist.artist)
