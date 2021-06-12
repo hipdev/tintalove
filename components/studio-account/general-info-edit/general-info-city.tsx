@@ -49,7 +49,7 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
 
     const { lat, lng }: any = await getLatLng(results[0])
 
-    const cityHash = geohashForLocation([lat, lng])
+    const geohash = geohashForLocation([lat, lng])
 
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
@@ -60,7 +60,7 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
       city_name,
-      city_hash: cityHash,
+      geohash,
       province,
       country,
     })
