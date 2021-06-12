@@ -14,9 +14,9 @@ const SelectCity = ({ user, cities }) => {
     user
       ? cities.find(
           (city) =>
-            city.city_hash == (user?.searching_city?.city_hash || 'colombia')
+            city.geohash == (user?.searching_city?.geohash || 'colombia')
         )
-      : cities.find((city) => city.city_hash == 'colombia')
+      : cities.find((city) => city.geohash == 'colombia')
   )
 
   const changeCity = (select) => {
@@ -85,7 +85,7 @@ const SelectCity = ({ user, cities }) => {
                 >
                   {cities.map((city) => (
                     <Listbox.Option
-                      key={city.city_hash}
+                      key={city.geohash}
                       className={({ active }) =>
                         (active ? 'text-white bg-primary' : 'text-gray-900') +
                         ' cursor-default select-none relative py-2 pl-3 pr-9'

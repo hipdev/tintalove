@@ -54,7 +54,7 @@ export async function updateUserSearchCity(uid, data) {
   const dataForm = {
     searching_city: {
       city_name: data.city_name,
-      city_hash: data.city_hash,
+      geohash: data.geohash,
       province: data.province,
       _geoloc: data._geoloc || null,
     },

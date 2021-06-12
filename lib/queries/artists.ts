@@ -69,7 +69,7 @@ export async function getArtistsInfo() {
 
 export async function createArtist(uid, data, wizard) {
   const cityId = slugify(
-    data.city_name + '-' + data.province + '-' + data.city_hash,
+    data.city_name + '-' + data.province + '-' + data.geohash,
     '_'
   )
 
@@ -89,7 +89,7 @@ export async function createArtist(uid, data, wizard) {
   }
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      geohash: data.city_hash,
+      geohash: data.geohash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,
@@ -136,7 +136,7 @@ export async function createArtist(uid, data, wizard) {
 
 export async function updateArtistMainInfo(uid, data) {
   const cityId = slugify(
-    data.city_name + '-' + data.province + '-' + data.city_hash,
+    data.city_name + '-' + data.province + '-' + data.geohash,
     '_'
   )
 
@@ -150,7 +150,7 @@ export async function updateArtistMainInfo(uid, data) {
 
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      geohash: data.city_hash,
+      geohash: data.geohash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,
