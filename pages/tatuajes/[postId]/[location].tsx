@@ -110,7 +110,7 @@ export async function getStaticPaths() {
 
   return {
     paths: withAll,
-    fallback: true,
+    fallback: 'blocking',
   }
 }
 
