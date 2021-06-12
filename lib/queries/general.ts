@@ -1,5 +1,7 @@
 import {
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -16,7 +18,7 @@ export async function getCities(key, country) {
   const querySnapshot = await getDocs(q)
   const cities = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    cities.push(doc.data())
+    cities.push({ ...doc.data(), id: doc.id })
   })
 
   return { cities }
@@ -34,4 +36,15 @@ export async function getCitiesPaths() {
   )
 
   return cities
+}
+
+export async function getLatLngFromCityId(cityId) {
+  const docRef = doc(collection(db, 'cities'), cityId)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    return { latLng: [docSnap.data()._geoloc.lat, docSnap.data()._geoloc.lng] }
+  } else {
+    return { latLng: null }
+  }
 }

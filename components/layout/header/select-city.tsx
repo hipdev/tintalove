@@ -28,8 +28,8 @@ const SelectCity = ({ user, cities }) => {
           mutate(user.uid)
           const url =
             select.city_name == 'Todo Colombia'
-              ? '/tatuajes/all/all-colombia'
-              : `/tatuajes/all/${select.city_name}-${select.province}~${select._geoloc.lat}~${select._geoloc.lng}`
+              ? '/location/Colombia'
+              : `/location/${select.id}`
           router.push(url)
 
           return 'Ciudad actualizada 😉'
@@ -40,13 +40,9 @@ const SelectCity = ({ user, cities }) => {
       })
     } else {
       setSelected(select)
-      router.push(
-        `/tatuajes/all/${select.city_name}-${select.province}~${select._geoloc.lat}~${select._geoloc.lng}`
-      )
+      router.push(`/location/${select.id}`)
     }
   }
-
-  console.log(user, 'el usuario')
 
   return (
     <>
