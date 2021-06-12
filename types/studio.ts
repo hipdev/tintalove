@@ -2,7 +2,7 @@ import { Timestamp } from '@firebase/firestore/dist/lite'
 
 export type StudioTypes = {
   bio: string
-  city_hash: string
+  geohash: string
   city_name: string
   country: string
   province: string
