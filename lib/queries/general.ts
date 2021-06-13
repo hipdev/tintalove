@@ -29,9 +29,7 @@ export async function getCitiesPaths() {
   const cities: any = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
     cities.push({
-      id: `${doc.data().city_name}-${doc.data().province}~${
-        doc.data()._geoloc.lat
-      }~${doc.data()._geoloc.lng}`,
+      id: doc.id,
     })
   )
 
