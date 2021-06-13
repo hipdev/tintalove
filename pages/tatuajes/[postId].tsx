@@ -59,7 +59,7 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
               top: 0,
             },
           }}
-          onRequestClose={closeModal}
+          onRequestClose={() => router.back()}
           contentLabel="Post modal"
         >
           <Post
