@@ -17,28 +17,6 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
   const router = useRouter()
 
   console.log(router, 'el router')
-
-  const closeModal = () => {
-    if (router.query.listId) {
-      router.push(`/list/${router.query.listId}`, '', {
-        scroll: false,
-        shallow: true,
-      })
-    } else {
-      if (router.query.loc) {
-        router.push(`/location/${router.query.loc}`, '', {
-          scroll: false,
-          shallow: true,
-        })
-      } else {
-        router.push('/', '', {
-          scroll: false,
-          shallow: true,
-        })
-      }
-    }
-  }
-
   return (
     <Layout>
       {postData && artistData && (
@@ -66,7 +44,7 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
             postData={postData}
             artistData={artistData}
             commentsData={commentsData}
-            closeModal={closeModal}
+            closeModal={() => router.back()}
           />
         </Modal>
       )}

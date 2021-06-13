@@ -38,14 +38,7 @@ const ListPost = ({
 
   return (
     <div>
-      <Link
-        href={
-          user?.searching_city
-            ? `/tatuajes/${post.post_id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.geohash}/?listId=${post.list_id}`
-            : `/tatuajes/${post.post_id}/Todo-Colombia--país--colombia/?listId=${post.list_id}`
-        }
-        scroll={false}
-      >
+      <Link href={`/tatuajes/${post.post_id}`}>
         <a>
           <img
             // src="https://via.placeholder.com/309x234"
