@@ -4,27 +4,19 @@ import {
   getPostComments,
   getPostDataById,
   getPostsIds,
-  getPostsInfo,
 } from 'lib/queries/posts'
-import Home from 'components/home/home'
 import Modal from 'react-modal'
 
 import { useRouter } from 'next/router'
-
-import { getCitiesPaths } from 'lib/queries/general'
 import { getArtistInfo } from 'lib/queries/artists'
 import Post from 'components/post/post'
-import { getPostsByCity } from 'lib/queries/geo'
 
-// Modal.setAppElement('#__next')
+Modal.setAppElement('#__next')
 
-export default function TattoosPage({
-  postsData,
-  postData,
-  artistData,
-  commentsData,
-}) {
+export default function TattoosPage({ postData, artistData, commentsData }) {
   const router = useRouter()
+
+  console.log(router, 'el router')
 
   const closeModal = () => {
     if (router.query.listId) {
@@ -33,13 +25,13 @@ export default function TattoosPage({
         shallow: true,
       })
     } else {
-      if (router.query.location) {
-        router.push(`/tatuajes/all/${router.query.location}`, '', {
+      if (router.query.loc) {
+        router.push(`/location/${router.query.loc}`, '', {
           scroll: false,
           shallow: true,
         })
       } else {
-        router.push('/tatuajes/all', '', {
+        router.push('/', '', {
           scroll: false,
           shallow: true,
         })
@@ -78,68 +70,38 @@ export default function TattoosPage({
           />
         </Modal>
       )}
-      {postsData && <Home posts={postsData} />}
+      {!postData && (
+        <p className="h-screen bg-dark-800 pt-32 text-4xl text-center font-bold text-gray-200">
+          No existe este post
+        </p>
+      )}
     </Layout>
   )
 }
 
 export async function getStaticPaths() {
   const postList = await getPostsIds()
-  const citiesIds = await getCitiesPaths()
 
   const paths = postList.map((doc: any) => ({
     params: {
       postId: doc.id,
-      location: 'all-colombia',
     },
   }))
-
-  const pathsLocations = citiesIds.map((doc: any) => ({
-    params: {
-      postId: 'all',
-      location: doc.id,
-    },
-  }))
-
-  const withAll = [
-    ...paths,
-    ...pathsLocations,
-    { params: { postId: 'all', location: 'all-colombia' } },
-  ]
-  console.log(withAll, 'esto es all')
 
   return {
-    paths: withAll,
-    fallback: 'blocking',
+    paths,
+    fallback: true,
   }
 }
 
 export const getStaticProps = async ({ params }) => {
-  let postsData = null
   let commentsData = null
   let postData = null
   let artistData = null
 
   // console.log(params, 'params')
 
-  const splitLocation = params.location.split('~')
-  const latLng = [parseFloat(splitLocation[1]), parseFloat(splitLocation[2])]
-
-  // console.log(latLng, 'lat y lng')
-
-  if (params.location == 'all-colombia') {
-    const { posts } = await getPostsInfo()
-    postsData = postsToJSON(posts)
-  }
-
-  if (latLng[0] && latLng[1]) {
-    console.log(latLng, 'la latitud')
-    const { posts } = await getPostsByCity(latLng)
-    console.log(posts, 'los posts!')
-    postsData = postsToJSON(posts)
-  }
-
-  if (params.postId != 'all') {
+  if (params.postId) {
     try {
       const dataPost: any = await getPostDataById('get-post', params.postId)
       const dataArtist = await getArtistInfo(dataPost.post.artist_id)
@@ -157,7 +119,6 @@ export const getStaticProps = async ({ params }) => {
 
   return {
     props: {
-      postsData,
       postData,
       commentsData,
       artistData,

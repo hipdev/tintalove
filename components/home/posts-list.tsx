@@ -88,6 +88,226 @@ const PostListHome = ({ posts }) => {
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem
+              key={Math.random()}
+              post={post}
+              user={data?.user || null}
+            />
+          ))
+        ) : (
+          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+        )}
       </Masonry>
     </div>
   )

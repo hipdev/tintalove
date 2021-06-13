@@ -19,8 +19,8 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
 
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
-      ? 'all-colombia'
-      : `${user?.searching_city?.city_name}-${user?.searching_city?.province}~${user?.searching_city?._geoloc.lat}~${user?.searching_city?._geoloc.lng}`
+      ? '?loc=Colombia'
+      : `?loc=${user?.searching_city?.city_id}`
   return (
     <div>
       <Link
@@ -31,6 +31,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         }
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
         scroll={false}
+        shallow={true}
       >
         <a>
           <img
