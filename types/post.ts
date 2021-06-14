@@ -1,4 +1,4 @@
-import { Timestamp } from '@firebase/firestore/dist/lite'
+import { Timestamp } from 'firebase/firestore/lite'
 
 export type PostTypes = {
   id: string
