@@ -30,11 +30,6 @@ export const getStaticProps = async ({ params }) => {
 
   console.log(params, 'params')
 
-  const splitLocation = params.location.split('~')
-  const latLng = [parseFloat(splitLocation[1]), parseFloat(splitLocation[2])]
-
-  // console.log(latLng, 'lat y lng')
-
   if (params.location == 'Colombia') {
     const { posts } = await getPostsInfo()
     postsData = postsToJSON(posts)
