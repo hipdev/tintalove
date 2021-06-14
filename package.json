@@ -25,6 +25,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "^1.1.0",
     "@algolia/autocomplete-theme-classic": "^1.1.0",
+    "@firebase/firestore": "^2.3.6",
     "@headlessui/react": "^1.2.0",
     "@react-google-maps/api": "^2.2.0",
     "@sendgrid/mail": "^7.4.4",
