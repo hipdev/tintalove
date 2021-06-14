@@ -15,8 +15,6 @@ Modal.setAppElement('#__next')
 
 export default function TattoosPage({ postData, artistData, commentsData }) {
   const router = useRouter()
-
-  console.log(router, 'el router')
   return (
     <Layout>
       {postData && artistData && (
