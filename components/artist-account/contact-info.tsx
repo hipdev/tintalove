@@ -83,8 +83,8 @@ const ContactInfo = ({ uid, isArtist }) => {
   }
 
   return (
-    <div className="w-4/5 mt-10">
-      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+    <div className="w-4/5 mt-10 text-gray-300">
+      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2 text-gray-100">
         Información de Contacto
       </h1>
 
@@ -115,10 +115,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
               <span className="mb-3 block">NÚMERO</span>
 
               <Controller
@@ -164,10 +161,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">INSTAGRAM</span>
 
               <input
@@ -193,10 +187,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">FACEBOOK</span>
 
               <input
@@ -222,10 +213,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">TWITTER</span>
 
               <input
@@ -253,9 +241,7 @@ const ContactInfo = ({ uid, isArtist }) => {
         </div>
         <div className="flex justify-between">
           {!isArtist && (
-            <p className="text-white">
-              Primero debes guardar el Paso 1, Información Personal.
-            </p>
+            <p>Primero debes guardar el Paso 1, Información Personal.</p>
           )}
           {isArtist ? (
             <button
