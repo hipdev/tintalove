@@ -23,7 +23,6 @@ import { Counter } from './counter'
 import firebase from 'firebase-8/app'
 import 'firebase-8/firestore'
 import { PostTypes } from 'types/post'
-import { distanceBetween, geohashQueryBounds } from 'geofire-common'
 
 const db = getFirestore(firebaseApp)
 
