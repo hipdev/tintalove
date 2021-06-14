@@ -81,9 +81,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
   }
 
   return uid ? (
-
-    <div className="w-full lg:4/5 pr-7 sm:pr-14 mt-10">
-      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+    <div className="w-full lg:4/5 pr-7 sm:pr-14 mt-10 text-gray-300">
+      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2 text-gray-100">
         Información laboral
       </h1>
 

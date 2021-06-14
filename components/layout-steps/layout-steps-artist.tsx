@@ -35,7 +35,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
         position="bottom-right"
       />
       <HeadContainer />
-      <div className="w-full lg:w-448  sm:h-auto bg-dark-500 pl-7 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
+      <div className="w-full lg:w-448  sm:h-auto bg-dark-800 pl-7 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
           <Link href="/">
             <a>
