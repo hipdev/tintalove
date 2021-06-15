@@ -29,6 +29,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             ? `/tatuajes/${post.id}/${url}`
             : `/tatuajes/${post.id}?loc=Colombia`
         }
+        scroll={false}
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
       >
         <a>
