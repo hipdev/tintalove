@@ -14,14 +14,9 @@ import {
   DocumentSnapshot,
   DocumentData,
   where,
-  startAt,
-  endAt,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
-
-import firebase from 'firebase-8/app'
-import 'firebase-8/firestore'
 import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
@@ -29,12 +24,17 @@ const db = getFirestore(firebaseApp)
 const firebaseConfig = { projectId: 'tinta-love' }
 // firebase old 8 version
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-} else {
-  firebase.app() // if already initialized, use that one
+const firebase: any = process.browser ? window.firebase : null
+
+if (firebase) {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+  } else {
+    firebase.app() // if already initialized, use that one
+  }
 }
-const db8 = firebase.firestore()
+
+const db8 = firebase ? firebase.firestore() : null
 export async function createArtistPost(
   uid,
   infoPicture,

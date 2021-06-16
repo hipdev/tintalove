@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
+import Script from 'next/script'
 
 const PostItemListed = ({
   post,
@@ -72,6 +73,8 @@ const PostItemListed = ({
 
   return (
     <>
+      <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js" />
+      <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
           as="div"
