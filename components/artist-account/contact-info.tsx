@@ -51,14 +51,14 @@ const ContactInfo = ({ uid, isArtist }) => {
       setValue('facebook', artist.facebook || null)
       setValue('twitter', artist.twitter || null)
     }
-  }, [artist])
+  }, [artist, setValue])
 
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
       return () => clearTimeout(timer)
     }
-  }, [success])
+  }, [success, router])
 
   const watchContactWay = watch('contact_way')
 
@@ -253,9 +253,11 @@ const ContactInfo = ({ uid, isArtist }) => {
             </button>
           ) : (
             <Link href="/artist/main-info">
-              <button className="block   btn-primary py-3 px-5">
-                Ir al paso 1
-              </button>
+              <a>
+                <button className="block   btn-primary py-3 px-5">
+                  Ir al paso 1
+                </button>
+              </a>
             </Link>
           )}
         </div>
