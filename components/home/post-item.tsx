@@ -20,8 +20,6 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
     getPostDataById
   )
 
-  console.log(post, 'el post')
-
   // console.log(user.searching_city.city_name, 'la ruta')
 
   const url =
@@ -50,7 +48,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             alt=""
             className="w-full rounded-md  object-cover"
           /> */}
-          {/* <div className="aspect-w-16 aspect-h-9 relative"> */}
+
           <div
             className={
               post.picture_size == 'portrait'
