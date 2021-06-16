@@ -33,6 +33,7 @@ const PostListHome = ({ posts }) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
+        {/* <div className="grid grid-cols-6 gap-6"> */}
         {posts.length > 0 ? (
           posts.map((post) => (
             <PostItem
