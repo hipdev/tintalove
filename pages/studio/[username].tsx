@@ -10,11 +10,11 @@ import {
 } from 'lib/queries/studios'
 import { useRouter } from 'next/router'
 
-export default function index({ studioId, studioData }: any) {
+const UsernameStudioPage = ({ studioId, studioData }: any) => {
   const router: any = useRouter()
 
   if (router.isFallback) {
-    return 'Loading'
+    return <span>Loading</span>
   }
 
   if (!studioId) {
@@ -27,6 +27,8 @@ export default function index({ studioId, studioData }: any) {
     </Layout>
   )
 }
+
+export default UsernameStudioPage
 
 export async function getStaticPaths() {
   const studioUsernamesList = await getUsernamesByStudios()
