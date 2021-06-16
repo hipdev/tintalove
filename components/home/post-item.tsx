@@ -5,15 +5,22 @@ import { UserState } from 'types/user'
 import useSWR from 'swr'
 import PostItemListed from './post-item-listed'
 import { getPostDataById } from 'lib/queries/posts'
-import { useRouter } from 'next/router'
-import slugify from 'slugify'
+import Image from 'next/image'
+
+const myLoader = ({ src, width, quality }) => {
+  return `${src}/tr:pr-true,w-${width},q-${quality || 75}`
+}
+const loaderPost = ({ src, quality }: any) => {
+  return `${src}/tr:pr-true,c-at_max,f-auto,h-235,q-${quality || 75}`
+}
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  const router = useRouter()
   const { data, mutate } = useSWR(
     post ? ['get-post', post.id] : null,
     getPostDataById
   )
+
+  console.log(post, 'el post')
 
   // console.log(user.searching_city.city_name, 'la ruta')
 
@@ -33,7 +40,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
       >
         <a>
-          <img
+          {/* <img
             // src="https://via.placeholder.com/309x234"
             src={
               post?.image?.url
@@ -42,17 +49,40 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             }
             alt=""
             className="w-full rounded-md  object-cover"
-          />
+          /> */}
+          {/* <div className="aspect-w-16 aspect-h-9 relative"> */}
+          <div
+            className={
+              post.picture_size == 'portrait'
+                ? 'aspect-w-3 aspect-h-4 relative'
+                : post.picture_size == 'landscape'
+                ? 'aspect-w-4 aspect-h-3 relative'
+                : 'aspect-w-1 aspect-h-1 relative'
+            }
+          >
+            <Image
+              loader={loaderPost}
+              src={post?.image?.url}
+              alt="Artist photo"
+              layout="fill"
+              // width={600}
+              // height={500}
+              sizes="100%"
+              quality={100}
+              className="w-full rounded-md  object-cover"
+            />
+          </div>
         </a>
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          <img
-            src={
-              post
-                ? `${post?.artist_picture}/tr:pr-true,c-at_max,f-auto,h-32,q-100`
-                : null
-            }
+          <Image
+            loader={myLoader}
+            src={post?.artist_picture}
+            alt="Artist photo"
+            width={35}
+            height={35}
+            quality={70}
             className="w-7 h-7 bg-primary rounded-full"
           />
           <p className="text-white text-sm">
