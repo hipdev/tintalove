@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import Layout from 'components/layout/layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
@@ -17,6 +18,8 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
   const router = useRouter()
   return (
     <Layout>
+      <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js" />
+      <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <Modal
           isOpen={!(router.query.postId == 'all')}

@@ -24,17 +24,6 @@ const db = getFirestore(firebaseApp)
 const firebaseConfig = { projectId: 'tinta-love' }
 // firebase old 8 version
 
-const firebase: any = process.browser ? window.firebase : null
-
-if (firebase) {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig)
-  } else {
-    firebase.app() // if already initialized, use that one
-  }
-}
-
-const db8 = firebase ? firebase.firestore() : null
 export async function createArtistPost(
   uid,
   infoPicture,
@@ -125,8 +114,16 @@ export async function addComment(comment, postId, userData) {
       user_id: userData.uid,
     })
       .then((docRef) => {
+        if (window.firebase) {
+          if (!window.firebase.apps.length) {
+            window.firebase.initializeApp(firebaseConfig)
+          } else {
+            window.firebase.app() // if already initialized, use that one
+          }
+        }
+
         const counter = new Counter(
-          db8.doc(`posts/${postId}`),
+          window.firebase.firestore().doc(`posts/${postId}`),
           'counter_comments'
         )
 
@@ -169,8 +166,17 @@ export async function getPostComments(postId) {
 
 export async function deletePostComment(commentId, postId) {
   await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
-
-  const counter = new Counter(db8.doc(`posts/${postId}`), 'counter_comments')
+  if (window.firebase) {
+    if (!window.firebase.apps.length) {
+      window.firebase.initializeApp(firebaseConfig)
+    } else {
+      window.firebase.app() // if already initialized, use that one
+    }
+  }
+  const counter = new Counter(
+    window.firebase.firestore().doc(`posts/${postId}`),
+    'counter_comments'
+  )
 
   counter.incrementBy(-1)
 }
