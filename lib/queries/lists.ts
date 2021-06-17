@@ -25,6 +25,12 @@ const firebaseConfig = { projectId: 'tinta-love' }
 
 // firebase old 8 version
 
+declare global {
+  interface Window {
+    firebase: any
+  }
+}
+
 export async function createList(user, list_name, isFirst) {
   if (isFirst) {
     const usrRef = doc(collection(db, 'users'), user.uid)

@@ -24,6 +24,12 @@ const db = getFirestore(firebaseApp)
 const firebaseConfig = { projectId: 'tinta-love' }
 // firebase old 8 version
 
+declare global {
+  interface Window {
+    firebase: any
+  }
+}
+
 export async function createArtistPost(
   uid,
   infoPicture,
