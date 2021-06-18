@@ -14,6 +14,7 @@ import {
   DocumentSnapshot,
   DocumentData,
   where,
+  documentId,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
@@ -75,6 +76,26 @@ export async function getPostsInfo() {
     // console.log('consultando artistas', doc.data())
     return posts.push({ ...doc.data(), id: doc.id })
   })
+
+  return { posts }
+}
+
+export async function getMorePostFromArtist(artistId, postId) {
+  const q = query(
+    collection(db, 'posts'),
+    where('artist_id', '==', artistId),
+    where(documentId(), '!=', postId), // Asi podemos filtrar por el ID del documento, que chimbaaa!!!
+    limit(4)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  console.log(posts, 'posts del artista')
 
   return { posts }
 }
