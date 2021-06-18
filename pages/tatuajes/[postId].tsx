@@ -28,7 +28,7 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
           // style={customStyles}
           style={{
             overlay: {
-              backgroundColor: 'rgb(8 10 18 / 98%)',
+              backgroundColor: '#0b0e19',
               top: 80,
               zIndex: 10,
             },
