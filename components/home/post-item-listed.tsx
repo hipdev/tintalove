@@ -93,7 +93,7 @@ const PostItemListed = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="absolute inset-0 bg-gray-800 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -112,20 +112,33 @@ const PostItemListed = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="inline-block w-448 align-bottom rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle  sm:p-6">
-                <div className="bg-black container mx-auto w-448 h-1/2 p-10">
-                  <h2 className="text-gray-400">
-                    ¿Estas seguro que deseas eliminar este post?
-                  </h2>
-                  <div className="text-gray-400 flex justify-center mt-5 text-xl">
-                    <button
-                      className="mr-5 border px-4 py-1 rounded-md"
-                      onClick={removeFromList}
+              <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                <div>
+                  {/* <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                  <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                </div> */}
+                  <div className="mt-3 text-center sm:mt-5">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg leading-6 font-medium text-gray-900"
                     >
-                      Eliminar
-                    </button>
-                    <button onClick={() => setIsOpen(false)}>Cancelar</button>
+                      Eliminar de tu lista
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Esta seguro de eliminar este tattoo ?
+                      </p>
+                    </div>
                   </div>
+                </div>
+                <div className="mt-5 sm:mt-6">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm"
+                    onClick={() => removeFromList()}
+                  >
+                    Sí, eliminar.
+                  </button>
                 </div>
               </div>
             </Transition.Child>
