@@ -2,6 +2,7 @@ import Script from 'next/script'
 import Layout from 'components/layout/layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
+  getMorePostFromArtist,
   getPostComments,
   getPostDataById,
   getPostsIds,
@@ -14,7 +15,12 @@ import Post from 'components/post/post'
 
 Modal.setAppElement('#__next')
 
-export default function TattoosPage({ postData, artistData, commentsData }) {
+export default function TattoosPage({
+  postData,
+  artistData,
+  commentsData,
+  morePostsArtist,
+}) {
   const router = useRouter()
   return (
     <Layout>
@@ -45,6 +51,7 @@ export default function TattoosPage({ postData, artistData, commentsData }) {
             postData={postData}
             artistData={artistData}
             commentsData={commentsData}
+            morePostsArtist={morePostsArtist}
             closeModal={() => router.back()}
           />
         </Modal>
@@ -77,6 +84,7 @@ export const getStaticProps = async ({ params }) => {
   let commentsData = null
   let postData = null
   let artistData = null
+  let morePostsArtist = null
 
   // console.log(params, 'params')
 
@@ -86,11 +94,18 @@ export const getStaticProps = async ({ params }) => {
       const dataArtist = await getArtistInfo(dataPost.post.artist_id)
       const dataComments = await getPostComments(params.postId)
 
+      const dataPostByArtist = await getMorePostFromArtist(
+        dataPost.post.artist_id,
+        params.postId
+      )
+
       // console.log(dataComments, 'los comments')
 
       postData = postToJSON(dataPost?.post)
       artistData = postToJSON(dataArtist.artist)
       commentsData = postsToJSON(dataComments.comments)
+      morePostsArtist = postsToJSON(dataPostByArtist.posts)
+      console.log(morePostsArtist, 'los otros posts')
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }
@@ -101,6 +116,7 @@ export const getStaticProps = async ({ params }) => {
       postData,
       commentsData,
       artistData,
+      morePostsArtist,
     },
     revalidate: 20,
   }
