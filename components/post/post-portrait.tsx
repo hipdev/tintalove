@@ -1,9 +1,4 @@
-import { FiBookmark } from 'react-icons/fi'
-import { FaRegCommentDots } from 'react-icons/fa'
-import { RiHeartLine } from 'react-icons/ri'
-import { FiSend } from 'react-icons/fi'
 import PostsComments from './post-comments'
-import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
@@ -11,6 +6,11 @@ import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import PostAside from './create/post-aside'
+import Image from 'next/image'
+
+const loaderPost = ({ src, quality }: any) => {
+  return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
+}
 
 const PostPortrait = ({
   postData,
@@ -30,11 +30,11 @@ const PostPortrait = ({
   console.log(data, 'la data user')
   return (
     <div className="flex flex-col xl:flex-row items-center xl:justify-between">
-      <div className="mb-5 flex justify-center xl:justify-start w-full sm:w-609 md:w-609">
+      <div className="mb-5 flex justify-center xl:justify-start w-full sm:w-3/5 md:w-3/5">
         <div className="mr-3 hidden sm:block">
           <PostAside postData={postData} />
         </div>
-        <img
+        {/* <img
           // src="https://via.placeholder.com/1100x621"
           src={
             postData?.image?.url
@@ -43,7 +43,21 @@ const PostPortrait = ({
           }
           alt=""
           className=" object-cover rounded-lg  md:max-w-lg lg:max-w-2xl"
-        />
+        /> */}
+        <div className="aspect-w-3 aspect-h-4 relative w-full h-448">
+          <Image
+            loader={loaderPost}
+            src={postData?.image?.url}
+            alt="Artist photo"
+            layout="fill"
+            // width={600}
+            // height={500}
+            sizes="100%"
+            quality={100}
+            className="w-full rounded-md  object-cover max-h-96"
+          />
+        </div>
+
         {/* <img
           alt=" "
           className=""
