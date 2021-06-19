@@ -1,6 +1,6 @@
 import Script from 'next/script'
 import Layout from 'components/layout/layout'
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
@@ -9,13 +9,10 @@ import {
   getPostDataById,
   getPostsIds,
 } from 'lib/queries/posts'
-import Modal from 'react-modal'
 
 import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
-import Post from 'components/post/post'
-
-Modal.setAppElement('#__next')
+import PostModalContent from 'components/post/post-modal-content'
 
 export default function TattoosPage({
   postData,
@@ -24,44 +21,15 @@ export default function TattoosPage({
   morePostsArtist,
 }) {
   const router = useRouter()
+
   return (
     <Layout>
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js" />
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <>
-          {/* <Modal
-            isOpen={!(router.query.postId == 'all')}
-            overlayClassName="fixed left-0 right-0 bottom-0 overflow-auto"
-            className="bg-transparent  overflow-auto w-full px-3 sm:px-7 absolute"
-            // style={customStyles}
-            style={{
-              overlay: {
-                backgroundColor: '#0b0e19',
-                top: 80,
-                zIndex: 10,
-              },
-              content: {
-                background: 'transparent',
-                border: 'none',
-                top: 0,
-              },
-            }}
-            onRequestClose={() => router.back()}
-            contentLabel="Post modal"
-          >
-            <Post
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-              morePostsArtist={morePostsArtist}
-              closeModal={() => router.back()}
-            />
-          </Modal> */}
           <Transition.Root show={!(router.query.postId == 'all')} as={Fragment}>
             <Dialog
-              as="div"
-              static
               className="fixed z-10 inset-0 overflow-y-auto"
               open={!(router.query.postId == 'all')}
               onClose={() => router.back()}
@@ -86,25 +54,13 @@ export default function TattoosPage({
                 >
                   &#8203;
                 </span>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                  enterTo="opacity-100 translate-y-0 sm:scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                  <div className="inline-block h-screen align-bottom bg-transparent rounded-lg pt-5 pb-4 text-left overflow-y-scroll shadow-xl transform transition-all sm:align-middle  sm:w-full sm:p-6 md:w-5/5">
-                    <Post
-                      postData={postData}
-                      artistData={artistData}
-                      commentsData={commentsData}
-                      morePostsArtist={morePostsArtist}
-                      closeModal={() => router.back()}
-                    />
-                  </div>
-                </Transition.Child>
+
+                <PostModalContent
+                  postData={postData}
+                  artistData={artistData}
+                  commentsData={commentsData}
+                  morePostsArtist={morePostsArtist}
+                />
               </div>
             </Dialog>
           </Transition.Root>
