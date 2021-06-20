@@ -17,12 +17,14 @@ const PostStatic = ({
   commentsData,
   morePostsArtist,
   closeModal,
+  relatedPosts,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
   commentsData: any
   morePostsArtist: any
   closeModal: any
+  relatedPosts: any
 }) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
