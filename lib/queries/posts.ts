@@ -60,6 +60,7 @@ export async function createArtistPost(
     picture_size,
     _geoloc: artist._geoloc,
     geohash: artist.geohash || artist.city_hash,
+    is_active: true,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }
