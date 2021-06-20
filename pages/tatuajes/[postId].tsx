@@ -19,6 +19,7 @@ export default function TattoosPage({
   artistData,
   commentsData,
   morePostsArtist,
+  relatedPosts,
 }) {
   const router = useRouter()
 
@@ -60,6 +61,7 @@ export default function TattoosPage({
                   artistData={artistData}
                   commentsData={commentsData}
                   morePostsArtist={morePostsArtist}
+                  relatedPosts={relatedPosts}
                 />
               </div>
             </Dialog>
@@ -95,6 +97,7 @@ export const getStaticProps = async ({ params }) => {
   let postData = null
   let artistData = null
   let morePostsArtist = null
+  let relatedPosts = null
 
   // console.log(params, 'params')
 
@@ -115,6 +118,7 @@ export const getStaticProps = async ({ params }) => {
       artistData = postToJSON(dataArtist.artist)
       commentsData = postsToJSON(dataComments.comments)
       morePostsArtist = postsToJSON(dataPostByArtist.posts)
+      relatedPosts = postsToJSON(dataPostByArtist.posts)
       console.log(morePostsArtist, 'los otros posts')
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
@@ -127,6 +131,7 @@ export const getStaticProps = async ({ params }) => {
       commentsData,
       artistData,
       morePostsArtist,
+      relatedPosts,
     },
     revalidate: 20,
   }

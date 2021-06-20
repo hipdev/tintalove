@@ -7,6 +7,7 @@ const PostModalContent = ({
   artistData,
   commentsData,
   morePostsArtist,
+  relatedPosts,
 }) => {
   const router = useRouter()
   const postRef = useRef(null)
@@ -24,6 +25,7 @@ const PostModalContent = ({
         artistData={artistData}
         commentsData={commentsData}
         morePostsArtist={morePostsArtist}
+        relatedPosts={relatedPosts}
         closeModal={() => router.back()}
       />
     </div>
