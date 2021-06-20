@@ -2,7 +2,7 @@ import { collection, getFirestore, doc, onSnapshot } from 'firebase/firestore'
 
 import firebaseApp from 'lib/firebase'
 
-const db = getFirestore()
+const db = getFirestore(firebaseApp)
 
 export function listenArtistById(uid, setArtist) {
   const unsub = onSnapshot(doc(collection(db, 'artists'), uid), (doc) => {
