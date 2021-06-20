@@ -2,7 +2,7 @@ import { collection, getFirestore, doc, onSnapshot } from 'firebase/firestore'
 
 import firebaseApp from 'lib/firebase'
 
-const db = getFirestore(firebaseApp)
+const db = getFirestore()
 
 export function listenArtistById(uid, setArtist) {
   const unsub = onSnapshot(doc(collection(db, 'artists'), uid), (doc) => {
@@ -15,9 +15,12 @@ export function listenArtistById(uid, setArtist) {
 
 export function listenArtistWizardById(uid, setArtistWizard) {
   const unsub = onSnapshot(
-    doc(collection(db, 'artists_wizard'), uid),
+    doc(db, 'artists_wizard', uid),
     (doc) => {
       setArtistWizard({ ...doc.data(), uid })
+    },
+    (error) => {
+      console.log(error, 'error')
     }
   )
 
