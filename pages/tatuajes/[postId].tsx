@@ -8,6 +8,7 @@ import {
   getPostComments,
   getPostDataById,
   getPostsIds,
+  getRelatedPosts,
 } from 'lib/queries/posts'
 
 import { useRouter } from 'next/router'
@@ -111,6 +112,7 @@ export const getStaticProps = async ({ params }) => {
         dataPost.post.artist_id,
         params.postId
       )
+      const dataRelatedPosts = await getRelatedPosts(dataPost.post.styles)
 
       // console.log(dataComments, 'los comments')
 
@@ -118,8 +120,8 @@ export const getStaticProps = async ({ params }) => {
       artistData = postToJSON(dataArtist.artist)
       commentsData = postsToJSON(dataComments.comments)
       morePostsArtist = postsToJSON(dataPostByArtist.posts)
-      relatedPosts = postsToJSON(dataPostByArtist.posts)
-      console.log(morePostsArtist, 'los otros posts')
+      relatedPosts = postsToJSON(dataRelatedPosts.posts)
+      console.log(relatedPosts, 'los otros posts')
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }

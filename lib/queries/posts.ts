@@ -100,6 +100,24 @@ export async function getMorePostFromArtist(artistId, postId) {
   return { posts }
 }
 
+export async function getRelatedPosts(styles) {
+  const q = query(
+    collection(db, 'posts'),
+    where('styles', 'array-contains-any', styles),
+    limit(8)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  console.log(posts, 'posts related')
+
+  return { posts }
+}
+
 export async function getPostsIds() {
   const querySnapshot = await getDocs(collection(db, 'posts'))
   const posts: any = []

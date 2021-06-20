@@ -107,34 +107,10 @@ const PostStatic = ({
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
+            {relatedPosts &&
+              relatedPosts.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
           </div>
         </div>
       </div>
