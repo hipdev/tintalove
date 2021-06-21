@@ -74,7 +74,7 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
 
     setLocation({ lat, lng })
 
-    const cityHash = geohashForLocation([lat, lng])
+    const geohash = geohashForLocation([lat, lng])
 
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
@@ -84,7 +84,7 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
       formatted_address: results[0].formatted_address,
       city_name,
       coordinates: { lat, lng },
-      city_hash: cityHash,
+      geohash,
     }
 
     toast.promise(updateStudioLocation(studioId, dataLocation), {

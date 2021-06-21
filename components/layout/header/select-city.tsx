@@ -14,9 +14,9 @@ const SelectCity = ({ user, cities }) => {
     user
       ? cities.find(
           (city) =>
-            city.city_hash == (user?.searching_city?.city_hash || 'colombia')
+            city.geohash == (user?.searching_city?.geohash || 'colombia')
         )
-      : cities.find((city) => city.city_hash == 'colombia')
+      : cities.find((city) => city.geohash == 'colombia')
   )
 
   const changeCity = (select) => {
@@ -26,9 +26,11 @@ const SelectCity = ({ user, cities }) => {
         success: () => {
           setSelected(select)
           mutate(user.uid)
-          router.push(
-            `/tatuajes/all/${select.city_name}--${select.province}--${select.city_hash}`
-          )
+          const url =
+            select.city_name == 'Todo Colombia'
+              ? '/location/Colombia'
+              : `/location/${select.id}`
+          router.push(url)
 
           return 'Ciudad actualizada 😉'
         },
@@ -38,13 +40,9 @@ const SelectCity = ({ user, cities }) => {
       })
     } else {
       setSelected(select)
-      router.push(
-        `/tatuajes/all/${select.city_name}--${select.province}--${select.city_hash}`
-      )
+      router.push(`/location/${select.id}`)
     }
   }
-
-  console.log(user, 'el usuario')
 
   return (
     <>
@@ -83,7 +81,7 @@ const SelectCity = ({ user, cities }) => {
                 >
                   {cities.map((city) => (
                     <Listbox.Option
-                      key={city.city_hash}
+                      key={city.geohash}
                       className={({ active }) =>
                         (active ? 'text-white bg-primary' : 'text-gray-900') +
                         ' cursor-default select-none relative py-2 pl-3 pr-9'

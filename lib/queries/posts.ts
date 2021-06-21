@@ -14,12 +14,10 @@ import {
   DocumentSnapshot,
   DocumentData,
   where,
+  documentId,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
-
-import firebase from 'firebase-8/app'
-import 'firebase-8/firestore'
 import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
@@ -27,12 +25,12 @@ const db = getFirestore(firebaseApp)
 const firebaseConfig = { projectId: 'tinta-love' }
 // firebase old 8 version
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-} else {
-  firebase.app() // if already initialized, use that one
+declare global {
+  interface Window {
+    firebase: any
+  }
 }
-const db8 = firebase.firestore()
+
 export async function createArtistPost(
   uid,
   infoPicture,
@@ -60,6 +58,9 @@ export async function createArtistPost(
     styles,
     description: dataForm.description,
     picture_size,
+    _geoloc: artist._geoloc,
+    geohash: artist.geohash || artist.city_hash,
+    is_active: true,
   })
     .then((doc) => {
       return { doc: doc.id, status: true }
@@ -76,6 +77,44 @@ export async function getPostsInfo() {
     // console.log('consultando artistas', doc.data())
     return posts.push({ ...doc.data(), id: doc.id })
   })
+
+  return { posts }
+}
+
+export async function getMorePostFromArtist(artistId, postId) {
+  const q = query(
+    collection(db, 'posts'),
+    where('artist_id', '==', artistId),
+    where(documentId(), '!=', postId), // Asi podemos filtrar por el ID del documento, que chimbaaa!!!
+    limit(4)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  console.log(posts, 'posts del artista')
+
+  return { posts }
+}
+
+export async function getRelatedPosts(styles) {
+  const q = query(
+    collection(db, 'posts'),
+    where('styles', 'array-contains-any', styles),
+    limit(8)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  console.log(posts, 'posts related')
 
   return { posts }
 }
@@ -121,8 +160,16 @@ export async function addComment(comment, postId, userData) {
       user_id: userData.uid,
     })
       .then((docRef) => {
+        if (window.firebase) {
+          if (!window.firebase.apps.length) {
+            window.firebase.initializeApp(firebaseConfig)
+          } else {
+            window.firebase.app() // if already initialized, use that one
+          }
+        }
+
         const counter = new Counter(
-          db8.doc(`posts/${postId}`),
+          window.firebase.firestore().doc(`posts/${postId}`),
           'counter_comments'
         )
 
@@ -165,8 +212,17 @@ export async function getPostComments(postId) {
 
 export async function deletePostComment(commentId, postId) {
   await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
-
-  const counter = new Counter(db8.doc(`posts/${postId}`), 'counter_comments')
+  if (window.firebase) {
+    if (!window.firebase.apps.length) {
+      window.firebase.initializeApp(firebaseConfig)
+    } else {
+      window.firebase.app() // if already initialized, use that one
+    }
+  }
+  const counter = new Counter(
+    window.firebase.firestore().doc(`posts/${postId}`),
+    'counter_comments'
+  )
 
   counter.incrementBy(-1)
 }

@@ -52,7 +52,7 @@ const ArtistsList = ({ artistsData }) => {
         <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-5 pb-20 mx-5 sm:mx-0">
           {artistsData ? (
             artistsData.map((artist) => {
-              return <ArtistCard artist={artist} />
+              return <ArtistCard artist={artist} key={artist.uid} />
             })
           ) : (
             <span>No hay artistas</span>

@@ -73,7 +73,7 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
           lat,
           lng,
         },
-        city_hash: cityHash,
+        geohash: cityHash,
         province,
         country,
       })

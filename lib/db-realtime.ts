@@ -15,9 +15,12 @@ export function listenArtistById(uid, setArtist) {
 
 export function listenArtistWizardById(uid, setArtistWizard) {
   const unsub = onSnapshot(
-    doc(collection(db, 'artists_wizard'), uid),
+    doc(db, 'artists_wizard', uid),
     (doc) => {
       setArtistWizard({ ...doc.data(), uid })
+    },
+    (error) => {
+      console.log(error, 'error')
     }
   )
 

@@ -1,23 +1,21 @@
-import useUserList from 'hooks/use-user-list'
+import { getUserListItems } from 'lib/queries/lists'
 import Masonry from 'react-masonry-css'
+import useSWR from 'swr'
 import ListPost from './list-post'
 import ListNotPublic from './not-public'
 
 const UserList = ({ listId, user }) => {
-  const { userList, userListItems, setUserListItems }: any = useUserList(listId)
+  // const { userList, userListItems, setUserListItems }: any = useUserList(listId)
+  const { data, mutate } = useSWR(['get-lists', listId], getUserListItems)
 
-  console.log(userList, 'items')
+  // console.log(data, 'la data')
 
-  if (!userList) {
+  if (!data?.userList) {
     return (
-      <div className="h-screen flex justify-center pt-10">
+      <div className="h-screen flex justify-center pt-20">
         <p className="text-gray-300 text-3xl">Ups, esta lista no existe</p>
       </div>
     )
-  }
-
-  if (!userListItems) {
-    return <div className="">Sin post guardados</div>
   }
 
   const breakpointColumnsObj = {
@@ -28,32 +26,30 @@ const UserList = ({ listId, user }) => {
     500: 1,
   }
 
-  if (!user?.uid) {
-    return <span>Cargando user...</span>
-  }
-
-  if (userList.user_id != user?.uid) {
+  if (data?.userList.user_id != user?.uid) {
     return <ListNotPublic />
   }
 
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {userList.list_name}{' '}
-        <span className="ml-3 font-medium">({userList.total_items || 0}) </span>
+        {data?.userList.list_name}{' '}
+        <span className="ml-3 font-medium">
+          ({data?.userList.total_items || 0}){' '}
+        </span>
       </h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {userListItems.length > 0 ? (
-          userListItems.map((post) => (
+        {data?.userListItems.length > 0 ? (
+          data?.userListItems.map((post) => (
             <ListPost
               key={post.id}
               post={post}
               user={user}
-              setUserListItems={setUserListItems}
+              mutateList={mutate}
             />
           ))
         ) : (
