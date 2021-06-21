@@ -193,7 +193,16 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
           <div className="col-span-6 md:col-span-3">
             <label className="block text-white text-sm mb-2 tracking-wide">
-              <span className="mb-3 block uppercase">Ciudad</span>
+              <div className="flex">
+                <span className="mb-3 block uppercase">Ciudad</span>
+                <span
+                  aria-label="Esta ubicación es importante, todas tus publicaciones estarán asociadas a ella."
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
+              </div>
 
               <MainInfoCity
                 defaultValue={artist.formatted_address || ''}
