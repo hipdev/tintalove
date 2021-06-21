@@ -6,8 +6,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import 'microtip/microtip.css'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -97,9 +99,18 @@ const ContactInfo = ({ uid, isArtist }) => {
               htmlFor=""
               className="block text-white text-sm  mb-3 tracking-wide"
             >
-              <span className="mb-3 block">
-                POR DÓNDE QUIERES QUE TE CONTACTEN
-              </span>
+              <div className="flex">
+                <span className="mb-3 block uppercase">
+                  POR DÓNDE QUIERES QUE TE CONTACTEN
+                </span>
+                <span
+                  aria-label="De acuerdo a tu selección, TintaLove direccionará al usuario"
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
+              </div>
 
               <select
                 className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800"
@@ -155,6 +166,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                       background: '#080a12',
                       color: '#e2e2e2',
                     }}
+                    placeholder="Selecciona primero el país"
                     {...field}
                   />
                 )}
