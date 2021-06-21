@@ -9,7 +9,7 @@ import {
 } from 'lib/queries/artists'
 import { useRouter } from 'next/router'
 
-export default function index({ artistId, artistData }: any) {
+const UsernameArtistPage = ({ artistId, artistData }: any) => {
   const router: any = useRouter()
 
   if (router.isFallback) {
@@ -27,6 +27,8 @@ export default function index({ artistId, artistData }: any) {
     </Layout>
   )
 }
+
+export default UsernameArtistPage
 
 export async function getStaticPaths() {
   const usernamesList = await getUserNamesByArtists()

@@ -9,11 +9,11 @@ import { UserState } from 'types/user'
 
 const ListPost = ({
   post,
-  setUserListItems,
+  mutateList,
   user,
 }: {
   post: PostList
-  setUserListItems: any
+  mutateList: any
   user: UserState
 }) => {
   const removeFromList = async () => {
@@ -25,9 +25,7 @@ const ListPost = ({
       toast.promise(removePostFromList(post.post_id, user.uid), {
         loading: 'Eliminando de tu lista...',
         success: () => {
-          setUserListItems((state) =>
-            state.filter((item) => item.id != post.id)
-          )
+          mutateList()
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -40,14 +38,7 @@ const ListPost = ({
 
   return (
     <div>
-      <Link
-        href={
-          user?.searching_city
-            ? `/tatuajes/${post.post_id}/${user?.searching_city?.city_name}--${user?.searching_city?.province}--${user?.searching_city?.city_hash}/?listId=${post.list_id}`
-            : `/tatuajes/${post.post_id}/Todo-Colombia--país--colombia/?listId=${post.list_id}`
-        }
-        scroll={false}
-      >
+      <Link href={`/tatuajes/${post.post_id}`}>
         <a>
           <img
             // src="https://via.placeholder.com/309x234"

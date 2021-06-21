@@ -6,18 +6,28 @@ import { BsArrowLeft } from 'react-icons/bs'
 import PostPortrait from './post-portrait'
 import PostHorizontal from './post-horizontal'
 import Link from 'next/link'
+import PostMore from './post-more'
+import useSWR from 'swr'
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
 
 const PostStatic = ({
   postData,
   artistData,
   commentsData,
+  morePostsArtist,
   closeModal,
+  relatedPosts,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
   commentsData: any
+  morePostsArtist: any
   closeModal: any
+  relatedPosts: any
 }) => {
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
   return (
     <div className="w-full container mx-auto mt-3 md:mt-20">
       <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
@@ -46,12 +56,14 @@ const PostStatic = ({
         <div className="w-full">
           {postData.picture_size == 'portrait' ? (
             <PostPortrait
+              user={data?.user}
               postData={postData}
               artistData={artistData}
               commentsData={commentsData}
             />
           ) : (
             <PostHorizontal
+              user={data?.user}
               postData={postData}
               artistData={artistData}
               commentsData={commentsData}
@@ -76,34 +88,10 @@ const PostStatic = ({
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
+            {morePostsArtist &&
+              morePostsArtist.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
           </div>
         </div>
         <div className="py-5">
@@ -119,34 +107,10 @@ const PostStatic = ({
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
-            <div>
-              <img
-                src="https://via.placeholder.com/309x234"
-                alt=""
-                className="w-full rounded-lg mb-1"
-              />
-            </div>
+            {relatedPosts &&
+              relatedPosts.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
           </div>
         </div>
       </div>
