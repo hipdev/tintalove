@@ -8,6 +8,8 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
 import { updateArtistWorkingInfo } from 'lib/queries/artists'
+import { FiHelpCircle } from 'react-icons/fi'
+import 'microtip/microtip.css'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -90,8 +92,16 @@ const WorkingInfo = ({ uid, isArtist }) => {
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
             <label className="text-sm mb-3 tracking-wide">
-              <span className="mb-3 block"> ESTILOS </span>
-
+              <div className="flex">
+                <span className="mb-3 block uppercase">Estilos</span>
+                <span
+                  aria-label="En base a ellos te encontrarán y también podrás crear publicaciones asociadas"
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
+              </div>
               <Controller
                 rules={{ required: true }}
                 control={control}
