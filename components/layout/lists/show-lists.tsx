@@ -18,13 +18,15 @@ const ShowLists = ({ userId }) => {
   if (!data) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
-    <div className="text-gray-300">
-      <h1 className="text-xl mb-5">Tus listas</h1>
+    <>
+      <div className="text-gray-300">
+        <h1 className="text-xl mb-5">Tus listas</h1>
+      </div>
       <div>
         {data.userLists.map((list) => (
           <div className="flex items-center mb-5 bg-ocean_blue-300 p-4 rounded-md">
             <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
-            <div className="flex flex-col w-full">
+            <div className="w-full flex flex-col">
               <Link href={`/list/${list.id}`} key={list.id}>
                 <a
                   className="text-white"
@@ -40,7 +42,7 @@ const ShowLists = ({ userId }) => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   )
 }
 

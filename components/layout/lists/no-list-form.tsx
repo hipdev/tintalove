@@ -63,27 +63,27 @@ const NoListForm = ({ hasList, user }: Props) => {
   }
 
   return (
-    <div className="mb-5">
+    <div className="mb-1">
       <div className="bg-ocean_blue-300 p-4 rounded-md mb-6">
         <div className="flex items-center">
           <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
           <div className="w-full">
             <p className="text-gray-300">
-              {hasList ? 'Nueva Lista' : 'Crea tu primera lista'}
+              {hasList ? 'Nueva lista' : 'Crea tu primera lista'}
             </p>
             <form onSubmit={handleSubmit} className="flex items-center w-full">
               <input
                 type="text"
                 value={listName}
                 onChange={(e) => setListName(e.target.value)}
-                className="bg-transparent placeholder-white border-2 border-light-400 rounded-md py-2 mr-5 w-11/12 px-3"
+                className="bg-transparent px-3 placeholder-white border-2 border-light-400 mr-5 w-11/12 rounded-md py-2"
                 placeholder="Mis favoritos!"
               />
               <button
                 type="submit"
                 className="bg-primary hover:bg-primaryHover p-2 rounded-md focus:outline-none"
               >
-                <span className="text-white text-3xl">
+                <span className="text-white text-3xl ">
                   <FiPlus />
                 </span>
               </button>

@@ -58,9 +58,11 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
               {({ open }) => (
                 <>
                   <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
-                    <span>{user.displayName}</span>
+
+                    <VscChevronDown className="text-2xl mr-3 " />
+                    <span className="mr-3">{user.displayName}</span>
                     <img
-                      className="w-12 rounded-full ml-3"
+                      className="w-12 h-12 rounded-full"
                       src={user.photoUrl}
                     />
                   </Menu.Button>

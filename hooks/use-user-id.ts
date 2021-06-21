@@ -1,20 +1,23 @@
 import { onAuthStateChanged, User } from '@firebase/auth'
 import { auth } from 'lib/firebase'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useUserId = () => {
   const [userId, setUserId] = useState(null)
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // user.getIdTokenResult()
+        // .then(({ claims }) => console.log(claims, 'los tokens'))
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // user.getIdTokenResult()
-      // .then(({ claims }) => console.log(claims, 'los tokens'))
+        const uid = user.uid
+        return setUserId(uid)
+      } else {
+        return setUserId(null)
+      }
+    })
 
-      const uid = user.uid
-      return setUserId(uid)
-    } else {
-      return setUserId(null)
-    }
+    return () => unsub()
   })
 
   return { userId }
