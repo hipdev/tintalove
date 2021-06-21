@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import * as SendGrid from '@sendgrid/mail'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const invitationArtistEmail = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const method = req.method
 
   if (method === 'POST' && req.body.artist_name && req.body.email) {
@@ -42,3 +45,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).send('Method Not Allowed')
   }
 }
+
+export default invitationArtistEmail

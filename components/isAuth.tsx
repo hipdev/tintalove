@@ -27,7 +27,7 @@ export default function IsAuth({ children }) {
       <div className="h-screen flex items-center justify-center bg-dark-800">
         <div className="text-white flex flex-col  items-center">
           <p className="mb-5 text-4xl font-semibold ">
-            Para acceder aquí debes loguearte
+            Verificando permisos...
           </p>
           <button
             onClick={handleLogin}

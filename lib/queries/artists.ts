@@ -68,9 +68,7 @@ export async function getArtistsInfo() {
 }
 
 export async function createArtist(uid, data, wizard) {
-  const cityId = slugify(
-    data.city_name + '-' + data.province + '-' + data.city_hash
-  )
+  const cityId = slugify(data.city_name + '-' + data.province, '_')
 
   const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
   const usernameRef = doc(collection(db, 'usernames'), data.username)
@@ -88,12 +86,13 @@ export async function createArtist(uid, data, wizard) {
   }
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      city_hash: data.city_hash,
+      geohash: data.geohash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,
       province: data.province,
       city_name: data.city_name,
+      _geoloc: data._geoloc,
     })
   }
 
@@ -133,9 +132,7 @@ export async function createArtist(uid, data, wizard) {
 }
 
 export async function updateArtistMainInfo(uid, data) {
-  const cityId = slugify(
-    data.city_name + '-' + data.province + '-' + data.city_hash
-  )
+  const cityId = slugify(data.city_name + '-' + data.province, '_')
 
   const artistRef = doc(collection(db, 'artists'), uid)
   const cityRef = doc(collection(db, 'cities'), cityId)
@@ -147,7 +144,7 @@ export async function updateArtistMainInfo(uid, data) {
 
   if (!citySnap.exists()) {
     await setDoc(cityRef, {
-      city_hash: data.city_hash,
+      geohash: data.geohash,
       country: 'Colombia',
       created_by: uid,
       formatted_address: data.formatted_address,

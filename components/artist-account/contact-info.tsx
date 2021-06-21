@@ -6,8 +6,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import 'microtip/microtip.css'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -33,7 +35,9 @@ const ContactInfo = ({ uid, isArtist }) => {
     },
   })
 
-  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
+  const regexUrl = new RegExp(
+    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+  )
 
   useEffect(() => {
     if (artist) {
@@ -51,14 +55,14 @@ const ContactInfo = ({ uid, isArtist }) => {
       setValue('facebook', artist.facebook || null)
       setValue('twitter', artist.twitter || null)
     }
-  }, [artist])
+  }, [artist, setValue])
 
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
       return () => clearTimeout(timer)
     }
-  }, [success])
+  }, [success, router])
 
   const watchContactWay = watch('contact_way')
 
@@ -83,8 +87,8 @@ const ContactInfo = ({ uid, isArtist }) => {
   }
 
   return (
-    <div className="w-4/5 mt-10">
-      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
+    <div className="w-4/5 mt-10 text-gray-300">
+      <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2 text-gray-100">
         Información de Contacto
       </h1>
 
@@ -95,9 +99,18 @@ const ContactInfo = ({ uid, isArtist }) => {
               htmlFor=""
               className="block text-white text-sm  mb-3 tracking-wide"
             >
-              <span className="mb-3 block">
-                POR DÓNDE QUIERES QUE TE CONTACTEN
-              </span>
+              <div className="flex">
+                <span className="mb-3 block uppercase">
+                  POR DÓNDE QUIERES QUE TE CONTACTEN
+                </span>
+                <span
+                  aria-label="De acuerdo a tu selección, TintaLove direccionará al usuario"
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
+              </div>
 
               <select
                 className="w-full input-primary form-select p-3 text-sm bg-dark-500 focus:ring-dark-800 focus:border-dark-800"
@@ -115,10 +128,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
               <span className="mb-3 block">NÚMERO</span>
 
               <Controller
@@ -156,6 +166,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                       background: '#080a12',
                       color: '#e2e2e2',
                     }}
+                    placeholder="Selecciona primero el país"
                     {...field}
                   />
                 )}
@@ -164,10 +175,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">INSTAGRAM</span>
 
               <input
@@ -193,10 +201,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">FACEBOOK</span>
 
               <input
@@ -222,10 +227,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-3 tracking-wide"
-            >
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">TWITTER</span>
 
               <input
@@ -253,9 +255,7 @@ const ContactInfo = ({ uid, isArtist }) => {
         </div>
         <div className="flex justify-between">
           {!isArtist && (
-            <p className="text-white">
-              Primero debes guardar el Paso 1, Información Personal.
-            </p>
+            <p>Primero debes guardar el Paso 1, Información Personal.</p>
           )}
           {isArtist ? (
             <button
@@ -267,9 +267,11 @@ const ContactInfo = ({ uid, isArtist }) => {
             </button>
           ) : (
             <Link href="/artist/main-info">
-              <button className="block   btn-primary py-3 px-5">
-                Ir al paso 1
-              </button>
+              <a>
+                <button className="block   btn-primary py-3 px-5">
+                  Ir al paso 1
+                </button>
+              </a>
             </Link>
           )}
         </div>

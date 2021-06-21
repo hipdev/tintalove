@@ -1,8 +1,8 @@
-import { Timestamp } from '@firebase/firestore/dist/lite'
+import { Timestamp } from 'firebase/firestore/lite'
 
 export type ArtistTypes = {
   bio: string
-  city_hash: string
+  geohash: string
   city_name: string
   country: string
   province: string
