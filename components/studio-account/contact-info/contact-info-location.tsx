@@ -40,6 +40,7 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
           lng: studioInfo.dataLocation.coordinates.lng,
         }
       )
+      setValue(studioInfo.dataLocation.formatted_address)
     }
   }, [studioInfo])
 

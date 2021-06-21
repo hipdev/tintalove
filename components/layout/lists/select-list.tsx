@@ -56,7 +56,7 @@ const SelectList = ({ userId, post, user }) => {
 
   return (
     <div className="text-gray-300">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ">
         <div className="bg-ocean_blue-300 w-full h-24 flex items-center justify-around mb-6">
           <h1 className="text-white text-2xl font-semibold">Mis favoritos</h1>
           {showForm ? (
@@ -64,7 +64,7 @@ const SelectList = ({ userId, post, user }) => {
               className="bg-light-600 hover:bg-light-900 p-2 rounded-md focus:outline-none"
               onClick={() => setShowForm(!showForm)}
             >
-              <VscClose className="text-white text-3xl" />
+              <VscClose className="text-white text-3xl bg-light-600" />
             </button>
           ) : (
             <button
@@ -85,7 +85,7 @@ const SelectList = ({ userId, post, user }) => {
             <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
 
             <button
-              className="flex flex-col w-full focus:outline-none"
+              className="w-full flex flex-col focus:outline-none"
               key={list.id}
               type="button"
               onClick={() => savePostOnList(list.id)}

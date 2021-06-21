@@ -59,7 +59,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
+      const timer = setTimeout(() => router.push('/studio/pictures-info'), 1000)
       return () => clearTimeout(timer)
     }
   }, [success])
@@ -75,7 +75,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
         setLoading(false)
         setSuccess(true)
 
-        return 'Artista actualizado 😉'
+        return 'Estudio actualizado 😉'
       },
       error: (err) => {
         setLoading(false)

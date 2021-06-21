@@ -5,7 +5,7 @@ import { lists } from 'lib/actions'
 import NoListForm from './no-list-form'
 import ShowLists from './show-lists'
 import SelectList from './select-list'
-
+0
 Modal.setAppElement('#__next')
 
 const UserLists = ({ user }) => {
@@ -39,7 +39,6 @@ const UserLists = ({ user }) => {
             left: 'auto',
             top: 0,
             height: '100%',
-            width: '608px',
             borderRadius: '0',
             boxShadow: '0px 1px 4px #000000',
           },

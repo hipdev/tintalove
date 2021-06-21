@@ -6,10 +6,12 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
 import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
+import { AiOutlineCamera } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
 import SelectCity from './select-city'
 import WrapperSelectCity from './wrapper-select-city'
+import WrapperAvailability from './wrapper-availability'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -77,6 +79,69 @@ const Header = ({ user }: { user: UserState }) => {
           )}
           {user?.is_artist && (
             <div className="flex  items-center justify-between w-full">
+              <div className="flex items-center">
+                <Link href="/">
+                  <a>
+                    {/* <img className="w-52" src="/short-logo.png" /> */}
+                    <div className="w-40 relative h-9 mt-2">
+                      <Image
+                        // layout="fill"
+                        width={180}
+                        height={35}
+                        src="/short-logo.png"
+                        alt="Picture of the author"
+                      />
+                    </div>
+                  </a>
+                </Link>
+                <span className="text-white text-2xl hidden md:block px-10">
+                  <VscMenu />
+                </span>
+                <div className="w-10 xl:w-28 items-center gap-3 hidden md:flex">
+                  <span className="text-white text-2xl">
+                    <GoSearch />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="BUSCAR"
+                    className="placeholder-white text-white bg-transparent w-0 xl:w-28 truncate hidden xl:block"
+                  />
+                </div>
+                <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
+                  <WrapperSelectCity user={user} />
+                </div>
+              </div>
+              {/*New elements for tablet resolution*/}
+              <div className="flex items-center">
+                <span className="text-white text-2xl block md:hidden px-0 md:px-10 pr-10 md:pr-0">
+                  <GoSearch />
+                </span>
+                <span className="text-white text-3xl block md:hidden">
+                  <VscMenu />
+                </span>
+              </div>
+              <div className="gap-3 ml-2 hidden md:flex items-center">
+                <WrapperAvailability user={user} />
+
+                {user?.artist_active && (
+                  <Link href="/post/new-post">
+                    <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                      <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                        <AiOutlineCamera />
+                      </span>
+                      <span className="hidden xl:block">PUBLICAR</span>
+                    </a>
+                  </Link>
+                )}
+
+                <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
+                  <SubMenuHeader user={user || null} />
+                </div>
+              </div>
+            </div>
+          )}
+          {!user?.is_artist && (
+            <div className="flex  items-center justify-between w-full">
               <div className="flex items-center w-7/12 xl:w-4/5">
                 <Link href="/">
                   <a>
@@ -100,7 +165,7 @@ const Header = ({ user }: { user: UserState }) => {
                     type="search"
                     placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
                     className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
-                    "
+                  "
                   />
                   <button
                     type="submit"

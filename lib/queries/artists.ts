@@ -1,3 +1,4 @@
+var slugify = require('slugify')
 import {
   collection,
   doc,
@@ -67,17 +68,33 @@ export async function getArtistsInfo() {
 }
 
 export async function createArtist(uid, data, wizard) {
+  const cityId = slugify(
+    data.city_name + '-' + data.province + '-' + data.city_hash
+  )
+
+  const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
   const usernameRef = doc(collection(db, 'usernames'), data.username)
   const artistRef = doc(collection(db, 'artists'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const userRef = doc(collection(db, 'users'), uid)
 
+  const citySnap = await getDoc(cityRef)
   const usernameSnap = await getDoc(usernameRef)
   const docSnap = await getDoc(artistRef)
 
   if (usernameSnap.exists()) {
     throw new Error('El nombre de usuario ya existe')
+  }
+  if (!citySnap.exists()) {
+    await setDoc(cityRef, {
+      city_hash: data.city_hash,
+      country: 'Colombia',
+      created_by: uid,
+      formatted_address: data.formatted_address,
+      province: data.province,
+      city_name: data.city_name,
+    })
   }
 
   if (docSnap.exists()) {
@@ -116,11 +133,29 @@ export async function createArtist(uid, data, wizard) {
 }
 
 export async function updateArtistMainInfo(uid, data) {
+  const cityId = slugify(
+    data.city_name + '-' + data.province + '-' + data.city_hash
+  )
+
   const artistRef = doc(collection(db, 'artists'), uid)
+  const cityRef = doc(collection(db, 'cities'), cityId)
 
   const userRef = doc(collection(db, 'users'), uid)
 
+  const citySnap = await getDoc(cityRef)
   const docSnap = await getDoc(artistRef)
+
+  if (!citySnap.exists()) {
+    await setDoc(cityRef, {
+      city_hash: data.city_hash,
+      country: 'Colombia',
+      created_by: uid,
+      formatted_address: data.formatted_address,
+      province: data.province,
+      _geoloc: data._geoloc,
+      city_name: data.city_name,
+    })
+  }
 
   if (docSnap.exists()) {
     const batch = writeBatch(db)
@@ -211,19 +246,21 @@ export async function updateArtistMainProfilePicture(
   wizard
 ) {
   const artistRef = doc(collection(db, 'artists'), uid)
+  const userRef = doc(collection(db, 'users'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
-  const options = {
-    method: 'DELETE',
-    body: JSON.stringify({ data: { imageId } }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
+  // Dont delete pictures from Imagekit anymore
+  // const options = {
+  //   method: 'DELETE',
+  //   body: JSON.stringify({ data: { imageId } }),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
 
-  if (update) {
-    await fetch('/api/profile/delete-image', options)
-  }
+  // if (update) {
+  //   await fetch('/api/profile/delete-image', options)
+  // }
 
   const dataForm = {
     profile_picture: data,
@@ -234,6 +271,7 @@ export async function updateArtistMainProfilePicture(
 
   if (docSnap.exists()) {
     await updateDoc(artistRef, dataForm)
+    await updateDoc(userRef, { photoUrl: data.url })
 
     if (wizard) {
       updateDoc(artistWizardRef, { step_four: true })

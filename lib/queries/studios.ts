@@ -241,6 +241,10 @@ export async function updateStudioLocation(studioId, dataLocation) {
     await updateDoc(studioRef, {
       dataLocation,
       updated_at: serverTimestamp(),
+      _geoloc: {
+        lat: dataLocation.coordinates.lat,
+        lng: dataLocation.coordinates.lng,
+      },
     })
 
     return true
@@ -257,6 +261,10 @@ export async function updateStudioLocationMarker(studioId, dataMarker) {
   if (docSnap.exists()) {
     await updateDoc(studioRef, {
       dataMarker,
+      _geoloc_marker: {
+        lat: dataMarker.marker_location[0],
+        lng: dataMarker.marker_location[1],
+      },
       updated_at: serverTimestamp(),
     })
 

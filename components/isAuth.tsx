@@ -1,32 +1,17 @@
 import { signInWithPopup } from '@firebase/auth'
-import { useStateMachine } from 'little-state-machine'
-import { login } from 'lib/actions'
 import { auth } from 'lib/firebase'
-import useUser from 'hooks/use-user'
-
-import { useEffect, useState } from 'react'
 import { provider } from './layout/header/submenu'
 import { createUser } from 'lib/queries/users'
+import useUserId from 'hooks/use-user-id'
 
 export default function IsAuth({ children }) {
-  const [isAuth, setAuth] = useState(true)
-  const { state } = useUser()
-
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  })
-
-  useEffect(() => {
-    setAuth(state.user)
-  }, [state])
+  const { userId } = useUserId()
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
-
-        if (res) actions.login(true)
       })
       .catch((error) => {
         // Handle Errors here.
@@ -35,11 +20,11 @@ export default function IsAuth({ children }) {
       })
   }
 
-  if (isAuth) {
+  if (userId) {
     return children
   } else {
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center bg-dark-800">
         <div className="text-white flex flex-col  items-center">
           <p className="mb-5 text-4xl font-semibold ">
             Para acceder aquí debes loguearte
