@@ -10,7 +10,7 @@ const useArtistWizardRealtime = (uid) => {
 
       return () => unsub()
     }
-  }, [])
+  }, [uid])
 
   return { artistWizard }
 }

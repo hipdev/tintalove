@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 const ImageKit = require('imagekit')
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const deleteImageImagekit = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const method = req.method
 
   if (method === 'DELETE') {
@@ -27,3 +30,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).send('METHOD NOT ALLOWED')
   }
 }
+
+export default deleteImageImagekit

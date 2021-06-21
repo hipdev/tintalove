@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import useOnClickOutside from 'hooks/use-clickoutside'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
@@ -26,8 +27,14 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row w-full justify-between px-2 sm:px-20 bg-dark-800 items-center pb-3 pt-2 uppercase">
             <div className="w-48 lg:w-60 mb-3 lg:mb-0">
               <Link href="/">
-                <a className="relative bottom-3">
-                  <img className="w-48 relative top-4" src="/newlogo.png" />
+                <a className="mt-2 block">
+                  <Image
+                    src="/newlogo.png"
+                    alt="Logo Tinta Love"
+                    width={192}
+                    height={50}
+                    layout="responsive"
+                  />
                 </a>
               </Link>
             </div>

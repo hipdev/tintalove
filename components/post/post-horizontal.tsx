@@ -2,23 +2,20 @@ import PostsComments from './post-comments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
-import useSWR from 'swr'
 import PostAside from './create/post-aside'
+import { UserState } from 'types/user'
 
 const PostHorizontal = ({
   postData,
   artistData,
+  user,
   commentsData,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
   commentsData: any
+  user: UserState
 }) => {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
-
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
@@ -44,7 +41,7 @@ const PostHorizontal = ({
       <div className="w-full flex flex-col-reverse mb-10">
         <PostsComments
           postId={postData.id}
-          user={data?.user}
+          user={user}
           commentsData={commentsData}
           setTotalComments={setTotalComments}
           totalComments={totalComments}

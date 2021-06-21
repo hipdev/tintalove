@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v4 as uuidv4 } from 'uuid'
 const ImageKit = require('imagekit')
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+
+const authImagekit = async (req: NextApiRequest, res: NextApiResponse) => {
   const method = req.method
 
   if (method === 'GET') {
@@ -28,3 +29,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).send('Method Not Allowed')
   }
 }
+
+export default authImagekit

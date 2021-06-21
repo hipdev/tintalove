@@ -19,21 +19,17 @@ import {
 import firebaseApp from 'lib/firebase'
 import { Counter } from './counter'
 
-import firebase from 'firebase-8/app'
-import 'firebase-8/firestore'
-
 const db = getFirestore(firebaseApp)
 
 const firebaseConfig = { projectId: 'tinta-love' }
 
 // firebase old 8 version
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-} else {
-  firebase.app() // if already initialized, use that one
+declare global {
+  interface Window {
+    firebase: any
+  }
 }
-const db8 = firebase.firestore()
 
 export async function createList(user, list_name, isFirst) {
   if (isFirst) {
@@ -86,7 +82,18 @@ export async function addPostToList(uid, post, listId) {
 
     batch.commit()
 
-    const counter = new Counter(db8.doc(`posts/${post.id}`), 'counter_listed')
+    if (window.firebase) {
+      if (!window.firebase.apps.length) {
+        window.firebase.initializeApp(firebaseConfig)
+      } else {
+        window.firebase.app() // if already initialized, use that one
+      }
+    }
+
+    const counter = new Counter(
+      window.firebase.firestore().doc(`posts/${post.id}`),
+      'counter_listed'
+    )
 
     counter.incrementBy(1)
 
@@ -136,8 +143,16 @@ export async function removePostFromList(postId, userId) {
       total_items: increment(-1),
     })
 
+    if (window.firebase) {
+      if (!window.firebase.apps.length) {
+        window.firebase.initializeApp(firebaseConfig)
+      } else {
+        window.firebase.app() // if already initialized, use that one
+      }
+    }
+
     const counter = new Counter(
-      db8.doc(`posts/${listItem.data().post_id}`),
+      window.firebase.firestore().doc(`posts/${listItem.data().post_id}`),
       'counter_listed'
     )
 
@@ -158,7 +173,7 @@ export async function getListsIds() {
   return lists
 }
 
-export async function getUserListItems(listId) {
+export async function getUserListItems(key, listId) {
   const q = query(collection(db, 'lists_items'), where('list_id', '==', listId))
   const listRef = doc(collection(db, 'lists'), listId)
 

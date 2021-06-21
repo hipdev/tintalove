@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import firebase from 'firebase-8/app'
+
 import * as uuid from 'uuid'
 
 const SHARD_COLLECTION_ID = '_counter_shards_'
@@ -25,7 +25,7 @@ export interface CounterSnapshot {
 }
 
 export class Counter {
-  private db: firebase.firestore.Firestore = null
+  private db = null
   private shardId = ''
   private shards: { [key: string]: number } = {}
   private notifyPromise: Promise<void> = null
@@ -37,10 +37,7 @@ export class Counter {
    * @param doc A reference to a document with a counter field.
    * @param field A path to a counter field in the above document.
    */
-  constructor(
-    private doc: firebase.firestore.DocumentReference,
-    private field: string
-  ) {
+  constructor(private doc, private field: string) {
     this.db = doc.firestore
     this.shardId = getShardId(COOKIE_NAME)
 
@@ -59,7 +56,7 @@ export class Counter {
    * All local increments will be reflected in the counter even if the main
    * counter hasn't been updated yet.
    */
-  public async get(options?: firebase.firestore.GetOptions): Promise<number> {
+  public async get(options?): Promise<number> {
     const valuePromises = Object.keys(this.shards).map(async (path) => {
       const shard = await this.db.doc(path).get(options)
       return <number>shard.get(this.field) || 0
@@ -76,20 +73,18 @@ export class Counter {
    */
   public onSnapshot(observable: (next: CounterSnapshot) => void) {
     Object.keys(this.shards).forEach((path) => {
-      this.db
-        .doc(path)
-        .onSnapshot((snap: firebase.firestore.DocumentSnapshot) => {
-          this.shards[snap.ref.path] = snap.get(this.field) || 0
-          if (this.notifyPromise !== null) return
-          this.notifyPromise = schedule(() => {
-            const sum = Object.values(this.shards).reduce((a, b) => a + b, 0)
-            observable({
-              exists: true,
-              data: () => sum,
-            })
-            this.notifyPromise = null
+      this.db.doc(path).onSnapshot((snap) => {
+        this.shards[snap.ref.path] = snap.get(this.field) || 0
+        if (this.notifyPromise !== null) return
+        this.notifyPromise = schedule(() => {
+          const sum = Object.values(this.shards).reduce((a, b) => a + b, 0)
+          observable({
+            exists: true,
+            data: () => sum,
           })
+          this.notifyPromise = null
         })
+      })
     })
   }
 
@@ -102,7 +97,7 @@ export class Counter {
    */
   public incrementBy(val: number): Promise<void> {
     // @ts-ignore
-    const increment: any = firebase.firestore.FieldValue.increment(val)
+    const increment: any = window.firebase.firestore.FieldValue.increment(val)
     const update: { [key: string]: any } = this.field
       .split('.')
       .reverse()
@@ -123,7 +118,7 @@ export class Counter {
    * shardRef.set({"counter1", firestore.FieldValue.Increment(1),
    *               "counter2", firestore.FieldValue.Increment(1));
    */
-  public shard(): firebase.firestore.DocumentReference {
+  public shard() {
     return this.doc.collection(SHARD_COLLECTION_ID).doc(this.shardId)
   }
 }
