@@ -5,6 +5,7 @@ import useSWR, { mutate } from 'swr'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { updateArtistMainProfilePicture } from 'lib/queries/artists'
+import { AiOutlineClose } from 'react-icons/ai'
 
 type Props = {
   picture: any
@@ -137,10 +138,16 @@ const MorePicturesCrop = ({
 
   return (
     <div className="flex flex-col ">
-      <p className="text-sm mb-3 mt-5">
-        Puedes mover la foto, el cuadrado indica las proporciones requeridas
-        para la foto de perfil.
-      </p>
+      <div className="flex">
+        <p className="text-sm mb-3 mt-5">
+          Puedes mover la foto, el cuadrado indica las proporciones requeridas
+          para la foto de perfil.
+        </p>
+        <AiOutlineClose
+          onClick={() => setPicture(false)}
+          className="text-2xl ml-5 cursor-pointer"
+        />
+      </div>
       <ReactCrop
         src={picture}
         crop={crop}
