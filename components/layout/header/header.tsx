@@ -79,7 +79,7 @@ const Header = ({ user }: { user: UserState }) => {
           )}
           {user?.is_artist && (
             <div className="flex  items-center justify-between w-full">
-              <div className="flex items-center w-7/12 xl:w-4/5">
+              <div className="flex items-center w-7/12 lg:w-2/3 xl:w-4/5">
                 <Link href="/">
                   <a>
                     {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -101,11 +101,31 @@ const Header = ({ user }: { user: UserState }) => {
                   <input
                     type="search"
                     placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
-                    className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
+                    className="w-96 lg:w-full xl:w-2/3 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
                     "
                   />
+                  <button
+                    type="submit"
+                    className="w-14 h-12 bg-green-500 rounded-r-lg"
+                  >
+                    <span className="text-xl text-white flex justify-center">
+                      <GoSearch />
+                    </span>
+                  </button>
+                  {/* JULI Este es el botón que abre las listas pero no nos aparece cuando es un usuario normal, en cambio sale en el geader de artista pls help us 
+                  <button
+                    className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none"
+                    onClick={() =>
+                      actions.lists({ post: null, listOpen: true })
+                    }
+                  >
+                    <span className="text-xl ">
+                      <FiHeart />
+                    </span>
+                  </button>
+                  */}
                 </div>
-                <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
+                <div className="flex items-center space-x-2 ml-0 lg:ml-2">
                   <WrapperSelectCity user={user} />
                 </div>
               </div>
@@ -118,7 +138,7 @@ const Header = ({ user }: { user: UserState }) => {
                   <VscMenu />
                 </span>
               </div>
-              <div className="gap-3 ml-2 hidden md:flex items-center">
+              <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
                 {user?.artist_active && (
                   <>
                     <WrapperAvailability user={user} />
