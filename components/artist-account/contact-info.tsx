@@ -6,11 +6,12 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { FiHelpCircle } from 'react-icons/fi'
+import { FiFacebook, FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
 import { AiOutlineInstagram } from 'react-icons/ai'
+import { FaFacebookF } from 'react-icons/fa'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -35,6 +36,11 @@ const ContactInfo = ({ uid, isArtist }) => {
       twitter: null,
     },
   })
+
+  const watchContactWay = watch('contact_way')
+  const watchInstagram = watch('instagram')
+  const watchFacebook = watch('facebook')
+  const watchTwitter = watch('twitter')
 
   const regexUrl = new RegExp(
     /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
@@ -65,8 +71,6 @@ const ContactInfo = ({ uid, isArtist }) => {
     }
   }, [success, router])
 
-  const watchContactWay = watch('contact_way')
-
   const onSubmit = (data) => {
     setLoading(true)
 
@@ -95,6 +99,8 @@ const ContactInfo = ({ uid, isArtist }) => {
       return `${website}/${url}`
     }
   }
+
+  console.log(watchInstagram, 'inst', artist?.instagram)
 
   return (
     <div className="w-4/5 mt-10 text-gray-300">
@@ -200,9 +206,12 @@ const ContactInfo = ({ uid, isArtist }) => {
                     },
                   })}
                 />
-                {artist?.instagram && (
+                {(watchInstagram || artist?.instagram) && (
                   <a
-                    href={checkUrl(artist.instagram, 'https://instagram.com')}
+                    href={checkUrl(
+                      watchInstagram || artist?.instagram,
+                      'https://instagram.com'
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -222,21 +231,35 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">FACEBOOK</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('facebook', {
-                  required: {
-                    value: watchContactWay == 'facebook' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser la url de tu perfil',
-                  },
-                })}
-              />
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil"
+                  className="w-full input-primary"
+                  {...register('facebook', {
+                    required: {
+                      value: watchContactWay == 'facebook' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                    pattern: {
+                      value: regexUrl,
+                      message: 'Debe ser la url de tu perfil',
+                    },
+                  })}
+                />
+                {(watchFacebook || artist?.facebook) && (
+                  <a
+                    href={checkUrl(
+                      watchFacebook || artist?.facebook,
+                      'https://instagram.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebookF className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
               {errors.facebook && errors.facebook.message && (
                 <p className="mt-1">
                   {errors.facebook && errors.facebook.message}
