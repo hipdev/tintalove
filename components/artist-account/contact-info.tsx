@@ -10,6 +10,7 @@ import { FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
+import { AiOutlineInstagram } from 'react-icons/ai'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -84,6 +85,15 @@ const ContactInfo = ({ uid, isArtist }) => {
     })
 
     setLoading(false)
+  }
+
+  const checkUrl = (url, website) => {
+    const isLink = regexUrl.test(url)
+    if (isLink) {
+      return url
+    } else {
+      return `${website}/${url}`
+    }
   }
 
   return (
@@ -178,21 +188,29 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">INSTAGRAM</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('instagram', {
-                  required: {
-                    value: watchContactWay == 'chat-instagram' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser una url de tu perfil',
-                  },
-                })}
-              />
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil o tu nombre de usuario"
+                  className="w-full input-primary"
+                  {...register('instagram', {
+                    required: {
+                      value: watchContactWay == 'chat-instagram' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+                {artist?.instagram && (
+                  <a
+                    href={checkUrl(artist.instagram, 'https://instagram.com')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineInstagram className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
+
               {errors.instagram && errors.instagram.message && (
                 <p className="mt-1">
                   {errors.instagram && errors.instagram.message}
