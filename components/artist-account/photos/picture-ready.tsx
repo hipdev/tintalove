@@ -60,7 +60,7 @@ const PictureReady = ({ artist }) => {
       {!picture && <MorePicturesArtist artist={artist} />}
 
       {picture && (
-        <div className="w-full md:w-3/5 pl-0 md:pl-10">
+        <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
           <PictureCrop
             update
             actualPictureId={artist.profile_picture.fileId}
