@@ -49,18 +49,18 @@ const SelectCity = ({ user, cities }) => {
       <Listbox value={selected} onChange={changeCity}>
         {({ open }) => (
           <>
-            <Listbox.Label className="block text-sm font-medium">
+            <Listbox.Label className="hidden md:block text-sm font-medium">
               <TiLocationOutline className="text-3xl text-primary" />
             </Listbox.Label>
-            <div className="mt-1 relative w-44">
+            <div className="block mt-1 relative w-11/12">
               <Listbox.Button
                 className="bg-transparent relative w-full rounded-md text-gray-200
-                shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-0 lg:focus:ring-1 focus:ring-primary focus:border-primary hidden md:block"
               >
-                <span className="block truncate">
+                <span className="hidden lg:block truncate">
                   {selected?.city_name || 'Todo Colombia'}
                 </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">
                   <HiOutlineSelector
                     className="h-5 w-5 text-gray-400"
                     aria-hidden="true"
