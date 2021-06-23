@@ -75,7 +75,7 @@ const CreatePostPicture = ({
 
       {!picture && (
         <div className="flex justify-center">
-          <label className="w-96 h-72 relative flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
+          <label className="w-full h-448 sm:h-609 relative flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <span className="text-4xl text-light-900 mb-4">
               <FaRegUserCircle />
             </span>
