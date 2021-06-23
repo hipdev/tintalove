@@ -6,10 +6,12 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { FiHelpCircle } from 'react-icons/fi'
+import { FiFacebook, FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
+import { AiOutlineInstagram } from 'react-icons/ai'
+import { FaFacebookF, FaTwitter } from 'react-icons/fa'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -34,6 +36,11 @@ const ContactInfo = ({ uid, isArtist }) => {
       twitter: null,
     },
   })
+
+  const watchContactWay = watch('contact_way')
+  const watchInstagram = watch('instagram')
+  const watchFacebook = watch('facebook')
+  const watchTwitter = watch('twitter')
 
   const regexUrl = new RegExp(
     /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
@@ -64,8 +71,6 @@ const ContactInfo = ({ uid, isArtist }) => {
     }
   }, [success, router])
 
-  const watchContactWay = watch('contact_way')
-
   const onSubmit = (data) => {
     setLoading(true)
 
@@ -84,6 +89,15 @@ const ContactInfo = ({ uid, isArtist }) => {
     })
 
     setLoading(false)
+  }
+
+  const checkUrl = (url, website) => {
+    const isLink = regexUrl.test(url)
+    if (isLink) {
+      return url
+    } else {
+      return `${website}/${url}`
+    }
   }
 
   return (
@@ -178,21 +192,32 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">INSTAGRAM</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('instagram', {
-                  required: {
-                    value: watchContactWay == 'chat-instagram' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser una url de tu perfil',
-                  },
-                })}
-              />
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil o tu nombre de usuario"
+                  className="w-full input-primary"
+                  {...register('instagram', {
+                    required: {
+                      value: watchContactWay == 'chat-instagram' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+                {(watchInstagram || artist?.instagram) && (
+                  <a
+                    href={checkUrl(
+                      watchInstagram || artist?.instagram,
+                      'https://instagram.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineInstagram className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
+
               {errors.instagram && errors.instagram.message && (
                 <p className="mt-1">
                   {errors.instagram && errors.instagram.message}
@@ -204,21 +229,31 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">FACEBOOK</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('facebook', {
-                  required: {
-                    value: watchContactWay == 'facebook' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser la url de tu perfil',
-                  },
-                })}
-              />
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil"
+                  className="w-full input-primary"
+                  {...register('facebook', {
+                    required: {
+                      value: watchContactWay == 'facebook' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+                {(watchFacebook || artist?.facebook) && (
+                  <a
+                    href={checkUrl(
+                      watchFacebook || artist?.facebook,
+                      'https://facebook.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebookF className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
               {errors.facebook && errors.facebook.message && (
                 <p className="mt-1">
                   {errors.facebook && errors.facebook.message}
@@ -229,27 +264,37 @@ const ContactInfo = ({ uid, isArtist }) => {
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
               <span className="mb-3 block">TWITTER</span>
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil"
+                  className="w-full input-primary"
+                  {...register('twitter', {
+                    required: {
+                      value: watchContactWay == 'twitter' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('twitter', {
-                  required: {
-                    value: watchContactWay == 'twitter' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser la url de tu perfil',
-                  },
-                })}
-              />
-              {errors.twitter && errors.twitter.message && (
-                <p className="mt-1">
-                  {errors.twitter && errors.twitter.message}
-                </p>
-              )}
+                {(watchTwitter || artist?.twitter) && (
+                  <a
+                    href={checkUrl(
+                      watchTwitter || artist?.twitter,
+                      'https://twitter.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTwitter className="text-2xl ml-4" />
+                  </a>
+                )}
+                {errors.twitter && errors.twitter.message && (
+                  <p className="mt-1">
+                    {errors.twitter && errors.twitter.message}
+                  </p>
+                )}
+              </div>
             </label>
           </div>
         </div>
