@@ -1,9 +1,19 @@
 import Compressor from 'compressorjs'
+import fetcher from 'lib/fetcher'
+import { addArtistPicture } from 'lib/queries/artists'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { HiOutlineCamera } from 'react-icons/hi'
+import useSWR from 'swr'
+import MorePicturesList from './more-pictures-list'
 
 const MorePicturesArtist = ({ artist }) => {
   const [anotherPicture, setAnotherPicture] = useState(null)
+
+  const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  })
 
   const handlePicture = (e: any) => {
     e.preventDefault()
@@ -18,13 +28,57 @@ const MorePicturesArtist = ({ artist }) => {
     }
 
     new Compressor(files[0], {
-      quality: 0.8,
-      maxWidth: 800,
+      quality: 0.9,
+      maxWidth: 1600,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()
-        reader.onload = () => {
+        reader.onload = async () => {
           setAnotherPicture(reader.result as any)
+
+          const dataFile: any = new FormData()
+
+          dataFile.append('fileName', artist?.uid || 'cropped')
+          dataFile.append('file', reader.result)
+          dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
+          dataFile.append('signature', data.signature)
+          dataFile.append('expire', data.expire)
+          dataFile.append('token', data.token)
+
+          const options = {
+            method: 'POST',
+            body: dataFile,
+          }
+
+          await fetch('https://upload.imagekit.io/api/v1/files/upload', options)
+            .then((response) => response.json())
+            .then(async (fileImagekit) => {
+              const content = {
+                filePath: fileImagekit.filePath,
+                size: fileImagekit.size,
+                fileId: fileImagekit.fileId,
+                url: fileImagekit.url,
+                name: fileImagekit.name,
+                thumbnailUrl: fileImagekit.url,
+              }
+              try {
+                toast.promise(addArtistPicture(artist?.uid, content), {
+                  loading: 'Actualizando...',
+                  success: () => {
+                    // setLoading(false)
+                    setAnotherPicture(null)
+
+                    return 'Foto añadida 😉'
+                  },
+                  error: (err) => {
+                    // setLoading(false)
+                    return `${err.toString()}`
+                  },
+                })
+              } catch (error) {
+                console.error(error)
+              }
+            })
         }
         reader.readAsDataURL(result)
       },
@@ -33,6 +87,8 @@ const MorePicturesArtist = ({ artist }) => {
       },
     })
   }
+
+  console.log(anotherPicture, 'blob')
 
   return (
     <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
@@ -51,11 +107,7 @@ const MorePicturesArtist = ({ artist }) => {
         />
       </label>
 
-      {anotherPicture && (
-        <div className="flex">
-          <span>hola</span>
-        </div>
-      )}
+      <MorePicturesList artist={artist} />
     </div>
   )
 }
