@@ -20,7 +20,7 @@ type Props = {
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-    <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto lg:h-screen">
+    <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto">
       <Toaster
         toastOptions={{
           className: 'bg-red-600',
@@ -102,7 +102,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
             <StepNav />
           </div>
         </header>
-        <main>{children}</main>
+        <main className="mb-10">{children}</main>
       </div>
     </div>
   )
