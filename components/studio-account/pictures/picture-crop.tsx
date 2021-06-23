@@ -63,28 +63,19 @@ const PictureCrop = ({
             thumbnailUrl: fileImagekit.url,
           }
           try {
-            toast.promise(
-              updateArtistMainProfilePicture(
-                uid,
-                content,
-                update,
-                actualPictureId,
-                true
-              ),
-              {
-                loading: 'Actualizando...',
-                success: () => {
-                  setLoading(false)
-                  setPicture(null)
+            toast.promise(updateArtistMainProfilePicture(uid, content, true), {
+              loading: 'Actualizando...',
+              success: () => {
+                setLoading(false)
+                setPicture(null)
 
-                  return 'Foto actualizada 😉'
-                },
-                error: (err) => {
-                  setLoading(false)
-                  return `${err.toString()}`
-                },
-              }
-            )
+                return 'Foto actualizada 😉'
+              },
+              error: (err) => {
+                setLoading(false)
+                return `${err.toString()}`
+              },
+            })
           } catch (error) {
             console.error(error)
           }
