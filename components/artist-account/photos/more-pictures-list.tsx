@@ -9,7 +9,10 @@ const MorePicturesList = ({ artist, pictures }) => {
   return (
     <div className="grid grid-cols-3 gap-5">
       {pictures.map((pic) => (
-        <div className="relative h-40 group" key={pic.fileId}>
+        <div
+          className="relative h-40 group overflow-hidden rounded-md border-none"
+          key={pic.fileId}
+        >
           <Image
             key={pic.fileId}
             loader={myLoader}
@@ -19,13 +22,13 @@ const MorePicturesList = ({ artist, pictures }) => {
             // width={600}
             // height={500}
             sizes="100%"
-            className="w-full rounded-md  object-cover"
+            className="w-full object-cover"
           />
 
-          <div className="group-hover:absolute right-1 bottom-2">
+          <div className="group-hover:absolute right-1 bottom-2 z-10">
             <AiOutlineDelete className="text-2xl text-primary cursor-pointer" />
           </div>
-          <div className="group-hover:absolute w-full bottom-0"></div>
+          <div className="group-hover:absolute w-full -bottom-2.5 bg-gradient-to-b from-transparent to-black h-20"></div>
         </div>
       ))}
     </div>
