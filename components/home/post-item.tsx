@@ -66,6 +66,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               // width={600}
               // height={500}
               sizes="100%"
+              loading="lazy"
               quality={100}
               className="w-full rounded-md  object-cover"
             />
