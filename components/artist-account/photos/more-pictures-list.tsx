@@ -6,6 +6,9 @@ const myLoader = ({ src, width, quality }) => {
 }
 
 const MorePicturesList = ({ artist, pictures }) => {
+  const handleDelete = (fileId) => {
+    console.log(fileId)
+  }
   return (
     <div className="grid grid-cols-3 gap-5">
       {pictures.map((pic) => (
@@ -25,9 +28,12 @@ const MorePicturesList = ({ artist, pictures }) => {
             className="w-full object-cover"
           />
 
-          <div className="group-hover:absolute right-1 bottom-2 z-10">
-            <AiOutlineDelete className="text-2xl text-primary cursor-pointer" />
-          </div>
+          <button
+            className="group-hover:absolute right-1 bottom-2 z-10"
+            onClick={() => handleDelete(pic.fileId)}
+          >
+            <AiOutlineDelete className="text-2xl text-primary " />
+          </button>
           <div className="group-hover:absolute w-full -bottom-2.5 bg-gradient-to-b from-transparent to-black h-20"></div>
         </div>
       ))}
