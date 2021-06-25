@@ -1,14 +1,29 @@
+import { deletePictureFromArtist } from 'lib/queries/artists'
 import Image from 'next/image'
+import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
 
 const myLoader = ({ src, width, quality }) => {
   return `${src}/tr:pr-true,w-${width},q-${quality || 75}`
 }
 
-const MorePicturesList = ({ artist, pictures }) => {
-  const handleDelete = (fileId) => {
+const MorePicturesList = ({ artist, pictures, mutatePictures }) => {
+  const handleDelete = (fileId, pictureId) => {
     console.log(fileId)
+
+    toast.promise(deletePictureFromArtist(fileId, pictureId), {
+      loading: 'Eliminando...',
+      success: () => {
+        mutatePictures()
+
+        return 'Foto eliminada 😉'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
   }
+  console.log(pictures, 'fotos')
   return (
     <div className="grid grid-cols-3 gap-5">
       {pictures.map((pic) => (
@@ -30,7 +45,7 @@ const MorePicturesList = ({ artist, pictures }) => {
 
           <button
             className="group-hover:absolute right-1 bottom-2 z-10"
-            onClick={() => handleDelete(pic.fileId)}
+            onClick={() => handleDelete(pic.fileId, pic.id)}
           >
             <AiOutlineDelete className="text-2xl text-primary " />
           </button>

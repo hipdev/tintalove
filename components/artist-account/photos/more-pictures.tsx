@@ -116,7 +116,11 @@ const MorePicturesArtist = ({ artist }) => {
       </label>
 
       {dataPictures?.pictures?.length > 0 && (
-        <MorePicturesList artist={artist} pictures={dataPictures?.pictures} />
+        <MorePicturesList
+          artist={artist}
+          pictures={dataPictures?.pictures}
+          mutatePictures={mutatePictures}
+        />
       )}
     </div>
   )
