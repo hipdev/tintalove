@@ -13,6 +13,7 @@ import {
   QueryDocumentSnapshot,
   query,
   where,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -410,4 +411,19 @@ export async function getArtistsPictures(key, artistId) {
   })
 
   return { pictures }
+}
+
+export async function deletePictureFromArtist(imageId, pictureId) {
+  const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
+
+  const options = {
+    method: 'DELETE',
+    body: JSON.stringify({ imageId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  await fetch('/api/profile/delete-image', options)
+  await deleteDoc(artistPictureRef)
 }
