@@ -1,4 +1,4 @@
-import ArtistProfile from 'components/artist/profile'
+import ArtistProfile from 'components/artist/artist-profile'
 import Layout from 'components/layout/layout'
 
 import { postToJSON } from 'lib/firebase'
