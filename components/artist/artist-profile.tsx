@@ -6,8 +6,16 @@ import { RiRoadMapLine } from 'react-icons/ri'
 import { FiClock } from 'react-icons/fi'
 import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
+import { ArtistTypes } from 'types/artist'
 
-const ArtistProfile = ({ artistData }) => {
+type Props = {
+  artistData: ArtistTypes
+  artistPics: any
+}
+
+const ArtistProfile = ({ artistData, artistPics }: Props) => {
+  console.log(artistPics, 'fotos del artista')
+
   return (
     <div className=" h-auto min-h-screen">
       <div className="mx-5 sm:mx-16 pt-20">
@@ -22,11 +30,11 @@ const ArtistProfile = ({ artistData }) => {
             </div>
             <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
               <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-                Daniela Castillo
+                {artistData?.displayName}
               </h1>
               <div className="flex items-center gap-2 mb-4 lg:mb-0">
                 <h6 className="text-light-200 text-base lg:text-sm">
-                  Medellín, Antioquia
+                  {artistData?.city_name}, {artistData?.province}
                 </h6>
                 <Link href="#">
                   <a className="text-green-600">(ver ubicación)</a>

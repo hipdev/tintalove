@@ -398,7 +398,9 @@ export async function getArtistAvailability(key, uid) {
   }
 }
 
-export async function getArtistsPictures(key, artistId) {
+export async function getArtistPictures(key, artistId) {
+  console.log(artistId, 'id del artista')
+
   const q = query(
     collection(db, 'artists_pics'),
     where('artist_id', '==', artistId)
