@@ -7,9 +7,9 @@ import { FiClock } from 'react-icons/fi'
 import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
 
-const ProfileArtist = () => {
+const ArtistProfile = ({ artistData }) => {
   return (
-    <div className="bg-dark-500 h-auto">
+    <div className=" h-auto min-h-screen">
       <div className="mx-5 sm:mx-16 pt-20">
         <div className="flex flex-col-reverse lg:flex-row gap-8">
           <div className="hidden lg:block w-full sm:w-4/5 lg:w-80  static lg:fixed flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
@@ -293,4 +293,4 @@ const ProfileArtist = () => {
   )
 }
 
-export default ProfileArtist
+export default ArtistProfile
