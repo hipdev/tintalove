@@ -7,6 +7,7 @@ import { FiClock } from 'react-icons/fi'
 import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
+import Image from 'next/image'
 
 type Props = {
   artistData: ArtistTypes
@@ -26,6 +27,19 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 src="https://via.placeholder.com/309x287"
                 alt=""
                 className="w-full"
+              />
+
+              <Image
+                loader={loaderPost}
+                src={post?.image?.url}
+                alt="Artist photo"
+                layout="fill"
+                // width={600}
+                // height={500}
+                sizes="100%"
+                loading="lazy"
+                quality={100}
+                className="w-full rounded-md  object-cover"
               />
             </div>
             <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
