@@ -7,9 +7,6 @@ import PostItemListed from './post-item-listed'
 import { getPostDataById } from 'lib/queries/posts'
 import Image from 'next/image'
 
-const myLoader = ({ src, width, quality }) => {
-  return `${src}/tr:pr-true,w-${width},q-${quality || 75}`
-}
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-235,q-${quality || 75}`
 }
