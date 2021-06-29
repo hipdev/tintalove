@@ -29,7 +29,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 className="w-full"
               />
 
-              <Image
+              {/* <Image
                 loader={loaderPost}
                 src={post?.image?.url}
                 alt="Artist photo"
@@ -40,7 +40,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 loading="lazy"
                 quality={100}
                 className="w-full rounded-md  object-cover"
-              />
+              /> */}
             </div>
             <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
               <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">

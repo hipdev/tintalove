@@ -72,7 +72,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          <Image
+          {/* <Image
             loader={myLoader}
             src={post?.artist_picture}
             alt="Artist photo"
@@ -80,7 +80,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             height={35}
             quality={70}
             className="w-7 h-7 bg-primary rounded-full"
-          />
+          /> */}
           <p className="text-white text-sm">
             {post.displayName || 'Sin nombre'}
           </p>
