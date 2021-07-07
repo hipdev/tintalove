@@ -4,6 +4,7 @@ import CreatePostPicture from './create-post-picture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
 import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
+import { BsArrowRight } from 'react-icons/bs'
 
 const CreatePost = ({ user }) => {
   const [description, setDescription] = useState('')
@@ -22,9 +23,9 @@ const CreatePost = ({ user }) => {
   }
 
   return (
-    <div className="bg-dark-800 pt-10 pb-48 h-3/6 xl:h-screen">
-      <div className="container mx-auto flex flex-col md:flex-row w-4/5 py-5 md:py-12 px-0 md:px-10  relative pb-40 md:pb-12 mt-20">
-        <div className="w-full md:w-2/3  pr-0 md:pr-10">
+    <div className="bg-dark-800 pt-10 h-3/6 xl:h-screen overflow-auto">
+      <div className="container mx-auto flex flex-col xl:flex-row w-4/5 pt-5 md:pt-12 px-0 md:px-10  relative pb-40 md:pb-12 xl:pb-0 mt-8">
+        <div className="w-full xl:w-2/3 pr-0 xl:pr-10">
           <CreatePostPicture
             uid={user.uid}
             dataForm={{ description, styles }}
@@ -34,18 +35,20 @@ const CreatePost = ({ user }) => {
           />
         </div>
 
-        <div className="w-full md:w-1/3 text-gray-300 mt-5 md:mt-0">
+        <div className="w-full xl:w-1/2 text-gray-300 mt-5 md:mt-0">
+          <h1 className="text-white text-2xl mb-10">Nueva publicación</h1>
           <label className="flex flex-col mb-5">
             <span className="block mb-2">Descripción corta</span>
             <textarea
-              className="input-primary"
+              className="input-primary placeholder-light-200 bg-ocean_blue-300 resize-none"
               placeholder="Ej: Gato en sombras, con un toque de puntillismo..."
+              rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
 
-          <label className="flex flex-col">
+          <label className="flex flex-col mb-8 xl:mb-80">
             <span className="block mb-2">Estilos usados</span>
             <Select
               options={options}
@@ -99,6 +102,15 @@ const CreatePost = ({ user }) => {
               </div>
             </div>
           )}
+          <div className="flex gap-4 sm:gap-8 text-white mt-5 xl:mt-32 ml-5 justify-center mb-5">
+            <button className="py-3 px-4 focus:outline-none">CANCELAR</button>
+            <button className="flex items-center gap-3 py-3 px-5 sm:px-20 bg-primary hover:bg-primaryHover rounded-md focus:outline-none">
+              PUBLICAR
+              <span className="text-2xl">
+                <BsArrowRight />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
