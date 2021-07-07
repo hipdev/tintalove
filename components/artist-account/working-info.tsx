@@ -4,18 +4,19 @@ import Select from 'react-select'
 import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
 import { updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
+import ContactInfoLocation from 'components/studio-account/contact-info/contact-info-location'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
 const WorkingInfo = ({ uid, isArtist }) => {
+  const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { artist } = useArtist(uid)
@@ -128,7 +129,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                 <input
                   className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
-                  value="independent"
+                  value="freelance"
                   {...register('work_as')}
                 />
                 <span className="ml-2 mr-4">Soy independiente</span>
@@ -168,6 +169,25 @@ const WorkingInfo = ({ uid, isArtist }) => {
                     </Link>
                   </p>
                 </div>
+              </div>
+            )}
+            {watchWorkAs == 'freelance' && (
+              <div className="mt-7">
+                <label
+                  htmlFor=""
+                  className="block text-white text-sm  mb-2 tracking-wide"
+                >
+                  <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
+
+                  {isArtist && (
+                    <ContactInfoLocation
+                      studioId={uid}
+                      studioInfo={artist || null}
+                      setLocation={setLocation}
+                    />
+                  )}
+                  {!isArtist && <p>Debes terminar el primer paso</p>}
+                </label>
               </div>
             )}
           </div>

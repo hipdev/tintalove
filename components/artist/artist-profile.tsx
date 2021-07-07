@@ -6,10 +6,19 @@ import { RiRoadMapLine } from 'react-icons/ri'
 import { FiClock } from 'react-icons/fi'
 import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
+import { ArtistTypes } from 'types/artist'
+import Image from 'next/image'
 
-const ProfileArtist = () => {
+type Props = {
+  artistData: ArtistTypes
+  artistPics: any
+}
+
+const ArtistProfile = ({ artistData, artistPics }: Props) => {
+  console.log(artistPics, 'fotos del artista')
+
   return (
-    <div className="bg-dark-500 h-auto">
+    <div className=" h-auto min-h-screen">
       <div className="mx-5 sm:mx-16 pt-20">
         <div className="flex flex-col-reverse lg:flex-row gap-8">
           <div className="hidden lg:block w-full sm:w-4/5 lg:w-80  static lg:fixed flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
@@ -19,14 +28,27 @@ const ProfileArtist = () => {
                 alt=""
                 className="w-full"
               />
+
+              {/* <Image
+                loader={loaderPost}
+                src={post?.image?.url}
+                alt="Artist photo"
+                layout="fill"
+                // width={600}
+                // height={500}
+                sizes="100%"
+                loading="lazy"
+                quality={100}
+                className="w-full rounded-md  object-cover"
+              /> */}
             </div>
             <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
               <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-                Daniela Castillo
+                {artistData?.displayName}
               </h1>
               <div className="flex items-center gap-2 mb-4 lg:mb-0">
                 <h6 className="text-light-200 text-base lg:text-sm">
-                  Medellín, Antioquia
+                  {artistData?.city_name}, {artistData?.province}
                 </h6>
                 <Link href="#">
                   <a className="text-green-600">(ver ubicación)</a>
@@ -285,52 +307,6 @@ const ProfileArtist = () => {
                   />
                 </div>
               </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy5.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy2.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy6.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy4.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -339,4 +315,4 @@ const ProfileArtist = () => {
   )
 }
 
-export default ProfileArtist
+export default ArtistProfile

@@ -124,7 +124,7 @@ const PostComments = ({
       </div>
 
       <div className={showComments ? 'hidden' : 'block'}>
-        <div className="flex justify-end mb-4 mr-2">
+        <div className="flex justify-end mb-4 mr-2 sm:hidden">
           <button
             onClick={() => setShowComments(true)}
             className="text-gray-300"
