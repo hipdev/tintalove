@@ -42,7 +42,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
     "microtip": "^0.2.2",
-    "next": "^11.0.1",
     "next-pwa": "^5.2.23",
     "react": "^17.0.2",
     "react-cool-onclickoutside": "^1.6.2",
