@@ -1,10 +1,11 @@
 import fetcher from 'lib/fetcher'
-import { useState } from 'react'
-import { Cropper } from 'react-cropper'
+import { useCallback, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
-import 'cropperjs/dist/cropper.css'
+import ReactCrop from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 import { updateArtistMainProfilePicture } from 'lib/queries/artists'
+import { AiOutlineClose } from 'react-icons/ai'
 
 type Props = {
   picture: any
@@ -15,31 +16,73 @@ type Props = {
   setPicture?: any
 }
 
-const PictureCrop = ({
+const PictureCropStudio = ({
   picture,
   uid,
   update,
   actualPictureId,
   setPicture,
 }: Props) => {
-  const [cropper, setCropper] = useState<any>()
   const [loading, setLoading] = useState(false)
+
+  const [crop, setCrop]: any = useState({
+    aspect: 6 / 7,
+    unit: '%',
+    width: 100,
+    // height: 100,
+  })
+
+  const imgRef = useRef(null)
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img
+  }, [])
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
 
+  const getResizedCanvas = () => {
+    const scaleX = imgRef.current.naturalWidth / imgRef.current.width
+    const scaleY = imgRef.current.naturalHeight / imgRef.current.height
+    const tmpCanvas = document.createElement('canvas')
+    tmpCanvas.width = Math.ceil(crop.width * scaleX)
+    tmpCanvas.height = Math.ceil(crop.height * scaleY)
+
+    const ctx = tmpCanvas.getContext('2d')
+    const image = imgRef.current
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    )
+
+    return tmpCanvas
+  }
+
   const getCropData = async () => {
     mutate('/api/imagekit/auth')
-    if (typeof cropper !== 'undefined') {
-      const file = cropper
-        .getCroppedCanvas({ imageSmoothingQuality: 'high' })
-        .toDataURL('image/jpeg')
 
+    const canvas = getResizedCanvas()
+    const file: any = canvas.toDataURL('image/jpeg')
+
+    if (!crop || !canvas) {
+      setLoading(false)
+      toast('Ocurrió un error con la foto')
+      return
+    }
+
+    if (crop) {
       const dataFile: any = new FormData()
 
-      dataFile.append('fileName', (file && file.name) || 'cropped')
+      dataFile.append('fileName', uid || 'cropped')
       dataFile.append('file', file)
       dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
       dataFile.append('signature', data.signature)
@@ -68,6 +111,7 @@ const PictureCrop = ({
               success: () => {
                 setLoading(false)
                 setPicture(null)
+                mutate(uid)
 
                 return 'Foto actualizada 😉'
               },
@@ -85,28 +129,24 @@ const PictureCrop = ({
 
   return (
     <div className="flex flex-col ">
-      <p className="text-sm mb-3 mt-5">
-        Puedes mover y hacer zoom con la foto, el cuadrado indica las
-        proporciones requeridas para la foto de perfil.
-      </p>
-      <Cropper
-        style={{ height: '60vh', width: '100%' }}
-        initialAspectRatio={1}
-        aspectRatio={6 / 7}
+      <div className="flex">
+        <p className="text-sm mb-3 mt-5">
+          Puedes mover la foto, el cuadrado indica las proporciones requeridas
+          para la foto de perfil.
+        </p>
+        <AiOutlineClose
+          onClick={() => setPicture(false)}
+          className="text-2xl ml-5 cursor-pointer"
+        />
+      </div>
+      <ReactCrop
         src={picture}
-        viewMode={0}
-        dragMode="move"
-        autoCropArea={1}
-        guides={false}
-        cropBoxResizable={false}
-        cropBoxMovable={false}
-        background={false}
-        responsive={true}
-        checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-        onInitialized={(instance: any) => {
-          setCropper(instance)
-        }}
+        crop={crop}
+        onImageLoaded={onLoad}
+        onChange={(c) => setCrop(c)}
+        imageStyle={{ maxHeight: '600px' }}
       />
+
       <button
         onClick={getCropData}
         className="block btn-primary py-3 px-5 mt-4"
@@ -118,4 +158,4 @@ const PictureCrop = ({
   )
 }
 
-export default PictureCrop
+export default PictureCropStudio
