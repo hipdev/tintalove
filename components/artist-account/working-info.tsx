@@ -9,7 +9,8 @@ import useArtist from 'hooks/use-artist'
 import { updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
-import ContactInfoLocation from 'components/studio-account/contact-info/contact-info-location'
+import ArtistContactInfoLocation from 'components/artist-account/contact-info/contact-info-location'
+import ArtistContactInfoMapStudio from './contact-info/contact-info-map'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -180,9 +181,9 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
 
                   {isArtist && (
-                    <ContactInfoLocation
-                      studioId={uid}
-                      studioInfo={artist || null}
+                    <ArtistContactInfoLocation
+                      artistId={uid}
+                      artistInfo={artist || null}
                       setLocation={setLocation}
                     />
                   )}
@@ -191,6 +192,14 @@ const WorkingInfo = ({ uid, isArtist }) => {
               </div>
             )}
           </div>
+
+          {location && (
+            <ArtistContactInfoMapStudio
+              studioId={uid}
+              cityLocation={location}
+            />
+          )}
+
           <div className="col-span-6 mb-6 ">
             <label htmlFor="" className="text-sm tracking-wide">
               <span className="mb-3 block">HORARIOS</span>
