@@ -8,7 +8,7 @@ import { CgDice1 } from 'react-icons/cg'
 
 const PostArtist = () => {
   return (
-    <div className="bg-dark-800 h-screen px-4 sm:px-16 lg:px-28 overflow-auto">
+    <div className="bg-dark-800 h-screen px-4 sm:px-16 lg:px-28 overflow-auto pt-10">
       <div className="flex flex-wrap xl:flex-nowrap justify-center xl:justify-start gap-16 xl:gap-24 mt-20">
         <div className="w-11/12 md:w-3/4 xl:w-1/2 h-auto">
           <div className="flex flex-col items-center justify-center w-full h-448 sm:h-609 border-2 border-light-200 border-dashed rounded-md">
