@@ -1,15 +1,16 @@
-import ArtistProfile from 'components/artist/profile'
+import ArtistProfile from 'components/artist/artist-profile'
 import Layout from 'components/layout/layout'
 
-import { postToJSON } from 'lib/firebase'
+import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
   getArtistIdByUsername,
   getArtistInfo,
+  getArtistPictures,
   getUserNamesByArtists,
 } from 'lib/queries/artists'
 import { useRouter } from 'next/router'
 
-const UsernameArtistPage = ({ artistId, artistData }: any) => {
+const UsernameArtistPage = ({ artistId, artistData, artistPics }: any) => {
   const router: any = useRouter()
 
   if (router.isFallback) {
@@ -19,11 +20,10 @@ const UsernameArtistPage = ({ artistId, artistData }: any) => {
   if (!artistId) {
     return <p>No existe ese artista</p>
   }
-  console.log(artistData, artistId, 'el artista info')
 
   return (
     <Layout>
-      <ArtistProfile artistData={artistData || null} />
+      <ArtistProfile artistData={artistData} artistPics={artistPics} />
     </Layout>
   )
 }
@@ -48,6 +48,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
   let artistId = null
   let artistData = null
+  let artistPics = null
   console.log(params.username, 'el parametro enviado')
 
   if (params.username) {
@@ -56,10 +57,11 @@ export async function getStaticProps({ params }: any) {
 
       try {
         const data = await getArtistInfo(artistId)
+        const dataPics = await getArtistPictures('_', artistId)
 
         artistData = postToJSON(data?.artist)
-
-        console.log(artistData, 'y eso que pasho')
+        artistPics = postsToJSON(dataPics?.pictures)
+        // Si falla uno fallan todos por esta dentro del mismo trycatch
       } catch (error) {
         console.log('Error obteniendo la info del artista')
       }
@@ -76,6 +78,7 @@ export async function getStaticProps({ params }: any) {
     props: {
       artistId,
       artistData,
+      artistPics,
     },
     revalidate: 2,
   }

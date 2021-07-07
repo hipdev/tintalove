@@ -6,10 +6,12 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
 import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
+import { AiOutlineCamera } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
 import SelectCity from './select-city'
 import WrapperSelectCity from './wrapper-select-city'
+import WrapperAvailability from './wrapper-availability'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -77,7 +79,7 @@ const Header = ({ user }: { user: UserState }) => {
           )}
           {user?.is_artist && (
             <div className="flex  items-center justify-between w-full">
-              <div className="flex items-center w-7/12 xl:w-4/5">
+              <div className="flex items-center w-7/12 lg:w-2/3 xl:w-4/5">
                 <Link href="/">
                   <a>
                     {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -99,17 +101,18 @@ const Header = ({ user }: { user: UserState }) => {
                   <input
                     type="search"
                     placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
-                    className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
+                    className="w-96 lg:w-full xl:w-2/3 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
                     "
                   />
                   <button
                     type="submit"
-                    className="w-14 h-12 bg-primary hover:bg-primaryHover focus:outline-none rounded-r-lg flex-shrink-0"
+                    className="w-14 h-12 bg-green-500 rounded-r-lg"
                   >
-                    <span className="text-2xl text-white flex justify-center">
-                      <AiOutlineSearch />
+                    <span className="text-xl text-white flex justify-center">
+                      <GoSearch />
                     </span>
                   </button>
+                  {/* JULI Este es el botón que abre las listas pero no nos aparece cuando es un usuario normal, en cambio sale en el geader de artista pls help us 
                   <button
                     className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none"
                     onClick={() =>
@@ -120,6 +123,10 @@ const Header = ({ user }: { user: UserState }) => {
                       <FiHeart />
                     </span>
                   </button>
+                  */}
+                </div>
+                <div className="flex items-center space-x-2 ml-0 lg:ml-2">
+                  <WrapperSelectCity user={user} />
                 </div>
               </div>
               {/*New elements for tablet resolution*/}
@@ -132,10 +139,23 @@ const Header = ({ user }: { user: UserState }) => {
                 </span>
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
-                <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <WrapperSelectCity user={user} />
+                {user?.artist_active && (
+                  <>
+                    <WrapperAvailability user={user} />
+                    <Link href="/post/new-post">
+                      <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                        <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                          <AiOutlineCamera />
+                        </span>
+                        <span className="hidden xl:block">PUBLICAR</span>
+                      </a>
+                    </Link>
+                  </>
+                )}
+
+                <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
+                  <SubMenuHeader user={user || null} />
                 </div>
-                <SubMenuHeader user={user || null} />
               </div>
             </div>
           )}
