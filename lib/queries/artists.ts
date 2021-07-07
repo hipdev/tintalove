@@ -1,6 +1,7 @@
 var slugify = require('slugify')
 import {
   collection,
+  addDoc,
   doc,
   getDoc,
   getFirestore,
@@ -10,6 +11,9 @@ import {
   writeBatch,
   getDocs,
   QueryDocumentSnapshot,
+  query,
+  where,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 
@@ -235,13 +239,7 @@ export async function updateArtistContactInfo(uid, data, wizard) {
   }
 }
 
-export async function updateArtistMainProfilePicture(
-  uid,
-  data,
-  update,
-  imageId,
-  wizard
-) {
+export async function updateArtistMainProfilePicture(uid, data, wizard) {
   const artistRef = doc(collection(db, 'artists'), uid)
   const userRef = doc(collection(db, 'users'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
@@ -273,6 +271,28 @@ export async function updateArtistMainProfilePicture(
     if (wizard) {
       updateDoc(artistWizardRef, { step_four: true })
     }
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function addArtistPicture(uid, data) {
+  const artistRef = doc(collection(db, 'artists'), uid)
+
+  const dataForm = {
+    ...data,
+    artist_id: uid,
+    created_at: serverTimestamp(),
+  }
+
+  console.log(dataForm, 'esto')
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    await addDoc(collection(db, 'artists_pics'), dataForm)
 
     return true
   } else {
@@ -376,4 +396,36 @@ export async function getArtistAvailability(key, uid) {
   } else {
     throw new Error('No estas registrado como artista')
   }
+}
+
+export async function getArtistPictures(key, artistId) {
+  console.log(artistId, 'id del artista')
+
+  const q = query(
+    collection(db, 'artists_pics'),
+    where('artist_id', '==', artistId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const pictures: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return pictures.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { pictures }
+}
+
+export async function deletePictureFromArtist(imageId, pictureId) {
+  const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
+
+  const options = {
+    method: 'DELETE',
+    body: JSON.stringify({ imageId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  await fetch('/api/profile/delete-image', options)
+  await deleteDoc(artistPictureRef)
 }
