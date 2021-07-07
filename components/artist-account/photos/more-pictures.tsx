@@ -1,6 +1,6 @@
 import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
-import { addArtistPicture, getArtistsPictures } from 'lib/queries/artists'
+import { addArtistPicture, getArtistPictures } from 'lib/queries/artists'
 
 import toast from 'react-hot-toast'
 import { HiOutlineCamera } from 'react-icons/hi'
@@ -19,7 +19,7 @@ const MorePicturesArtist = ({ artist }) => {
 
   const { data: dataPictures, mutate: mutatePictures }: any = useSWR(
     ['getArtistPictures', artist?.uid],
-    getArtistsPictures
+    getArtistPictures
   )
 
   const handlePicture = async (e: any) => {
@@ -116,7 +116,11 @@ const MorePicturesArtist = ({ artist }) => {
       </label>
 
       {dataPictures?.pictures?.length > 0 && (
-        <MorePicturesList artist={artist} pictures={dataPictures?.pictures} />
+        <MorePicturesList
+          artist={artist}
+          pictures={dataPictures?.pictures}
+          mutatePictures={mutatePictures}
+        />
       )}
     </div>
   )
