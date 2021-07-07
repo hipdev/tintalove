@@ -238,6 +238,27 @@ export async function updateArtistLocation(artistId, dataLocation) {
   }
 }
 
+export async function updateArtistLocationMarker(artistId, dataMarker) {
+  const artistRef = doc(collection(db, 'artists'), artistId)
+
+  const docSnap = await getDoc(artistRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(artistRef, {
+      dataMarker,
+      _geoloc_marker: {
+        lat: dataMarker.marker_location[0],
+        lng: dataMarker.marker_location[1],
+      },
+      updated_at: serverTimestamp(),
+    })
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
 export async function updateArtistContactInfo(uid, data, wizard) {
   const artistRef = doc(collection(db, 'artists'), uid)
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)

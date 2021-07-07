@@ -270,7 +270,7 @@ export async function updateStudioLocationMarker(studioId, dataMarker) {
 
     return true
   } else {
-    throw new Error('No estas registrado como artista')
+    throw new Error('No estas registrado como estudio')
   }
 }
 

@@ -7,7 +7,11 @@ import { useEffect, useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
 
-import { updateArtistLocation } from 'lib/queries/artists'
+import {
+  updateArtistLocation,
+  updateArtistLocationMarker,
+} from 'lib/queries/artists'
+import { updateStudioLocationMarker } from 'lib/queries/studios'
 
 const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
@@ -91,6 +95,24 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
       loading: 'Actualizando...',
       success: () => {
         return 'Ubicacion actualizada 😉'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
+
+    const marker_location = [lat, lng]
+    const marker_hash = geohashForLocation(marker_location)
+
+    const dataMarker = {
+      marker_location,
+      marker_hash,
+    }
+
+    toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
+      loading: 'Actualizando...',
+      success: () => {
+        return 'Marker actualizado 📍'
       },
       error: (err) => {
         return `${err.toString()}`
