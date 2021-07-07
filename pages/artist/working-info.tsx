@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import WorkingInfo from 'components/artist-account/working-info'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
@@ -15,6 +16,7 @@ export default function WorkingInfopage() {
 
   return (
     <LayoutStepsArtist uid={userId} user={data.user}>
+      <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places" />
       <WorkingInfo uid={data.user.uid || null} isArtist={data.user.is_artist} />
     </LayoutStepsArtist>
   )
