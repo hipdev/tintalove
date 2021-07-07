@@ -249,7 +249,7 @@ export async function updateStudioLocation(studioId, dataLocation) {
 
     return true
   } else {
-    throw new Error('No estas registrado como artista')
+    throw new Error('No estas registrado como estudio')
   }
 }
 
