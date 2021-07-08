@@ -1,6 +1,6 @@
 import Layout from 'components/layout/layout'
 import Loading from 'components/loading/loading'
-import CreatePost from 'components/post/create/create-post'
+import CreatePost from 'components/post/create/CreatePost'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 import useSWR from 'swr'

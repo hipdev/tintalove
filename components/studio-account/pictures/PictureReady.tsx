@@ -1,7 +1,7 @@
 import Compressor from 'compressorjs'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
-import PictureCrop from './picture-crop'
+import PictureCrop from './PictureCrop'
 
 const PictureReady = ({ artist }) => {
   const [picture, setPicture] = useState(null)

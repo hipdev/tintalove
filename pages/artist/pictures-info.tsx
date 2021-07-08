@@ -1,7 +1,7 @@
 import PicturesInfo from 'components/artist-account/photos/pictures-info'
 
 import IsAuth from 'components/isAuth'
-import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
+import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
 import useUser from 'hooks/use-user'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'

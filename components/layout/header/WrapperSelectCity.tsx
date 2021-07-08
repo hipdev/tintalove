@@ -1,7 +1,7 @@
 import { getCities } from 'lib/queries/general'
 import useSWR from 'swr'
 import { UserState } from 'types/user'
-import SelectCity from './select-city'
+import SelectCity from './SelectCity'
 
 const WrapperSelectCity = ({ user }: { user: UserState }) => {
   const { data } = useSWR(['get-cities', 'Colombia'], getCities)

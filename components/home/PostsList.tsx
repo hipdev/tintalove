@@ -3,7 +3,7 @@ import { getUserInfo } from 'lib/queries/users'
 import { MdFilterList } from 'react-icons/md'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
-import PostItem from './post-item'
+import PostItem from './PostItem'
 
 const PostListHome = ({ posts }) => {
   const { userId } = useUserId()

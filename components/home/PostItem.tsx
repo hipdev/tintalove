@@ -3,7 +3,7 @@ import { FaRegCommentDots } from 'react-icons/fa'
 import { PostTypes } from 'types/post'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
-import PostItemListed from './post-item-listed'
+import PostItemListed from './PostItemListed'
 import { getPostDataById } from 'lib/queries/posts'
 import Image from 'next/image'
 

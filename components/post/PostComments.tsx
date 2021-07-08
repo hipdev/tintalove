@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
-import PostComment from './post-comment'
+import PostComment from './PostComment'
 
 const PostComments = ({
   postId,
