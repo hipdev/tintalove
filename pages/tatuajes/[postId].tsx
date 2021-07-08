@@ -13,7 +13,7 @@ import {
 
 import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
-import PostModalContent from 'components/post/post-modal-content'
+import PostModalContent from 'components/post/PostModalContent'
 
 export default function TattoosPage({
   postData,

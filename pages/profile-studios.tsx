@@ -1,4 +1,4 @@
-import ProfileStudios from 'components/layout-pages/w-profile-studios'
+import ProfileStudios from 'components/layout-pages/ProfileStudios'
 import { postsToJSON } from 'lib/firebase'
 import { getStudiosInfo } from 'lib/queries/studios'
 

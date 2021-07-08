@@ -1,4 +1,4 @@
-import ArtistsList from 'components/artists/artists-list'
+import ArtistsList from 'components/artists/ArtistsList'
 import { postsToJSON } from 'lib/firebase'
 import { getArtistsInfo } from 'lib/queries/artists'
 

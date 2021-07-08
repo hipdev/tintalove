@@ -1,5 +1,5 @@
 import IsAuth from 'components/isAuth'
-import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
+import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import Artists from 'components/studio-account/artists/artists'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'

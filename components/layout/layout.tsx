@@ -5,8 +5,8 @@ import useSWR from 'swr'
 import Footer from './footer'
 import HeadContainer from './head'
 import Header from './header/header'
-import UserLists from './lists/user-lists'
-import NavFooter from './nav-footer'
+import UserLists from './lists/UserLists'
+import NavFooter from './NavFooter'
 
 type Props = {
   children: any
