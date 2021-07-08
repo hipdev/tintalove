@@ -1,8 +1,8 @@
-import PostsComments from './post-comments'
+import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
-import PostAside from './create/post-aside'
+import PostAside from './create/PostAside'
 import Image from 'next/image'
 import { UserState } from 'types/user'
 

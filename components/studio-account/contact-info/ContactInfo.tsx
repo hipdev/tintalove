@@ -8,8 +8,8 @@ import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import ContactInfoLocation from './contact-info-location'
-import ContactInfoMapStudio from './contact-info-map'
+import ContactInfoLocation from './ContactInfoLocation'
+import ContactInfoMapStudio from './ContactInfoMap'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
   const [location, setLocation] = useState(null)

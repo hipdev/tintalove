@@ -1,7 +1,7 @@
 import Script from 'next/script'
 import IsAuth from 'components/isAuth'
-import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
-import ContactInfoStudio from 'components/studio-account/contact-info/contact-info'
+import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
+import ContactInfoStudio from 'components/studio-account/contact-info/ContactInfo'
 import useScript from 'hooks/use-script'
 
 import useUserId from 'hooks/use-user-id'

@@ -2,7 +2,7 @@ import { AiOutlineStar } from 'react-icons/ai'
 import { RiMessengerLine } from 'react-icons/ri'
 import { FaInstagram } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
-import StudioCard from './studio-card'
+import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
 import Link from 'next/link'
 

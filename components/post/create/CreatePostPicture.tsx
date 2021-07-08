@@ -5,7 +5,7 @@ import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
-import CreatePostCrop from './create-post-crop'
+import CreatePostCrop from './CreatePostCrop'
 
 const CreatePostPicture = ({
   uid,

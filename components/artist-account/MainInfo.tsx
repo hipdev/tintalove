@@ -6,10 +6,10 @@ import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import MainInfoAvailable from './main-info-edit/main-info-available'
+import MainInfoAvailable from './main-info-edit/MainInfoAvailable'
 
 import 'microtip/microtip.css'
-import MainInfoCity from './main-info-edit/main-info-city'
+import MainInfoCity from './main-info-edit/MainInfoCity'
 import { createArtist, userNameAvailable } from 'lib/queries/artists'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/

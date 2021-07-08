@@ -9,9 +9,9 @@ import { FiHeart } from 'react-icons/fi'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
-import SelectCity from './select-city'
-import WrapperSelectCity from './wrapper-select-city'
-import WrapperAvailability from './wrapper-availability'
+import SelectCity from './SelectCity'
+import WrapperSelectCity from './WrapperSelectCity'
+import WrapperAvailability from './WrapperAvailability'
 
 const Header = ({ user }: { user: UserState }) => {
   const {

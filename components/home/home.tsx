@@ -1,4 +1,4 @@
-import PostsList from './posts-list'
+import PostsList from './PostsList'
 
 const Home = ({ posts }) => {
   return (
