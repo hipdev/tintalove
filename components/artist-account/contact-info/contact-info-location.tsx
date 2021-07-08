@@ -6,9 +6,14 @@ import useOnclickOutside from 'react-cool-onclickoutside'
 import { useEffect, useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
-import { updateStudioLocation } from 'lib/queries/studios'
 
-const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
+import {
+  updateArtistLocation,
+  updateArtistLocationMarker,
+} from 'lib/queries/artists'
+import { updateStudioLocationMarker } from 'lib/queries/studios'
+
+const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
 
   const {
@@ -28,20 +33,20 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   })
 
   useEffect(() => {
-    if (studioInfo?.dataLocation) {
-      setPlaceholder(studioInfo?.dataLocation.formatted_address)
+    if (artistInfo?.dataLocation) {
+      setPlaceholder(artistInfo?.dataLocation.formatted_address)
       setLocation(
         {
-          lat: studioInfo.dataMarker.marker_location[0],
-          lng: studioInfo.dataMarker.marker_location[1],
+          lat: artistInfo?.dataMarker?.marker_location[0],
+          lng: artistInfo?.dataMarker?.marker_location[1],
         } || {
-          lat: studioInfo.dataLocation.coordinates.lat,
-          lng: studioInfo.dataLocation.coordinates.lng,
+          lat: artistInfo?.dataLocation?.coordinates.lat,
+          lng: artistInfo?.dataLocation?.coordinates.lng,
         }
       )
-      setValue(studioInfo.dataLocation.formatted_address)
+      setValue(artistInfo.dataLocation.formatted_address)
     }
-  }, [studioInfo])
+  }, [artistInfo])
 
   // useScript(
   //   'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places&callback=initMap'
@@ -86,10 +91,28 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
       geohash,
     }
 
-    toast.promise(updateStudioLocation(studioId, dataLocation), {
+    toast.promise(updateArtistLocation(artistId, dataLocation), {
       loading: 'Actualizando...',
       success: () => {
         return 'Ubicacion actualizada 😉'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
+
+    const marker_location = [lat, lng]
+    const marker_hash = geohashForLocation(marker_location)
+
+    const dataMarker = {
+      marker_location,
+      marker_hash,
+    }
+
+    toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
+      loading: 'Actualizando...',
+      success: () => {
+        return 'Marker actualizado 📍'
       },
       error: (err) => {
         return `${err.toString()}`
@@ -136,4 +159,4 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   )
 }
 
-export default ContactInfoLocation
+export default ArtistContactInfoLocation
