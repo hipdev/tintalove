@@ -1,6 +1,6 @@
 import { getAlgoliaResults } from '@algolia/autocomplete-js'
 import algoliasearch from 'algoliasearch'
-import { Autocomplete } from 'components/algolia/Autocomplete'
+import { Autocomplete } from 'components/algolia/autocomplete'
 import { ProductItem } from 'components/algolia/ProductItem'
 import '@algolia/autocomplete-theme-classic'
 
