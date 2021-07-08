@@ -1,4 +1,4 @@
-import ContactInfo from 'components/artist-account/contact-info'
+import ContactInfo from 'components/artist-account/contact-info/contact-info'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
 import useUserId from 'hooks/use-user-id'
