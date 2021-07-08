@@ -3,7 +3,6 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
-import useScript from 'hooks/use-script'
 import { useState } from 'react'
 import { geohashForLocation } from 'geofire-common'
 
@@ -25,10 +24,6 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
     callbackName: 'initMap',
     defaultValue: defaultValue,
   })
-
-  const statusMap = useScript(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places&callback=initMap'
-  )
 
   const ref = useOnclickOutside(() => {
     // When user clicks outside of the component, we can dismiss
