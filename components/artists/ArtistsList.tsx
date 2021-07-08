@@ -1,6 +1,6 @@
 import { BsSearch } from 'react-icons/bs'
 import { MdKeyboardArrowDown } from 'react-icons/md'
-import ArtistCard from './artist-card'
+import ArtistCard from './ArtistCard'
 
 const ArtistsList = ({ artistsData }) => {
   return (

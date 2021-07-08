@@ -7,10 +7,10 @@ import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import MainInfoAvailable from './general-info-edit/general-info-available'
+import MainInfoAvailable from './general-info-edit/GeneralInfoAvailable'
 
 import 'microtip/microtip.css'
-import GeneralInfoCity from './general-info-edit/general-info-city'
+import GeneralInfoCity from './general-info-edit/GeneralInfoCity'
 import { createStudio, userNameAvailableStudio } from 'lib/queries/studios'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/

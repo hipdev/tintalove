@@ -1,7 +1,7 @@
 import useArtistRealtime from 'hooks/realtime/use-artist'
-import PictureAddMain from './picture-add-main'
+import PictureAddMain from './PictureAddMain'
 
-import PictureReady from './picture-ready'
+import PictureReady from './PictureReady'
 
 const PicturesInfoStudio = ({ studioId, hasStudio }) => {
   const { artist } = useArtistRealtime(studioId)

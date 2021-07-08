@@ -1,4 +1,4 @@
-import ProfileStudio from 'components/layout-pages/w-profile-studios'
+import ProfileStudio from 'components/layout-pages/ProfileStudios'
 import Layout from 'components/layout/layout'
 
 import { postToJSON } from 'lib/firebase'
