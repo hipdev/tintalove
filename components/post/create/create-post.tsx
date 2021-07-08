@@ -5,6 +5,8 @@ import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
 import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
 import { BsArrowRight } from 'react-icons/bs'
+import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
+import { CgDice1 } from 'react-icons/cg'
 
 const CreatePost = ({ user }) => {
   const [description, setDescription] = useState('')
@@ -35,7 +37,56 @@ const CreatePost = ({ user }) => {
           />
         </div>
 
-        <div className="w-full xl:w-1/2 text-gray-300 mt-5 md:mt-0">
+        <div className="text-gray-300 ">
+          {withPicture && (
+            <div className="block xl:hidden my-5 text-center">
+              <h2 className="font-semibold text-xl mb-5">
+                Orientación de la foto
+              </h2>
+              <div className="flex flex-wrap justify-around">
+                <div
+                  className={pictureSize == 'portrait' ? 'text-primary' : ''}
+                >
+                  <button
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
+                    onClick={() => setPictureSize('portrait')}
+                  >
+                    <span className="text-2xl">
+                      <BsTablet />
+                    </span>
+                    <span className="hidden md:block">VERTICAL</span>
+                  </button>
+                </div>
+                <div
+                  className={pictureSize == 'landscape' ? 'text-primary' : ''}
+                >
+                  <button
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
+                    onClick={() => setPictureSize('landscape')}
+                  >
+                    <span className="text-2xl">
+                      <BsTabletLandscape />
+                    </span>
+                    <span className="hidden md:block">HORIZONTAL</span>
+                  </button>
+                </div>
+                <div className={pictureSize == 'square' ? 'text-primary' : ''}>
+                  <button
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
+                    onClick={() => setPictureSize('square')}
+                  >
+                    <span className="text-2xl">
+                      <CgDice1 />
+                    </span>
+                    <span className="hidden md:block">CUADRADA</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col w-full xl:w-1/2 text-gray-300 mt-5 md:mt-0">
           <h1 className="text-white text-2xl mb-10">Nueva publicación</h1>
           <label className="flex flex-col mb-5">
             <span className="block mb-2">Descripción corta</span>
@@ -48,7 +99,7 @@ const CreatePost = ({ user }) => {
             />
           </label>
 
-          <label className="flex flex-col mb-8 xl:mb-80">
+          <label className="flex flex-col mb-8">
             <span className="block mb-2">Estilos usados</span>
             <Select
               options={options}
@@ -61,56 +112,51 @@ const CreatePost = ({ user }) => {
           </label>
 
           {withPicture && (
-            <div className="mt-14 text-center">
+            <div className="hidden xl:block mt-14 text-center">
               <h2 className="font-semibold text-xl mb-5">
                 Orientación de la foto
               </h2>
-              <div className="flex justify-around">
+              <div className="flex flex-wrap justify-around">
                 <div
                   className={pictureSize == 'portrait' ? 'text-primary' : ''}
                 >
                   <button
-                    className="outline-none focus:outline-none relative top-2 hover:text-primary"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
                     onClick={() => setPictureSize('portrait')}
                   >
-                    <IoMdTabletPortrait className="text-7xl" />
-                    <span className="mt-3 block">Retrato</span>
+                    <span className="text-2xl">
+                      <BsTablet />
+                    </span>
+                    <span className="hidden md:block">VERTICAL</span>
                   </button>
                 </div>
                 <div
                   className={pictureSize == 'landscape' ? 'text-primary' : ''}
                 >
                   <button
-                    className="hover:text-primary focus:outline-none"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
                     onClick={() => setPictureSize('landscape')}
                   >
-                    <IoMdTabletLandscape className="text-7xl" />
-
-                    <span>Paisaje</span>
+                    <span className="text-2xl">
+                      <BsTabletLandscape />
+                    </span>
+                    <span className="hidden md:block">HORIZONTAL</span>
                   </button>
                 </div>
                 <div className={pictureSize == 'square' ? 'text-primary' : ''}>
                   <button
-                    className="hover:text-primary focus:outline-none relative top-3"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
                     onClick={() => setPictureSize('square')}
                   >
-                    <FaTabletAlt className="text-7xl" />
-
-                    <span className="block mt-2">Cuadrado</span>
+                    <span className="text-2xl">
+                      <CgDice1 />
+                    </span>
+                    <span className="hidden md:block">CUADRADA</span>
                   </button>
                 </div>
               </div>
             </div>
           )}
-          <div className="flex gap-4 sm:gap-8 text-white mt-5 xl:mt-32 ml-5 justify-center mb-5">
-            <button className="py-3 px-4 focus:outline-none">CANCELAR</button>
-            <button className="flex items-center gap-3 py-3 px-5 sm:px-20 bg-primary hover:bg-primaryHover rounded-md focus:outline-none">
-              PUBLICAR
-              <span className="text-2xl">
-                <BsArrowRight />
-              </span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
