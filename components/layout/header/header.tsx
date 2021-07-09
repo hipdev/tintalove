@@ -47,12 +47,15 @@ const Header = ({ user }: { user: UserState }) => {
                     <GoSearch />
                   </span>
                   <span className="text-white text-3xl block lg:hidden">
-                    <VscMenu />
+                    <VscMenu onClick={() => window.navigator.vibrate(500)} />
                   </span>
                 </div>
+
+                {/* Menu desktop */}
                 <span className="text-white text-3xl hidden lg:block px-10">
                   <VscMenu />
                 </span>
+
                 <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
                   <input
                     type="search"
