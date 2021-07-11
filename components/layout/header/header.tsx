@@ -47,7 +47,7 @@ const Header = ({ user }: { user: UserState }) => {
                     <GoSearch />
                   </span>
                   <span className="text-white text-3xl block lg:hidden">
-                    <VscMenu onClick={() => window.navigator.vibrate(500)} />
+                    <VscMenu />
                   </span>
                 </div>
 
