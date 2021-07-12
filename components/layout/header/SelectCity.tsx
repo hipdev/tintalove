@@ -56,15 +56,15 @@ const SelectCity = ({ user, cities }) => {
             </Listbox.Label>
             <div className="block mt-1 relative w-11/12">
               <Listbox.Button
-                className="bg-transparent relative w-full rounded-md text-gray-200
+                className="bg-transparent relative w-full rounded-md text-gr-200
                 shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-0 lg:focus:ring-1 focus:ring-primary focus:border-primary hidden md:block"
               >
                 <span className="hidden lg:block truncate">
                   {selected?.city_name || 'Todo Colombia'}
                 </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-5 pointer-events-none ">
+                <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-5 pointer-events-none">
                   <RiArrowDownSLine
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 text-gr-200"
                     aria-hidden="true"
                   />
                 </span>
