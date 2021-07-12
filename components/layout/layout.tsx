@@ -35,7 +35,7 @@ const Layout = ({ children }: Props) => {
       />
       <HeadContainer />
       <Header user={data?.user || null} />
-      <main className="bg-dark-800">{children}</main>
+      <main className="bg-gr-900">{children}</main>
       <Footer />
       <UserLists user={data?.user || null} />
 
