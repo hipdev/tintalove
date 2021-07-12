@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         primary: '#158e72',
         primaryHover: '#126b56',
-        nt: {
+        gr: {
           100: '#F5F8FA',
           200: '#C7D0D8',
           300: '#B2BCC6',
