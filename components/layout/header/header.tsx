@@ -96,7 +96,7 @@ const Header = ({ user }: { user: UserState }) => {
                     </div>
                   </a>
                 </Link>
-                <div className="text-nt-200 hidden md:flex px-14 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-14 space-x-2 items-center">
                   <span className="text-3xl">
                     <HiOutlineMenuAlt2 />
                   </span>
@@ -104,7 +104,7 @@ const Header = ({ user }: { user: UserState }) => {
                     <a>Menú</a>
                   </Link>
                 </div>
-                <div className="text-nt-200 hidden md:flex px-2 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-2 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
@@ -131,21 +131,25 @@ const Header = ({ user }: { user: UserState }) => {
                   <>
                     <WrapperAvailability user={user} />
                     <div className="flex">
-                      <Link href="/post/new-post">
-                        <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
-                          <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                            <AiOutlineCamera />
-                          </span>
-                          <span className="hidden xl:block">PUBLICAR</span>
-                        </a>
-                      </Link>
-                      <Link href="/post/new-post">
-                        <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
-                          <span className="text-nt-200">
-                            <FiPlus />
-                          </span>
-                        </a>
-                      </Link>
+                      <button>
+                        <Link href="/post/new-post">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-l-md flex items-center justify-center">
+                            <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                              <AiOutlineCamera />
+                            </span>
+                            <span className="hidden xl:block">PUBLICAR</span>
+                          </a>
+                        </Link>
+                      </button>
+                      <button>
+                        <Link href="/post/new-post">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-r-md flex items-center justify-center">
+                            <span className="text-nt-200 text-xl">
+                              <FiPlus />
+                            </span>
+                          </a>
+                        </Link>
+                      </button>
                     </div>
                   </>
                 )}

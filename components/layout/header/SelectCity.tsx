@@ -52,7 +52,7 @@ const SelectCity = ({ user, cities }) => {
         {({ open }) => (
           <>
             <Listbox.Label className="hidden md:block text-sm font-medium">
-              <TiLocationOutline className="text-2xl text-nt-200" />
+              <TiLocationOutline className="text-2xl text-gr-200" />
             </Listbox.Label>
             <div className="block mt-1 relative w-11/12">
               <Listbox.Button

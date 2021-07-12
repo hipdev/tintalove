@@ -51,12 +51,12 @@ const Availability = ({
         <div className="text-left">
           <Listbox value={selected} onChange={handleAvailability}>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-full px-3 text-left bg-nt-800 rounded-lg shadow-md cursor-pointer sm:text-sm focus:outline-none border-2 border-nt-700">
+              <Listbox.Button className="relative w-full px-3 text-left bg-nt-800 rounded-lg shadow-md cursor-pointer sm:text-sm focus:outline-none border-2 border-gr-700">
                 <div>
                   <div className="flex items-center gap-2 px-2 py-3 xl:py-1 rounded-md">
                     <div className="leading-tight hidden xl:block">
-                      <p className="text-nt-200 text-xs">Disponibilidad</p>
-                      <p className="text-nt-200 text-base">{selected.label}</p>
+                      <p className="text-gr-200 text-xs">Disponibilidad</p>
+                      <p className="text-gr-200 text-base">{selected.label}</p>
                     </div>
                     <span className="text-green-500 text-2xl pl-2">
                       <FiCalendar />
