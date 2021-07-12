@@ -9,8 +9,8 @@ import useArtist from 'hooks/use-artist'
 import { updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
-import ArtistContactInfoLocation from 'components/artist-account/contact-info/contact-info-location'
-import ArtistContactInfoMapStudio from './contact-info/contact-info-map'
+import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
+import ArtistContactInfoMapStudio from './contact-info/ContactInfoMap'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }

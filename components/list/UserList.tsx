@@ -1,8 +1,8 @@
 import { getUserListItems } from 'lib/queries/lists'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
-import ListPost from './list-post'
-import ListNotPublic from './not-public'
+import ListPost from './ListPost'
+import ListNotPublic from './NotPublic'
 
 const UserList = ({ listId, user }) => {
   // const { userList, userListItems, setUserListItems }: any = useUserList(listId)

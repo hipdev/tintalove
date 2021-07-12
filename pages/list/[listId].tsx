@@ -1,6 +1,6 @@
 import Layout from 'components/layout/layout'
 import { useRouter } from 'next/router'
-import UserList from 'components/list/user-list'
+import UserList from 'components/list/UserList'
 import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'

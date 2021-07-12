@@ -1,5 +1,5 @@
 import Layout from 'components/layout/layout'
-import PostArtist from '../components/new-post-artist'
+import PostArtist from '../components/NewPostArtist'
 
 export default function IndexPage() {
   return (

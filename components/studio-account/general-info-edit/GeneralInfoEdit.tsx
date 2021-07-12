@@ -1,5 +1,5 @@
 import useStudio from 'hooks/use-studio'
-import GeneralInfoform from './general-info-form'
+import GeneralInfoform from './GeneralInfoForm'
 
 const MainInfoEdit = ({ studioId, uid }) => {
   const { studio } = useStudio(studioId)

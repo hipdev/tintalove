@@ -1,33 +1,34 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
+
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import MainInfoAvailable from './MainInfoAvailable'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 import 'microtip/microtip.css'
 
-import GeneralInfoCity from './general-info-city'
-import GeneralInfoAvailable from './general-info-available'
+import MainInfoCity from './MainInfoCity'
 import {
-  updateStudioGeneralInfo,
-  updateStudioUsername,
-  userNameAvailableStudio,
-} from 'lib/queries/studios'
+  updateArtistMainInfo,
+  updateArtistUsername,
+  userNameAvailable,
+} from 'lib/queries/artists'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfoForm = ({ studioId, studio, uid }) => {
+const MainInfoForm = ({ uid, artist }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      studio_name: studio.studio_name || '',
-      username: studio.username || '',
-      bio: studio.bio,
+      displayName: artist.displayName || '',
+      username: artist.username || '',
+      bio: artist.bio,
     },
   })
 
@@ -35,13 +36,12 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const watchMultiple: any = watch()
   const cityRef = useRef(null)
 
-  const [studioUsername, setStudioUsername] = useState(studio.username)
+  const [artistUsername, setArtistUserName] = useState(artist.username)
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
 
-  const [counter, setCounter] = useState(studio.bio.length || 0)
+  const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
-    formatted_address: studio.formatted_address || '',
+    formatted_address: artist.formatted_address || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -63,7 +63,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const checkUsername = useCallback(
     debounce(async (username) => {
       if (username != '') {
-        const available = await userNameAvailableStudio(username)
+        const available = await userNameAvailable(username)
         setAvailableUserName(available)
 
         // Falta validar cuando el username esta disponible agregar el estado para guardar
@@ -79,34 +79,24 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('studio_name', name)
+        setValue('displayName', name)
       }
     }, 3000),
     []
   )
-
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(
-        () => router.push('/studio-account/artists'),
-        1000
-      )
-      return () => clearTimeout(timer)
-    }
-  }, [success])
 
   const handleName = (e) => {
     const name: string = e.target.value
 
     const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
 
-    setValue('studio_name', capitalName)
+    setValue('displayName', capitalName)
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
 
     updateName(formattedName)
 
-    setValue('studio_name', capitalizeAllWords(name))
+    setValue('displayName', capitalizeAllWords(name))
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,12 +121,12 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
     setLoading(true)
 
     const newUsername = getValues('username')
-    toast.promise(updateStudioUsername(studioId, studioUsername, newUsername), {
+    toast.promise(updateArtistUsername(uid, artistUsername, newUsername), {
       loading: 'Actualizando usuario...',
       success: (data) => {
         setLoading(false)
-        setStudioUsername(newUsername)
-        return 'Usuario actualizado en el estudio 😉'
+        setArtistUserName(newUsername)
+        return 'Usuario actualizado 😉'
       },
       error: (err) => {
         setLoading(false)
@@ -147,7 +137,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
   const onSubmit = async (data) => {
     setLoading(true)
-    if (data?.studio_name == '' && data?.bio == '') {
+    if (data.displayName == '' || data.bio == '') {
       setLoading(false)
       toast('Debes ingresar el nombre y la bio 😓')
       return
@@ -155,8 +145,8 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
     if (
       !placeInfo &&
-      data.studio_name == studio.studio_name &&
-      data.bio == studio.bio
+      data.displayName == artist.displayName &&
+      data.bio == artist.bio
     ) {
       cityRef.current.focus()
       setLoading(false)
@@ -164,17 +154,16 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       return
     }
 
-    let formData = { bio: data.bio, studio_name: data.studio_name }
+    let formData = { bio: data.bio, displayName: data.displayName }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
-      loading: 'Actualizando...',
+    toast.promise(updateArtistMainInfo(uid, formData), {
+      loading: 'Actualizando artista...',
       success: (data) => {
         setLoading(false)
-        setSuccess(true)
         // setTriggerAuth(Math.random()) // reload global user state data
-
-        return 'Estudio actualizado 😉'
+        router.push('/artist/working-info')
+        return 'Artista actualizado 😉'
       },
       error: (err) => {
         setLoading(false)
@@ -191,9 +180,9 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
         <div className="grid grid-cols-6 gap-6 tooltipBox">
           <div className="col-span-6 md:col-span-3">
             <label className="block text-white text-sm mb-2 tracking-wide">
-              <span className="mb-3 block uppercase">Nombre del estudio</span>
+              <span className="mb-3 block uppercase">Nombre artístico</span>
               <input
-                {...register('studio_name')}
+                {...register('displayName')}
                 autoComplete="off"
                 placeholder="..."
                 className="input-primary w-full"
@@ -204,10 +193,19 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
           </div>
           <div className="col-span-6 md:col-span-3">
             <label className="block text-white text-sm mb-2 tracking-wide">
-              <span className="mb-3 block uppercase">Ciudad</span>
+              <div className="flex">
+                <span className="mb-3 block uppercase">Ciudad</span>
+                <span
+                  aria-label="Esta ubicación es importante, todas tus publicaciones estarán asociadas a ella."
+                  data-microtip-position="top"
+                  role="tooltip"
+                >
+                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                </span>
+              </div>
 
-              <GeneralInfoCity
-                defaultValue={studio.formatted_address || ''}
+              <MainInfoCity
+                defaultValue={artist.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
             </label>
@@ -231,9 +229,9 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
               <div className="relative">
                 <input
                   className={
-                    availableUserName || watchUserName == studioUsername
-                      ? 'input-primary w-full pl-[126px] text-green-500'
-                      : 'input-primary w-full pl-[126px] text-red-500'
+                    availableUserName || watchUserName == artistUsername
+                      ? 'input-primary w-full pl-[109px] text-green-500'
+                      : 'input-primary w-full pl-[109px] text-red-500'
                   }
                   type="text"
                   autoComplete="off"
@@ -242,13 +240,13 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                   onChange={handleUserName}
                 />
                 <span className="absolute top-[13px] left-[10px]">
-                  tintalove.com/st/
+                  tintalove.com/
                 </span>
 
                 <div className="absolute right-2 top-3">
                   {validUserName ? (
                     <>
-                      {availableUserName || watchUserName == studioUsername ? (
+                      {availableUserName || watchUserName == artistUsername ? (
                         <FiCheckCircle className="ml-1 text-2xl text-green-500" />
                       ) : (
                         <FiAlertCircle className="ml-1 text-2xl text-red-500" />
@@ -260,7 +258,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                 </div>
               </div>
 
-              {watchUserName == studioUsername && (
+              {watchUserName == artistUsername && (
                 <span className="mt-2 block">Este es tu usuario actual</span>
               )}
             </label>
@@ -268,8 +266,8 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
           <div className="col-span-6 md:col-span-3">
             <div className="text-white flex items-center">
-              {watchUserName != studioUsername && (
-                <GeneralInfoAvailable
+              {watchUserName != artistUsername && (
+                <MainInfoAvailable
                   validUserName={validUserName}
                   availableUserName={availableUserName}
                 />
@@ -277,7 +275,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
             </div>
 
             {validUserName &&
-              watchUserName != studioUsername &&
+              watchUserName != artistUsername &&
               availableUserName && (
                 <button
                   disabled={loading}
@@ -294,16 +292,9 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
             <div className="flex justify-between items-center mb-3">
               <label
                 htmlFor=""
-                className="flex text-white text-sm tracking-wide"
+                className="block text-white text-sm tracking-wide"
               >
-                <span className="uppercase">HISTORIA / BIO</span>
-                <span
-                  aria-label="Esta es la descripción de tu perfil de estudio"
-                  data-microtip-position="top"
-                  role="tooltip"
-                >
-                  <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                </span>
+                <span className="uppercase">Biografía</span>
               </label>
               <span className="text-white ">{counter}/500</span>
             </div>
@@ -319,9 +310,9 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
           </div>
         </div>
 
-        {studio.studio_name != watchMultiple.studio_name ||
-        studio.formatted_address != placeInfo?.formatted_address ||
-        studio.bio != watchMultiple.bio ? (
+        {artist.displayName != watchMultiple.displayName ||
+        artist.formatted_address != placeInfo?.formatted_address ||
+        artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button
               type="submit"
