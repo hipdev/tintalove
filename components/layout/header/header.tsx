@@ -2,16 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { VscMenu } from 'react-icons/vsc'
 import SubMenuHeader from './submenu'
-import { AiOutlineSearch } from 'react-icons/ai'
 import { UserState } from 'types/user'
 import { GoSearch } from 'react-icons/go'
 import { FiHeart } from 'react-icons/fi'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
-import SelectCity from './select-city'
-import WrapperSelectCity from './wrapper-select-city'
-import WrapperAvailability from './wrapper-availability'
+import WrapperSelectCity from './WrapperSelectCity'
+import WrapperAvailability from './WrapperAvailability'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -50,9 +48,12 @@ const Header = ({ user }: { user: UserState }) => {
                     <VscMenu />
                   </span>
                 </div>
+
+                {/* Menu desktop */}
                 <span className="text-white text-3xl hidden lg:block px-10">
                   <VscMenu />
                 </span>
+
                 <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
                   <input
                     type="search"

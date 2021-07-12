@@ -1,14 +1,15 @@
+import SideMenuArtistSteps from 'components/artist-account/SideMenuArtistSteps'
 import Image from 'next/image'
 import Link from 'next/link'
-import StepNav from './step-nav'
+import StepNav from './StepNav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
+import SideMenuArtist from 'components/artist-account/SideMenuArtist'
 import { AiOutlineCamera } from 'react-icons/ai'
-import SideMenuStudioSteps from 'components/studio-account/side-menu-studio-steps'
-import SideMenuStudio from 'components/studio-account/side-menu-studio'
 import { VscMenu } from 'react-icons/vsc'
-import WrapperAvailability from 'components/layout/header/wrapper-availability'
+import WrapperAvailability from 'components/layout/header/WrapperAvailability'
+import { Toaster } from 'react-hot-toast'
 
 type Props = {
   uid?: string
@@ -16,14 +17,25 @@ type Props = {
   user?: UserState
 }
 
-const LayoutStepsStudio = ({ children, uid, user }: Props) => {
+const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   return (
-
-    <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
+    <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto">
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600',
+          style: {
+            background: '#158e72',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 3000,
+        }}
+        position="bottom-right"
+      />
       <HeadContainer />
-
-      <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
+      <div className="w-full lg:w-448  sm:h-auto bg-dark-800 pl-7 sm:pl-10 pt-10 2xl:pl-12 sm:pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
           <Link href="/">
             <a>
@@ -37,19 +49,15 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {user && user?.studio_active && (
-          <SideMenuStudio username={user?.username || null} />
+        {user && user?.artist_active && (
+          <SideMenuArtist username={user?.username || null} />
         )}
 
         {!user ||
-          (user && !user?.studio_active && (
-            <SideMenuStudioSteps studioId={user.studio_id} />
-          ))}
+          (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
-
-      <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 ">
-
-        <header className="flex justify-between pt-6  pr-0 sm:pr-10">
+      <div className="w-full pl-7 sm:pl-7 2xl:pl-20 bg-dark-500">
+        <header className="block sm:flex justify-between pt-6 pr-1 sm:pr-10 w-full ">
           <div className="flex items-center justify-between w-full">
             <Link href="/">
               <a className="block lg:hidden mr-5">
@@ -70,15 +78,14 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
                 <VscMenu />
               </span>
               <Link href="/">
-
-                <a className="flex items-center text-2xl md:text-lg text-white">
+                <a className="flex items-center text-2xl md:text-lg text-gray-200">
                   <RiArrowGoBackFill className="mr-5" />
                   <span className="hidden md:block mr-3">Volver al inicio</span>
                 </a>
               </Link>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex w-full justify-end">
             {user?.artist_active && (
               <div className="mr-7 items-center hidden md:flex">
                 <WrapperAvailability user={user} />
@@ -95,10 +102,10 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             <StepNav />
           </div>
         </header>
-        <main>{children}</main>
+        <main className="mb-10">{children}</main>
       </div>
     </div>
   )
 }
 
-export default LayoutStepsStudio
+export default LayoutStepsArtist

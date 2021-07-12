@@ -2,9 +2,9 @@ import { useStateMachine } from 'little-state-machine'
 import { AiOutlineUnorderedList } from 'react-icons/ai'
 import Modal from 'react-modal'
 import { lists } from 'lib/actions'
-import NoListForm from './no-list-form'
-import ShowLists from './show-lists'
-import SelectList from './select-list'
+import NoListForm from './NoListForm'
+import ShowLists from './ShowLists'
+import SelectList from './SelectList'
 0
 Modal.setAppElement('#__next')
 

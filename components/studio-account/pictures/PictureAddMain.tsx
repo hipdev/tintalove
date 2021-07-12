@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 
-import PictureCrop from './picture-crop'
+import PictureCrop from './PictureCrop'
 
 const PictureAddMain = ({ uid, hasStudio }) => {
   const [picture, setPicture] = useState(null)

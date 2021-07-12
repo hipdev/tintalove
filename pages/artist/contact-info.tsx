@@ -1,6 +1,6 @@
-import ContactInfo from 'components/artist-account/contact-info/contact-info'
+import ContactInfo from 'components/artist-account/contact-info/ContactInfo'
 import IsAuth from 'components/isAuth'
-import LayoutStepsArtist from 'components/layout-steps/layout-steps-artist'
+import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 import useSWR from 'swr'

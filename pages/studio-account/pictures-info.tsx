@@ -1,6 +1,6 @@
-import LayoutStepsStudio from 'components/layout-steps/layout-steps-studio'
+import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import IsAuth from 'components/isAuth'
-import PicturesInfoStudio from 'components/studio-account/pictures/pictures-info'
+import PicturesInfoStudio from 'components/studio-account/pictures/PicturesInfo'
 import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'

@@ -1,5 +1,5 @@
 import useArtist from 'hooks/use-artist'
-import MainInfoForm from './main-info-form'
+import MainInfoForm from './MainInfoForm'
 
 const MainInfoEdit = ({ uid }) => {
   const { artist } = useArtist(uid)

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Select from 'react-select'
-import CreatePostPicture from './create-post-picture'
+import CreatePostPicture from './CreatePostPicture'
 import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
 import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
