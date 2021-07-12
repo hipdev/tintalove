@@ -62,7 +62,7 @@ const SelectCity = ({ user, cities }) => {
                 <span className="hidden lg:block truncate">
                   {selected?.city_name || 'Todo Colombia'}
                 </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none ">
+                <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-5 pointer-events-none ">
                   <RiArrowDownSLine
                     className="h-5 w-5 text-gray-400"
                     aria-hidden="true"

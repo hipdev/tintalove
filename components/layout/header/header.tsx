@@ -96,34 +96,34 @@ const Header = ({ user }: { user: UserState }) => {
                     </div>
                   </a>
                 </Link>
-                <div className="text-gr-200 hidden md:flex px-14 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
                   <span className="text-3xl">
                     <HiOutlineMenuAlt2 />
                   </span>
                   <Link href="#">
-                    <a>Menú</a>
+                    <a className="hidden lg:block">Menú</a>
                   </Link>
                 </div>
-                <div className="text-gr-200 hidden md:flex px-2 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-5 lg:px-10 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
                   <Link href="#">
-                    <a>Buscar</a>
+                    <a className="hidden lg:block">Buscar</a>
                   </Link>
                 </div>
 
-                <div className="flex items-center space-x-2 ml-0 lg:ml-10">
+                <div className="flex items-center space-x-2">
                   <WrapperSelectCity user={user} />
                 </div>
               </div>
               {/*New elements for tablet resolution*/}
               <div className="flex items-center">
                 <span className="text-white text-2xl block md:hidden px-0 md:px-10 pr-10 md:pr-0">
-                  <GoSearch />
+                  <AiOutlineSearch />
                 </span>
                 <span className="text-white text-3xl block md:hidden">
-                  <VscMenu />
+                  <HiOutlineMenuAlt2 />
                 </span>
               </div>
               <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
@@ -133,7 +133,7 @@ const Header = ({ user }: { user: UserState }) => {
                     <div className="flex">
                       <button>
                         <Link href="/post/new-post">
-                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-l-md flex items-center justify-center">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-l-lg flex items-center justify-center">
                             <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                               <AiOutlineCamera />
                             </span>
@@ -143,8 +143,8 @@ const Header = ({ user }: { user: UserState }) => {
                       </button>
                       <button>
                         <Link href="/post/new-post">
-                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-r-md flex items-center justify-center">
-                            <span className="text-nt-200 text-xl">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-500 py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-r-lg flex items-center justify-center">
+                            <span className="text-nt-200 text-2xl xl:text-xl">
                               <FiPlus />
                             </span>
                           </a>
