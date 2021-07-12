@@ -4,12 +4,13 @@ import { VscMenu } from 'react-icons/vsc'
 import SubMenuHeader from './submenu'
 import { UserState } from 'types/user'
 import { GoSearch } from 'react-icons/go'
-import { FiHeart } from 'react-icons/fi'
-import { AiOutlineCamera } from 'react-icons/ai'
+import { FiHeart, FiPlus } from 'react-icons/fi'
+import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
 import WrapperSelectCity from './WrapperSelectCity'
 import WrapperAvailability from './WrapperAvailability'
+import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -95,38 +96,24 @@ const Header = ({ user }: { user: UserState }) => {
                     </div>
                   </a>
                 </Link>
-                <span className="text-white text-3xl hidden md:block px-10">
-                  <VscMenu />
-                </span>
-                <div className="lg:w-full xl:w-9/12 relative hidden lg:flex items-center">
-                  <input
-                    type="search"
-                    placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
-                    className="w-96 lg:w-full xl:w-2/3 h-12 px-5 rounded-l-lg placeholder-white truncate bg-ocean_blue-300 text-white
-                    "
-                  />
-                  <button
-                    type="submit"
-                    className="w-14 h-12 bg-green-500 rounded-r-lg"
-                  >
-                    <span className="text-xl text-white flex justify-center">
-                      <GoSearch />
-                    </span>
-                  </button>
-                  {/* JULI Este es el botón que abre las listas pero no nos aparece cuando es un usuario normal, en cambio sale en el geader de artista pls help us 
-                  <button
-                    className="text-white w-14 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0 ml-5 hover:bg-primaryHover focus:outline-none"
-                    onClick={() =>
-                      actions.lists({ post: null, listOpen: true })
-                    }
-                  >
-                    <span className="text-xl ">
-                      <FiHeart />
-                    </span>
-                  </button>
-                  */}
+                <div className="text-nt-200 hidden md:flex px-14 space-x-2 items-center">
+                  <span className="text-3xl">
+                    <HiOutlineMenuAlt2 />
+                  </span>
+                  <Link href="#">
+                    <a>Menú</a>
+                  </Link>
                 </div>
-                <div className="flex items-center space-x-2 ml-0 lg:ml-2">
+                <div className="text-nt-200 hidden md:flex px-2 space-x-2 items-center">
+                  <span className="text-2xl flex justify-center">
+                    <AiOutlineSearch />
+                  </span>
+                  <Link href="#">
+                    <a>Buscar</a>
+                  </Link>
+                </div>
+
+                <div className="flex items-center space-x-2 ml-0 lg:ml-10">
                   <WrapperSelectCity user={user} />
                 </div>
               </div>
@@ -143,14 +130,23 @@ const Header = ({ user }: { user: UserState }) => {
                 {user?.artist_active && (
                   <>
                     <WrapperAvailability user={user} />
-                    <Link href="/post/new-post">
-                      <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
-                        <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                          <AiOutlineCamera />
-                        </span>
-                        <span className="hidden xl:block">PUBLICAR</span>
-                      </a>
-                    </Link>
+                    <div className="flex">
+                      <Link href="/post/new-post">
+                        <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                          <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                            <AiOutlineCamera />
+                          </span>
+                          <span className="hidden xl:block">PUBLICAR</span>
+                        </a>
+                      </Link>
+                      <Link href="/post/new-post">
+                        <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center">
+                          <span className="text-nt-200">
+                            <FiPlus />
+                          </span>
+                        </a>
+                      </Link>
+                    </div>
                   </>
                 )}
 
