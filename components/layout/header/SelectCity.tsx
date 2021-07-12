@@ -7,6 +7,8 @@ import { TiLocationOutline } from 'react-icons/ti'
 import toast from 'react-hot-toast'
 import { updateUserSearchCity } from 'lib/queries/users'
 import { useRouter } from 'next/router'
+import { MdKeyboardArrowDown } from 'react-icons/md'
+import { RiArrowDownSLine } from 'react-icons/ri'
 
 const SelectCity = ({ user, cities }) => {
   const router = useRouter()
@@ -50,7 +52,7 @@ const SelectCity = ({ user, cities }) => {
         {({ open }) => (
           <>
             <Listbox.Label className="hidden md:block text-sm font-medium">
-              <TiLocationOutline className="text-3xl text-primary" />
+              <TiLocationOutline className="text-2xl text-gr-200" />
             </Listbox.Label>
             <div className="block mt-1 relative w-11/12">
               <Listbox.Button
@@ -60,8 +62,8 @@ const SelectCity = ({ user, cities }) => {
                 <span className="hidden lg:block truncate">
                   {selected?.city_name || 'Todo Colombia'}
                 </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">
-                  <HiOutlineSelector
+                <span className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none ">
+                  <RiArrowDownSLine
                     className="h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
