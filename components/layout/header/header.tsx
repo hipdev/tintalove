@@ -104,7 +104,7 @@ const Header = ({ user }: { user: UserState }) => {
                     <a className="hidden lg:block">Menú</a>
                   </Link>
                 </div>
-                <div className="text-gr-200 hidden md:flex px-5 lg:px-10 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-5 xl:px-10 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
@@ -133,7 +133,7 @@ const Header = ({ user }: { user: UserState }) => {
                     <div className="flex">
                       <button>
                         <Link href="/post/new-post">
-                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-l-lg flex items-center justify-center">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-400 py-3 xl:py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-l-lg flex items-center justify-center">
                             <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                               <AiOutlineCamera />
                             </span>
@@ -143,7 +143,7 @@ const Header = ({ user }: { user: UserState }) => {
                       </button>
                       <button>
                         <Link href="/post/new-post">
-                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-500 py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-r-lg flex items-center justify-center">
+                          <a className="text-white font-semibold tracking-wide text-sm bg-gn-500 py-3 xl:py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-r-lg flex items-center justify-center">
                             <span className="text-nt-200 text-2xl xl:text-xl">
                               <FiPlus />
                             </span>
