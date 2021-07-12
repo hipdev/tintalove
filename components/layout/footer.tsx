@@ -24,7 +24,7 @@ const Footer = () => {
             showFooter ? 'block' : 'hidden'
           } fixed bottom-0 w-full `}
         >
-          <div className="flex flex-col lg:flex-row w-full justify-between px-2 sm:px-20 bg-dark-800 items-center pb-3 pt-2 uppercase">
+          <div className="flex flex-col lg:flex-row w-full justify-between px-2 sm:px-20 bg-gr-900 items-center pb-3 pt-2 uppercase">
             <div className="w-48 lg:w-60 mb-3 lg:mb-0">
               <Link href="/">
                 <a className="mt-2 block">
