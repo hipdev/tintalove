@@ -1,7 +1,7 @@
 import { getAlgoliaResults } from '@algolia/autocomplete-js'
 import algoliasearch from 'algoliasearch'
 import { Autocomplete } from 'components/algolia/autocomplete'
-import { ProductItem } from 'components/algolia/product-item'
+import { ProductItem } from 'components/algolia/ProductItem'
 import '@algolia/autocomplete-theme-classic'
 
 const appId = 'JE20HAUJXG'
