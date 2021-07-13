@@ -147,7 +147,6 @@ export async function getPostDataById(key, postId) {
 
 export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
-  const docRef = doc(collection(db, 'posts'), postId)
 
   // Initialize Firebase 8.
 
