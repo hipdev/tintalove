@@ -30,6 +30,8 @@ const PostPortrait = ({
     postData.counter_comments || 0
   )
 
+  console.log(artistData, 'data Artist')
+
   return (
     <div className="flex flex-col md:flex-row items-center xl:justify-between">
       <div className="w-full sm:w-3/5 md:w-3/5">
