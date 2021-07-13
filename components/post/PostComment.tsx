@@ -40,7 +40,7 @@ const PostComment = ({
         <img
           src={comment.user_picture}
           alt=""
-          className="rounded-full w-12 object-cover"
+          className="rounded-full w-12 h-12 object-cover"
         />
       </div>
       <div>

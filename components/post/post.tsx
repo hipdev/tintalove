@@ -40,7 +40,7 @@ const PostStatic = ({
   }
 
   return (
-    <div className="w-full container mx-auto mt-3 md:mt-20">
+    <div className="w-full container mx-auto mt-3 md:mt-10">
       <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="flex flex-col mb-2">
@@ -65,21 +65,12 @@ const PostStatic = ({
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs">
         <div className="w-full">
-          {postData.picture_size == 'portrait' ? (
-            <PostPortrait
-              user={data?.user}
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-            />
-          ) : (
-            <PostHorizontal
-              user={data?.user}
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-            />
-          )}
+          <PostPortrait
+            user={data?.user}
+            postData={postData}
+            artistData={artistData}
+            commentsData={commentsData}
+          />
         </div>
       </div>
 
