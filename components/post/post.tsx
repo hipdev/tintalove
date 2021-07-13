@@ -40,28 +40,7 @@ const PostStatic = ({
   }
 
   return (
-    <div className="w-full container mx-auto mt-3 md:mt-10">
-      <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col mb-2">
-            <h1 className="text-white text-2xl font-semibold font-raleway tracking-wide">
-              {postData.description || 'Sin descripción'}
-            </h1>
-            <p className="text-light-200 text-sm self-end">
-              #Realismo #Color #Payaso #Retrato
-            </p>
-          </div>
-        </div>
-        <button
-          className="flex items-center gap-3 text-white focus:outline-none"
-          onClick={closeModal}
-        >
-          <span className="text-3xl">
-            <BsArrowLeft />
-          </span>
-          Volver
-        </button>
-      </div>
+    <div className="w-full container mx-auto mt-3 md:mt-10 mb-20">
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs">
         <div className="w-full">
@@ -70,6 +49,7 @@ const PostStatic = ({
             postData={postData}
             artistData={artistData}
             commentsData={commentsData}
+            closeModal={closeModal}
           />
         </div>
       </div>
