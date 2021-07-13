@@ -6,7 +6,7 @@ import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
-import PostAside from './create/PostAside'
+import PostAside from './PostAside'
 import { UserState } from 'types/user'
 import Link from 'next/link'
 import { FiPhoneCall } from 'react-icons/fi'
@@ -36,19 +36,18 @@ const PostPortrait = ({
   console.log(artistData, 'data Artist')
 
   return (
-    <div className="flex flex-col md:flex-row items-center xl:justify-between">
+    <div className="flex flex-col md:flex-row items-center xl:justify-between relative">
       <div className="w-full sm:w-3/5 md:w-3/5">
-        <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col mb-2">
-              <h1 className="text-white text-2xl font-semibold font-raleway tracking-wide">
-                {postData.description || 'Sin descripción'}
-              </h1>
-              <p className="text-light-200 text-sm self-end">
-                #Realismo #Color #Payaso #Retrato
-              </p>
-            </div>
+        <div className="flex justify-between mb-8">
+          <div className="flex flex-col mb-2">
+            <h1 className="text-white text-2xl font-semibold tracking-wide">
+              {postData.description || 'Sin descripción'}
+            </h1>
+            <p className="text-light-200 text-sm self-end">
+              #Realismo #Color #Payaso #Retrato
+            </p>
           </div>
+
           <button
             className="flex items-center gap-3 text-white focus:outline-none"
             onClick={closeModal}
@@ -61,7 +60,7 @@ const PostPortrait = ({
         </div>
         <div className="mb-5 flex justify-center xl:justify-start ">
           <div className="mr-3 hidden sm:block">
-            <StickyBox offsetTop={10} offsetBottom={20}>
+            <StickyBox offsetTop={100} offsetBottom={20}>
               <PostAside postData={postData} />
             </StickyBox>
           </div>
@@ -130,13 +129,7 @@ const PostPortrait = ({
               </a>
             </div>
           </div>
-          <div className="h-[2px] w-full bg-gray-800 mt-2"></div>
-          <h3 className="mt-2 text-lg text-gray-400 font-semibold">
-            Agenda:{' '}
-            <span className="font-normal text-gray-200">
-              {artistData.available_label}
-            </span>{' '}
-          </h3>
+          <div className="h-[2px] w-full bg-gray-900 mt-2"></div>
         </div>
 
         <PostsComments
