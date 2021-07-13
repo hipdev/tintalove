@@ -1,6 +1,6 @@
 import { addComment } from 'lib/queries/posts'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './PostComment'
@@ -16,6 +16,8 @@ const PostComments = ({
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
+
+  const commentBoxRef = useRef(null)
 
   const removeComment = (commentId) => {
     let filteredArray = comments.filter((comment) => comment.id !== commentId)
@@ -49,6 +51,7 @@ const PostComments = ({
 
           setComment('')
           setLoading(false)
+          commentBoxRef.current.scrollTop = 0
 
           return 'Comentario añadido 😉'
         },
@@ -134,6 +137,7 @@ const PostComments = ({
         </div>
       </div>
       <div
+        ref={commentBoxRef}
         className={
           'mb-4 w-full max-h-560 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
