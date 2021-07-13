@@ -23,7 +23,7 @@ module.exports = {
         },
         dark: {
           500: '#111319',
-          600: '#10101DF2', // new layout design
+          600: '#0b0e19', // new layout design
           700: '#1f1f1f',
           800: '#080A12', // new layout design
         },

@@ -68,7 +68,7 @@ const PostStatic = ({
               </a>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-8">
             {morePostsArtist &&
               morePostsArtist.map((post) => (
                 <PostMore post={post} user={data?.user} key={post.id} />

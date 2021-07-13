@@ -20,7 +20,7 @@ const Header = ({ user }: { user: UserState }) => {
     lists,
   })
   return (
-    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 fixed z-20">
+    <nav className="h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20  static 2xl:fixed z-20">
       <div className="relative flex flex-wrap md:flex-nowrap items-center justify-center lg:justify-between">
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (

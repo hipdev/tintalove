@@ -33,7 +33,7 @@ const PostPortrait = ({
   console.log(artistData, 'data Artist')
 
   return (
-    <div className="flex flex-col md:flex-row items-center xl:justify-between">
+    <div className="flex flex-col md:flex-row xl:justify-between">
       <div className="w-full sm:w-3/5 md:w-3/5">
         <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
           <div className="flex items-center gap-3">
