@@ -1,3 +1,5 @@
+import Masonry from 'react-masonry-css'
+
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
@@ -28,6 +30,15 @@ const PostStatic = ({
 }) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
+
+  const breakpointColumnsObj = {
+    default: 6,
+    1600: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  }
+
   return (
     <div className="w-full container mx-auto mt-3 md:mt-20">
       <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
@@ -106,11 +117,25 @@ const PostStatic = ({
               </span>
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            {relatedPosts &&
-              relatedPosts.map((post) => (
-                <PostMore post={post} user={data?.user} key={post.id} />
-              ))}
+          <div className="">
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+            </Masonry>
           </div>
         </div>
       </div>
