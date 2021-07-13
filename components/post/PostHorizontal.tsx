@@ -2,7 +2,7 @@ import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
-import PostAside from './create/PostAside'
+import PostAside from './PostAside'
 import { UserState } from 'types/user'
 
 const PostHorizontal = ({
