@@ -39,7 +39,7 @@ const PostStatic = ({
   }
 
   return (
-    <div className="w-full container mx-auto mt-3 md:mt-10 mb-20">
+    <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs">
         <div className="w-full">
