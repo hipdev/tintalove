@@ -24,6 +24,7 @@ export type ArtistTypes = {
   instagram: string
   work_as: string
   _geoloc: AlgoliaGeolocation
+  available_label: string
 } | null
 
 type ProfilePicture = {
