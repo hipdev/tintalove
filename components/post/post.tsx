@@ -1,13 +1,14 @@
+import Masonry from 'react-masonry-css'
+import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import useSWR from 'swr'
+
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import { BsArrowLeft } from 'react-icons/bs'
 import PostPortrait from './PostPortrait'
-import PostHorizontal from './PostHorizontal'
-import Link from 'next/link'
+
 import PostMore from './PostMore'
-import useSWR from 'swr'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 
@@ -28,47 +29,27 @@ const PostStatic = ({
 }) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
+
+  const breakpointColumnsObj = {
+    default: 6,
+    1600: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  }
+
   return (
-    <div className="w-full container mx-auto mt-3 md:mt-20">
-      <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col mb-2">
-            <h1 className="text-white text-2xl font-semibold font-raleway tracking-wide">
-              {postData.description || 'Sin descripción'}
-            </h1>
-            <p className="text-light-200 text-sm self-end">
-              #Realismo #Color #Payaso #Retrato
-            </p>
-          </div>
-        </div>
-        <button
-          className="flex items-center gap-3 text-white focus:outline-none"
-          onClick={closeModal}
-        >
-          <span className="text-3xl">
-            <BsArrowLeft />
-          </span>
-          Volver
-        </button>
-      </div>
+    <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs">
         <div className="w-full">
-          {postData.picture_size == 'portrait' ? (
-            <PostPortrait
-              user={data?.user}
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-            />
-          ) : (
-            <PostHorizontal
-              user={data?.user}
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-            />
-          )}
+          <PostPortrait
+            user={data?.user}
+            postData={postData}
+            artistData={artistData}
+            commentsData={commentsData}
+            closeModal={closeModal}
+          />
         </div>
       </div>
 
@@ -106,11 +87,25 @@ const PostStatic = ({
               </span>
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            {relatedPosts &&
-              relatedPosts.map((post) => (
-                <PostMore post={post} user={data?.user} key={post.id} />
-              ))}
+          <div className="">
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+              {relatedPosts &&
+                relatedPosts.map((post) => (
+                  <PostMore post={post} user={data?.user} key={post.id} />
+                ))}
+            </Masonry>
           </div>
         </div>
       </div>

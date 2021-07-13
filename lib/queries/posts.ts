@@ -147,7 +147,6 @@ export async function getPostDataById(key, postId) {
 
 export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
-  const docRef = doc(collection(db, 'posts'), postId)
 
   // Initialize Firebase 8.
 
@@ -182,9 +181,8 @@ export async function addComment(comment, postId, userData) {
         return false
       })
 
-    console.log(res, 'la res')
     if (res) {
-      return true
+      return res
     } else {
       throw new Error('Creando el comentario')
     }
