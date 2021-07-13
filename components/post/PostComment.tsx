@@ -35,7 +35,7 @@ const PostComment = ({
   }
 
   return (
-    <div className="w-full flex space-x-4 mb-5 relative group pr-16">
+    <div className="w-full flex space-x-4 mb-5 relative group">
       <div className="flex-shrink-0">
         <img
           src={comment.user_picture}
@@ -48,7 +48,7 @@ const PostComment = ({
           <h4 className="text-gray-200 font-raleway font-semibold tracking-wide">
             {comment.displayName}{' '}
           </h4>
-          <p className="text-light-400 text-xs ml-2">{distanceGone}</p>
+          <p className="text-light-400 text-xs ml-2 mb-[3px]">{distanceGone}</p>
         </div>
         <p className="text-light-200 text-sm mt-1">{comment.comment}</p>
       </div>

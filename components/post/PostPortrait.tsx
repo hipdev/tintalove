@@ -31,7 +31,7 @@ const PostPortrait = ({
   )
 
   return (
-    <div className="flex flex-col xl:flex-row items-center xl:justify-between">
+    <div className="flex flex-col md:flex-row items-center xl:justify-between">
       <div className="w-full sm:w-3/5 md:w-3/5">
         <div className="w-full xl:max-w-3xl flex flex-wrap justify-between mb-8">
           <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ const PostPortrait = ({
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col-reverse self-center xl:self-start w-full xl:w-1/5 ml-0 xl:ml-44 overflow-hidden overflow-ellipsis">
+      <div className="flex flex-grow flex-col-reverse self-start w-full md:w-2/5 ml-0 xl:ml-20 overflow-hidden overflow-ellipsis pl-10">
         <PostsComments
           postId={postData.id}
           user={user || null}
