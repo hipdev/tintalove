@@ -1,15 +1,14 @@
 import Masonry from 'react-masonry-css'
-
+import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import useSWR from 'swr'
+
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import { BsArrowLeft } from 'react-icons/bs'
 import PostPortrait from './PostPortrait'
-import PostHorizontal from './PostHorizontal'
-import Link from 'next/link'
+
 import PostMore from './PostMore'
-import useSWR from 'swr'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 

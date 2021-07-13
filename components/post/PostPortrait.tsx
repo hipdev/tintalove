@@ -1,11 +1,13 @@
+import StickyBox from 'react-sticky-box'
+import Image from 'next/image'
+import { BsArrowLeft } from 'react-icons/bs'
+
 import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
 import PostAside from './create/PostAside'
-import Image from 'next/image'
 import { UserState } from 'types/user'
-import { BsArrowLeft } from 'react-icons/bs'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
@@ -54,7 +56,9 @@ const PostPortrait = ({
         </div>
         <div className="mb-5 flex justify-center xl:justify-start ">
           <div className="mr-3 hidden sm:block">
-            <PostAside postData={postData} />
+            <StickyBox offsetTop={10} offsetBottom={20}>
+              <PostAside postData={postData} />
+            </StickyBox>
           </div>
           {/* <img
           // src="https://via.placeholder.com/1100x621"
