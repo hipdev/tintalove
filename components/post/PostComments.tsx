@@ -117,7 +117,7 @@ const PostComments = ({
               ></path>
             </svg>
           )}
-          <span className="hidden sm:block">
+          <span className="hidden xl:block">
             {loading ? 'Enviando...' : 'Comentar'}
           </span>
         </button>
@@ -135,7 +135,7 @@ const PostComments = ({
       </div>
       <div
         className={
-          'mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          'mb-4 w-full max-h-560 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
         }
       >
