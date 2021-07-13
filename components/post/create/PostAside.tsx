@@ -1,4 +1,3 @@
-import { FiBookmark } from 'react-icons/fi'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { RiHeartLine } from 'react-icons/ri'
 import { FiSend } from 'react-icons/fi'
@@ -17,14 +16,6 @@ const PostAside = (postData) => {
           <button className="block mb-2">
             <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
               <span className="text-2xl text-green-500">
-                <FiBookmark />
-              </span>
-            </div>
-            <p className="text-atomico text-white tracking-wide">GUARDAR</p>
-          </button>
-          <button className="block mb-2">
-            <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">
-              <span className="text-2xl text-green-500">
                 <RiHeartLine />
               </span>
               <p className="text-xs text-white font-raleway">74</p>
@@ -38,7 +29,7 @@ const PostAside = (postData) => {
               </span>
               <p className="text-xs text-white font-raleway">{totalComments}</p>
             </div>
-            <p className="text-atomico text-black tracking-wide">COMENTAR</p>
+            <p className="text-atomico text-white tracking-wide">COMENTAR</p>
           </button>
           <button className="block mb-2">
             <div className="flex flex-col justify-center items-center w-14 h-14 bg-ocean_blue-300 rounded-lg">

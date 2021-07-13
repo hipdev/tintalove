@@ -18,7 +18,8 @@ const PostModalContent = ({
   return (
     <div
       ref={postRef}
-      className="inline-block h-screen align-bottom bg-transparent rounded-lg pt-5 pb-4 text-left overflow-y-scroll shadow-xl transform transition-all sm:align-middle  sm:w-full sm:p-6 md:w-5/5"
+      className="inline-block h-screen align-bottom bg-transparent rounded-lg pt-5 pb-4 text-left 
+      overflow-y-scroll shadow-xl sm:align-middle w-full px-5  sm:w-full sm:px-10 2xl:px-16 md:w-5/5"
     >
       <Post
         postData={postData}
