@@ -11,6 +11,7 @@ import { lists } from 'lib/actions'
 import WrapperSelectCity from './WrapperSelectCity'
 import WrapperAvailability from './WrapperAvailability'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
+import { FaRegHeart } from 'react-icons/fa'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -98,20 +99,28 @@ const Header = ({ user }: { user: UserState }) => {
                     <HiOutlineMenuAlt2 />
                   </span>
                   <Link href="#">
-                    <a className="hidden lg:block">Menú</a>
+                    <a className="hidden xl:block">Menú</a>
                   </Link>
                 </div>
-                <div className="text-gr-200 hidden md:flex px-10 lg:px-5 xl:px-10 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-10 md:px-5 xl:px-8 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
                   <Link href="#">
-                    <a className="hidden lg:block">Buscar</a>
+                    <a className="hidden xl:block">Buscar</a>
                   </Link>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 pr-2">
                   <WrapperSelectCity user={user} />
+                </div>
+                <div className="text-gr-200 space-x-2 items-center hidden md:flex">
+                  <span className="text-xl">
+                    <FaRegHeart />
+                  </span>
+                  <Link href="#">
+                    <a className="hidden xl:block truncate">Favoritos</a>
+                  </Link>
                 </div>
               </div>
               {/*New elements for tablet resolution*/}
