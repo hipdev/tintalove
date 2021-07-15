@@ -24,14 +24,14 @@ export default function TattoosPage({
   const router = useRouter()
 
   return (
-    <Layout>
+    <>
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js" />
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <>
           <Modal
             isOpen={!(router.query.postId == 'all')}
-            overlayClassName="fixed left-0 right-0 bottom-0 top-16 sm:top-16 xl:top-20"
+            overlayClassName="fixed left-0 right-0 bottom-0 top-0"
             className="bg-transparent  w-full px-0  absolute "
             // style={customStyles}
             style={{
@@ -39,7 +39,7 @@ export default function TattoosPage({
                 backgroundColor: '#0b0e19',
                 // top: 80,
                 zIndex: 10,
-                overflow: 'hidden',
+                overflow: 'auto',
               },
               content: {
                 background: 'transparent',
@@ -50,13 +50,15 @@ export default function TattoosPage({
             onRequestClose={() => router.back()}
             contentLabel="Post modal"
           >
-            <PostModalContent
-              postData={postData}
-              artistData={artistData}
-              commentsData={commentsData}
-              morePostsArtist={morePostsArtist}
-              relatedPosts={relatedPosts}
-            />
+            <Layout>
+              <PostModalContent
+                postData={postData}
+                artistData={artistData}
+                commentsData={commentsData}
+                morePostsArtist={morePostsArtist}
+                relatedPosts={relatedPosts}
+              />
+            </Layout>
           </Modal>
         </>
       )}
@@ -65,7 +67,7 @@ export default function TattoosPage({
           No existe este post
         </p>
       )}
-    </Layout>
+    </>
   )
 }
 
