@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: ['Manrope', ...fontFamily.sans],
       },
       fontSize: {
         atomico: '.65rem',
