@@ -11,6 +11,7 @@ import { lists } from 'lib/actions'
 import WrapperSelectCity from './WrapperSelectCity'
 import WrapperAvailability from './WrapperAvailability'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
+import { FaRegHeart } from 'react-icons/fa'
 
 const Header = ({ user }: { user: UserState }) => {
   const {
@@ -25,7 +26,7 @@ const Header = ({ user }: { user: UserState }) => {
         <div className="w-full flex flex-shrink items-center justify-between md:justify-center xl:justify-start">
           {!user?.is_artist && (
             <>
-              <div className="w-full flex justify-between lg:justify-start items-center">
+              <div className="w-full flex justify-between sm:justify-start items-center">
                 <Link href="/">
                   <a>
                     {/* <img className="w-52" src="/short-logo.png" /> */}
@@ -42,39 +43,36 @@ const Header = ({ user }: { user: UserState }) => {
                 </Link>
                 {/*New elements for tablet resolution*/}
                 <div className="flex items-center">
-                  <span className="relative top-0 text-white text-2xl block lg:hidden px-6">
-                    <GoSearch />
+                  <span className="relative top-0 text-white text-2xl block md:hidden px-6">
+                    <AiOutlineSearch />
                   </span>
-                  <span className="text-white text-3xl block lg:hidden">
-                    <VscMenu />
+                  <span className="text-white text-3xl block md:hidden">
+                    <HiOutlineMenuAlt2 />
                   </span>
                 </div>
 
                 {/* Menu desktop */}
-                <span className="text-white text-3xl hidden lg:block px-10">
-                  <VscMenu />
-                </span>
-
-                <div className="lg:w-full xl:w-7/12 relative hidden lg:flex items-center">
-                  <input
-                    type="search"
-                    placeholder="ENCUENTRA TATUAJES Y ARTISTAS INCREIBLES"
-                    className="w-96 lg:w-full xl:w-7/12 h-12 px-5 rounded-l-lg placeholder-black truncate"
-                  />
-                  <button
-                    type="submit"
-                    className="w-14 h-12 bg-green-500 rounded-r-lg"
-                  >
-                    <span className="text-2xl text-white flex justify-center">
-                      <GoSearch />
-                    </span>
-                  </button>
+                <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
+                  <span className="text-3xl">
+                    <HiOutlineMenuAlt2 />
+                  </span>
+                  <Link href="#">
+                    <a className="hidden lg:block">Menú</a>
+                  </Link>
+                </div>
+                <div className="text-gr-200 hidden md:flex px-10 lg:px-5 xl:px-10 space-x-2 items-center">
+                  <span className="text-2xl flex justify-center">
+                    <AiOutlineSearch />
+                  </span>
+                  <Link href="#">
+                    <a className="hidden lg:block">Buscar</a>
+                  </Link>
+                </div>
+                <div className="hidden md:flex items-center space-x-2">
+                  <WrapperSelectCity user={user} />
                 </div>
               </div>
               <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden lg:flex">
-                <div className="flex items-center space-x-2 md:ml-6 lg:ml-2">
-                  <WrapperSelectCity user={user} />
-                </div>
                 <SubMenuHeader user={user} />
               </div>
             </>
@@ -101,20 +99,28 @@ const Header = ({ user }: { user: UserState }) => {
                     <HiOutlineMenuAlt2 />
                   </span>
                   <Link href="#">
-                    <a className="hidden lg:block">Menú</a>
+                    <a className="hidden xl:block">Menú</a>
                   </Link>
                 </div>
-                <div className="text-gr-200 hidden md:flex px-5 xl:px-10 space-x-2 items-center">
+                <div className="text-gr-200 hidden md:flex px-10 md:px-5 xl:px-8 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
                   <Link href="#">
-                    <a className="hidden lg:block">Buscar</a>
+                    <a className="hidden xl:block">Buscar</a>
                   </Link>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 pr-2">
                   <WrapperSelectCity user={user} />
+                </div>
+                <div className="text-gr-200 space-x-2 items-center hidden md:flex">
+                  <span className="text-xl">
+                    <FaRegHeart />
+                  </span>
+                  <Link href="#">
+                    <a className="hidden xl:block truncate">Favoritos</a>
+                  </Link>
                 </div>
               </div>
               {/*New elements for tablet resolution*/}

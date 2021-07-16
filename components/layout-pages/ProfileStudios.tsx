@@ -8,8 +8,8 @@ import Link from 'next/link'
 
 const ProfileStudio = ({ studioData }) => {
   return (
-    <div className="bg-dark-500 h-auto px-5 sm:px-0">
-      <div className="container mx-auto pt-32">
+    <div className="bg-gr-900 h-auto px-5 sm:px-0">
+      <div className="container mx-auto pt-80">
         <div className="w-full bg-ocean_blue-200 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
             <div className="flex flex-shrink-0 w-14 h-14 bg-blue-500 rounded-lg"></div>
@@ -23,12 +23,6 @@ const ProfileStudio = ({ studioData }) => {
             </div>
           </div>
           <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-items-start items-center gap-3">
-            <button className="text-white flex items-center gap-2 bg-light-600 py-4 px-10 rounded-lg focus:outline-none">
-              <span className="text-2xl">
-                <AiOutlineStar />
-              </span>
-              FAVORITOS
-            </button>
             <button className="text-white flex items-center gap-2 bg-green-500 py-4 px-10 rounded-lg focus:outline-none">
               <span className="text-2xl">
                 <RiMessengerLine />
@@ -75,6 +69,11 @@ const ProfileStudio = ({ studioData }) => {
             Artistas del estudio
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <StudioCard studios={studioData} />
+            <StudioCard studios={studioData} />
+            <StudioCard studios={studioData} />
+            <StudioCard studios={studioData} />
+            <StudioCard studios={studioData} />
             <StudioCard studios={studioData} />
           </div>
         </div>
