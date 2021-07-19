@@ -22,9 +22,10 @@ module.exports = {
           500: '#0071F3',
         },
         dark: {
+          500: '#111319', // new layout design
           600: '#10101DF2', // new layout design
           700: '#1f1f1f',
-          800: '#080A12', // new layout design
+          800: '#030308', // new layout design
         },
         light: {
           200: '#D7DAE6',
