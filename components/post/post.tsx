@@ -11,6 +11,7 @@ import PostMore from './PostMore'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 import PostBottomFixed from './PostBottomFixed'
+import PostRelated from './PostRelated'
 
 const PostStatic = ({
   postData,
@@ -65,10 +66,10 @@ const PostStatic = ({
             </a>
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 ">
           {morePostsArtist &&
             morePostsArtist.map((post) => (
-              <PostMore post={post} user={data?.user} key={post.id} />
+              <PostRelated post={post} user={data?.user} key={post.id} />
             ))}
         </div>
       </div>
