@@ -1,5 +1,6 @@
 import { addComment } from 'lib/queries/posts'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
@@ -23,6 +24,9 @@ const PostComments = ({
     let filteredArray = comments.filter((comment) => comment.id !== commentId)
     setComments(filteredArray)
   }
+  useEffect(() => {
+    setComments(commentsData)
+  }, [commentsData])
 
   const sendComment = () => {
     setLoading(true)

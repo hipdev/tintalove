@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
 import PostModalContent from 'components/post/PostModalContent'
+import { useEffect, useState } from 'react'
 
 export default function TattoosPage({
   postData,
@@ -22,6 +23,11 @@ export default function TattoosPage({
   relatedPosts,
 }) {
   const router = useRouter()
+  const [ref, setRef] = useState(null)
+
+  useEffect(() => {
+    if (ref) ref.scrollTop = 0
+  }, [router, ref])
 
   return (
     <>
@@ -30,6 +36,7 @@ export default function TattoosPage({
       {postData && artistData && (
         <>
           <Modal
+            overlayRef={(ref) => setRef(ref)}
             isOpen={!(router.query.postId == 'all')}
             overlayClassName="fixed left-0 right-0 bottom-0 top-0"
             className="bg-transparent  w-full px-0  absolute "

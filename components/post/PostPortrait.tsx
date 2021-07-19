@@ -46,7 +46,17 @@ const PostPortrait = ({
           alt=""
           className=" object-cover rounded-lg  md:max-w-lg lg:max-w-2xl"
         /> */}
-          <div className="aspect-w-3 aspect-h-4 relative w-full h-448">
+          {/* <div className="aspect-w-3 aspect-h-4 relative w-full h-448"> */}
+          <div
+            className={
+              'relative w-full mb-10 ' +
+              (postData.picture_size == 'portrait'
+                ? 'aspect-w-3 aspect-h-4 2xl:mr-36'
+                : postData.picture_size == 'landscape'
+                ? 'aspect-w-4 aspect-h-3'
+                : 'aspect-w-1 aspect-h-1')
+            }
+          >
             <Image
               loader={loaderPost}
               src={postData?.image?.url}
@@ -91,8 +101,8 @@ const PostPortrait = ({
         </div>
 
         <div className="flex">
-          <div className="mr-3 hidden sm:block ">
-            <StickyBox offsetTop={10} offsetBottom={20}>
+          <div className="mr-3 hidden sm:block 2xl:h-560">
+            <StickyBox offsetTop={10}>
               <div>
                 <button
                   className="flex items-center gap-3 text-white focus:outline-none mr-7 mb-4"
