@@ -114,8 +114,11 @@ const PostPortrait = ({
           </div>
         </div>
 
-        <div className={'flex '} style={{ height: `${imageHeight - 120}px` }}>
-          <div className="mr-3 hidden sm:block">
+        <div className={'flex '}>
+          <div
+            className="mr-3 hidden sm:block"
+            style={{ height: `${imageHeight - 120}px` }}
+          >
             <StickyBox offsetTop={10}>
               <div>
                 <button
