@@ -2,7 +2,6 @@ import Masonry from 'react-masonry-css'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import useSWR from 'swr'
-
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
@@ -11,7 +10,7 @@ import PostPortrait from './PostPortrait'
 import PostMore from './PostMore'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
-import { AiOutlineCalendar } from 'react-icons/ai'
+import PostBottomFixed from './PostBottomFixed'
 
 const PostStatic = ({
   postData,
@@ -41,21 +40,7 @@ const PostStatic = ({
 
   return (
     <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
-      <div className="fixed bottom-0 z-20 w-full bg-dark-800 left-0 text-gray-300 py-3">
-        <div className="container mx-auto">
-          <div className="flex justify-around">
-            <div className="flex items-center">
-              Agenda de
-              <Link href={`/${artistData.username}`}>
-                <a className="text-gn-500 ml-2">{artistData.displayName}</a>
-              </Link>
-              <AiOutlineCalendar className="mx-2 text-xl" />
-              {artistData.available_label}
-            </div>
-            <div>Llamar</div>
-          </div>
-        </div>
-      </div>
+      <PostBottomFixed artistData={artistData} />
       {/* Picture, comments and card block */}
       <div className="flex lg:container-xs">
         <div className="w-full">
