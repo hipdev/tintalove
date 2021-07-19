@@ -36,34 +36,9 @@ const PostPortrait = ({
   console.log(artistData, 'data Artist')
 
   return (
-    <div className="flex flex-col md:flex-row items-center xl:justify-between relative">
+    <div className="flex flex-col md:flex-row items-center xl:justify-between">
       <div className="w-full sm:w-3/5 md:w-3/5">
-        <div className="flex justify-between mb-8">
-          <div className="flex flex-col mb-2">
-            <h1 className="text-white text-2xl font-semibold tracking-wide">
-              {postData.description || 'Sin descripción'}
-            </h1>
-            <p className="text-light-200 text-sm self-end">
-              #Realismo #Color #Payaso #Retrato
-            </p>
-          </div>
-
-          <button
-            className="flex items-center gap-3 text-white focus:outline-none"
-            onClick={closeModal}
-          >
-            <span className="text-3xl">
-              <BsArrowLeft />
-            </span>
-            Volver
-          </button>
-        </div>
         <div className="mb-5 flex justify-center xl:justify-start ">
-          <div className="mr-3 hidden sm:block">
-            <StickyBox offsetTop={100} offsetBottom={20}>
-              <PostAside postData={postData} />
-            </StickyBox>
-          </div>
           {/* <img
           // src="https://via.placeholder.com/1100x621"
           src={
@@ -98,47 +73,68 @@ const PostPortrait = ({
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 xl:ml-20 overflow-hidden overflow-ellipsis pl-10">
-        <div className="bg-dark-800 text-gray-200 px-4 py-4 mb-10 rounded-sm">
-          <div className="flex justify-between">
-            <div className="flex">
-              <Link href={`/${artistData.username}`}>
-                <a>
-                  <img
-                    src={artistData?.profile_picture.url}
-                    className="w-12 h-12 rounded-full"
-                  />
-                </a>
-              </Link>
-              <div className="flex flex-col ml-5">
-                <Link href={`/${artistData.username}`}>
-                  <a className="text-xl">{artistData.displayName}</a>
-                </Link>
-                <span className="text-sm text-gray-400">{`${artistData.city_name}, ${artistData.province}`}</span>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <button className="bg-rd-400 hover:bg-rd-300 text-2xl p-2 rounded-full mr-2">
-                <AiOutlineHeart />
-              </button>
-              <a
-                href={`tel:${artistData.phone}`}
-                className="bg-gn-400 hover:bg-gn-300 text-2xl p-2 rounded-full inline-block"
-              >
-                <FiPhoneCall />
-              </a>
-            </div>
+      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 xl:ml-10 ">
+        <div className="flex mb-8 border-gray-700 border-b pb-5">
+          <button
+            className="flex items-center gap-3 text-white focus:outline-none mr-10"
+            onClick={closeModal}
+          >
+            <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
+              <BsArrowLeft />
+            </span>
+          </button>
+          <div className="flex flex-col mb-2">
+            <h1 className="text-white text-2xl font-semibold tracking-wide">
+              {postData.description || 'Sin descripción'}
+            </h1>
+            <p className="text-light-200 text-sm self-end">
+              #Realismo #Color #Payaso #Retrato
+            </p>
           </div>
-          <div className="h-[2px] w-full bg-gray-900 mt-2"></div>
         </div>
 
-        <PostsComments
-          postId={postData.id}
-          user={user || null}
-          commentsData={commentsData}
-          setTotalComments={setTotalComments}
-          totalComments={totalComments}
-        />
+        <div className="flex justify-center xl:justify-start h-[50rem]">
+          <div className="mr-3 hidden sm:block ">
+            <StickyBox offsetTop={10} offsetBottom={20}>
+              <div>
+                <button
+                  className="flex items-center gap-3 text-white focus:outline-none mr-10 mb-4"
+                  // onClick={closeModal}
+                >
+                  <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
+                    <BsArrowLeft />
+                  </span>
+                </button>
+
+                <button
+                  className="flex items-center gap-3 text-white focus:outline-none mr-10 mb-4"
+                  // onClick={closeModal}
+                >
+                  <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
+                    <BsArrowLeft />
+                  </span>
+                </button>
+
+                <button
+                  className="flex items-center gap-3 text-white focus:outline-none mr-10"
+                  // onClick={closeModal}
+                >
+                  <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
+                    <BsArrowLeft />
+                  </span>
+                </button>
+              </div>
+            </StickyBox>
+          </div>
+
+          <PostsComments
+            postId={postData.id}
+            user={user || null}
+            commentsData={commentsData}
+            setTotalComments={setTotalComments}
+            totalComments={totalComments}
+          />
+        </div>
       </div>
     </div>
   )
