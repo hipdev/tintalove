@@ -42,72 +42,67 @@ const PostStatic = ({
     <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
       <PostBottomFixed artistData={artistData} />
       {/* Picture, comments and card block */}
-      <div className="flex lg:container-xs">
-        <div className="w-full">
-          <PostPortrait
-            user={data?.user}
-            postData={postData}
-            artistData={artistData}
-            commentsData={commentsData}
-            closeModal={closeModal}
-          />
-        </div>
-      </div>
 
-      <div className="w-full ">
-        <div className="border-t-2 border-b-2 border-light-800 py-5">
-          <div className="flex flex-wrap justify-between sm:justify-between mb-5">
-            <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              Más de {artistData.displayName}
-            </h1>
-            <Link href={`/${postData.username}`}>
-              <a className="flex items-center text-white font-raleway tracking-wide">
-                Visitar perfil
-                <span className="text-green-600 text-2xl pl-2">
-                  <HiArrowNarrowRight />
-                </span>
-              </a>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            {morePostsArtist &&
-              morePostsArtist.map((post) => (
-                <PostMore post={post} user={data?.user} key={post.id} />
-              ))}
-          </div>
-        </div>
-        <div className="py-5">
-          <div className="flex flex-wrap justify-center sm:justify-between mb-5">
-            <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-              También podría interesarte
-            </h1>
-            <button className="flex items-center text-white font-raleway tracking-wide">
-              Ver más
+      <PostPortrait
+        user={data?.user}
+        postData={postData}
+        artistData={artistData}
+        commentsData={commentsData}
+        closeModal={closeModal}
+      />
+
+      <div className="border-t-2 border-b-2 border-light-800 py-5">
+        <div className="flex flex-wrap justify-between sm:justify-between mb-5">
+          <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
+            Más de {artistData.displayName}
+          </h1>
+          <Link href={`/${postData.username}`}>
+            <a className="flex items-center text-white font-raleway tracking-wide">
+              Visitar perfil
               <span className="text-green-600 text-2xl pl-2">
                 <HiArrowNarrowRight />
               </span>
-            </button>
-          </div>
-          <div className="">
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-              {relatedPosts &&
-                relatedPosts.map((post) => (
-                  <PostMore post={post} user={data?.user} key={post.id} />
-                ))}
-              {relatedPosts &&
-                relatedPosts.map((post) => (
-                  <PostMore post={post} user={data?.user} key={post.id} />
-                ))}
-              {relatedPosts &&
-                relatedPosts.map((post) => (
-                  <PostMore post={post} user={data?.user} key={post.id} />
-                ))}
-            </Masonry>
-          </div>
+            </a>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+          {morePostsArtist &&
+            morePostsArtist.map((post) => (
+              <PostMore post={post} user={data?.user} key={post.id} />
+            ))}
+        </div>
+      </div>
+      <div className="py-5">
+        <div className="flex flex-wrap justify-center sm:justify-between mb-5">
+          <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
+            También podría interesarte
+          </h1>
+          <button className="flex items-center text-white font-raleway tracking-wide">
+            Ver más
+            <span className="text-green-600 text-2xl pl-2">
+              <HiArrowNarrowRight />
+            </span>
+          </button>
+        </div>
+        <div className="">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {relatedPosts &&
+              relatedPosts.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
+            {relatedPosts &&
+              relatedPosts.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
+            {relatedPosts &&
+              relatedPosts.map((post) => (
+                <PostMore post={post} user={data?.user} key={post.id} />
+              ))}
+          </Masonry>
         </div>
       </div>
     </div>
