@@ -1,6 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Post from 'components/post/Post'
-import { useEffect, useRef } from 'react'
 
 const PostModalContent = ({
   postData,
