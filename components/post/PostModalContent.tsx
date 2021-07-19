@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import PostStatic from 'components/post/Post'
+import PostStatic from 'components/post/PostStatic'
 
 const PostModalContent = ({
   postData,
