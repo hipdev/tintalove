@@ -7,6 +7,7 @@ const PostModalContent = ({
   commentsData,
   morePostsArtist,
   relatedPosts,
+  overlayRef,
 }) => {
   const router = useRouter()
 
@@ -21,6 +22,7 @@ const PostModalContent = ({
         commentsData={commentsData}
         morePostsArtist={morePostsArtist}
         relatedPosts={relatedPosts}
+        overlayRef={overlayRef}
         closeModal={() => router.back()}
       />
     </div>

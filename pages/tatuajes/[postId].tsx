@@ -64,6 +64,7 @@ export default function TattoosPage({
                 commentsData={commentsData}
                 morePostsArtist={morePostsArtist}
                 relatedPosts={relatedPosts}
+                overlayRef={ref}
               />
             </Layout>
           </Modal>
