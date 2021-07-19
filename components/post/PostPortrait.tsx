@@ -4,10 +4,11 @@ import { BsArrowLeft, BsHeart } from 'react-icons/bs'
 import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { UserState } from 'types/user'
 import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
@@ -26,9 +27,21 @@ const PostPortrait = ({
   user: UserState
   closeModal: any
 }) => {
+  const imageRef = useRef(null)
+  const router = useRouter()
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
+
+  const [imageHeight, setImageHeight] = useState(null)
+
+  useEffect(() => {
+    console.log('image ref')
+    // console.log(imageRef.current.offsetHeight, 'imageRef')
+    if (imageRef.current) {
+      setImageHeight(imageRef.current.offsetHeight)
+    }
+  }, [imageRef, router])
 
   console.log(artistData, 'data Artist')
 
@@ -48,10 +61,11 @@ const PostPortrait = ({
         /> */}
           {/* <div className="aspect-w-3 aspect-h-4 relative w-full h-448"> */}
           <div
+            ref={imageRef}
             className={
               'relative w-full mb-10 ' +
               (postData.picture_size == 'portrait'
-                ? 'aspect-w-3 aspect-h-4 2xl:mr-36'
+                ? 'aspect-w-3 aspect-h-4 2xl:mr-36 h-609'
                 : postData.picture_size == 'landscape'
                 ? 'aspect-w-4 aspect-h-3'
                 : 'aspect-w-1 aspect-h-1')
@@ -100,8 +114,8 @@ const PostPortrait = ({
           </div>
         </div>
 
-        <div className="flex">
-          <div className="mr-3 hidden sm:block 2xl:h-560">
+        <div className={'flex '} style={{ height: `${imageHeight - 120}px` }}>
+          <div className="mr-3 hidden sm:block">
             <StickyBox offsetTop={10}>
               <div>
                 <button

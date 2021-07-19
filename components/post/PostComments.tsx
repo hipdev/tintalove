@@ -85,6 +85,7 @@ const PostComments = ({
                     : 'https://via.placeholder.com/45x45'
                 }
                 className="object-cover w-12 h-12 rounded-full overflow-hidden"
+                title="user-image"
               />
             </a>
           </Link>
@@ -144,7 +145,7 @@ const PostComments = ({
       <div
         ref={commentBoxRef}
         className={
-          'mb-4 w-full max-h-560 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          'mb-4 w-full overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
         }
       >
