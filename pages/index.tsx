@@ -5,7 +5,7 @@ import Home from 'components/home/home'
 
 export default function IndexPage({ postData }) {
   return (
-    <Layout>
+    <Layout fixed>
       <Home posts={postData} />
     </Layout>
   )

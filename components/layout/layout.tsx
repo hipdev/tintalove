@@ -11,9 +11,10 @@ import NavFooter from './NavFooter'
 type Props = {
   children: any
   userId?: string | null
+  fixed?: boolean
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children, fixed }: Props) => {
   const { userId } = useUserId()
 
   const { data } = useSWR(userId ? userId : null, getUserInfo)
@@ -34,7 +35,7 @@ const Layout = ({ children }: Props) => {
         position="bottom-right"
       />
       <HeadContainer />
-      <Header user={data?.user || null} />
+      <Header user={data?.user || null} fixed={fixed} />
       <main className="bg-dark-800">{children}</main>
       <Footer />
       <UserLists user={data?.user || null} />
