@@ -1,16 +1,13 @@
 import StickyBox from 'react-sticky-box'
 import Image from 'next/image'
-import { BsArrowLeft } from 'react-icons/bs'
-
+import { BsArrowLeft, BsHeart } from 'react-icons/bs'
 import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import { useState } from 'react'
-import PostAside from './PostAside'
 import { UserState } from 'types/user'
-import Link from 'next/link'
-import { FiPhoneCall } from 'react-icons/fi'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { BiShareAlt } from 'react-icons/bi'
+import { FiFlag } from 'react-icons/fi'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
@@ -36,7 +33,7 @@ const PostPortrait = ({
   console.log(artistData, 'data Artist')
 
   return (
-    <div className="flex flex-col md:flex-row items-center xl:justify-between">
+    <div className="flex flex-col md:flex-row  xl:justify-between">
       <div className="w-full sm:w-3/5 md:w-3/5">
         <div className="mb-5 flex justify-center xl:justify-start ">
           {/* <img
@@ -73,7 +70,7 @@ const PostPortrait = ({
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 xl:ml-10 ">
+      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 md:ml-10 ">
         <div className="flex mb-8 border-gray-700 border-b pb-5">
           <button
             className="flex items-center gap-3 text-white focus:outline-none mr-10"
@@ -84,7 +81,7 @@ const PostPortrait = ({
             </span>
           </button>
           <div className="flex flex-col mb-2">
-            <h1 className="text-white text-2xl font-semibold tracking-wide">
+            <h1 className="text-white text-3xl font-semibold tracking-wide">
               {postData.description || 'Sin descripción'}
             </h1>
             <p className="text-light-200 text-sm self-end">
@@ -93,34 +90,34 @@ const PostPortrait = ({
           </div>
         </div>
 
-        <div className="flex justify-center xl:justify-start h-[50rem]">
+        <div className="flex">
           <div className="mr-3 hidden sm:block ">
             <StickyBox offsetTop={10} offsetBottom={20}>
               <div>
                 <button
-                  className="flex items-center gap-3 text-white focus:outline-none mr-10 mb-4"
+                  className="flex items-center gap-3 text-white focus:outline-none mr-7 mb-4"
                   // onClick={closeModal}
                 >
                   <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
-                    <BsArrowLeft />
+                    <BsHeart className="relative top-[2px]" />
                   </span>
                 </button>
 
                 <button
-                  className="flex items-center gap-3 text-white focus:outline-none mr-10 mb-4"
+                  className="flex items-center gap-3 text-white focus:outline-none mr-7 mb-4"
                   // onClick={closeModal}
                 >
                   <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
-                    <BsArrowLeft />
+                    <BiShareAlt />
                   </span>
                 </button>
 
                 <button
-                  className="flex items-center gap-3 text-white focus:outline-none mr-10"
+                  className="flex items-center gap-3 text-white focus:outline-none mr-7"
                   // onClick={closeModal}
                 >
                   <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
-                    <BsArrowLeft />
+                    <FiFlag />
                   </span>
                 </button>
               </div>
