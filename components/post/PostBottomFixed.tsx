@@ -1,8 +1,14 @@
 import Link from 'next/link'
-import { AiOutlineCalendar } from 'react-icons/ai'
+import Image from 'next/image'
+
 import { FaWhatsapp } from 'react-icons/fa'
 import { IoIosArrowUp } from 'react-icons/io'
 import { ArtistTypes } from 'types/artist'
+import { AiOutlineStar } from 'react-icons/ai'
+
+const loaderImage = ({ src, quality }: any) => {
+  return `${src}/tr:pr-true,w-48,h-48,q-${quality || 75}`
+}
 
 const PostBottomFixed = ({
   artistData,
@@ -19,13 +25,37 @@ const PostBottomFixed = ({
       <div className="container mx-auto">
         <div className="flex justify-between">
           <div className="flex items-center">
-            Agenda de
-            <Link href={`/${artistData.username}`}>
-              <a className="text-gn-500 ml-2">{artistData.displayName}</a>
-            </Link>
-            <AiOutlineCalendar className="mx-2 text-xl" />
-            {artistData.available_label}
+            <div className="flex">
+              <Link href={`/${artistData.username}`}>
+                <a className="text-gn-500 ml-2 w-12 mr-3">
+                  <Image
+                    loader={loaderImage}
+                    src={artistData.profile_picture.url}
+                    alt="Artist photo"
+                    width={48}
+                    height={48}
+                    sizes="100%"
+                    quality={100}
+                    className="w-full rounded-md  object-cover"
+                  />
+                </a>
+              </Link>
+              <div className="leading-tight">
+                <Link href={`/${artistData.username}`}>
+                  <a className="text-white font-semibold text-xl ">
+                    {artistData.displayName}
+                  </a>
+                </Link>
+                <h2 className="text-sm text-gray-400">
+                  {artistData.city_name}, {artistData.province}{' '}
+                </h2>
+              </div>
+            </div>
+            <button className="flex items-center px-7 border border-gn-500 rounded-md py-3 ml-5 text-sm">
+              AÑADIR A FAVORITOS <AiOutlineStar className="ml-2 text-xl" />
+            </button>
           </div>
+
           <div className="flex items-center">
             <div className="text-right mr-5">
               <h3 className="text-gray-400">CITAS DISPONIBLES EN</h3>
