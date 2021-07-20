@@ -46,7 +46,7 @@ const PostComment = ({
       <div>
         <div className="flex items-end">
           <h4 className="text-gray-200 font-raleway font-semibold tracking-wide">
-            {comment.id}{' '}
+            {comment.displayName}
           </h4>
           <p className="text-light-400 text-xs ml-2 mb-[3px]">{distanceGone}</p>
         </div>
