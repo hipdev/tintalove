@@ -18,7 +18,7 @@ const PostBottomFixed = ({
   overlayRef: any
 }) => {
   const goTop = () => {
-    overlayRef.scrollTop = 0
+    overlayRef.scrollTo({ top: 0, behavior: 'smooth' })
   }
   return (
     <div className="fixed bottom-0 z-20 w-full bg-gr-700 left-0 text-gray-300 py-4 px-16 border-t border-gray-700">
