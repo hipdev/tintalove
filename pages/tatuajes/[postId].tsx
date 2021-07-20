@@ -26,7 +26,7 @@ export default function TattoosPage({
   const [ref, setRef] = useState(null)
 
   useEffect(() => {
-    if (ref) ref.scrollTop = 0
+    if (ref) ref.scrollTo({ top: 0, behavior: 'smooth' })
   }, [router, ref])
 
   return (
