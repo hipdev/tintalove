@@ -1,21 +1,20 @@
+import { useState } from 'react'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
-import { useStateMachine } from 'little-state-machine'
-import { login } from 'lib/actions'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
+
+import LoginModal from './LoginModal'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  })
+  const [openModal, setOpenModal] = useState(false)
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
@@ -42,9 +41,17 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     <>
       {!user && (
         <>
+          {openModal && (
+            <LoginModal
+              modal={{ openModal, setOpenModal }}
+              handleLogin={handleLogin}
+            />
+          )}
+
           <button
             title="Acceder con Gmail"
-            onClick={handleLogin}
+            // onClick={handleLogin}
+            onClick={() => setOpenModal(true)}
             className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder
