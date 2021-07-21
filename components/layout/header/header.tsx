@@ -20,6 +20,8 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   }: any = useStateMachine({
     lists,
   })
+
+  console.log(user, 'el user')
   return (
     <nav
       className={

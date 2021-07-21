@@ -5,7 +5,7 @@ import { auth } from 'lib/firebase'
 
 declare const window: any
 
-const PhoneCaptcha = ({ phone }: any) => {
+const PhoneCaptcha = ({ code, phoneNumber }: any) => {
   useEffect(() => {
     console.log(auth, 'auth instance')
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -23,30 +23,35 @@ const PhoneCaptcha = ({ phone }: any) => {
   }, [])
 
   const sendSMS = () => {
-    // signInWithPhoneNumber(auth, '+573177358656', window.recaptchaVerifier)
-    //   .then((confirmationResult) => {
-    //     // SMS sent. Prompt user to type the code from the message, then sign the
-    //     // user in with confirmationResult.confirm(code).
-    //     window.confirmationResult = confirmationResult
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     // Error; SMS not sent
-    //     // ...
-    //   })
+    signInWithPhoneNumber(auth, '+' + phoneNumber, window.recaptchaVerifier)
+      .then((confirmationResult) => {
+        console.log('enviamos el mensaje')
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult
+        code.setShowCode(true)
+
+        console.log(code, 'eeeee')
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        // ...
+        console.log(error, 'error enviando sms')
+      })
   }
 
-  console.log(window.recaptchaVerifier, 'el captcha')
+  // console.log(window.confirmationResult, 'confirmation result')
+  console.log(code, 'el codigo')
 
   return (
     <>
       <button
-        id="sign-in-button"
         onClick={sendSMS}
         className="flex items-center justify-center border py-2 mt-5 rounded-md px-2 bg-dark-800 border-black"
       >
         Obtener código <BsPhone className="text-xl ml-3" />
       </button>
+      <div className="hidden" id="sign-in-button"></div>
     </>
   )
 }

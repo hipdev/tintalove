@@ -34,6 +34,24 @@ export async function createUser(user: User) {
   }
 }
 
+export async function createPhoneUser(user: User) {
+  const docRef = doc(collection(db, 'users'), user.uid)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    // console.log('Document data:', docSnap.data())
+    return true
+  } else {
+    const userRef = doc(collection(db, 'users'), user.uid)
+    await setDoc(userRef, {
+      phoneNumber: user.phoneNumber,
+      created_at: serverTimestamp(),
+    })
+    console.log('No such document!')
+    return true
+  }
+}
+
 export async function getUserInfo(uid) {
   const docRef = doc(collection(db, 'users'), uid)
   const docSnap: DocumentSnapshot<UserState> = await getDoc(docRef)
