@@ -57,7 +57,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
                 <div className="text-center">ó</div>
               </>
             )}
-            <PhoneAuth phone={{ showPhone, setShowPhone }} />
+            <PhoneAuth show={{ showPhone, setShowPhone }} />
           </div>
 
           <div
