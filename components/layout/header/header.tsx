@@ -21,7 +21,6 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
     lists,
   })
 
-  console.log(user, 'el user')
   return (
     <nav
       className={

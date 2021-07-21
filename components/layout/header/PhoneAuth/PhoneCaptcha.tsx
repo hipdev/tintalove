@@ -7,13 +7,11 @@ declare const window: any
 
 const PhoneCaptcha = ({ code, phoneNumber }: any) => {
   useEffect(() => {
-    console.log(auth, 'auth instance')
     window.recaptchaVerifier = new RecaptchaVerifier(
       'sign-in-button',
       {
         size: 'invisible',
         callback: (response) => {
-          console.log(response, 'captcha')
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           //   onSignInSubmit();
         },
@@ -25,13 +23,10 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
   const sendSMS = () => {
     signInWithPhoneNumber(auth, '+' + phoneNumber, window.recaptchaVerifier)
       .then((confirmationResult) => {
-        console.log('enviamos el mensaje')
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult
         code.setShowCode(true)
-
-        console.log(code, 'eeeee')
       })
       .catch((error) => {
         // Error; SMS not sent
@@ -39,9 +34,6 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
         console.log(error, 'error enviando sms')
       })
   }
-
-  // console.log(window.confirmationResult, 'confirmation result')
-  console.log(code, 'el codigo')
 
   return (
     <>

@@ -1,21 +1,24 @@
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { BsPhone } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
-import { auth } from 'lib/firebase'
+import { useState } from 'react'
 import { createPhoneUser } from 'lib/queries/users'
+import { mutate } from 'swr'
 
 declare const window: any
 
-const PhoneCode = ({ code, phoneNumber }: any) => {
+const PhoneCode = ({ modal }: any) => {
   const [inputCode, setInputCode]: any = useState('')
-  const sendCode = () => {
+  const sendCode = async () => {
     window.confirmationResult
       .confirm(inputCode)
       .then(async (result) => {
         // User signed in successfully.
         const user = result.user
-        await createPhoneUser(user)
-        console.log(user, 'El usuario registrado')
+        const res = await createPhoneUser(user)
+        modal.setOpenModal(false)
+
+        if (res) {
+          mutate(user.uid)
+        }
+
         // ...
       })
       .catch((error) => {
@@ -24,9 +27,6 @@ const PhoneCode = ({ code, phoneNumber }: any) => {
         console.log(error, 'Código inválido')
       })
   }
-
-  // console.log(window.confirmationResult, 'confirmation result')
-  console.log(inputCode.length, 'el codigo')
 
   return (
     <div className="text-center flex items-center flex-col">

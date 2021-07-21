@@ -101,6 +101,10 @@
 .react-tel-input {
   padding-left: 0 !important;
 }
+.react-tel-input input {
+  width: 90% !important;
+  text-align: center !important;
+}
 
 .react-tel-input .flag-dropdown {
   border-radius: 5px !important;

@@ -1,5 +1,5 @@
 import { BsPhone } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import PhoneCaptcha from './PhoneCaptcha'
 import { phone } from 'phone'
@@ -7,7 +7,7 @@ import { phone } from 'phone'
 import 'react-phone-input-2/lib/style.css'
 import PhoneCode from './PhoneCode'
 
-const PhoneAuth = ({ show }: any) => {
+const PhoneAuth = ({ show, modal }: any) => {
   const [phoneReady, setPhoneReady] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const [phoneNumber, setPhoneNumber]: any = useState()
@@ -30,9 +30,9 @@ const PhoneAuth = ({ show }: any) => {
               <h2 className="font-semibold text-xl text-center mb-3">
                 Indica tu número de celular
               </h2>
-              <p className="w-96 text-center text-sm text-gray-400">
+              <p className="w-full sm:w-96 text-center text-sm text-gray-400">
                 Revisa el código que llegará por SMS, dice algo como:{' '}
-                <span className="text-gray-300 w-">
+                <span className="text-gray-300 ">
                   &quot;123456 is your verification code for Tinta Love&quot;
                 </span>
               </p>
@@ -51,14 +51,13 @@ const PhoneAuth = ({ show }: any) => {
                     'ur',
                     'mx',
                   ]}
-                  containerClass="input-primary p-1 w-64"
+                  containerClass="input-primary p-1 w-full sm:w-64"
                   searchStyle={{ background: 'red' }}
                   inputStyle={{
                     background: '#111319',
                     border: 'none',
                     color: '#fff',
-                    fontSize: '1.1rem',
-                    width: '15rem',
+                    fontSize: '1rem',
                   }}
                   buttonStyle={{
                     background: '#111319',
@@ -80,7 +79,6 @@ const PhoneAuth = ({ show }: any) => {
                     } else {
                       setPhoneReady(false)
                     }
-                    console.log(phoneNumber, country, validPhone, 'el número')
                   }}
                 />
               </div>
@@ -96,7 +94,11 @@ const PhoneAuth = ({ show }: any) => {
         </>
       )}
       {showCode && (
-        <PhoneCode phoneNumber={phoneNumber} code={{ showCode, setShowCode }} />
+        <PhoneCode
+          phoneNumber={phoneNumber}
+          code={{ showCode, setShowCode }}
+          modal={modal}
+        />
       )}
     </>
   )

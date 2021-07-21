@@ -9,6 +9,7 @@ import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
 
 import LoginModal from './LoginModal'
+import { mutate } from 'swr'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
@@ -19,13 +20,15 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
 
   const pn = new PhoneNumber(user?.phoneNumber || '', 'co')
 
-  console.log(pn, 'esto que es')
-
   const handleLogin = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
+
+        if (res) {
+          mutate(user.uid)
+        }
       })
       .catch((error) => {
         // Handle Errors here.
