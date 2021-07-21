@@ -44,10 +44,11 @@ export async function createPhoneUser(user: User) {
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
     await setDoc(userRef, {
+      displayName: 'Sin nombre',
       phoneNumber: user.phoneNumber,
       created_at: serverTimestamp(),
     })
-    console.log('No such document!')
+    console.log('Creado el usuario')
     return true
   }
 }

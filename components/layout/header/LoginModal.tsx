@@ -4,7 +4,7 @@ import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
 import { useState } from 'react'
 
-const PhoneAuth = dynamic(() => import('./PhoneAuth/PhoneInput'), {
+const PhoneInput = dynamic(() => import('./PhoneAuth/PhoneInput'), {
   ssr: false,
 })
 
@@ -57,7 +57,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
                 <div className="text-center">ó</div>
               </>
             )}
-            <PhoneAuth show={{ showPhone, setShowPhone }} />
+            <PhoneInput show={{ showPhone, setShowPhone }} modal={modal} />
           </div>
 
           <div
