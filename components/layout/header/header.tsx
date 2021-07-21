@@ -78,7 +78,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                   <WrapperSelectCity user={user} />
                 </div>
               </div>
-              <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden lg:flex">
+              <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
                 <SubMenuHeader user={user} />
               </div>
             </>

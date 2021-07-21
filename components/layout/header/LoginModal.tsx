@@ -61,7 +61,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
           </div>
 
           <div
-            className="absolute -top-3 -right-2 "
+            className="absolute -top-3 right-2  sm:-right-2 "
             onClick={() => modal.setOpenModal(false)}
           >
             <CgCloseO className="text-white text-3xl cursor-pointer" />
