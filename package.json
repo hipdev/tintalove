@@ -31,6 +31,7 @@
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.3",
     "algoliasearch": "^4.10.3",
+    "awesome-phonenumber": "^2.54.0",
     "compressorjs": "^1.0.7",
     "date-fns": "^2.22.1",
     "draft-js": "^0.11.7",
