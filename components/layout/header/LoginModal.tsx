@@ -1,10 +1,16 @@
+import dynamic from 'next/dynamic'
 import Modal from 'react-modal'
-import { SiGmail } from 'react-icons/si'
-import { BsPhone } from 'react-icons/bs'
 import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
+import { useState } from 'react'
+
+const PhoneAuth = dynamic(() => import('./PhoneAuth/PhoneInput'), {
+  ssr: false,
+})
 
 const LoginModal = ({ modal, handleLogin }: any) => {
+  const [showPhone, setShowPhone] = useState(false)
+
   return (
     <>
       <Modal
@@ -33,21 +39,25 @@ const LoginModal = ({ modal, handleLogin }: any) => {
         contentLabel="Post modal"
       >
         <div className="bg-gr-800  text-gray-300 px-14 py-5 pb-10 relative">
-          <h2 className="text-gray-300 font-semibold text-2xl text-center">
-            Ingresar en Tinta Love
-          </h2>
+          {!showPhone && (
+            <h2 className="text-gray-300 font-semibold text-2xl text-center mb-7">
+              Ingresar en Tinta Love
+            </h2>
+          )}
 
-          <div className="mt-10 flex flex-col justify-center">
-            <button
-              className="flex items-center justify-center border py-2 mb-5 rounded-md px-2 bg-dark-800 border-black"
-              onClick={handleLogin}
-            >
-              Entrar con Gmail <AiOutlineGoogle className="text-xl ml-3" />
-            </button>
-            <div className="text-center">ó</div>
-            <button className="flex items-center justify-center border py-2 mt-5 rounded-md px-2 bg-dark-800 border-black">
-              Entrar con Celular <BsPhone className="text-xl ml-3" />
-            </button>
+          <div className=" flex flex-col justify-center">
+            {!showPhone && (
+              <>
+                <button
+                  className="flex items-center justify-center border py-2 mb-3 rounded-md px-2 bg-dark-800 border-black"
+                  onClick={handleLogin}
+                >
+                  Entrar con Gmail <AiOutlineGoogle className="text-xl ml-3" />
+                </button>
+                <div className="text-center">ó</div>
+              </>
+            )}
+            <PhoneAuth phone={{ showPhone, setShowPhone }} />
           </div>
 
           <div
