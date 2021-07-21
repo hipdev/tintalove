@@ -68,7 +68,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                     {/* <span className="mr-3">{user.displayName}</span> */}
                     <img
                       className="w-12 h-12 rounded-full"
-                      src={user.photoUrl}
+                      src={user.photoUrl || '/unuser.png'}
                     />
                     <VscChevronDown className="text-2xl ml-3 " />
                   </Menu.Button>
@@ -89,7 +89,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Hola!</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          {user.email}
+                          {user.email || user.phoneNumber}
                         </p>
                       </div>
 
