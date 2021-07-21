@@ -4,10 +4,10 @@ import { UserState } from 'types/user'
 import Image from 'next/image'
 
 const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,h-235,q-${quality || 75}`
+  return `${src}/tr:pr-true,c-at_max,f-auto,h-290,q-${quality || 75}`
 }
 
-const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
+const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
       ? '?loc=Colombia'
@@ -22,16 +22,7 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
       scroll={true}
     >
       <a>
-        <div
-          className={
-            'mb-5 relative ' +
-            (post.picture_size == 'portrait'
-              ? 'aspect-w-3 aspect-h-4'
-              : post.picture_size == 'landscape'
-              ? 'aspect-w-4 aspect-h-3'
-              : 'aspect-w-1 aspect-h-1')
-          }
-        >
+        <div className="mb-0 md:mb-5 relative h-60 2xl:h-72 sm:h-60 w-full">
           <Image
             loader={loaderPost}
             src={post?.image?.url}
@@ -49,4 +40,4 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
   )
 }
 
-export default PostMore
+export default PostRelated

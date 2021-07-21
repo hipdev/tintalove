@@ -101,6 +101,10 @@
 .react-tel-input {
   padding-left: 0 !important;
 }
+.react-tel-input input {
+  width: 90% !important;
+  text-align: center !important;
+}
 
 .react-tel-input .flag-dropdown {
   border-radius: 5px !important;
@@ -119,4 +123,15 @@
 .react-tel-input .selected-flag:hover {
   background-color: #1f232d !important ;
   border-radius: 10px 0 0 0 !important;
+}
+
+.react-tel-input .selected-flag .arrow {
+  border-left: 5px solid transparent !important;
+  border-right: 5px solid transparent !important;
+  border-top: 6px solid #555 !important;
+  top: 48% !important;
+}
+.react-tel-input .selected-flag {
+  width: 42px !important;
+  border-right: 2px solid #41444f !important;
 }

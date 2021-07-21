@@ -7,6 +7,8 @@ import { TiLocationOutline } from 'react-icons/ti'
 import toast from 'react-hot-toast'
 import { updateUserSearchCity } from 'lib/queries/users'
 import { useRouter } from 'next/router'
+import { MdKeyboardArrowDown } from 'react-icons/md'
+import { RiArrowDownSLine } from 'react-icons/ri'
 
 const SelectCity = ({ user, cities }) => {
   const router = useRouter()
@@ -49,23 +51,23 @@ const SelectCity = ({ user, cities }) => {
       <Listbox value={selected} onChange={changeCity}>
         {({ open }) => (
           <>
-            <Listbox.Label className="hidden md:block text-sm font-medium">
-              <TiLocationOutline className="text-3xl text-primary" />
-            </Listbox.Label>
-            <div className="block mt-1 relative w-11/12">
+            <div className="block mt-1 relative w-full">
               <Listbox.Button
-                className="bg-transparent relative w-full rounded-md text-gray-200
-                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-0 lg:focus:ring-1 focus:ring-primary focus:border-primary hidden md:block"
+                className="bg-transparent relative w-full rounded-md text-gr-200
+                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none   hidden md:block cu"
               >
-                <span className="hidden lg:block truncate">
-                  {selected?.city_name || 'Todo Colombia'}
-                </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">
-                  <HiOutlineSelector
-                    className="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </span>
+                <div className="flex">
+                  <TiLocationOutline className="text-2xl text-gr-200 mr-4" />
+                  <span className="hidden xl:block ">
+                    {selected?.city_name || 'Todo Colombia'}
+                  </span>
+                  <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-1 pointer-events-none">
+                    <RiArrowDownSLine
+                      className="h-5 w-5 text-gr-200"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
               </Listbox.Button>
 
               <Transition

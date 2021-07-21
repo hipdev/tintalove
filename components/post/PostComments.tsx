@@ -1,6 +1,7 @@
 import { addComment } from 'lib/queries/posts'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './PostComment'
@@ -17,10 +18,15 @@ const PostComments = ({
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
 
+  const commentBoxRef = useRef(null)
+
   const removeComment = (commentId) => {
     let filteredArray = comments.filter((comment) => comment.id !== commentId)
     setComments(filteredArray)
   }
+  useEffect(() => {
+    setComments(commentsData)
+  }, [commentsData])
 
   const sendComment = () => {
     setLoading(true)
@@ -34,6 +40,7 @@ const PostComments = ({
       toast.promise(addComment(comment, postId, user), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
+          console.log(data, 'el comentario creado')
           setComments([
             {
               displayName: user.displayName,
@@ -49,6 +56,7 @@ const PostComments = ({
 
           setComment('')
           setLoading(false)
+          commentBoxRef.current.scrollTop = 0
 
           return 'Comentario añadido 😉'
         },
@@ -77,6 +85,7 @@ const PostComments = ({
                     : 'https://via.placeholder.com/45x45'
                 }
                 className="object-cover w-12 h-12 rounded-full overflow-hidden"
+                title="user-image"
               />
             </a>
           </Link>
@@ -117,7 +126,7 @@ const PostComments = ({
               ></path>
             </svg>
           )}
-          <span className="hidden sm:block">
+          <span className="hidden xl:block">
             {loading ? 'Enviando...' : 'Comentar'}
           </span>
         </button>
@@ -134,8 +143,9 @@ const PostComments = ({
         </div>
       </div>
       <div
+        ref={commentBoxRef}
         className={
-          'mb-4 w-full max-h-672 overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          'mb-4 w-full overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
         }
       >
