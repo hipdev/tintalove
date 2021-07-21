@@ -43,6 +43,7 @@
     "microtip": "^0.2.2",
     "next": "^11.0.1",
     "next-pwa": "^5.2.23",
+    "phone": "^3.1.2",
     "react": "^17.0.2",
     "react-cool-onclickoutside": "^1.6.2",
     "react-dom": "^17.0.2",
