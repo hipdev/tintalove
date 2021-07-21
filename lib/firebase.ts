@@ -3,7 +3,8 @@ import { Auth, getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAU64dBRZUAf0aS3g8aq_xwM2_Co9bNUv4',
-  authDomain: 'tinta-love.firebaseapp.com',
+  // authDomain: 'tinta-love.firebaseapp.com',
+  authDomain: 'auth.tintalove.com',
   projectId: 'tinta-love',
   // storageBucket: 'tinta-love.appspot.com',
   // messagingSenderId: '715168088259',

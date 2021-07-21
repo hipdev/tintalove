@@ -1,7 +1,6 @@
+import Modal from 'react-modal'
 import Script from 'next/script'
 import Layout from 'components/layout/layout'
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
   getMorePostFromArtist,
@@ -14,6 +13,7 @@ import {
 import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
 import PostModalContent from 'components/post/PostModalContent'
+import { useEffect, useState } from 'react'
 
 export default function TattoosPage({
   postData,
@@ -23,50 +23,51 @@ export default function TattoosPage({
   relatedPosts,
 }) {
   const router = useRouter()
+  const [ref, setRef] = useState(null)
+
+  useEffect(() => {
+    if (ref) ref.scrollTop = 0
+  }, [router, ref])
 
   return (
-    <Layout>
+    <>
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js" />
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <>
-          <Transition.Root show={!(router.query.postId == 'all')} as={Fragment}>
-            <Dialog
-              className="fixed z-10 inset-0 overflow-y-auto"
-              open={!(router.query.postId == 'all')}
-              onClose={() => router.back()}
-            >
-              <div className="flex  pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Dialog.Overlay className="fixed inset-0 bg-dark-800 " />
-                </Transition.Child>
-
-                {/* This element is to trick the browser into centering the modal contents. */}
-                <span
-                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                  aria-hidden="true"
-                >
-                  &#8203;
-                </span>
-
-                <PostModalContent
-                  postData={postData}
-                  artistData={artistData}
-                  commentsData={commentsData}
-                  morePostsArtist={morePostsArtist}
-                  relatedPosts={relatedPosts}
-                />
-              </div>
-            </Dialog>
-          </Transition.Root>
+          <Modal
+            overlayRef={(ref) => setRef(ref)}
+            isOpen={!(router.query.postId == 'all')}
+            overlayClassName="fixed left-0 right-0 bottom-0 top-0"
+            className="bg-transparent  w-full px-0  absolute "
+            // style={customStyles}
+            style={{
+              overlay: {
+                backgroundColor: '#0b0e19',
+                // top: 80,
+                zIndex: 10,
+                overflow: 'auto',
+              },
+              content: {
+                background: 'transparent',
+                border: 'none',
+                top: 0,
+              },
+            }}
+            onRequestClose={() => router.back()}
+            contentLabel="Post modal"
+          >
+            <Layout>
+              <PostModalContent
+                postData={postData}
+                artistData={artistData}
+                commentsData={commentsData}
+                morePostsArtist={morePostsArtist}
+                relatedPosts={relatedPosts}
+                overlayRef={ref}
+              />
+            </Layout>
+          </Modal>
         </>
       )}
       {!postData && (
@@ -74,7 +75,7 @@ export default function TattoosPage({
           No existe este post
         </p>
       )}
-    </Layout>
+    </>
   )
 }
 

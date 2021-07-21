@@ -1,27 +1,34 @@
+import { useState } from 'react'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
+import PhoneNumber from 'awesome-phonenumber'
 import { auth } from 'lib/firebase'
-import { useStateMachine } from 'little-state-machine'
-import { login } from 'lib/actions'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
+
+import LoginModal from './LoginModal'
+import { mutate } from 'swr'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
-  const { state: loginState, actions } = useStateMachine({
-    login,
-  })
+  const [openModal, setOpenModal] = useState(false)
+
+  const pn = new PhoneNumber(user?.phoneNumber || '', 'co')
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
+
+        if (res) {
+          mutate(user.uid)
+        }
       })
       .catch((error) => {
         // Handle Errors here.
@@ -42,9 +49,17 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     <>
       {!user && (
         <>
+          {openModal && (
+            <LoginModal
+              modal={{ openModal, setOpenModal }}
+              handleLogin={handleLogin}
+            />
+          )}
+
           <button
             title="Acceder con Gmail"
-            onClick={handleLogin}
+            // onClick={handleLogin}
+            onClick={() => setOpenModal(true)}
             className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder
@@ -58,13 +73,12 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
               {({ open }) => (
                 <>
                   <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
-
-                    <VscChevronDown className="text-2xl mr-3 " />
-                    <span className="mr-3">{user.displayName}</span>
+                    {/* <span className="mr-3">{user.displayName}</span> */}
                     <img
                       className="w-12 h-12 rounded-full"
-                      src={user.photoUrl}
+                      src={user.photoUrl || '/unuser.png'}
                     />
+                    <VscChevronDown className="text-2xl ml-3 " />
                   </Menu.Button>
 
                   <Transition
@@ -83,7 +97,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Hola!</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          {user.email}
+                          {user.email || pn.getNumber('national')}
                         </p>
                       </div>
 
