@@ -94,6 +94,7 @@ const PostComments = ({
         <div className="w-full">
           {!showInput ? (
             <input
+              autoFocus
               type="text"
               value={comment}
               placeholder="Escribe un comentario..."
@@ -104,6 +105,7 @@ const PostComments = ({
           ) : (
             <div className="flex">
               <input
+                autoFocus
                 type="text"
                 value={comment}
                 placeholder="Escribe un comentario..."
