@@ -59,6 +59,9 @@ const PhoneAuth = ({ show, modal }: any) => {
                     color: '#fff',
                     fontSize: '1rem',
                   }}
+                  inputProps={{
+                    autoFocus: true,
+                  }}
                   buttonStyle={{
                     background: '#111319',
                     border: 'none',
