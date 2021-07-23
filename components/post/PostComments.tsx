@@ -12,6 +12,7 @@ const PostComments = ({
   commentsData,
   setTotalComments,
   totalComments,
+  imageHeight,
 }) => {
   const [comment, setComment] = useState('')
   const [showComments, setShowComments] = useState(false)
@@ -144,8 +145,9 @@ const PostComments = ({
       </div>
       <div
         ref={commentBoxRef}
+        style={{ height: `${imageHeight - 320}px` }}
         className={
-          'mb-4 w-full overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          'mb-4 w-full overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
         }
       >
