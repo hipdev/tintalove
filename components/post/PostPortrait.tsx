@@ -39,6 +39,7 @@ const PostPortrait = ({
     console.log('image ref')
     // console.log(imageRef.current.offsetHeight, 'imageRef')
     if (imageRef.current) {
+      // esto es para calcular el alto de la foto
       setImageHeight(imageRef.current.offsetHeight)
     }
   }, [imageRef, router])
@@ -117,7 +118,7 @@ const PostPortrait = ({
         <div className={'flex '}>
           <div
             className="mr-3 hidden sm:block"
-            style={{ height: `${imageHeight - 120}px` }}
+            style={{ height: `${imageHeight - 120}px` }} // aqui le pongo el alto de la foto - 120 px para que quede hasta acá, lo de arriba son 120px
           >
             <StickyBox offsetTop={10}>
               <div>
@@ -152,6 +153,7 @@ const PostPortrait = ({
           </div>
 
           <PostsComments
+            imageHeight={imageHeight}
             postId={postData.id}
             user={user || null}
             commentsData={commentsData}

@@ -34,11 +34,13 @@ const PostComment = ({
     })
   }
 
+  console.log(comment, 'el comentario')
+
   return (
     <div className="w-full flex space-x-4 mb-5 relative group">
       <div className="flex-shrink-0">
         <img
-          src={`${comment.user_picture}/tr:pr-true,w-48,h-48,q-90`}
+          src={`${comment.user_picture}`}
           alt="User photo"
           className="rounded-full w-12 h-12 object-cover"
         />
