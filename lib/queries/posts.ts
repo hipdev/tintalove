@@ -195,7 +195,7 @@ export async function getPostComments(postId) {
   const q = query(
     collection(db, `posts/${postId}/comments`),
     orderBy('created_at', 'desc'),
-    limit(10)
+    limit(15) // holi, tengo un hpta limite de 10, te jodiste :v
   )
 
   const querySnapshot = await getDocs(q)

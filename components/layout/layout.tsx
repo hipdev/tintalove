@@ -23,7 +23,7 @@ const Layout = ({ children, fixed }: Props) => {
     <>
       <Toaster
         toastOptions={{
-          className: 'bg-red-600',
+          className: 'bg-red-600 mb-20 mr-3',
           style: {
             background: '#158e72',
             border: 'none',
@@ -32,11 +32,15 @@ const Layout = ({ children, fixed }: Props) => {
           },
           duration: 3000,
         }}
+        containerStyle={{
+          top: '5rem',
+          right: '1rem',
+        }}
         position="bottom-right"
       />
       <HeadContainer />
       <Header user={data?.user || null} fixed={fixed} />
-      <main className="bg-dark-800">{children}</main>
+      <main className="bg-dark-800 bott">{children}</main>
       <Footer />
       <UserLists user={data?.user || null} />
 

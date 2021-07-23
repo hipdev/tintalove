@@ -73,7 +73,7 @@
 .ReactModal__Content::-webkit-scrollbar-track,
 .create_artist__menu-list::-webkit-scrollbar-track,
 .react-tel-input .country-list::-webkit-scrollbar-track {
-  background: #080a12;
+  background: #afafaf;
 }
 
 /* Handle */
@@ -81,7 +81,7 @@
 .ReactModal__Content::-webkit-scrollbar-thumb,
 .create_artist__menu-list::-webkit-scrollbar-thumb,
 .react-tel-input .country-list::-webkit-scrollbar-thumb {
-  background: #000;
+  background: #585858;
 }
 
 /* Handle on hover */
@@ -89,7 +89,7 @@
 .ReactModal__Content::-webkit-scrollbar-thumb:hover,
 .create_artist__menu-list::-webkit-scrollbar-thumb:hover,
 .react-tel-input .country-list::-webkit-scrollbar-thumb:hover {
-  background: #dcdcdc;
+  background: #3a3939;
 }
 .create_artist__control {
   border-color: none !important;

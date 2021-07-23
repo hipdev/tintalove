@@ -114,6 +114,7 @@ const PostComments = ({
           />
           {showInput && (
             <button
+              ref={refClickOutside}
               className="flex items-center bg-green-400 hover:bg-primaryHover px-4 rounded-r-lg"
               onClick={sendComment}
               disabled={loading}
@@ -142,7 +143,7 @@ const PostComments = ({
                   ></path>
                 </svg>
               )}
-              <span className="hidden xl:block">
+              <span className="hidden xl:block text-gray-300">
                 {loading ? 'Enviando...' : ''}
               </span>
             </button>
