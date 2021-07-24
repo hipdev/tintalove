@@ -83,7 +83,7 @@ const PostComments = ({
   }
 
   return (
-    <div>
+    <div className="w-full">
       <div className="w-full flex flex-shrink mb-5">
         <div className="w-16 flex items-center">
           <Link href="#">
@@ -110,7 +110,7 @@ const PostComments = ({
             onClick={() => setShowInput(true)}
             onFocus={() => setShowInput(true)}
             placeholder="Escribe un comentario..."
-            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-l-lg  text-gray-300 flex-shrink truncate "
+            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg  text-gray-300 flex-shrink truncate "
             onChange={(e) => setComment(e.target.value)}
           />
           {showInput && (

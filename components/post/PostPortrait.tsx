@@ -115,7 +115,7 @@ const PostPortrait = ({
           </div>
         </div>
 
-        <div className={'flex '}>
+        <div className="flex w-full">
           <div
             className="mr-3 hidden sm:block"
             style={{ height: `${imageHeight - 120}px` }} // aqui le pongo el alto de la foto - 120 px para que quede hasta acá, lo de arriba son 120px
