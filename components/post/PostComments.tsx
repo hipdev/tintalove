@@ -101,21 +101,23 @@ const PostComments = ({
             </a>
           </Link>
         </div>
-        <div className={showInput ? 'flex' : 'w-full'}>
+        <form className={showInput ? 'flex w-full' : 'w-full'}>
           <input
             ref={refClickOutside}
             autoFocus
             type="text"
             value={comment}
             onClick={() => setShowInput(true)}
+            onFocus={() => setShowInput(true)}
             placeholder="Escribe un comentario..."
-            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-l-lg focus:outline-none text-gray-300 flex-shrink truncate focus:border focus:border-gn-300"
+            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-l-lg  text-gray-300 flex-shrink truncate "
             onChange={(e) => setComment(e.target.value)}
           />
           {showInput && (
             <button
+              style={{ position: 'relative', right: '2px' }}
               ref={refClickOutside}
-              className="flex items-center bg-green-400 hover:bg-primaryHover px-4 rounded-r-lg"
+              className="flex items-center justify-center bg-green-400 hover:bg-primaryHover  rounded-r-lg px-3"
               onClick={sendComment}
               disabled={loading}
             >
@@ -148,7 +150,7 @@ const PostComments = ({
               </span>
             </button>
           )}
-        </div>
+        </form>
       </div>
 
       <div className={showComments ? 'hidden' : 'block'}>
