@@ -98,7 +98,7 @@ const PostPortrait = ({
       <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 md:ml-10 ">
         <div className="flex mb-8 border-gray-700 border-b pb-5">
           <button
-            className="flex items-center gap-3 text-white focus:outline-none mr-10"
+            className="flex gap-3 text-white focus:outline-none mr-10"
             onClick={closeModal}
           >
             <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
@@ -106,12 +106,16 @@ const PostPortrait = ({
             </span>
           </button>
           <div className="flex flex-col mb-2">
-            <h1 className="text-white text-3xl font-semibold tracking-wide">
+            <h1 className="text-white text-2xl font-semibold tracking-wide mb-2 leading-7">
               {postData.description || 'Sin descripción'}
             </h1>
-            <p className="text-light-200 text-sm self-end">
+            <p className="text-light-200 text-sm">
               #Realismo #Color #Payaso #Retrato
             </p>
+            <a className="text-sm text-gray-400 font-semibold" href="#">
+              Realizado en:{' '}
+              <span className="text-gn-500">Opio Studio Tattoo</span>
+            </a>
           </div>
         </div>
 
