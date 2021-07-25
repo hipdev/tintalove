@@ -22,6 +22,7 @@ export type ArtistTypes = {
   twitter: string
   facebook: string
   instagram: string
+  telegram_user: string
   work_as: string
   _geoloc: AlgoliaGeolocation
   available_label: string
