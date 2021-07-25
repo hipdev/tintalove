@@ -11,7 +11,12 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import { FaFacebookF, FaTwitter } from 'react-icons/fa'
+import {
+  FaFacebookF,
+  FaTelegram,
+  FaTelegramPlane,
+  FaTwitter,
+} from 'react-icons/fa'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
@@ -34,6 +39,7 @@ const ContactInfo = ({ uid, isArtist }) => {
       instagram: null,
       facebook: null,
       twitter: null,
+      telegram_user: null,
     },
   })
 
@@ -41,6 +47,7 @@ const ContactInfo = ({ uid, isArtist }) => {
   const watchInstagram = watch('instagram')
   const watchFacebook = watch('facebook')
   const watchTwitter = watch('twitter')
+  const watchTelegram = watch('telegram_user')
 
   const regexUrl = new RegExp(
     /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
@@ -61,6 +68,7 @@ const ContactInfo = ({ uid, isArtist }) => {
       setValue('instagram', artist.instagram || null)
       setValue('facebook', artist.facebook || null)
       setValue('twitter', artist.twitter || null)
+      setValue('telegram_user', artist.telegram_user || null)
     }
   }, [artist, setValue])
 
@@ -134,7 +142,6 @@ const ContactInfo = ({ uid, isArtist }) => {
                 <option value="direct-call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
-                <option value="chat-instagram">Chat de Instagram</option>
               </select>
               {errors.contact_way && (
                 <p className="mt-1">Esta campo es requerido</p>
@@ -254,12 +261,12 @@ const ContactInfo = ({ uid, isArtist }) => {
                   </a>
                 )}
               </div>
-              {errors.facebook && errors.facebook.message && (
-                <p className="mt-1">
-                  {errors.facebook && errors.facebook.message}
-                </p>
-              )}
             </label>
+            {errors.facebook && errors.facebook.message && (
+              <p className="mt-1">
+                {errors.facebook && errors.facebook.message}
+              </p>
+            )}
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
@@ -289,14 +296,62 @@ const ContactInfo = ({ uid, isArtist }) => {
                     <FaTwitter className="text-2xl ml-4" />
                   </a>
                 )}
-                {errors.twitter && errors.twitter.message && (
-                  <p className="mt-1">
-                    {errors.twitter && errors.twitter.message}
-                  </p>
-                )}
               </div>
+              {errors.twitter && errors.twitter.message && (
+                <p className="mt-1">
+                  {errors.twitter && errors.twitter.message}
+                </p>
+              )}
             </label>
           </div>
+
+          {(watchContactWay == 'telegram' || artist?.telegram_user) && (
+            <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+              <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+                <div className="flex">
+                  <span className="mb-3 block uppercase">Telegram</span>
+                  <span
+                    aria-label="Debes tener un usuario de Telegram, ve a la app y crea uno si no lo tienes."
+                    data-microtip-position="top"
+                    role="tooltip"
+                  >
+                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Agrega tu usuario de Telegram"
+                    className="w-full input-primary"
+                    {...register('telegram_user', {
+                      required: {
+                        value: watchContactWay == 'telegram' ? true : false,
+                        message: 'Este campo es requerido',
+                      },
+                    })}
+                  />
+
+                  {(watchTelegram || artist?.telegram_user) && (
+                    <a
+                      href={checkUrl(
+                        watchTelegram || artist?.telegram_user,
+                        'https://t.me'
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaTelegramPlane className="text-2xl ml-4" />
+                    </a>
+                  )}
+                </div>
+                {errors.telegram_user && errors.telegram_user.message && (
+                  <p className="mt-1">
+                    {errors.telegram_user && errors.telegram_user.message}
+                  </p>
+                )}
+              </label>
+            </div>
+          )}
         </div>
         <div className="flex justify-between">
           {!isArtist && (

@@ -114,7 +114,7 @@ const PostPortrait = ({
             </p>
             <a className="text-sm text-gray-400 font-semibold" href="#">
               Realizado en:{' '}
-              <span className="text-gn-500">Opio Studio Tattoo</span>
+              <span className="text-gn-500">Tinta Studio Tattoo</span>
             </a>
           </div>
         </div>
