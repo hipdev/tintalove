@@ -17,11 +17,12 @@ import {
   FaTelegramPlane,
   FaTwitter,
 } from 'react-icons/fa'
+import { ArtistTypes } from 'types/artist'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { artist } = useArtist(uid)
+  const { artist }: { artist: ArtistTypes } = useArtist(uid)
   const router = useRouter()
 
   const {
