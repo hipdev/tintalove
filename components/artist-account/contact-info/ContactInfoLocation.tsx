@@ -87,7 +87,7 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
       city_name,
-      coordinates: { lat, lng },
+      _geoloc: { lat, lng },
       geohash,
     }
 
