@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
@@ -7,16 +6,25 @@ import PhoneNumber from 'awesome-phonenumber'
 import { auth } from 'lib/firebase'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
-
 import LoginModal from './LoginModal'
 import { mutate } from 'swr'
+
+import { useEffect } from 'react'
+import { useContext } from 'react'
+import { LoginContext } from 'pages/_app'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
-  const [openModal, setOpenModal] = useState(false)
+  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+
+  console.log(isOpen, 'context')
+
+  useEffect(() => {
+    console.log(isOpen, 'me modificaron')
+  }, [isOpen])
 
   const pn = new PhoneNumber(user?.phoneNumber || '', 'co')
 
@@ -49,9 +57,9 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     <>
       {!user && (
         <>
-          {openModal && (
+          {isOpen && (
             <LoginModal
-              modal={{ openModal, setOpenModal }}
+              modal={{ isOpen, setIsOpen }}
               handleLogin={handleLogin}
             />
           )}
@@ -59,7 +67,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
           <button
             title="Acceder con Gmail"
             // onClick={handleLogin}
-            onClick={() => setOpenModal(true)}
+            onClick={openModal}
             className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder

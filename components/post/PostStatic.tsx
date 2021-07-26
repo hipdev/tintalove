@@ -43,7 +43,11 @@ const PostStatic = ({
 
   return (
     <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
-      <PostBottomFixed artistData={artistData} overlayRef={overlayRef} />
+      <PostBottomFixed
+        artistData={artistData}
+        overlayRef={overlayRef}
+        user={data?.user}
+      />
       {/* Picture, comments and card block */}
 
       <PostPortrait

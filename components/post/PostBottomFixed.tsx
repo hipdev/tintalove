@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
-
 import { FaWhatsapp } from 'react-icons/fa'
 import { IoIosArrowUp } from 'react-icons/io'
 import { ArtistTypes } from 'types/artist'
 import { AiOutlineStar } from 'react-icons/ai'
+import { UserState } from 'types/user'
+import { useContext } from 'react'
+import { LoginContext } from 'pages/_app'
 
 const loaderImage = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,w-48,h-48,q-${quality || 75}`
@@ -13,10 +15,14 @@ const loaderImage = ({ src, quality }: any) => {
 const PostBottomFixed = ({
   artistData,
   overlayRef,
+  user,
 }: {
   artistData: ArtistTypes
   overlayRef: any
+  user: UserState
 }) => {
+  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+
   const goTop = () => {
     overlayRef.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -63,9 +69,15 @@ const PostBottomFixed = ({
                 {artistData.available_label}
               </span>
             </div>
-            <button className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500">
-              CONTACTAR <FaWhatsapp className="text-xl ml-3" />
-            </button>
+
+            {!user && (
+              <button
+                className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
+                onClick={openModal}
+              >
+                CONTACTAR <FaWhatsapp className="text-xl ml-3" />
+              </button>
+            )}
 
             <button
               className="ml-4 flex items-center text-white focus:outline-none"
