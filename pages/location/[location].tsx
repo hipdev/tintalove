@@ -28,15 +28,12 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }) => {
   let postsData = null
 
-  console.log(params, 'params')
-
   if (params.location == 'Colombia') {
     const { posts } = await getPostsInfo()
     postsData = postsToJSON(posts)
   } else {
     const { latLng } = await getLatLngFromCityId(params.location)
     const { posts } = await getPostsByCity(latLng)
-    // console.log(posts, 'los posts ')
     postsData = postsToJSON(posts)
   }
 

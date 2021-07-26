@@ -67,7 +67,6 @@ export async function getUserInfo(uid) {
 }
 
 export async function updateUserSearchCity(uid, data) {
-  console.log(data, 'selected')
   const userRef = doc(collection(db, 'users'), uid)
 
   const dataForm = {

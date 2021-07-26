@@ -33,8 +33,6 @@ export default UsernameStudioPage
 export async function getStaticPaths() {
   const studioUsernamesList = await getUsernamesByStudios()
 
-  console.log(studioUsernamesList, 'usernames')
-
   const paths = studioUsernamesList.map((doc: any) => ({
     params: {
       username: doc.username,
