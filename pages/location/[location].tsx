@@ -36,6 +36,7 @@ export const getStaticProps = async ({ params }) => {
   } else {
     const { latLng } = await getLatLngFromCityId(params.location)
     const { posts } = await getPostsByCity(latLng)
+    console.log(posts, 'los posts ')
     postsData = postsToJSON(posts)
   }
 

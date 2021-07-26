@@ -140,7 +140,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                 {...register('contact_way', { required: true })}
               >
                 <option value="">Selecciona por favor</option>
-                <option value="direct-call">Llamada directa</option>
+                <option value="direct_call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
               </select>

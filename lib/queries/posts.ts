@@ -52,6 +52,7 @@ export async function createArtistPost(
     image: infoPicture,
     username: artist.username,
     city_name: artist.city_name,
+    province: artist.province,
     country: artist.country,
     displayName: artist.displayName,
     artist_picture: artist.profile_picture.url,
