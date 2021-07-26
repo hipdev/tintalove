@@ -7,6 +7,7 @@ import { AiOutlineStar } from 'react-icons/ai'
 import { UserState } from 'types/user'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
+import PostCallOptions from './PostCallOptions'
 
 const loaderImage = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,w-48,h-48,q-${quality || 75}`
@@ -70,13 +71,15 @@ const PostBottomFixed = ({
               </span>
             </div>
 
-            {!user && (
+            {!user ? (
               <button
                 className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
                 onClick={openModal}
               >
                 CONTACTAR <FaWhatsapp className="text-xl ml-3" />
               </button>
+            ) : (
+              <PostCallOptions artistData={artistData} />
             )}
 
             <button
