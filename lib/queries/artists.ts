@@ -226,10 +226,6 @@ export async function updateArtistLocation(artistId, dataLocation) {
     await updateDoc(artistRef, {
       dataLocation,
       updated_at: serverTimestamp(),
-      _geoloc: {
-        lat: dataLocation.coordinates.lat,
-        lng: dataLocation.coordinates.lng,
-      },
     })
 
     return true
