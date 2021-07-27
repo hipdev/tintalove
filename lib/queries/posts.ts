@@ -97,7 +97,22 @@ export async function getMorePostFromArtist(artistId, postId) {
     return posts.push({ ...doc.data(), id: doc.id })
   })
 
-  console.log(posts, 'posts del artista')
+  return { posts }
+}
+
+export async function getArtistPosts(_key, artistId) {
+  const q = query(
+    collection(db, 'posts'),
+    where('artist_id', '==', artistId),
+    limit(15)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
 
   return { posts }
 }
@@ -114,8 +129,6 @@ export async function getRelatedPosts(styles) {
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
     return posts.push({ ...doc.data(), id: doc.id })
   })
-
-  console.log(posts, 'posts related')
 
   return { posts }
 }
