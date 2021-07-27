@@ -20,6 +20,10 @@ type Props = {
   artistPics: any
 }
 
+const loaderPost = ({ src, quality }: any) => {
+  return `${src}/tr:pr-true,c-at_max,f-auto,h-320,q-${quality || 75}`
+}
+
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
   console.log(artistPics, 'fotos del artista')
   console.log(artistData, 'data del artista')
@@ -27,34 +31,35 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
-  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+  const { openModal } = useContext(LoginContext)
 
   return (
     <div className=" h-auto min-h-screen">
       <div className="mx-5 sm:mx-16 pt-20">
         <div className="flex flex-col-reverse lg:flex-row gap-8">
           <div className="hidden lg:block w-full sm:w-4/5 lg:w-80  static lg:fixed flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden mb-5 lg:mb-0">
-            <div className="">
-              <img
+            {/* <img
                 src="https://via.placeholder.com/309x287"
                 alt=""
                 className="w-full"
-              />
+              /> */}
 
-              {/* <Image
+            <div className="h-80 w-full relative">
+              <Image
                 loader={loaderPost}
-                src={post?.image?.url}
-                alt="Artist photo"
-                layout="fill"
+                src={artistData.profile_picture.url}
+                alt={`Foto de perfil de ${artistData.displayName}`}
+                layout="fill" // el fill obliga a que se adapte al padre
                 // width={600}
                 // height={500}
-                sizes="100%"
+                // sizes="100%"
                 loading="lazy"
                 quality={100}
-                className="w-full rounded-md  object-cover"
-              /> */}
+                className="w-full  object-cover"
+              />
             </div>
-            <div className="h-80 relative bg-dark-700 bg-opacity-50 px-5 py-6 rounded-b-lg">
+
+            <div className="relative bg-gr-800 bg-opacity-50 px-5 py-6 rounded-b-lg">
               <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
                 {artistData?.displayName}
               </h1>
@@ -89,34 +94,38 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   </a>
                 </Link>
               </div>
-              <div>
-                <div className="flex space-x-2">
+
+              <div className="mb-6">
+                <div className="flex space-x-2 mt-5 mb-4">
                   <span className="text-light-500">
-                    <RiCalendarLine />
+                    <RiCalendarLine className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-xs">
-                    Disponible en 2 meses
+                  <p className="text-light-500 text-sm">
+                    <span className="font-semibold">Disponibilidad: </span>{' '}
+                    {artistData.available_label}
                   </p>
                 </div>
-                <div className="flex space-x-2 my-2">
+
+                <div className="flex space-x-2 my-2 mb-4">
                   <span className="text-light-500">
-                    <RiRoadMapLine />
+                    <RiRoadMapLine className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-xs">
+                  <p className="text-light-500 text-sm">
                     {artistData.dataLocation.formatted_address}
                   </p>
                 </div>
+
                 <div className="flex space-x-2 mb-5">
                   <span className="text-light-500">
-                    <FiClock />
+                    <FiClock className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-xs">{artistData.times}</p>
+                  <p className="text-light-500 text-sm">{artistData.times}</p>
                 </div>
               </div>
 
               {!data?.user ? (
                 <button
-                  className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
+                  className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 w-full justify-center text-gray-200"
                   onClick={openModal}
                 >
                   CONTACTAR <FaWhatsapp className="text-xl ml-3" />
@@ -133,7 +142,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
             </div>
           </div>
           <div className="block lg:hidden w-full flex-shrink-0 self-center lg:self-start rounded-lg overflow-hidden fixed bottom-0 z-10">
-            <div className="flex items-center justify-between gap-4 h-auto lg:h-80 relative bg-dark-700 bg-opacity-70 px-5 py-6 rounded-b-lg">
+            <div className="flex items-center justify-between gap-4 h-auto relative bg-dark-700 bg-opacity-70 px-5 py-6 rounded-b-lg">
               <div>
                 <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
                   Daniela Castillo
@@ -174,13 +183,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 Acerca de mi
               </h1>
               <p className="text-gray-400 w-full lg:w-2/3 mb-10">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Repellat, animi cupiditate perspiciatis velit fuga in quasi
-                nobis debitis qui expedita similique, omnis ipsam optio
-                quibusdam vero minima, beatae autem accusamus nulla. Sed
-                architecto illo et distinctio vero, nostrum reiciendis, sint
-                voluptatum totam aliquam ducimus neque vitae odio minus,
-                assumenda quis.
+                {artistData.bio}
               </p>
             </div>
             <div className="w-full flex flex-wrap gap-x-6">
