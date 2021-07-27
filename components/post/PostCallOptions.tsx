@@ -44,15 +44,15 @@ const DirectCallButton = ({ artistData }) => {
   )
 }
 
-const TelegramButton = ({ artistData }) => (
+const TelegramButton = ({ artistData }: { artistData: ArtistTypes }) => (
   <a
-    href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
+    href={`https://t.me/${artistData.telegram_user}`}
     target="_blank"
     rel="noreferrer"
     className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
   >
-    Whats App
-    <FaWhatsapp className="text-xl ml-3" />
+    Telegram
+    <FaTelegramPlane className="text-xl ml-3" />
   </a>
 )
 
