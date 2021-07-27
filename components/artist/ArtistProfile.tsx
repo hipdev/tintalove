@@ -215,7 +215,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
             </div>
             <div className="border-b-2 border-gray-500 w-full h-1 mb-5"></div>
 
-            <ArtistsPosts artistId={artistData.artist_id} />
+            <ArtistsPosts artistId={artistData.artist_id} user={data?.user} />
           </div>
         </div>
       </div>

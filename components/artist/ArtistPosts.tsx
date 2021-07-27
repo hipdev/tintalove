@@ -1,138 +1,50 @@
+import PostMore from 'components/post/PostMore'
 import { getArtistPosts } from 'lib/queries/posts'
 import Link from 'next/link'
+import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
+import { UserState } from 'types/user'
 
 type Props = {
   artistId: any
+  user: UserState
 }
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-320,q-${quality || 75}`
 }
 
-const ArtistsPosts = ({ artistId }: Props) => {
+const breakpointColumnsObj = {
+  default: 6,
+  1600: 4,
+  1100: 3,
+  700: 2,
+  500: 1,
+}
+
+const ArtistsPosts = ({ artistId, user }: Props) => {
   console.log(artistId, 'artist id')
   const { data } = useSWR(['get-artist-posts', artistId], getArtistPosts)
 
   console.log(data, 'los posts')
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap gap-5">
-      <div className="w-full h-full">
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy3.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy6.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy4.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-      </div>
-      <div className="w-full h-full">
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy3.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy2.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy1.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-      </div>
-      <div className="w-full h-full">
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy3.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy6.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy4.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-      </div>
-      <div className="w-full h-full">
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy5.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy2.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy3.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-      </div>
-      <div className="w-full h-full">
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy3.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy6.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-        <div className="overflow-hidden rounded-xl mb-5">
-          <img
-            src="galaxy4.jpg"
-            alt=""
-            className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-          />
-        </div>
-      </div>
+    <div>
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.posts?.map((post) => (
+          <PostMore post={post} user={user} key={post.id} />
+        ))}
+        {data?.posts?.map((post) => (
+          <PostMore post={post} user={user} key={post.id} />
+        ))}
+        {data?.posts?.map((post) => (
+          <PostMore post={post} user={user} key={post.id} />
+        ))}
+      </Masonry>
     </div>
   )
 }
