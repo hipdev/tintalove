@@ -5,6 +5,7 @@ export type ArtistTypes = {
   geohash: string
   city_name: string
   country: string
+  country_code: string
   province: string
   phone: string
   contact_way: string

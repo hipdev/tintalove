@@ -11,15 +11,11 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import {
-  FaFacebookF,
-  FaTelegram,
-  FaTelegramPlane,
-  FaTwitter,
-} from 'react-icons/fa'
+import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { ArtistTypes } from 'types/artist'
 
 const ContactInfo = ({ uid, isArtist }) => {
+  const [phone, setPhone]: any = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { artist }: { artist: ArtistTypes } = useArtist(uid)
@@ -36,7 +32,6 @@ const ContactInfo = ({ uid, isArtist }) => {
     mode: 'onChange',
     defaultValues: {
       contact_way: '',
-      phone: '',
       instagram: null,
       facebook: null,
       twitter: null,
@@ -65,7 +60,9 @@ const ContactInfo = ({ uid, isArtist }) => {
       }
 
       setValue('contact_way', artist.contact_way || null)
-      setValue('phone', artist.phone || null)
+      setPhone(
+        { value: artist.phone, country_code: artist.country_code } || null
+      )
       setValue('instagram', artist.instagram || null)
       setValue('facebook', artist.facebook || null)
       setValue('twitter', artist.twitter || null)
@@ -83,19 +80,25 @@ const ContactInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistContactInfo(uid, data, true), {
-      loading: 'Actualizando...',
-      success: () => {
-        setLoading(false)
-        setSuccess(true)
+    const dataForm = { ...data, phone }
 
-        return 'Artista actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    if (phone?.value) {
+      toast.promise(updateArtistContactInfo(uid, dataForm, true), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
+          setSuccess(true)
+
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast.error('Debes agregar el teléfono')
+    }
 
     setLoading(false)
   }
@@ -153,47 +156,54 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
               <span className="mb-3 block">NÚMERO</span>
 
-              <Controller
-                rules={{ required: true }}
-                control={control}
-                name="phone"
-                render={({ field }) => (
-                  <PhoneInput
-                    country={'co'}
-                    onlyCountries={[
-                      'co',
-                      'es',
-                      'ar',
-                      'it',
-                      'ec',
-                      'br',
-                      'pe',
-                      'us',
-                      'ur',
-                      'mx',
-                    ]}
-                    containerClass="input-primary p-1"
-                    searchStyle={{ background: 'red' }}
-                    inputStyle={{
-                      background: '#111319',
-                      border: 'none',
-                      color: '#fff',
-                    }}
-                    buttonStyle={{
-                      background: '#111319',
-                      border: 'none',
-                    }}
-                    dropdownStyle={{
-                      fontFamily: 'Inter',
-                      background: '#080a12',
-                      color: '#e2e2e2',
-                    }}
-                    placeholder="Selecciona primero el país"
-                    {...field}
-                  />
-                )}
+              <PhoneInput
+                country={'co'}
+                copyNumbersOnly={false}
+                preferredCountries={[
+                  'co',
+                  'es',
+                  'ar',
+                  'it',
+                  'ec',
+                  'br',
+                  'pe',
+                  'us',
+                  'ur',
+                  'mx',
+                ]}
+                containerClass="input-primary p-1"
+                searchStyle={{ background: 'red' }}
+                inputStyle={{
+                  background: '#111319',
+                  border: 'none',
+                  color: '#fff',
+                }}
+                buttonStyle={{
+                  background: '#111319',
+                  border: 'none',
+                }}
+                dropdownStyle={{
+                  fontFamily: 'Inter',
+                  background: '#080a12',
+                  color: '#e2e2e2',
+                }}
+                placeholder="Selecciona primero el país"
+                onChange={(value, country: any, e, formattedValue) => {
+                  console.log(
+                    value,
+                    country,
+                    e,
+                    formattedValue,
+                    'los valores del input'
+                  )
+
+                  setPhone({
+                    value: '+' + value,
+                    country_code: country.countryCode.toUpperCase(),
+                  })
+                }}
+                value={phone.value}
               />
-              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
