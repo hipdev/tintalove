@@ -63,8 +63,12 @@ const PostCallOptions = ({ artistData }: { artistData: ArtistTypes }) => {
         <WhatsAppButton artistData={artistData} />
       ) : artistData.contact_way == 'direct_call' ? (
         <DirectCallButton artistData={artistData} />
-      ) : (
+      ) : artistData.contact_way == 'telegram' ? (
         <TelegramButton artistData={artistData} />
+      ) : (
+        <button className="bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200">
+          Sin Asignar
+        </button>
       )}
     </>
   )
