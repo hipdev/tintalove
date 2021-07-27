@@ -9,7 +9,7 @@ const WhatsAppButton = ({ artistData }) => (
     href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
     target="_blank"
     rel="noreferrer"
-    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
   >
     Whats App
     <FaWhatsapp className="text-xl ml-3" />
@@ -27,14 +27,14 @@ const DirectCallButton = ({ artistData }) => {
         href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
         target="_blank"
         rel="noreferrer"
-        className="flex sm:hidden bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+        className="flex sm:hidden bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
       >
         Llamar
         <FaWhatsapp className="text-xl ml-3" />
       </a>
 
       <button
-        className="hidden sm:flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+        className="hidden sm:flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
         onClick={() => setText(phoneNumber)}
       >
         {text}
@@ -49,7 +49,7 @@ const TelegramButton = ({ artistData }: { artistData: ArtistTypes }) => (
     href={`https://t.me/${artistData.telegram_user}`}
     target="_blank"
     rel="noreferrer"
-    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
   >
     Telegram
     <FaTelegramPlane className="text-xl ml-3" />
