@@ -1,31 +1,77 @@
+import { useState } from 'react'
 import { FaTelegramPlane, FaWhatsapp } from 'react-icons/fa'
 import { FiPhoneCall } from 'react-icons/fi'
 import { ArtistTypes } from 'types/artist'
+import PhoneNumber from 'awesome-phonenumber'
+
+import parsePhoneNumber from 'libphonenumber-js'
+
+const WhatsAppButton = ({ artistData }) => (
+  <a
+    href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
+    target="_blank"
+    rel="noreferrer"
+    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+  >
+    Whats App
+    <FaWhatsapp className="text-xl ml-3" />
+  </a>
+)
+
+const DirectCallButton = ({ artistData }) => {
+  const [text, setText] = useState('Ver número')
+
+  const phoneNumber = parsePhoneNumber(
+    '+' + artistData.phone
+  ).formatInternational()
+  console.log(phoneNumber, 'porque estas undefinded carechimba')
+
+  return (
+    <>
+      <a
+        href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
+        target="_blank"
+        rel="noreferrer"
+        className="flex sm:hidden bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+      >
+        Llamar
+        <FaWhatsapp className="text-xl ml-3" />
+      </a>
+
+      <button
+        className="hidden sm:flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+        onClick={() => setText(phoneNumber)}
+      >
+        {text}
+        <FiPhoneCall className="text-xl ml-3" />
+      </button>
+    </>
+  )
+}
+
+const TelegramButton = ({ artistData }) => (
+  <a
+    href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
+    target="_blank"
+    rel="noreferrer"
+    className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase"
+  >
+    Whats App
+    <FaWhatsapp className="text-xl ml-3" />
+  </a>
+)
 
 const PostCallOptions = ({ artistData }: { artistData: ArtistTypes }) => {
-  console.log(artistData, 'data artist')
   return (
-    <a
-      href={
-        artistData.contact_way == 'whatsapp'
-          ? `https://api.whatsapp.com/send?phone=${artistData.phone}`
-          : artistData.contact_way == 'direct_call'
-          ? `https://api.whatsapp.com/send?phone=${artistData.phone}`
-          : `https://api.whatsapp.com/send?phone=${artistData.phone}`
-      }
-      target="_blank"
-      rel="noreferrer"
-      className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
-    >
-      CONTACTAR{' '}
+    <>
       {artistData.contact_way == 'whatsapp' ? (
-        <FaWhatsapp className="text-xl ml-3" />
+        <WhatsAppButton artistData={artistData} />
       ) : artistData.contact_way == 'direct_call' ? (
-        <FiPhoneCall className="text-xl ml-3" />
+        <DirectCallButton artistData={artistData} />
       ) : (
-        <FaTelegramPlane className="text-xl ml-3" />
+        <TelegramButton artistData={artistData} />
       )}
-    </a>
+    </>
   )
 }
 
