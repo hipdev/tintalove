@@ -8,8 +8,6 @@ import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
 import LoginModal from './LoginModal'
 import { mutate } from 'swr'
-
-import { useEffect } from 'react'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 
@@ -20,13 +18,6 @@ const provider = new GoogleAuthProvider().setCustomParameters({
 const SubMenuHeader = ({ user }: { user: UserState }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
-  console.log(isOpen, 'context')
-
-  useEffect(() => {
-    console.log(isOpen, 'me modificaron')
-  }, [isOpen])
-
-  console.log(user?.phoneNumber, 'telefono en user')
   const pn = user?.phoneNumber
     ? parsePhoneNumber(user?.phoneNumber).formatInternational()
     : 'Sin celular'

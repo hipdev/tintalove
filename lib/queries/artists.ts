@@ -260,7 +260,13 @@ export async function updateArtistContactInfo(uid, data, wizard) {
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const dataForm = {
-    ...data,
+    contact_way: data.contact_way,
+    facebook: data.facebook,
+    instagram: data.instagram,
+    telegram_user: data.telegram_user,
+    twitter: data.twitter,
+    phone: data.phone.value,
+    country_code: data.phone.country_code,
     updated_at: serverTimestamp(),
   }
 

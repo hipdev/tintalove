@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { FaTelegramPlane, FaWhatsapp } from 'react-icons/fa'
 import { FiPhoneCall } from 'react-icons/fi'
 import { ArtistTypes } from 'types/artist'
-import PhoneNumber from 'awesome-phonenumber'
-
 import parsePhoneNumber from 'libphonenumber-js'
 
 const WhatsAppButton = ({ artistData }) => (
@@ -21,10 +19,7 @@ const WhatsAppButton = ({ artistData }) => (
 const DirectCallButton = ({ artistData }) => {
   const [text, setText] = useState('Ver número')
 
-  const phoneNumber = parsePhoneNumber(
-    '+' + artistData.phone
-  ).formatInternational()
-  console.log(phoneNumber, 'porque estas undefinded carechimba')
+  const phoneNumber = parsePhoneNumber(artistData.phone).formatInternational()
 
   return (
     <>
