@@ -2,7 +2,7 @@ import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
-import PhoneNumber from 'awesome-phonenumber'
+import parsePhoneNumber from 'libphonenumber-js'
 import { auth } from 'lib/firebase'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
@@ -26,7 +26,10 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     console.log(isOpen, 'me modificaron')
   }, [isOpen])
 
-  const pn = new PhoneNumber(user?.phoneNumber || '', 'co')
+  console.log(user?.phoneNumber, 'telefono en user')
+  const pn = user?.phoneNumber
+    ? parsePhoneNumber(user?.phoneNumber).formatInternational()
+    : 'Sin celular'
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
@@ -105,7 +108,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Hola!</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          {user.email || pn.getNumber('national')}
+                          {user.email || pn}
                         </p>
                       </div>
 
