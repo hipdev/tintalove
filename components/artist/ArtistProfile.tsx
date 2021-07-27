@@ -1,6 +1,6 @@
 import { FiInstagram } from 'react-icons/fi'
 import { AiFillFacebook } from 'react-icons/ai'
-import { FaTwitter } from 'react-icons/fa'
+import { FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { RiCalendarLine } from 'react-icons/ri'
 import { RiRoadMapLine } from 'react-icons/ri'
 import { FiClock } from 'react-icons/fi'
@@ -8,6 +8,12 @@ import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
 import Image from 'next/image'
+import PostCallOptions from 'components/post/PostCallOptions'
+import useUserId from 'hooks/use-user-id'
+import useSWR from 'swr'
+import { getUserInfo } from 'lib/queries/users'
+import { useContext } from 'react'
+import { LoginContext } from 'pages/_app'
 
 type Props = {
   artistData: ArtistTypes
@@ -16,6 +22,12 @@ type Props = {
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
   console.log(artistPics, 'fotos del artista')
+  console.log(artistData, 'data del artista')
+
+  const { userId } = useUserId()
+  const { data } = useSWR(userId ? userId : null, getUserInfo)
+
+  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
   return (
     <div className=" h-auto min-h-screen">
@@ -90,22 +102,29 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   <span className="text-light-500">
                     <RiRoadMapLine />
                   </span>
-                  <p className="text-light-500 text-xs">Cómo llegar</p>
+                  <p className="text-light-500 text-xs">
+                    {artistData.dataLocation.formatted_address}
+                  </p>
                 </div>
                 <div className="flex space-x-2 mb-5">
                   <span className="text-light-500">
                     <FiClock />
                   </span>
-                  <p className="text-light-500 text-xs">
-                    Lunes a viernes, de 10am - 7pm
-                    <br />
-                    Sábados, Domingos y Festivos 10:00am <br /> 1:00pm
-                  </p>
+                  <p className="text-light-500 text-xs">{artistData.times}</p>
                 </div>
               </div>
-              <button className="btn-primary font-light text-xs tracking-wide py-4 w-full focus:outline-none">
-                CONTÁCTAME
-              </button>
+
+              {!data?.user ? (
+                <button
+                  className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
+                  onClick={openModal}
+                >
+                  CONTACTAR <FaWhatsapp className="text-xl ml-3" />
+                </button>
+              ) : (
+                <PostCallOptions artistData={artistData} />
+              )}
+
               <button className="absolute top-0 right-0 -mt-6 mr-5 w-12 h-12 flex justify-center items-center text-white text-2xl bg-green-600 rounded-full focus:outline-none">
                 <span>
                   <AiOutlineStar />
