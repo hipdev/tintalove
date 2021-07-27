@@ -46,18 +46,26 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
               /> */}
 
             <div className="h-80 w-full relative">
-              <Image
-                loader={loaderPost}
-                src={artistData.profile_picture.url}
-                alt={`Foto de perfil de ${artistData.displayName}`}
-                layout="fill" // el fill obliga a que se adapte al padre
-                // width={600}
-                // height={500}
-                // sizes="100%"
-                loading="lazy"
-                quality={100}
-                className="w-full  object-cover"
-              />
+              {artistData?.profile_picture?.url ? (
+                <Image
+                  loader={loaderPost}
+                  src={artistData?.profile_picture?.url}
+                  alt={`Foto de perfil de ${artistData.displayName}`}
+                  layout="fill" // el fill obliga a que se adapte al padre
+                  // width={600}
+                  // height={500}
+                  // sizes="100%"
+                  loading="lazy"
+                  quality={100}
+                  className="w-full  object-cover"
+                />
+              ) : (
+                <img
+                  src="https://via.placeholder.com/309x287"
+                  alt="Sin foto de perfil"
+                  className="w-full"
+                />
+              )}
             </div>
 
             <div className="relative bg-gr-800 bg-opacity-50 px-5 py-6 rounded-b-lg">
@@ -103,7 +111,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   </span>
                   <p className="text-light-500 text-sm">
                     <span className="font-semibold">Disponibilidad: </span>{' '}
-                    {artistData.available_label}
+                    {artistData?.available_label || 'Sin disponibilidad'}
                   </p>
                 </div>
 
@@ -112,7 +120,8 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                     <RiRoadMapLine className="text-xl" />
                   </span>
                   <p className="text-light-500 text-sm">
-                    {artistData.dataLocation.formatted_address}
+                    {artistData?.dataLocation?.formatted_address ||
+                      'Sin dirección'}
                   </p>
                 </div>
 
@@ -120,7 +129,9 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   <span className="text-light-500">
                     <FiClock className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-sm">{artistData.times}</p>
+                  <p className="text-light-500 text-sm">
+                    {artistData?.times || 'Sin asignar'}
+                  </p>
                 </div>
               </div>
 
@@ -184,38 +195,21 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 Acerca de mi
               </h1>
               <p className="text-gray-400 w-full lg:w-2/3 mb-10">
-                {artistData.bio}
+                {artistData?.bio || 'Sin bio'}
               </p>
             </div>
             <div className="w-full flex flex-wrap gap-x-6">
-              <Link href="#">
-                <a className="text-white flex-shrink-0">TODOS LOS ESTILOS</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">COLOR</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white flex-shrink-0">NUEVA ESCUELA</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">COLOR</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">MAORI</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">REALISMO</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">PUNTILLISMO</a>
-              </Link>
-              <Link href="#">
-                <a className="text-white">SOMBRAS</a>
-              </Link>
+              <button className="text-white flex-shrink-0">Todos</button>
+
+              {artistData?.styles?.map((style) => (
+                <button className="text-gray-300 hover:text-white" key={style}>
+                  {style}
+                </button>
+              ))}
             </div>
             <div className="border-b-2 border-gray-500 w-full h-1 mb-5"></div>
 
-            <ArtistsPosts artistId={artistData.artist_id} user={data?.user} />
+            <ArtistsPosts artistId={artistData?.artist_id} user={data?.user} />
           </div>
         </div>
       </div>
