@@ -14,6 +14,7 @@ import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
+import ArtistsPosts from './ArtistPosts'
 
 type Props = {
   artistData: ArtistTypes
@@ -213,123 +214,8 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
               </Link>
             </div>
             <div className="border-b-2 border-gray-500 w-full h-1 mb-5"></div>
-            <div className="flex flex-wrap md:flex-nowrap gap-5">
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy6.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy4.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy2.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy1.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy6.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy4.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy5.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy2.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy3.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy6.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl mb-5">
-                  <img
-                    src="galaxy4.jpg"
-                    alt=""
-                    className="object-cover rounded-xl transition duration-700 ease-in-out transform hover:transform hover:scale-125"
-                  />
-                </div>
-              </div>
-            </div>
+
+            <ArtistsPosts artistId={artistData.artist_id} />
           </div>
         </div>
       </div>

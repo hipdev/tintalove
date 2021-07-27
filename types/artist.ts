@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase/firestore/lite'
 
 export type ArtistTypes = {
+  artist_id: string
   bio: string
   geohash: string
   city_name: string

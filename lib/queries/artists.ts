@@ -46,7 +46,7 @@ export async function getArtistInfo(uid) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { artist: docSnap.data() }
+    return { artist: { ...docSnap.data(), artist_id: docSnap.id } }
   } else {
     return { artist: null }
   }
