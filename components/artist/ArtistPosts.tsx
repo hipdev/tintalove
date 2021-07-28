@@ -1,6 +1,5 @@
 import PostMore from 'components/post/PostMore'
 import { getArtistPosts } from 'lib/queries/posts'
-import Link from 'next/link'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
 import { UserState } from 'types/user'
@@ -8,10 +7,6 @@ import { UserState } from 'types/user'
 type Props = {
   artistId: any
   user: UserState
-}
-
-const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,h-320,q-${quality || 75}`
 }
 
 const breakpointColumnsObj = {
@@ -23,10 +18,7 @@ const breakpointColumnsObj = {
 }
 
 const ArtistsPosts = ({ artistId, user }: Props) => {
-  console.log(artistId, 'artist id')
   const { data } = useSWR(['get-artist-posts', artistId], getArtistPosts)
-
-  console.log(data, 'los posts')
 
   return (
     <div>
