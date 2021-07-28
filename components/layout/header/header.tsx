@@ -1,10 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { VscMenu } from 'react-icons/vsc'
 import SubMenuHeader from './submenu'
 import { UserState } from 'types/user'
-import { GoSearch } from 'react-icons/go'
-import { FiHeart, FiPlus } from 'react-icons/fi'
+import { FiPlus } from 'react-icons/fi'
 import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
@@ -100,34 +98,37 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                     </div>
                   </a>
                 </Link>
-                <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
+                <button className="text-gr-200 hidden md:flex ml-10 xl:ml-14 space-x-2 items-center">
                   <span className="text-3xl">
                     <HiOutlineMenuAlt2 />
                   </span>
                   <Link href="#">
                     <a className="hidden xl:block">Menú</a>
                   </Link>
-                </div>
-                <div className="text-gr-200 hidden md:flex px-10 md:px-5 xl:px-8 space-x-2 items-center">
+                </button>
+                <button className="text-gr-200 hidden md:flex mx-10 md:mx-5 xl:mx-8 space-x-2 items-center">
                   <span className="text-2xl flex justify-center">
                     <AiOutlineSearch />
                   </span>
                   <Link href="#">
                     <a className="hidden xl:block">Buscar</a>
                   </Link>
-                </div>
+                </button>
 
-                <div className="flex items-center space-x-2 pr-2">
+                <div className="flex items-center space-x-2 mr-2">
                   <WrapperSelectCity user={user} />
                 </div>
-                <div className="text-gr-200 space-x-2 items-center hidden md:flex">
+                <button
+                  className="text-gr-200 space-x-2 items-center hidden md:flex mx-2"
+                  onClick={() => actions.lists({ post: null, listOpen: true })}
+                >
                   <span className="text-xl">
                     <FaRegHeart />
                   </span>
                   <Link href="#">
                     <a className="hidden xl:block truncate">Favoritos</a>
                   </Link>
-                </div>
+                </button>
               </div>
               {/*New elements for tablet resolution*/}
               <div className="flex items-center">
