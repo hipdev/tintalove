@@ -45,6 +45,12 @@ const ArtistsPosts = ({ artistId, user }: Props) => {
           <PostMore post={post} user={user} key={post.id} />
         ))}
       </Masonry>
+
+      {data?.posts?.length == 0 && (
+        <div className="text-center text-3xl text-gray-300 font-bold mt-12">
+          <h2>Sin publicaciones actualmente</h2>
+        </div>
+      )}
     </div>
   )
 }
