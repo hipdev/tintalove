@@ -23,7 +23,7 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
     new Compressor(files[0], {
       quality: 0.8,
-      maxWidth: 800,
+      maxWidth: 1400,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()

@@ -44,11 +44,12 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
         openModalPics={openModalPics}
         setOpenModalPics={setOpenModalPics}
         artistPics={artistPics}
+        profilePicture={artistData?.profile_picture?.url || null}
       />
 
-      <div className="min-h-screen pt-20 px-5 sm:px-10 lg:px-20">
-        <div className="flex lg:flex-row ">
-          <div className="w-full sm:w-2/6 rounded-lg overflow-hidden mb-5 lg:mb-0 max-w-xs">
+      <div className="min-h-screen pt-5 sm:pt-20 px-5 sm:px-10 lg:px-20 pb-20">
+        <div className="flex flex-col sm:flex-row ">
+          <div className="w-full sm:w-2/6 rounded-lg overflow-hidden mb-5 lg:mb-0 sm:max-w-xs">
             {/* <img
                 src="https://via.placeholder.com/309x287"
                 alt=""
