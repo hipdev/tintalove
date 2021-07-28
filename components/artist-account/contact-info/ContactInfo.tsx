@@ -13,6 +13,7 @@ import 'microtip/microtip.css'
 import { AiOutlineInstagram } from 'react-icons/ai'
 import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { ArtistTypes } from 'types/artist'
+import { checkUrl } from 'lib/utils'
 
 const ContactInfo = ({ uid, isArtist }) => {
   const [phone, setPhone]: any = useState({})
@@ -44,10 +45,6 @@ const ContactInfo = ({ uid, isArtist }) => {
   const watchFacebook = watch('facebook')
   const watchTwitter = watch('twitter')
   const watchTelegram = watch('telegram_user')
-
-  const regexUrl = new RegExp(
-    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
-  )
 
   useEffect(() => {
     if (artist) {
@@ -101,15 +98,6 @@ const ContactInfo = ({ uid, isArtist }) => {
     }
 
     setLoading(false)
-  }
-
-  const checkUrl = (url, website) => {
-    const isLink = regexUrl.test(url)
-    if (isLink) {
-      return url
-    } else {
-      return `${website}/${url}`
-    }
   }
 
   return (
@@ -390,5 +378,7 @@ const ContactInfo = ({ uid, isArtist }) => {
     </div>
   )
 }
+
+export { checkUrl }
 
 export default ContactInfo

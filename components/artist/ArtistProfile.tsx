@@ -15,6 +15,7 @@ import { getUserInfo } from 'lib/queries/users'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import ArtistsPosts from './ArtistPosts'
+import { checkUrl } from 'lib/utils'
 
 type Props = {
   artistData: ArtistTypes
@@ -80,28 +81,45 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   <a className="text-green-600">(ver ubicación)</a>
                 </Link>
               </div>
+
               <div className="flex space-x-4 my-4">
-                <Link href="#">
-                  <a>
+                {artistData?.instagram && (
+                  <a
+                    href={checkUrl(
+                      artistData.instagram,
+                      'https://instagram.com'
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <span className="text-2xl text-light-200">
                       <FiInstagram />
                     </span>
                   </a>
-                </Link>
-                <Link href="#">
-                  <a>
+                )}
+                {artistData?.facebook && (
+                  <a
+                    href={checkUrl(artistData.facebook, 'https://facebook.com')}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <span className="text-2xl text-light-200">
                       <AiFillFacebook />
                     </span>
                   </a>
-                </Link>
-                <Link href="#">
-                  <a>
+                )}
+
+                {artistData?.twitter && (
+                  <a
+                    href={checkUrl(artistData.twitter, 'https://twitter.com')}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <span className="text-2xl text-light-200">
                       <FaTwitter />
                     </span>
                   </a>
-                </Link>
+                )}
               </div>
 
               <div className="mb-6">
