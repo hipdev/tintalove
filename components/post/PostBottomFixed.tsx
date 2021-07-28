@@ -26,8 +26,6 @@ const PostBottomFixed = ({
 }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
-  console.log(showUp, 'porque true hptaa')
-
   const goTop = () => {
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
   }

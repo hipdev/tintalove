@@ -66,7 +66,7 @@ const PostPortrait = ({
             className={
               'relative w-full mb-10 ' +
               (postData.picture_size == 'portrait'
-                ? 'aspect-w-3 aspect-h-4 2xl:mr-36 h-609'
+                ? 'aspect-w-3 aspect-h-4 '
                 : postData.picture_size == 'landscape'
                 ? 'aspect-w-4 aspect-h-3'
                 : 'aspect-w-1 aspect-h-1')

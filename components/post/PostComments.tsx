@@ -6,6 +6,7 @@ import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './PostComment'
+import { useWindowSize } from 'hooks/useWindowSize'
 
 const PostComments = ({
   postId,
@@ -21,6 +22,10 @@ const PostComments = ({
   const [loading, setLoading] = useState(false)
   const [showInput, setShowInput] = useState(false)
 
+  const [wSize, setWSize]: any = useState()
+
+  const windowSize = useWindowSize()
+
   const refClickOutside = useOnclickOutside(() => {
     setShowInput(false)
   })
@@ -35,9 +40,16 @@ const PostComments = ({
     let filteredArray = comments.filter((comment) => comment.id !== commentId)
     setComments(filteredArray)
   }
+
   useEffect(() => {
     setComments(commentsData)
   }, [commentsData])
+
+  useEffect(() => {
+    setWSize(windowSize.width)
+  }, [windowSize])
+
+  console.log(windowSize, 'ancho de la ventana')
 
   const sendComment = () => {
     setLoading(true)
@@ -165,7 +177,9 @@ const PostComments = ({
       </div>
       <div
         ref={commentBoxRef}
-        style={{ height: `${imageHeight - 320}px` }}
+        style={{
+          height: `${imageHeight - (wSize <= 639 ? 150 : 320)}px`,
+        }}
         className={
           'mb-4 w-full overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
