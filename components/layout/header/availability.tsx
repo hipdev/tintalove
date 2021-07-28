@@ -28,14 +28,12 @@ const Availability = ({
   )
 
   const handleAvailability = (selected) => {
-    console.log(selected, 'el item')
-
     toast.promise(updateAvailability(user.uid, selected), {
       loading: 'Actualizando...',
       success: () => {
         setSelected(agenda[selected.id - 1])
         mutate(['get-availability', user.uid])
-        console.log('disponiblidad actualizada')
+
         availableId = selected.id
 
         return 'Gracias por actualizar tu disponibilidad 😉'
@@ -45,8 +43,6 @@ const Availability = ({
       },
     })
   }
-
-  console.log(availableId, 'selected')
 
   return (
     <>
