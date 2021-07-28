@@ -35,10 +35,6 @@ const PostComment = ({
     })
   }
 
-  console.log(comment, 'el comentario')
-
-  console.log(comment?.user_picture, 'url')
-  console.log(url_domain(comment?.user_picture), 'url formateada')
   const userImage = url_domain(comment?.user_picture)
 
   return (
