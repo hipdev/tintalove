@@ -1,5 +1,5 @@
 import fetcher from 'lib/fetcher'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import ReactCrop from 'react-image-crop'
@@ -26,11 +26,20 @@ const PictureCrop = ({
   const [loading, setLoading] = useState(false)
 
   const [crop, setCrop]: any = useState({
-    aspect: 6 / 7,
+    aspect: 3 / 4,
     unit: '%',
     width: 100,
     // height: 100,
   })
+
+  useEffect(() => {
+    setCrop({
+      aspect: 3 / 4,
+      unit: '%',
+      width: 100,
+      // height: 100,
+    })
+  }, [setPicture])
 
   const imgRef = useRef(null)
 
@@ -128,7 +137,7 @@ const PictureCrop = ({
   }
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col items-center">
       <div className="flex">
         <p className="text-sm mb-3 mt-5">
           Puedes mover la foto, el cuadrado indica las proporciones requeridas
