@@ -65,7 +65,7 @@ const PostBottomFixed = ({
 
           <div className="flex items-center">
             <div className="text-right mr-5">
-              <h3 className="text-gray-400">CITAS DISPONIBLES EN</h3>
+              <h3 className="text-gray-400 w-48">CITAS DISPONIBLES EN</h3>
               <span className="font-semibold">
                 {artistData.available_label}
               </span>
