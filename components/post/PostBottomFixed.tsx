@@ -17,18 +17,37 @@ const PostBottomFixed = ({
   artistData,
   overlayRef,
   user,
+  showUp,
 }: {
   artistData: ArtistTypes
   overlayRef: any
   user: UserState
+  showUp: boolean
 }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
+  console.log(showUp, 'porque true hptaa')
+
   const goTop = () => {
-    overlayRef.scrollTo({ top: 0, behavior: 'smooth' })
+    overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
   }
   return (
     <div className="fixed bottom-0 z-20 w-full bg-gr-700 left-0 text-gray-300 py-4 px-16 border-t border-gray-700">
+      <div
+        className={
+          'transition-opacity ' + (showUp ? 'opacity-100' : 'opacity-0')
+        }
+      >
+        <button
+          className="absolute -top-20 right-5 ml-4 flex items-center text-white focus:outline-none"
+          onClick={goTop}
+        >
+          <span className="text-xl rounded-full bg-gr-800 hover:bg-gr-900 p-3 border border-gr-600">
+            <IoIosArrowUp />
+          </span>
+        </button>
+      </div>
+
       <div className="container mx-auto">
         <div className="flex justify-between">
           <div className="flex items-center">
@@ -81,15 +100,6 @@ const PostBottomFixed = ({
             ) : (
               <PostCallOptions artistData={artistData} />
             )}
-
-            <button
-              className="ml-4 flex items-center text-white focus:outline-none"
-              onClick={goTop}
-            >
-              <span className="text-2xl rounded-full bg-gr-800 hover:bg-gr-900 p-3 border border-gr-600">
-                <IoIosArrowUp />
-              </span>
-            </button>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import Modal from 'react-modal'
 import Script from 'next/script'
 import Layout from 'components/layout/layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
+import debounce from 'lodash.debounce'
 import {
   getMorePostFromArtist,
   getPostComments,
@@ -25,10 +26,20 @@ export default function TattoosPage({
   const router = useRouter()
   const ref = useRef(null)
 
+  const [showUp, setShowUp] = useState(false)
+
   useEffect(() => {
-    console.log('hola')
     if (ref?.current) ref.current.scrollTop = 0
   }, [router, ref])
+
+  const handleScroll = debounce((val) => {
+    console.log(ref.current.scrollTop, 'scrolling')
+    if (ref.current.scrollTop > 700) {
+      setShowUp(true)
+    } else {
+      setShowUp(false)
+    }
+  }, 500)
 
   return (
     <>
@@ -59,7 +70,11 @@ export default function TattoosPage({
               onRequestClose={() => router.back()}
               contentLabel="Post modal"
             >
-              <div className="overflow-y-auto fixed h-full w-full" ref={ref}>
+              <div
+                className="overflow-y-auto fixed h-full w-full"
+                ref={ref}
+                onScroll={handleScroll}
+              >
                 <Layout>
                   <PostModalContent
                     postData={postData}
@@ -68,6 +83,7 @@ export default function TattoosPage({
                     morePostsArtist={morePostsArtist}
                     relatedPosts={relatedPosts}
                     overlayRef={ref}
+                    showUp={showUp}
                   />
                 </Layout>
               </div>
