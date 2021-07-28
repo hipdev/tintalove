@@ -15,7 +15,7 @@ const loaderPost = ({ src, quality }: any) => {
 }
 
 const breakpointColumnsObj = {
-  default: 6,
+  default: 5,
   1600: 4,
   1100: 3,
   700: 2,
