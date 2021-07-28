@@ -1,10 +1,12 @@
 import { Timestamp } from 'firebase/firestore/lite'
 
 export type ArtistTypes = {
+  artist_id: string
   bio: string
   geohash: string
   city_name: string
   country: string
+  country_code: string
   province: string
   phone: string
   contact_way: string
@@ -22,9 +24,11 @@ export type ArtistTypes = {
   twitter: string
   facebook: string
   instagram: string
+  telegram_user: string
   work_as: string
   _geoloc: AlgoliaGeolocation
   available_label: string
+  dataLocation: DataLocation
 } | null
 
 type ProfilePicture = {
@@ -35,7 +39,16 @@ type ProfilePicture = {
   thumbnailUrl: string
   url: string
 }
+
 type AlgoliaGeolocation = {
   lat: number
   lng: number
+}
+
+type DataLocation = {
+  city_name: string
+  formatted_address: string
+  geohash: string
+  place_id: string
+  _geoloc: AlgoliaGeolocation
 }

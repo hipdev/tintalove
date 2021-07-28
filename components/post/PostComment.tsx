@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { deletePostComment } from 'lib/queries/posts'
+import { url_domain } from 'lib/utils'
 import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
 
@@ -34,11 +35,17 @@ const PostComment = ({
     })
   }
 
+  const userImage = url_domain(comment?.user_picture)
+
   return (
     <div className="w-full flex space-x-4 mb-5 relative group">
       <div className="flex-shrink-0">
         <img
-          src={`${comment.user_picture}/tr:pr-true,w-48,h-48,q-90`}
+          src={
+            userImage == 'ik.imagekit.io'
+              ? `${comment.user_picture}/tr:pr-true,w-48,h-48,q-90`
+              : comment.user_picture
+          }
           alt="User photo"
           className="rounded-full w-12 h-12 object-cover"
         />

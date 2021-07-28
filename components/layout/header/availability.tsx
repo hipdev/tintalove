@@ -9,10 +9,10 @@ import { IoMdCheckmarkCircle } from 'react-icons/io'
 import { RiCheckboxCircleFill } from 'react-icons/ri'
 
 const agenda = [
-  { id: 0, label: 'En una semana' },
-  { id: 1, label: 'En 15 días' },
-  { id: 2, label: 'En un mes' },
-  { id: 3, label: 'Dos meses o mas' },
+  { id: 1, label: 'En una semana' },
+  { id: 2, label: 'En 15 días' },
+  { id: 3, label: 'En un mes' },
+  { id: 4, label: 'Dos meses o mas' },
 ]
 
 const Availability = ({
@@ -24,18 +24,17 @@ const Availability = ({
 }) => {
   console.log(availableId, 'esto')
   const [selected, setSelected] = useState(
-    availableId ? agenda[availableId] : agenda[0]
+    availableId ? agenda[availableId - 1] : agenda[1]
   )
 
   const handleAvailability = (selected) => {
-    console.log(selected, 'el item')
-
     toast.promise(updateAvailability(user.uid, selected), {
       loading: 'Actualizando...',
       success: () => {
-        setSelected(agenda[selected.id])
+        setSelected(agenda[selected.id - 1])
         mutate(['get-availability', user.uid])
-        console.log('disponiblidad actualizada')
+
+        availableId = selected.id
 
         return 'Gracias por actualizar tu disponibilidad 😉'
       },
@@ -49,14 +48,19 @@ const Availability = ({
     <>
       {user && (
         <div className="text-left">
-          <Listbox value={selected} onChange={handleAvailability}>
+          <Listbox
+            value={!availableId ? 5 : selected}
+            onChange={handleAvailability}
+          >
             <div className="relative">
               <Listbox.Button className="relative w-full px-3 text-left bg-nt-800 rounded-lg shadow-md cursor-pointer sm:text-sm focus:outline-none border-2 border-gr-700">
                 <div>
                   <div className="flex items-center gap-2 px-2 py-3 xl:py-1 rounded-md">
                     <div className="leading-tight hidden xl:block">
                       <p className="text-gr-200 text-xs">Disponibilidad</p>
-                      <p className="text-gr-200 text-base">{selected.label}</p>
+                      <p className="text-gr-200 text-base">
+                        {!availableId ? 'Sin seleccionar' : selected.label}
+                      </p>
                     </div>
                     <span className="text-green-500 text-2xl pl-0 xl:pl-2">
                       <FiCalendar />

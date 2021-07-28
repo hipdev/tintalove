@@ -39,6 +39,7 @@ const PostPortrait = ({
     console.log('image ref')
     // console.log(imageRef.current.offsetHeight, 'imageRef')
     if (imageRef.current) {
+      // esto es para calcular el alto de la foto
       setImageHeight(imageRef.current.offsetHeight)
     }
   }, [imageRef, router])
@@ -65,7 +66,7 @@ const PostPortrait = ({
             className={
               'relative w-full mb-10 ' +
               (postData.picture_size == 'portrait'
-                ? 'aspect-w-3 aspect-h-4 2xl:mr-36 h-609'
+                ? 'aspect-w-3 aspect-h-4 '
                 : postData.picture_size == 'landscape'
                 ? 'aspect-w-4 aspect-h-3'
                 : 'aspect-w-1 aspect-h-1')
@@ -97,7 +98,7 @@ const PostPortrait = ({
       <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 md:ml-10 ">
         <div className="flex mb-8 border-gray-700 border-b pb-5">
           <button
-            className="flex items-center gap-3 text-white focus:outline-none mr-10"
+            className="flex gap-3 text-white focus:outline-none mr-10"
             onClick={closeModal}
           >
             <span className="text-2xl rounded-full bg-gr-700 p-3 border border-gr-600">
@@ -105,19 +106,27 @@ const PostPortrait = ({
             </span>
           </button>
           <div className="flex flex-col mb-2">
-            <h1 className="text-white text-3xl font-semibold tracking-wide">
+            <h1 className="text-white text-2xl font-semibold tracking-wide mb-2 leading-7">
               {postData.description || 'Sin descripción'}
             </h1>
-            <p className="text-light-200 text-sm self-end">
+            <p className="text-light-200 text-sm">
               #Realismo #Color #Payaso #Retrato
             </p>
+            <a className="text-sm text-gray-400 font-semibold" href="#">
+              Realizado en:{' '}
+              <span className="text-gn-500">Tinta Studio Tattoo</span>
+            </a>
           </div>
         </div>
 
+<<<<<<< HEAD
         <div className="flex ">
+=======
+        <div className="flex w-full">
+>>>>>>> acfa710157b29e3eee0967e8ae77e3569ed11e6a
           <div
             className="mr-3 hidden sm:block"
-            style={{ height: `${imageHeight - 120}px` }}
+            style={{ height: `${imageHeight - 120}px` }} // aqui le pongo el alto de la foto - 120 px para que quede hasta acá, lo de arriba son 120px
           >
             <StickyBox offsetTop={10}>
               <div>
@@ -152,6 +161,7 @@ const PostPortrait = ({
           </div>
 
           <PostsComments
+            imageHeight={imageHeight}
             postId={postData.id}
             user={user || null}
             commentsData={commentsData}
