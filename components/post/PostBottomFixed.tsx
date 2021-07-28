@@ -8,6 +8,7 @@ import { UserState } from 'types/user'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import PostCallOptions from './PostCallOptions'
+import { BsHeart } from 'react-icons/bs'
 
 const loaderImage = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,w-48,h-48,q-${quality || 75}`
@@ -30,7 +31,7 @@ const PostBottomFixed = ({
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
   }
   return (
-    <div className="fixed bottom-0 z-20 w-full bg-gr-700 left-0 text-gray-300 py-4 px-16 border-t border-gray-700">
+    <div className="fixed bottom-0 z-20 w-full bg-gr-700 left-0 text-gray-300 py-4 border-t border-gray-700 px-5  sm:w-full sm:px-10 2xl:px-16">
       <div
         className={
           'transition-opacity ' + (showUp ? 'opacity-100' : 'opacity-0')
@@ -46,59 +47,58 @@ const PostBottomFixed = ({
         </button>
       </div>
 
-      <div className="container mx-auto">
-        <div className="flex justify-between">
-          <div className="flex items-center">
-            <div className="flex">
-              <Link href={`/${artistData.username}`}>
-                <a className="text-gn-500 ml-2 w-12 mr-3">
-                  <Image
-                    loader={loaderImage}
-                    src={artistData.profile_picture.url}
-                    alt="Artist photo"
-                    width={48}
-                    height={48}
-                    sizes="100%"
-                    quality={100}
-                    className="w-full rounded-md  object-cover"
-                  />
-                </a>
-              </Link>
-              <div className="leading-tight">
+      <div className="flex justify-between">
+        <div className="flex items-center">
+          <div className="flex">
+            <Link href={`/${artistData.username}`}>
+              <a className="text-gn-500 ml-2 w-12 mr-3">
+                <Image
+                  loader={loaderImage}
+                  src={artistData.profile_picture.url}
+                  alt="Artist photo"
+                  width={48}
+                  height={48}
+                  sizes="100%"
+                  quality={100}
+                  className="w-full rounded-md  object-cover"
+                />
+              </a>
+            </Link>
+            <div className="leading-tight">
+              <div className="flex items-center">
                 <Link href={`/${artistData.username}`}>
                   <a className="text-white font-semibold text-xl ">
                     {artistData.displayName}
                   </a>
                 </Link>
-                <h2 className="text-sm text-gray-400">
-                  {artistData.city_name}, {artistData.province}{' '}
-                </h2>
+                <button>
+                  <BsHeart className="ml-4 text-xl hover:text-primary" />
+                </button>
               </div>
+
+              <h2 className="text-sm text-gray-400">
+                {artistData.city_name}, {artistData.province}{' '}
+              </h2>
             </div>
-            <button className="flex items-center px-7 border border-gn-500 rounded-md py-3 ml-5 text-sm">
-              AÑADIR A FAVORITOS <AiOutlineStar className="ml-2 text-xl" />
+          </div>
+        </div>
+
+        <div className="flex items-center">
+          <div className="text-right mr-5">
+            <h3 className="text-gray-400 w-48">CITAS DISPONIBLES EN</h3>
+            <span className="font-semibold">{artistData.available_label}</span>
+          </div>
+
+          {!user ? (
+            <button
+              className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
+              onClick={openModal}
+            >
+              CONTACTAR <FaWhatsapp className="text-xl ml-3" />
             </button>
-          </div>
-
-          <div className="flex items-center">
-            <div className="text-right mr-5">
-              <h3 className="text-gray-400 w-48">CITAS DISPONIBLES EN</h3>
-              <span className="font-semibold">
-                {artistData.available_label}
-              </span>
-            </div>
-
-            {!user ? (
-              <button
-                className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500"
-                onClick={openModal}
-              >
-                CONTACTAR <FaWhatsapp className="text-xl ml-3" />
-              </button>
-            ) : (
-              <PostCallOptions artistData={artistData} />
-            )}
-          </div>
+          ) : (
+            <PostCallOptions artistData={artistData} />
+          )}
         </div>
       </div>
     </div>
