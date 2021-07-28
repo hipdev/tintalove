@@ -14,7 +14,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
   return (
     <>
       <Modal
-        isOpen={modal.openModal}
+        isOpen={modal.isOpen}
         style={{
           overlay: {
             backgroundColor: 'rgb(11 14 25 / 80%)',
@@ -35,7 +35,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
             overflow: 'initial',
           },
         }}
-        onRequestClose={() => modal.setOpenModal(false)}
+        onRequestClose={() => modal.setIsOpen(false)}
         contentLabel="Post modal"
       >
         <div className="bg-gr-800  text-gray-300 px-14 py-5 pb-10 relative">
@@ -62,7 +62,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
 
           <div
             className="absolute -top-3 right-2  sm:-right-2 "
-            onClick={() => modal.setOpenModal(false)}
+            onClick={() => modal.setIsOpen(false)}
           >
             <CgCloseO className="text-white text-3xl cursor-pointer" />
           </div>

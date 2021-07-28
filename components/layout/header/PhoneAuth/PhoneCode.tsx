@@ -13,7 +13,7 @@ const PhoneCode = ({ modal }: any) => {
         // User signed in successfully.
         const user = result.user
         const res = await createPhoneUser(user)
-        modal.setOpenModal(false)
+        modal.setIsOpen(false)
 
         if (res) {
           mutate(user.uid)

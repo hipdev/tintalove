@@ -21,6 +21,7 @@ const PostStatic = ({
   closeModal,
   relatedPosts,
   overlayRef,
+  showUp,
 }: {
   postData: PostTypes
   artistData: ArtistTypes
@@ -29,6 +30,7 @@ const PostStatic = ({
   closeModal: any
   relatedPosts: any
   overlayRef: any
+  showUp: boolean
 }) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
@@ -43,7 +45,12 @@ const PostStatic = ({
 
   return (
     <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
-      <PostBottomFixed artistData={artistData} overlayRef={overlayRef} />
+      <PostBottomFixed
+        artistData={artistData}
+        overlayRef={overlayRef}
+        user={data?.user}
+        showUp={showUp}
+      />
       {/* Picture, comments and card block */}
 
       <PostPortrait

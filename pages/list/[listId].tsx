@@ -10,8 +10,6 @@ export default function ListPage() {
   const { userId } = useUserId()
   const { data, error } = useSWR(userId ? userId : null, getUserInfo)
 
-  console.log(data, 'data en User List')
-
   return (
     <>
       <Layout>

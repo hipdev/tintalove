@@ -46,7 +46,7 @@ export async function getArtistInfo(uid) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { artist: docSnap.data() }
+    return { artist: { ...docSnap.data(), artist_id: docSnap.id } }
   } else {
     return { artist: null }
   }
@@ -226,10 +226,6 @@ export async function updateArtistLocation(artistId, dataLocation) {
     await updateDoc(artistRef, {
       dataLocation,
       updated_at: serverTimestamp(),
-      _geoloc: {
-        lat: dataLocation.coordinates.lat,
-        lng: dataLocation.coordinates.lng,
-      },
     })
 
     return true
@@ -264,7 +260,13 @@ export async function updateArtistContactInfo(uid, data, wizard) {
   const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
 
   const dataForm = {
-    ...data,
+    contact_way: data.contact_way,
+    facebook: data.facebook,
+    instagram: data.instagram,
+    telegram_user: data.telegram_user,
+    twitter: data.twitter,
+    phone: data.phone.value,
+    country_code: data.phone.country_code,
     updated_at: serverTimestamp(),
   }
 

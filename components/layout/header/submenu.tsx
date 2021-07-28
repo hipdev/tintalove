@@ -1,24 +1,26 @@
-import { useState } from 'react'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
-import PhoneNumber from 'awesome-phonenumber'
+import parsePhoneNumber from 'libphonenumber-js'
 import { auth } from 'lib/firebase'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
-
 import LoginModal from './LoginModal'
 import { mutate } from 'swr'
+import { useContext } from 'react'
+import { LoginContext } from 'pages/_app'
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
 })
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
-  const [openModal, setOpenModal] = useState(false)
+  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
-  const pn = new PhoneNumber(user?.phoneNumber || '', 'co')
+  const pn = user?.phoneNumber
+    ? parsePhoneNumber(user?.phoneNumber).formatInternational()
+    : 'Sin celular'
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
@@ -49,9 +51,9 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     <>
       {!user && (
         <>
-          {openModal && (
+          {isOpen && (
             <LoginModal
-              modal={{ openModal, setOpenModal }}
+              modal={{ isOpen, setIsOpen }}
               handleLogin={handleLogin}
             />
           )}
@@ -59,7 +61,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
           <button
             title="Acceder con Gmail"
             // onClick={handleLogin}
-            onClick={() => setOpenModal(true)}
+            onClick={openModal}
             className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
           >
             Acceder
@@ -97,7 +99,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Hola!</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          {user.email || pn.getNumber('national')}
+                          {user.email || pn}
                         </p>
                       </div>
 

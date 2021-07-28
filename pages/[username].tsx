@@ -49,7 +49,6 @@ export async function getStaticProps({ params }: any) {
   let artistId = null
   let artistData = null
   let artistPics = null
-  console.log(params.username, 'el parametro enviado')
 
   if (params.username) {
     try {

@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-import React, { useCallback, useRef, useState } from 'react'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
@@ -20,6 +20,7 @@ import {
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
+  console.log(artist, 'artist Data')
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -42,6 +43,11 @@ const MainInfoForm = ({ uid, artist }) => {
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: artist.formatted_address || '',
+    geohash: artist.geohash || '',
+    province: artist.province || '',
+    _geoloc: artist._geoloc || '',
+    country: artist.country || '',
+    city_name: artist.city_name || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -99,7 +105,7 @@ const MainInfoForm = ({ uid, artist }) => {
     setValue('displayName', capitalizeAllWords(name))
   }
 
-  const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserName = (e: ChangeEvent<HTMLInputElement>) => {
     setValidUserName(false)
     setAvailableUserName(false)
 
@@ -155,7 +161,10 @@ const MainInfoForm = ({ uid, artist }) => {
     }
 
     let formData = { bio: data.bio, displayName: data.displayName }
-    if (placeInfo) formData = { ...placeInfo, ...formData }
+
+    console.log(placeInfo, 'esto es placeInfo, aqui esta el error')
+
+    if (placeInfo) formData = { ...placeInfo, ...formData } // Aqui meto PlaceInfo cuando cambian la ciudad
 
     toast.promise(updateArtistMainInfo(uid, formData), {
       loading: 'Actualizando artista...',

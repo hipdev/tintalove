@@ -1,3 +1,4 @@
+import useOnclickOutside from 'react-cool-onclickoutside'
 import { addComment } from 'lib/queries/posts'
 import Link from 'next/link'
 import { useEffect } from 'react'
@@ -5,6 +6,7 @@ import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegCommentDots } from 'react-icons/fa'
 import PostComment from './PostComment'
+import { useWindowSize } from 'hooks/useWindowSize'
 
 const PostComments = ({
   postId,
@@ -12,12 +14,28 @@ const PostComments = ({
   commentsData,
   setTotalComments,
   totalComments,
+  imageHeight,
 }) => {
   const [comment, setComment] = useState('')
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState(commentsData)
   const [loading, setLoading] = useState(false)
   const [showInput, setShowInput] = useState(false)
+<<<<<<< HEAD
+=======
+
+  const [wSize, setWSize]: any = useState()
+
+  const windowSize = useWindowSize()
+
+  const refClickOutside = useOnclickOutside(() => {
+    setShowInput(false)
+  })
+
+  const handleClickBtn = () => {
+    setShowInput(!showInput)
+  }
+>>>>>>> acfa710157b29e3eee0967e8ae77e3569ed11e6a
 
   const commentBoxRef = useRef(null)
 
@@ -25,9 +43,16 @@ const PostComments = ({
     let filteredArray = comments.filter((comment) => comment.id !== commentId)
     setComments(filteredArray)
   }
+
   useEffect(() => {
     setComments(commentsData)
   }, [commentsData])
+
+  useEffect(() => {
+    setWSize(windowSize.width)
+  }, [windowSize])
+
+  console.log(windowSize, 'ancho de la ventana')
 
   const sendComment = () => {
     setLoading(true)
@@ -73,7 +98,7 @@ const PostComments = ({
   }
 
   return (
-    <div>
+    <div className="w-full">
       <div className="w-full flex flex-shrink mb-5">
         <div className="w-16 flex items-center">
           <Link href="#">
@@ -91,6 +116,7 @@ const PostComments = ({
             </a>
           </Link>
         </div>
+<<<<<<< HEAD
         <div className="w-full">
           {!showInput ? (
             <input
@@ -148,6 +174,58 @@ const PostComments = ({
             </div>
           )}
         </div>
+=======
+        <form className={showInput ? 'flex w-full' : 'w-full'}>
+          <input
+            ref={refClickOutside}
+            autoFocus
+            type="text"
+            value={comment}
+            onClick={() => setShowInput(true)}
+            onFocus={() => setShowInput(true)}
+            placeholder="Escribe un comentario..."
+            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg  text-gray-300 flex-shrink truncate "
+            onChange={(e) => setComment(e.target.value)}
+          />
+          {showInput && (
+            <button
+              style={{ position: 'relative', right: '2px' }}
+              ref={refClickOutside}
+              className="flex items-center justify-center bg-green-400 hover:bg-primaryHover  rounded-r-lg px-3"
+              onClick={sendComment}
+              disabled={loading}
+            >
+              {!loading && <FaRegCommentDots className="text-xl text-gr-100" />}
+
+              {loading && (
+                <svg
+                  className="block animate-spin  ml-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              )}
+              <span className="hidden xl:block text-gray-300">
+                {loading ? 'Enviando...' : ''}
+              </span>
+            </button>
+          )}
+        </form>
+>>>>>>> acfa710157b29e3eee0967e8ae77e3569ed11e6a
       </div>
 
       <div className={showComments ? 'hidden' : 'block'}>
@@ -162,8 +240,11 @@ const PostComments = ({
       </div>
       <div
         ref={commentBoxRef}
+        style={{
+          height: `${imageHeight - (wSize <= 639 ? 150 : 320)}px`,
+        }}
         className={
-          'mb-4 w-full overflow-hidden overflow-y-auto nice_scroll mr-10 sm:block ' +
+          'mb-4 w-full overflow-y-auto nice_scroll mr-10 sm:block ' +
           (showComments ? 'block' : 'hidden')
         }
       >

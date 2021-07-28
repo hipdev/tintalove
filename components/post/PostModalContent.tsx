@@ -8,6 +8,7 @@ const PostModalContent = ({
   morePostsArtist,
   relatedPosts,
   overlayRef,
+  showUp,
 }) => {
   const router = useRouter()
 
@@ -24,6 +25,7 @@ const PostModalContent = ({
         relatedPosts={relatedPosts}
         overlayRef={overlayRef}
         closeModal={() => router.back()}
+        showUp={showUp}
       />
     </div>
   )

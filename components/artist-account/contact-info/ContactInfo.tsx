@@ -11,12 +11,15 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import 'microtip/microtip.css'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import { FaFacebookF, FaTwitter } from 'react-icons/fa'
+import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
+import { ArtistTypes } from 'types/artist'
+import { checkUrl } from 'lib/utils'
 
 const ContactInfo = ({ uid, isArtist }) => {
+  const [phone, setPhone]: any = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { artist } = useArtist(uid)
+  const { artist }: { artist: ArtistTypes } = useArtist(uid)
   const router = useRouter()
 
   const {
@@ -30,10 +33,10 @@ const ContactInfo = ({ uid, isArtist }) => {
     mode: 'onChange',
     defaultValues: {
       contact_way: '',
-      phone: '',
       instagram: null,
       facebook: null,
       twitter: null,
+      telegram_user: null,
     },
   })
 
@@ -41,10 +44,7 @@ const ContactInfo = ({ uid, isArtist }) => {
   const watchInstagram = watch('instagram')
   const watchFacebook = watch('facebook')
   const watchTwitter = watch('twitter')
-
-  const regexUrl = new RegExp(
-    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
-  )
+  const watchTelegram = watch('telegram_user')
 
   useEffect(() => {
     if (artist) {
@@ -57,10 +57,13 @@ const ContactInfo = ({ uid, isArtist }) => {
       }
 
       setValue('contact_way', artist.contact_way || null)
-      setValue('phone', artist.phone || null)
+      setPhone(
+        { value: artist.phone, country_code: artist.country_code } || null
+      )
       setValue('instagram', artist.instagram || null)
       setValue('facebook', artist.facebook || null)
       setValue('twitter', artist.twitter || null)
+      setValue('telegram_user', artist.telegram_user || null)
     }
   }, [artist, setValue])
 
@@ -74,30 +77,27 @@ const ContactInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistContactInfo(uid, data, true), {
-      loading: 'Actualizando...',
-      success: () => {
-        setLoading(false)
-        setSuccess(true)
+    const dataForm = { ...data, phone }
 
-        return 'Artista actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    if (phone?.value) {
+      toast.promise(updateArtistContactInfo(uid, dataForm, true), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
+          setSuccess(true)
+
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast.error('Debes agregar el teléfono')
+    }
 
     setLoading(false)
-  }
-
-  const checkUrl = (url, website) => {
-    const isLink = regexUrl.test(url)
-    if (isLink) {
-      return url
-    } else {
-      return `${website}/${url}`
-    }
   }
 
   return (
@@ -131,10 +131,9 @@ const ContactInfo = ({ uid, isArtist }) => {
                 {...register('contact_way', { required: true })}
               >
                 <option value="">Selecciona por favor</option>
-                <option value="direct-call">Llamada directa</option>
+                <option value="direct_call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
-                <option value="chat-instagram">Chat de Instagram</option>
               </select>
               {errors.contact_way && (
                 <p className="mt-1">Esta campo es requerido</p>
@@ -145,47 +144,54 @@ const ContactInfo = ({ uid, isArtist }) => {
             <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
               <span className="mb-3 block">NÚMERO</span>
 
-              <Controller
-                rules={{ required: true }}
-                control={control}
-                name="phone"
-                render={({ field }) => (
-                  <PhoneInput
-                    country={'co'}
-                    onlyCountries={[
-                      'co',
-                      'es',
-                      'ar',
-                      'it',
-                      'ec',
-                      'br',
-                      'pe',
-                      'us',
-                      'ur',
-                      'mx',
-                    ]}
-                    containerClass="input-primary p-1"
-                    searchStyle={{ background: 'red' }}
-                    inputStyle={{
-                      background: '#111319',
-                      border: 'none',
-                      color: '#fff',
-                    }}
-                    buttonStyle={{
-                      background: '#111319',
-                      border: 'none',
-                    }}
-                    dropdownStyle={{
-                      fontFamily: 'Inter',
-                      background: '#080a12',
-                      color: '#e2e2e2',
-                    }}
-                    placeholder="Selecciona primero el país"
-                    {...field}
-                  />
-                )}
+              <PhoneInput
+                country={'co'}
+                copyNumbersOnly={false}
+                preferredCountries={[
+                  'co',
+                  'es',
+                  'ar',
+                  'it',
+                  'ec',
+                  'br',
+                  'pe',
+                  'us',
+                  'ur',
+                  'mx',
+                ]}
+                containerClass="input-primary p-1"
+                searchStyle={{ background: 'red' }}
+                inputStyle={{
+                  background: '#111319',
+                  border: 'none',
+                  color: '#fff',
+                }}
+                buttonStyle={{
+                  background: '#111319',
+                  border: 'none',
+                }}
+                dropdownStyle={{
+                  fontFamily: 'Inter',
+                  background: '#080a12',
+                  color: '#e2e2e2',
+                }}
+                placeholder="Selecciona primero el país"
+                onChange={(value, country: any, e, formattedValue) => {
+                  console.log(
+                    value,
+                    country,
+                    e,
+                    formattedValue,
+                    'los valores del input'
+                  )
+
+                  setPhone({
+                    value: '+' + value,
+                    country_code: country.countryCode.toUpperCase(),
+                  })
+                }}
+                value={phone.value}
               />
-              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
@@ -254,12 +260,12 @@ const ContactInfo = ({ uid, isArtist }) => {
                   </a>
                 )}
               </div>
-              {errors.facebook && errors.facebook.message && (
-                <p className="mt-1">
-                  {errors.facebook && errors.facebook.message}
-                </p>
-              )}
             </label>
+            {errors.facebook && errors.facebook.message && (
+              <p className="mt-1">
+                {errors.facebook && errors.facebook.message}
+              </p>
+            )}
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
@@ -289,14 +295,62 @@ const ContactInfo = ({ uid, isArtist }) => {
                     <FaTwitter className="text-2xl ml-4" />
                   </a>
                 )}
-                {errors.twitter && errors.twitter.message && (
-                  <p className="mt-1">
-                    {errors.twitter && errors.twitter.message}
-                  </p>
-                )}
               </div>
+              {errors.twitter && errors.twitter.message && (
+                <p className="mt-1">
+                  {errors.twitter && errors.twitter.message}
+                </p>
+              )}
             </label>
           </div>
+
+          {(watchContactWay == 'telegram' || artist?.telegram_user) && (
+            <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+              <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+                <div className="flex">
+                  <span className="mb-3 block uppercase">Telegram</span>
+                  <span
+                    aria-label="Debes tener un usuario de Telegram, ve a la app y crea uno si no lo tienes."
+                    data-microtip-position="top"
+                    role="tooltip"
+                  >
+                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Agrega tu usuario de Telegram"
+                    className="w-full input-primary"
+                    {...register('telegram_user', {
+                      required: {
+                        value: watchContactWay == 'telegram' ? true : false,
+                        message: 'Este campo es requerido',
+                      },
+                    })}
+                  />
+
+                  {(watchTelegram || artist?.telegram_user) && (
+                    <a
+                      href={checkUrl(
+                        watchTelegram || artist?.telegram_user,
+                        'https://t.me'
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaTelegramPlane className="text-2xl ml-4" />
+                    </a>
+                  )}
+                </div>
+                {errors.telegram_user && errors.telegram_user.message && (
+                  <p className="mt-1">
+                    {errors.telegram_user && errors.telegram_user.message}
+                  </p>
+                )}
+              </label>
+            </div>
+          )}
         </div>
         <div className="flex justify-between">
           {!isArtist && (
@@ -324,5 +378,7 @@ const ContactInfo = ({ uid, isArtist }) => {
     </div>
   )
 }
+
+export { checkUrl }
 
 export default ContactInfo
