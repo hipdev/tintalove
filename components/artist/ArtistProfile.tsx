@@ -191,7 +191,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
               <h1 className="text-white text-2xl font-semibold tracking-wide mb-4">
                 Acerca de mi
               </h1>
-              <p className="text-gray-400 w-full lg:w-2/3 mb-10">
+              <p className="text-gray-400 w-full lg:w-2/3 mb-10 whitespace-pre-line">
                 {artistData?.bio || 'Sin bio'}
               </p>
             </div>
