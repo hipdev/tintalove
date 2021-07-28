@@ -13,7 +13,7 @@ import {
 import { useRouter } from 'next/router'
 import { getArtistInfo } from 'lib/queries/artists'
 import PostModalContent from 'components/post/PostModalContent'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function TattoosPage({
   postData,
@@ -23,10 +23,11 @@ export default function TattoosPage({
   relatedPosts,
 }) {
   const router = useRouter()
-  const [ref, setRef] = useState(null)
+  const ref = useRef(null)
 
   useEffect(() => {
-    if (ref) ref.scrollTop = 0
+    console.log('hola')
+    if (ref?.current) ref.current.scrollTop = 0
   }, [router, ref])
 
   return (
@@ -35,39 +36,43 @@ export default function TattoosPage({
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <>
-          <Modal
-            overlayRef={(ref) => setRef(ref)}
-            isOpen={!(router.query.postId == 'all')}
-            overlayClassName="fixed left-0 right-0 bottom-0 top-0"
-            className="bg-transparent  w-full px-0  absolute "
-            // style={customStyles}
-            style={{
-              overlay: {
-                backgroundColor: '#0b0e19',
-                // top: 80,
-                zIndex: 10,
-                overflow: 'auto',
-              },
-              content: {
-                background: 'transparent',
-                border: 'none',
-                top: 0,
-              },
-            }}
-            onRequestClose={() => router.back()}
-            contentLabel="Post modal"
-          >
-            <Layout>
-              <PostModalContent
-                postData={postData}
-                artistData={artistData}
-                commentsData={commentsData}
-                morePostsArtist={morePostsArtist}
-                relatedPosts={relatedPosts}
-                overlayRef={ref}
-              />
-            </Layout>
-          </Modal>
+          <div onScroll={() => console.log('me scrollearon')}>
+            <Modal
+              // overlayRef={(ref) => setRef(ref)}
+              isOpen={!(router.query.postId == 'all')}
+              overlayClassName="fixed left-0 right-0 bottom-0 top-0"
+              className="bg-transparent  w-full px-0  absolute "
+              // style={customStyles}
+              style={{
+                overlay: {
+                  backgroundColor: '#0b0e19',
+                  // top: 80,
+                  zIndex: 10,
+                  overflow: 'hidden',
+                },
+                content: {
+                  background: 'transparent',
+                  border: 'none',
+                  top: 0,
+                },
+              }}
+              onRequestClose={() => router.back()}
+              contentLabel="Post modal"
+            >
+              <div className="overflow-y-auto fixed h-full w-full" ref={ref}>
+                <Layout>
+                  <PostModalContent
+                    postData={postData}
+                    artistData={artistData}
+                    commentsData={commentsData}
+                    morePostsArtist={morePostsArtist}
+                    relatedPosts={relatedPosts}
+                    overlayRef={ref}
+                  />
+                </Layout>
+              </div>
+            </Modal>
+          </div>
         </>
       )}
       {!postData && (
