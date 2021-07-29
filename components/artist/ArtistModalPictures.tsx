@@ -2,6 +2,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-820,q-${quality || 75}`
@@ -81,7 +83,26 @@ const ArtistModalPictures = ({
                   </div>
                 </div>
               ) : (
-                <div>Slider de fotos</div>
+                <div>
+                  {profilePicture && (
+                    <Carousel
+                      swipeable
+                      useKeyboardArrows
+                      autoFocus={true}
+                      stopOnHover
+                    >
+                      <div>
+                        <img src={profilePicture} />
+                      </div>
+                      <div>
+                        <img src={profilePicture} />
+                      </div>
+                      <div>
+                        <img src={profilePicture} />
+                      </div>
+                    </Carousel>
+                  )}
+                </div>
               )}
             </div>
           </Transition.Child>
