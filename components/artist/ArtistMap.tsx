@@ -6,13 +6,15 @@ import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import { useState } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
+import { useRouter } from 'next/router'
 
 type Props = {
   artistData: ArtistTypes
 }
 
 const ArtistMap = ({ artistData }: Props) => {
-  console.log(artistData, 'data del artista')
+  console.log(artistData, 'data del artista, me cargaron bb')
+  const router = useRouter()
 
   const [openLocationModal, setOpenLocationModal] = useState(false)
 
@@ -26,8 +28,8 @@ const ArtistMap = ({ artistData }: Props) => {
           as="div"
           static
           className="fixed z-10 inset-0 overflow-y-auto"
-          open={openLocationModal}
-          onClose={() => setOpenLocationModal(false)}
+          open={true}
+          onClose={() => router.push(`/${artistData.username}`)}
         >
           <div className="flex items-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
             <Transition.Child
@@ -56,11 +58,12 @@ const ArtistMap = ({ artistData }: Props) => {
                   <button
                     type="button"
                     className="absolute text-white hover:text-gray-300 -top-10 right-0  text-2xl sm:text-4xl z-10"
-                    onClick={() => setOpenLocationModal(false)}
+                    onClick={() => router.push(`/${artistData.username}`)}
                   >
                     <IoMdCloseCircle />
                   </button>
                   Hola, soy el modal del mapa
+                  <div className="h-20 bg-black w-40">ja</div>
                 </div>
               </div>
             </Transition.Child>
