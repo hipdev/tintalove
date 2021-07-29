@@ -27,14 +27,14 @@ const DirectCallButton = ({ artistData }) => {
         href={`tel:${artistData.phone}`}
         target="_blank"
         rel="noreferrer"
-        className="flex sm:hidden bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
+        className="flex sm:hidden bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200 w-full"
       >
         Llamar
         <FaWhatsapp className="text-xl ml-3" />
       </a>
 
       <button
-        className="hidden sm:flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200"
+        className="hidden sm:flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 uppercase justify-center text-gray-200  w-full"
         onClick={() => setText(phoneNumber)}
       >
         {text}
