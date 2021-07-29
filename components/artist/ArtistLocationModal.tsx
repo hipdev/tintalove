@@ -10,7 +10,7 @@ const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-820,q-${quality || 75}`
 }
 
-const ArtistModalPictures = ({
+const ArtistLocationModal = ({
   openModal,
   setOpenModal,
   artistPics,
@@ -99,4 +99,4 @@ const ArtistModalPictures = ({
   )
 }
 
-export default ArtistModalPictures
+export default ArtistLocationModal

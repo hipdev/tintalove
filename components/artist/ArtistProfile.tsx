@@ -28,10 +28,10 @@ const loaderPost = ({ src, quality }: any) => {
 }
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
-  console.log(artistPics, 'fotos del artista') // ojo aquí
   console.log(artistData, 'data del artista')
 
   const [openModalPics, setOpenModalPics] = useState(false)
+  const [openLocationModal, setOpenLocationModal] = useState(false)
 
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
@@ -40,12 +40,23 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
   return (
     <>
-      <ArtistModalPictures
-        openModalPics={openModalPics}
-        setOpenModalPics={setOpenModalPics}
-        artistPics={artistPics}
-        profilePicture={artistData?.profile_picture?.url || null}
-      />
+      {openModalPics && (
+        <ArtistModalPictures
+          openModal={openModalPics}
+          setOpenModal={setOpenModalPics}
+          artistPics={artistPics}
+          profilePicture={artistData?.profile_picture?.url || null}
+        />
+      )}
+
+      {openLocationModal && (
+        <ArtistModalPictures
+          openModal={openLocationModal}
+          setOpenModal={setOpenLocationModal}
+          artistPics={artistPics}
+          profilePicture={artistData?.profile_picture?.url || null}
+        />
+      )}
 
       <div className="min-h-screen pt-5 sm:pt-20 px-5 sm:px-10 lg:px-20 pb-20">
         <div className="flex flex-col sm:flex-row ">
@@ -150,10 +161,13 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   <span className="text-light-500">
                     <RiRoadMapLine className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-sm">
+                  <button
+                    className="text-light-500 text-sm hover:text-gn-500 text-left"
+                    onClick={() => setOpenLocationModal(true)}
+                  >
                     {artistData?.dataLocation?.formatted_address ||
                       'Sin dirección'}
-                  </p>
+                  </button>
                 </div>
 
                 <div className="flex space-x-2 mb-5">
