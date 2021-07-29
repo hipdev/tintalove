@@ -1,9 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { Carousel } from 'react-responsive-carousel'
+
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import ArtistSliderPictures from './ArtistSliderPictures'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-820,q-${quality || 75}`
@@ -46,67 +47,52 @@ const ArtistModalPictures = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="absolute mx-auto left-0 right-0 bg-transparent justify-center h-full mt-10 w-5/6 sm:w-1/2 2xl:w-2/3 top-5 flex flex-col items-center">
-              <button
-                type="button"
-                className="absolute text-white hover:text-gray-300 -top-10 right-0  text-2xl sm:text-4xl z-10"
-                onClick={() => setOpenModalPics(false)}
-              >
-                <IoMdCloseCircle />
-              </button>
-              {artistPics?.length == 0 ? (
-                <div className="w-full relative">
-                  <div
-                    className="aspect-w-3 aspect-h-4 relative"
-                    onClick={() => setOpenModalPics(true)}
-                  >
-                    {profilePicture ? (
-                      <Image
-                        loader={loaderPost}
-                        src={profilePicture}
-                        alt={`Foto maximizada`}
-                        layout="fill" // el fill obliga a que se adapte al padre
-                        // width={600}
-                        // height={500}
-                        // sizes="100%"
-                        loading="lazy"
-                        quality={100}
-                        className="w-full  object-cover"
-                      />
-                    ) : (
-                      <img
-                        src="https://via.placeholder.com/309x287"
-                        alt="Sin foto de perfil"
-                        className="w-full"
-                      />
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  {profilePicture && (
-                    <Carousel
-                      swipeable
-                      useKeyboardArrows
-                      autoFocus
-                      stopOnHover
-                      showThumbs={false}
-                      showStatus={false}
-                      dynamicHeight
-                      // showIndicators={false}
+            <div className="absolute mx-auto left-0 right-0 bg-transparent justify-center h-full mt-10 w-11/12 sm:w-1/2 2xl:w-2/5 top-5 flex flex-col items-center">
+              <div className="relative">
+                <button
+                  type="button"
+                  className="absolute text-white hover:text-gray-300 -top-10 right-0  text-2xl sm:text-4xl z-10"
+                  onClick={() => setOpenModalPics(false)}
+                >
+                  <IoMdCloseCircle />
+                </button>
+                {artistPics?.length == 0 ? (
+                  <div className="w-full relative">
+                    <div
+                      className="aspect-w-3 aspect-h-4 relative"
+                      onClick={() => setOpenModalPics(true)}
                     >
-                      <div>
-                        <img src={profilePicture} />
-                      </div>
-                      {artistPics?.map((pic) => (
-                        <div key={pic.id}>
-                          <img src={pic.url} />
-                        </div>
-                      ))}
-                    </Carousel>
-                  )}
-                </div>
-              )}
+                      {profilePicture ? (
+                        <Image
+                          loader={loaderPost}
+                          src={profilePicture}
+                          alt={`Foto maximizada`}
+                          layout="fill" // el fill obliga a que se adapte al padre
+                          // width={600}
+                          // height={500}
+                          // sizes="100%"
+                          loading="lazy"
+                          quality={100}
+                          className="w-full  object-cover"
+                        />
+                      ) : (
+                        <img
+                          src="https://via.placeholder.com/309x287"
+                          alt="Sin foto de perfil"
+                          className="w-full"
+                        />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <ArtistSliderPictures
+                      artistPics={artistPics}
+                      profilePicture={profilePicture}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </Transition.Child>
         </div>
