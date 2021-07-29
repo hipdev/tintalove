@@ -1,5 +1,6 @@
 import ArtistMap from 'components/artist/ArtistMap'
 import Layout from 'components/layout/layout'
+import { Loader } from '@googlemaps/js-api-loader'
 
 import { postToJSON } from 'lib/firebase'
 import {
@@ -8,23 +9,35 @@ import {
   getUserNamesByArtists,
 } from 'lib/queries/artists'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+
+const loader = new Loader({
+  apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
+  libraries: ['places'],
+})
 
 const UsernameArtistPage = ({ artistId, artistData }: any) => {
+  const [loadMap, setLoadMap] = useState(false)
   const router: any = useRouter()
 
   if (router.isFallback) {
     return 'Loading'
   }
 
+  loader
+    .load()
+    .then(() => {
+      setLoadMap(true)
+    })
+    .catch((e) => {
+      console.log('error loading Google Maps API')
+    })
+
   if (!artistId) {
     return <p>No existe ese artista</p>
   }
 
-  return (
-    <Layout>
-      <ArtistMap artistData={artistData} />
-    </Layout>
-  )
+  return <Layout>{loadMap && <ArtistMap artistData={artistData} />}</Layout>
 }
 
 export default UsernameArtistPage
