@@ -47,7 +47,7 @@ const ArtistModalPictures = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="absolute mx-auto left-0 right-0 bg-transparent justify-center h-full mt-10 w-11/12 sm:w-1/2 2xl:w-2/5 top-5 flex flex-col items-center">
+            <div className="absolute mx-auto left-0 right-0 bg-transparent justify-center h-full  w-11/12 sm:w-1/2 2xl:w-2/5 top-5 flex flex-col items-center">
               <div className="relative">
                 <button
                   type="button"
@@ -59,7 +59,7 @@ const ArtistModalPictures = ({
                 {artistPics?.length == 0 ? (
                   <div className="w-full relative">
                     <div
-                      className="aspect-w-3 aspect-h-4 relative"
+                      className="aspect-w-3 aspect-h-4 relative max-h-20"
                       onClick={() => setOpenModalPics(true)}
                     >
                       {profilePicture ? (
@@ -85,12 +85,10 @@ const ArtistModalPictures = ({
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    <ArtistSliderPictures
-                      artistPics={artistPics}
-                      profilePicture={profilePicture}
-                    />
-                  </div>
+                  <ArtistSliderPictures
+                    artistPics={artistPics}
+                    profilePicture={profilePicture}
+                  />
                 )}
               </div>
             </div>

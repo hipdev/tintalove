@@ -22,6 +22,7 @@ const ArtistSliderPictures = ({ artistPics, profilePicture, theRef }: any) => {
       infiniteLoop
       useKeyboardArrows
       // autoFocus
+      autoPlay={false}
       stopOnHover
       showThumbs={false}
       showStatus={false}
@@ -30,10 +31,10 @@ const ArtistSliderPictures = ({ artistPics, profilePicture, theRef }: any) => {
       ref={ref}
     >
       <div>
-        <img src={profilePicture} />
+        <img className="" src={profilePicture} style={{ maxHeight: '90%' }} />
       </div>
       {artistPics?.map((pic) => (
-        <div key={pic.id}>
+        <div key={pic.id} style={{ maxHeight: '90%' }}>
           <img src={pic.url} />
         </div>
       ))}
