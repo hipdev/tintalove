@@ -1,10 +1,12 @@
 import useStudio from 'hooks/use-studio'
 import { updateStudioContactInfo } from 'lib/queries/studios'
+import { checkUrl } from 'lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { AiOutlineInstagram } from 'react-icons/ai'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './ContactInfoLocation'
@@ -32,6 +34,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
       instagram: '',
       facebook: '',
       twitter: '',
+      telegram_user: '',
     },
   })
 
@@ -51,6 +54,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
       setValue('instagram', studio.instagram)
       setValue('facebook', studio.facebook)
       setValue('twitter', studio.twitter)
+      setValue('telegram_user', studio.telegram_user)
       setPhone(
         { value: studio.phone, country_code: studio.country_code } || null
       )
@@ -65,6 +69,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   }, [success])
 
   const watchContactWay = watch('contact_way')
+  const watchInstagram = watch('instagram')
+  const watchFacebook = watch('facebook')
+  const watchTwitter = watch('twitter')
+  const watchTelegram = watch('telegram_user')
 
   const onSubmit = (data) => {
     setLoading(true)
@@ -110,10 +118,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 {...register('contact_way', { required: true })}
               >
                 <option value="">Selecciona por favor</option>
-                <option value="direct-call">Llamada directa</option>
+                <option value="direct_call">Llamada directa</option>
                 <option value="whatsapp">WhatsApp</option>
                 <option value="telegram">Telegram</option>
-                <option value="chat-instagram">Chat de Instagram</option>
               </select>
               {errors.contact_way && (
                 <p className="mt-1">Esta campo es requerido</p>
@@ -174,28 +181,37 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               />
             </label>
           </div>
-          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-2 tracking-wide"
-            >
-              <span className="mb-2 block">INSTAGRAM</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('instagram', {
-                  required: {
-                    value: watchContactWay == 'instagram' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser una url de tu perfil',
-                  },
-                })}
-              />
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+              <span className="mb-3 block">INSTAGRAM</span>
+
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil o tu nombre de usuario"
+                  className="w-full input-primary"
+                  {...register('instagram', {
+                    required: {
+                      value: watchContactWay == 'chat-instagram' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+                {(watchInstagram || studio?.instagram) && (
+                  <a
+                    href={checkUrl(
+                      watchInstagram || studio?.instagram,
+                      'https://instagram.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineInstagram className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
+
               {errors.instagram && errors.instagram.message && (
                 <p className="mt-1">
                   {errors.instagram && errors.instagram.message}
@@ -203,6 +219,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               )}
             </label>
           </div>
+
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
