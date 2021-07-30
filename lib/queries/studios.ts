@@ -212,7 +212,9 @@ export async function updateStudioContactInfo(studioId, data, wizard) {
     contact_way: data.contact_way,
     facebook: data.facebook || null,
     instagram: data.instagram || null,
-    phone: data.phone,
+    telegram_user: data.telegram_user || null,
+    phone: data.phone.value,
+    country_code: data.phone.country_code || 'CO',
     twitter: data.twitter || null,
     updated_at: serverTimestamp(),
   }
@@ -228,7 +230,7 @@ export async function updateStudioContactInfo(studioId, data, wizard) {
 
     return true
   } else {
-    throw new Error('No estas registrado como artista')
+    throw new Error('No estas registrado como estudio')
   }
 }
 
