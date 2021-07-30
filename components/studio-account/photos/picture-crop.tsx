@@ -1,5 +1,5 @@
 import fetcher from 'lib/fetcher'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import ReactCrop from 'react-image-crop'
@@ -10,15 +10,15 @@ import { AiOutlineClose } from 'react-icons/ai'
 type Props = {
   picture: any
   clearPicture?: any
-  uid: string
+  studioId: string
   update?: boolean
   actualPictureId?: string
   setPicture?: any
 }
 
-const PictureCropStudio = ({
+const PictureCrop = ({
   picture,
-  uid,
+  studioId,
   update,
   actualPictureId,
   setPicture,
@@ -26,11 +26,20 @@ const PictureCropStudio = ({
   const [loading, setLoading] = useState(false)
 
   const [crop, setCrop]: any = useState({
-    aspect: 6 / 7,
+    aspect: 3 / 4,
     unit: '%',
     width: 100,
     // height: 100,
   })
+
+  useEffect(() => {
+    setCrop({
+      aspect: 3 / 4,
+      unit: '%',
+      width: 100,
+      // height: 100,
+    })
+  }, [setPicture])
 
   const imgRef = useRef(null)
 
@@ -82,7 +91,7 @@ const PictureCropStudio = ({
     if (crop) {
       const dataFile: any = new FormData()
 
-      dataFile.append('fileName', uid || 'cropped')
+      dataFile.append('fileName', studioId || 'cropped')
       dataFile.append('file', file)
       dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
       dataFile.append('signature', data.signature)
@@ -106,20 +115,23 @@ const PictureCropStudio = ({
             thumbnailUrl: fileImagekit.url,
           }
           try {
-            toast.promise(updateArtistMainProfilePicture(uid, content, true), {
-              loading: 'Actualizando...',
-              success: () => {
-                setLoading(false)
-                setPicture(null)
-                mutate(uid)
+            toast.promise(
+              updateArtistMainProfilePicture(studioId, content, true),
+              {
+                loading: 'Actualizando...',
+                success: () => {
+                  setLoading(false)
+                  setPicture(null)
+                  mutate(studioId)
 
-                return 'Foto actualizada 😉'
-              },
-              error: (err) => {
-                setLoading(false)
-                return `${err.toString()}`
-              },
-            })
+                  return 'Foto actualizada 😉'
+                },
+                error: (err) => {
+                  setLoading(false)
+                  return `${err.toString()}`
+                },
+              }
+            )
           } catch (error) {
             console.error(error)
           }
@@ -128,7 +140,7 @@ const PictureCropStudio = ({
   }
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col items-center">
       <div className="flex">
         <p className="text-sm mb-3 mt-5">
           Puedes mover la foto, el cuadrado indica las proporciones requeridas
@@ -158,4 +170,4 @@ const PictureCropStudio = ({
   )
 }
 
-export default PictureCropStudio
+export default PictureCrop
