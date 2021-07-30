@@ -115,6 +115,10 @@ const ArtistMap = ({ artistData }: Props) => {
                           artistData._geoloc.lng,
                       }}
                       zoom={18}
+                      options={{
+                        streetViewControl: false,
+                        mapTypeControl: false,
+                      }}
                     >
                       <Marker
                         position={{
