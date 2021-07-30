@@ -1,10 +1,7 @@
 import { ArtistTypes } from 'types/artist'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import useUserId from 'hooks/use-user-id'
-import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
-import { useState } from 'react'
+import { Fragment, useRef } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
 import { SiWaze } from 'react-icons/si'
 import { useRouter } from 'next/router'
@@ -13,14 +10,16 @@ type Props = {
   artistData: ArtistTypes
 }
 
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: '4px',
+}
+
 const ArtistMap = ({ artistData }: Props) => {
-  console.log(artistData, 'data del artista, me cargaron bb')
   const router = useRouter()
 
-  const [openLocationModal, setOpenLocationModal] = useState(false)
-
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const ref = useRef()
 
   return (
     <>
@@ -31,6 +30,7 @@ const ArtistMap = ({ artistData }: Props) => {
           className="fixed z-10 inset-0 overflow-y-auto"
           open={true}
           onClose={() => router.push(`/${artistData.username}`)}
+          initialFocus={ref}
         >
           <div className="flex items-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
             <Transition.Child
@@ -83,6 +83,7 @@ const ArtistMap = ({ artistData }: Props) => {
                     </div>
                     <div>
                       <a
+                        ref={ref}
                         href={`https://www.waze.com/ul?ll=${
                           artistData._geoloc_marker.lat ||
                           artistData._geoloc.lat
@@ -102,7 +103,41 @@ const ArtistMap = ({ artistData }: Props) => {
                       </a>
                     </div>
                   </div>
-                  <div className="h-4/5 mb-20 bg-black ">ja</div>
+                  <div className="h-4/5 mb-20 bg-black ">
+                    <GoogleMap
+                      mapContainerStyle={containerStyle}
+                      center={{
+                        lat:
+                          artistData._geoloc_marker.lat ||
+                          artistData._geoloc.lat,
+                        lng:
+                          artistData._geoloc_marker.lng ||
+                          artistData._geoloc.lng,
+                      }}
+                      zoom={18}
+                    >
+                      <Marker
+                        position={{
+                          lat:
+                            artistData._geoloc_marker.lat ||
+                            artistData._geoloc.lat,
+                          lng:
+                            artistData._geoloc_marker.lng ||
+                            artistData._geoloc.lng,
+                        }}
+                        icon={{
+                          url: '/icon-black.png',
+                        }}
+                        label={{
+                          text: artistData.displayName,
+                          color: '#030308',
+                          fontSize: '1.4rem',
+                          fontWeight: '900',
+                          className: 'marker-position',
+                        }}
+                      />
+                    </GoogleMap>
+                  </div>
                 </div>
               </div>
             </Transition.Child>
