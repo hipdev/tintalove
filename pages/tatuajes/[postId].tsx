@@ -33,8 +33,7 @@ export default function TattoosPage({
   }, [router, ref])
 
   const handleScroll = debounce((val) => {
-    console.log(ref.current.scrollTop, 'scrolling')
-    if (ref.current.scrollTop > 700) {
+    if (ref?.current?.scrollTop > 700) {
       setShowUp(true)
     } else {
       setShowUp(false)

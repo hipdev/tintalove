@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import { useState } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
+import { SiWaze } from 'react-icons/si'
 import { useRouter } from 'next/router'
 
 type Props = {
@@ -23,7 +24,7 @@ const ArtistMap = ({ artistData }: Props) => {
 
   return (
     <>
-      <Transition.Root show={openLocationModal} as={Fragment}>
+      <Transition.Root show={true} as={Fragment}>
         <Dialog
           as="div"
           static
@@ -53,8 +54,8 @@ const ArtistMap = ({ artistData }: Props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="absolute mx-auto left-0 right-0 bg-transparent justify-center h-full  w-11/12 sm:w-1/2 2xl:w-2/5 top-5 flex flex-col items-center">
-                <div className="relative">
+              <div className="absolute mx-auto  left-0 right-0 bg-transparent justify-center h-full  w-11/12 sm:w-10/12  top-0 sm:top-5 flex flex-col items-center">
+                <div className="relative h-5/6  w-full px-7 rounded-md bg-gr-700">
                   <button
                     type="button"
                     className="absolute text-white hover:text-gray-300 -top-10 right-0  text-2xl sm:text-4xl z-10"
@@ -62,8 +63,46 @@ const ArtistMap = ({ artistData }: Props) => {
                   >
                     <IoMdCloseCircle />
                   </button>
-                  Hola, soy el modal del mapa
-                  <div className="h-20 bg-black w-40">ja</div>
+                  <h1 className="mt-5 text-gray-300 text-2xl font-semibold mb-4">
+                    Ubicación de {artistData.displayName}
+                  </h1>
+                  <div className="text-left text-gray-400 mb-3 flex justify-around">
+                    <div className="mr-2">
+                      <p className="text-sm sm:text-md">
+                        <span className="hidden sm:inline-block">
+                          Dirección:{' '}
+                        </span>{' '}
+                        {artistData.formatted_address}
+                      </p>
+                      <p className="text-sm sm:text-md">
+                        <span className="hidden sm:inline-block ">
+                          Horarios:{' '}
+                        </span>{' '}
+                        {artistData.times}
+                      </p>
+                    </div>
+                    <div>
+                      <a
+                        href={`https://www.waze.com/ul?ll=${
+                          artistData._geoloc_marker.lat ||
+                          artistData._geoloc.lat
+                        },${
+                          artistData._geoloc_marker.lng ||
+                          artistData._geoloc.lng
+                        }&navigate=yes&zoom=10`}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ backgroundColor: '#33ccff' }}
+                        className=" flex px-2 sm:px-7 py-2 text-black rounded-full sm:rounded-md font-semibold items-center"
+                      >
+                        <span className="hidden sm:inline-block ">
+                          Abrir con Waze
+                        </span>
+                        <SiWaze className=" sm:ml-2 text-3xl sm:text-2xl text-gray-700" />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="h-4/5 mb-20 bg-black ">ja</div>
                 </div>
               </div>
             </Transition.Child>

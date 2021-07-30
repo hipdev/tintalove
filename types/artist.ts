@@ -27,6 +27,7 @@ export type ArtistTypes = {
   telegram_user: string
   work_as: string
   _geoloc: AlgoliaGeolocation
+  _geoloc_marker: AlgoliaGeolocation
   available_label: string
   dataLocation: DataLocation
 } | null
