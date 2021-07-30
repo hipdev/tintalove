@@ -55,7 +55,7 @@ const ArtistMap = ({ artistData }: Props) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <div className="absolute mx-auto  left-0 right-0 bg-transparent justify-center h-full  w-11/12 sm:w-10/12  top-0 sm:top-5 flex flex-col items-center">
-                <div className="relative h-5/6  w-full px-7 rounded-md bg-gr-700">
+                <div className="relative h-5/6   w-full px-7 rounded-md bg-gr-700 pb-10">
                   <button
                     type="button"
                     className="absolute text-white hover:text-gray-300 -top-10 right-0  text-2xl sm:text-4xl z-10"
@@ -69,15 +69,15 @@ const ArtistMap = ({ artistData }: Props) => {
                   <div className="text-left text-gray-400 mb-3 flex justify-around">
                     <div className="mr-2">
                       <p className="text-sm sm:text-md">
-                        <span className="hidden sm:inline-block">
-                          Dirección:{' '}
-                        </span>{' '}
+                        <span className="hidden sm:inline-block font-semibold mr-2">
+                          Dirección:
+                        </span>
                         {artistData.formatted_address}
                       </p>
-                      <p className="text-sm sm:text-md">
-                        <span className="hidden sm:inline-block ">
-                          Horarios:{' '}
-                        </span>{' '}
+                      <p className="text-sm sm:text-md ">
+                        <span className="hidden sm:inline-block font-semibold mr-2">
+                          Horarios:
+                        </span>
                         {artistData.times}
                       </p>
                     </div>
