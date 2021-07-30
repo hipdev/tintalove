@@ -101,9 +101,6 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 <h6 className="text-light-200 text-base lg:text-sm">
                   {artistData?.city_name}, {artistData?.province}
                 </h6>
-                <Link href="#">
-                  <a className="text-green-600">(ver ubicación)</a>
-                </Link>
               </div>
 
               <div className="flex space-x-4 my-4">
@@ -159,15 +156,18 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
                 <div className="flex space-x-2 my-2 mb-4">
                   <span className="text-light-500">
-                    <RiRoadMapLine className="text-xl" />
+                    <Link href={`/${artistData.username}/map`}>
+                      <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                        <RiRoadMapLine className="text-xl" />
+                      </a>
+                    </Link>
                   </span>
-                  <button
-                    className="text-light-500 text-sm hover:text-gn-500 text-left"
-                    onClick={() => setOpenLocationModal(true)}
-                  >
-                    {artistData?.dataLocation?.formatted_address ||
-                      'Sin dirección'}
-                  </button>
+                  <Link href={`/${artistData.username}/map`}>
+                    <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                      {artistData?.dataLocation?.formatted_address ||
+                        'Sin dirección'}
+                    </a>
+                  </Link>
                 </div>
 
                 <div className="flex space-x-2 mb-5">
