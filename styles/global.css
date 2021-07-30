@@ -78,5 +78,8 @@ th:not(:last-child) {
   height: 100%;
   overflow: hidden;
 }
-
+.marker-position {
+  bottom: 2.4rem;
+  position: relative;
+}
 @import 'components/styles/react-select.css';
