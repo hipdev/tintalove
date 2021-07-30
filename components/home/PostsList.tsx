@@ -18,16 +18,7 @@ const PostListHome = ({ posts }) => {
   }
 
   return (
-    <div className="px-5 sm:px-10 lg:px-20 pt-24">
-      <div className="flex flex-wrap justify-center sm:justify-between mb-6">
-        <div className="flex items-center space-x-2 mb-3 sm:mb-0 mr-3">
-          <button className="text-white mr-4 border-b border-primary pb-2">
-            POPULAR
-          </button>
-          <button className="text-white pb-2">MÁS RECIENTE</button>
-        </div>
-      </div>
-
+    <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24">
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"

@@ -12,10 +12,6 @@ export default function ContactInfoPageStudio() {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
-  const status = useScript(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places'
-  )
-
   if (!data && !data?.user) {
     return <IsAuth>Cargando data...</IsAuth>
   }
