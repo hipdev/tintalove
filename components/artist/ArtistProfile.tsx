@@ -28,10 +28,10 @@ const loaderPost = ({ src, quality }: any) => {
 }
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
-  console.log(artistPics, 'fotos del artista') // ojo aquí
   console.log(artistData, 'data del artista')
 
   const [openModalPics, setOpenModalPics] = useState(false)
+  const [openLocationModal, setOpenLocationModal] = useState(false)
 
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
@@ -40,12 +40,23 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
   return (
     <>
-      <ArtistModalPictures
-        openModalPics={openModalPics}
-        setOpenModalPics={setOpenModalPics}
-        artistPics={artistPics}
-        profilePicture={artistData?.profile_picture?.url || null}
-      />
+      {openModalPics && (
+        <ArtistModalPictures
+          openModal={openModalPics}
+          setOpenModal={setOpenModalPics}
+          artistPics={artistPics}
+          profilePicture={artistData?.profile_picture?.url || null}
+        />
+      )}
+
+      {openLocationModal && (
+        <ArtistModalPictures
+          openModal={openLocationModal}
+          setOpenModal={setOpenLocationModal}
+          artistPics={artistPics}
+          profilePicture={artistData?.profile_picture?.url || null}
+        />
+      )}
 
       <div className="min-h-screen pt-5 sm:pt-20 px-5 sm:px-10 lg:px-20 pb-20">
         <div className="flex flex-col sm:flex-row ">
@@ -90,9 +101,6 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 <h6 className="text-light-200 text-base lg:text-sm">
                   {artistData?.city_name}, {artistData?.province}
                 </h6>
-                <Link href="#">
-                  <a className="text-green-600">(ver ubicación)</a>
-                </Link>
               </div>
 
               <div className="flex space-x-4 my-4">
@@ -148,12 +156,18 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
                 <div className="flex space-x-2 my-2 mb-4">
                   <span className="text-light-500">
-                    <RiRoadMapLine className="text-xl" />
+                    <Link href={`/${artistData.username}/map`}>
+                      <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                        <RiRoadMapLine className="text-xl" />
+                      </a>
+                    </Link>
                   </span>
-                  <p className="text-light-500 text-sm">
-                    {artistData?.dataLocation?.formatted_address ||
-                      'Sin dirección'}
-                  </p>
+                  <Link href={`/${artistData.username}/map`}>
+                    <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                      {artistData?.dataLocation?.formatted_address ||
+                        'Sin dirección'}
+                    </a>
+                  </Link>
                 </div>
 
                 <div className="flex space-x-2 mb-5">

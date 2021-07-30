@@ -352,6 +352,7 @@ const ContactInfo = ({ uid, isArtist }) => {
             </div>
           )}
         </div>
+
         <div className="flex justify-between">
           {!isArtist && (
             <p>Primero debes guardar el Paso 1, Información Personal.</p>
