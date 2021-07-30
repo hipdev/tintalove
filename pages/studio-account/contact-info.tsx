@@ -1,14 +1,13 @@
-import Script from 'next/script'
-import IsAuth from 'components/isAuth'
-import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
-import ContactInfoStudio from 'components/studio-account/contact-info/ContactInfo'
-import useScript from 'hooks/use-script'
-
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
 import useSWR from 'swr'
 import { useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
+
+import IsAuth from 'components/isAuth'
+import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
+import ContactInfoStudio from 'components/studio-account/contact-info/ContactInfo'
+
+import useUserId from 'hooks/use-user-id'
+import { getUserInfo } from 'lib/queries/users'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
