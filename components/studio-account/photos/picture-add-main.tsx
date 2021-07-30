@@ -1,19 +1,17 @@
 import Compressor from 'compressorjs'
 import useArtistRealtime from 'hooks/realtime/use-artist'
-import Link from 'next/link'
 import { useState } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 
-import PictureCrop from './PictureCrop'
+import PictureCrop from './picture-crop'
 
-const PictureAddMain = ({ uid, hasStudio }) => {
+const PictureAddMain = ({ studioId, hasStudio }) => {
   const [picture, setPicture] = useState(null)
-  const { artist } = useArtistRealtime(uid)
+  const { artist } = useArtistRealtime(studioId)
 
   const handlePicture = (e: any) => {
     e.preventDefault()
-
     let files
     if (e.dataTransfer) {
       // usefull for DragAndDrop files
@@ -25,7 +23,7 @@ const PictureAddMain = ({ uid, hasStudio }) => {
 
     new Compressor(files[0], {
       quality: 0.8,
-      maxWidth: 800,
+      maxWidth: 1400,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()
@@ -59,11 +57,15 @@ const PictureAddMain = ({ uid, hasStudio }) => {
 
       {picture && (
         <div className="flex">
-          <PictureCrop picture={picture} setPicture={setPicture} uid={uid} />
+          <PictureCrop
+            picture={picture}
+            setPicture={setPicture}
+            studioId={studioId}
+          />
         </div>
       )}
 
-      {!picture && hasStudio && (
+      {!picture && (
         <div className="flex justify-center">
           <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <span className="text-4xl text-light-900 mb-4">
@@ -84,18 +86,6 @@ const PictureAddMain = ({ uid, hasStudio }) => {
               </label>
             </div>
           </div>
-        </div>
-      )}
-      {!hasStudio && (
-        <div className="flex justify-between">
-          <p className="text-white">
-            Primero debes guardar el Paso 1, Información Personal.
-          </p>
-          <Link href="/studio-account/general">
-            <button className="block   btn-primary py-3 px-5">
-              Ir al paso 1
-            </button>
-          </Link>
         </div>
       )}
     </div>

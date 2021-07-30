@@ -1,26 +1,26 @@
 import useArtistRealtime from 'hooks/realtime/use-artist'
-import PictureAddMain from './PictureAddMain'
+import PictureAddMain from './picture-add-main'
 
-import PictureReady from './PictureReady'
+import PictureReady from './picture-ready'
 
-const PicturesInfoStudio = ({ studioId, hasStudio }) => {
+const PicturesInfo = ({ studioId, hasStudio }) => {
   const { artist } = useArtistRealtime(studioId)
 
   return (
-    <div className="w-full pr-5 2xl:w-4/5  mt-10">
+    <div className="w-full pr-5 2xl:w-4/5  mt-10 text-gray-200">
       <div className="flex justify-between">
         <h1 className="text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
-          Fotos de perfil
+          Fotos del estudio
         </h1>
       </div>
 
       {artist?.profile_picture ? (
         <PictureReady artist={artist} />
       ) : (
-        <PictureAddMain uid={studioId} hasStudio={hasStudio} />
+        <PictureAddMain studioId={studioId} hasStudio={hasStudio} />
       )}
     </div>
   )
 }
 
-export default PicturesInfoStudio
+export default PicturesInfo

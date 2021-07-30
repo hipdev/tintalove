@@ -1,9 +1,10 @@
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import IsAuth from 'components/isAuth'
-import PicturesInfoStudio from 'components/studio-account/pictures/PicturesInfo'
+
 import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
+import PicturesInfo from 'components/studio-account/photos/pictures-info'
 
 export default function PictureInfoPage() {
   const { userId } = useUserId()
@@ -15,7 +16,7 @@ export default function PictureInfoPage() {
 
   return (
     <LayoutStepsStudio uid={userId} user={data.user}>
-      <PicturesInfoStudio
+      <PicturesInfo
         hasStudio={data.user.has_studio}
         studioId={data.user.studio_id}
       />
