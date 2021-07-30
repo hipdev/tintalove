@@ -65,7 +65,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => router.push('/studio/pictures-info'), 1000)
+      const timer = setTimeout(
+        () => router.push('/studio-account/pictures-info'),
+        1000
+      )
       return () => clearTimeout(timer)
     }
   }, [success])
@@ -80,6 +83,8 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     setLoading(true)
 
     const dataForm = { ...data, phone }
+
+    console.log(dataForm, 'la data')
 
     toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
       loading: 'Actualizando...',
