@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { AiOutlineInstagram } from 'react-icons/ai'
+import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
+import { FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './ContactInfoLocation'
@@ -221,56 +223,71 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
           </div>
 
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-2 tracking-wide"
-            >
-              <span className="mb-2 block">FACEBOOK</span>
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+              <span className="mb-3 block">FACEBOOK</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('facebook', {
-                  required: {
-                    value: watchContactWay == 'chat-facebook' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser la url de tu perfil',
-                  },
-                })}
-              />
-              {errors.facebook && errors.facebook.message && (
-                <p className="mt-1">
-                  {errors.facebook && errors.facebook.message}
-                </p>
-              )}
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil"
+                  className="w-full input-primary"
+                  {...register('facebook', {
+                    required: {
+                      value: watchContactWay == 'facebook' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+                {(watchFacebook || studio?.facebook) && (
+                  <a
+                    href={checkUrl(
+                      watchFacebook || studio?.facebook,
+                      'https://facebook.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebookF className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
             </label>
+            {errors.facebook && errors.facebook.message && (
+              <p className="mt-1">
+                {errors.facebook && errors.facebook.message}
+              </p>
+            )}
           </div>
-          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm  mb-2 tracking-wide"
-            >
-              <span className="mb-2 block">TWITTER</span>
 
-              <input
-                type="text"
-                placeholder="Pega la URL de tu perfil"
-                className="w-full input-primary"
-                {...register('twitter', {
-                  required: {
-                    value: watchContactWay == 'chat-twitter' ? true : false,
-                    message: 'Este campo es requerido',
-                  },
-                  pattern: {
-                    value: regexUrl,
-                    message: 'Debe ser la url de tu perfil',
-                  },
-                })}
-              />
+          <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+            <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+              <span className="mb-3 block">TWITTER</span>
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Pega la URL de tu perfil"
+                  className="w-full input-primary"
+                  {...register('twitter', {
+                    required: {
+                      value: watchContactWay == 'twitter' ? true : false,
+                      message: 'Este campo es requerido',
+                    },
+                  })}
+                />
+
+                {(watchTwitter || studio?.twitter) && (
+                  <a
+                    href={checkUrl(
+                      watchTwitter || studio?.twitter,
+                      'https://twitter.com'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTwitter className="text-2xl ml-4" />
+                  </a>
+                )}
+              </div>
               {errors.twitter && errors.twitter.message && (
                 <p className="mt-1">
                   {errors.twitter && errors.twitter.message}
@@ -278,6 +295,55 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               )}
             </label>
           </div>
+
+          {(watchContactWay == 'telegram' || studio?.telegram_user) && (
+            <div className="col-span-6 lg:col-span-4 xl:col-span-3">
+              <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
+                <div className="flex">
+                  <span className="mb-3 block uppercase">Telegram</span>
+                  <span
+                    aria-label="Debes tener un usuario de Telegram, ve a la app y crea uno si no lo tienes."
+                    data-microtip-position="top"
+                    role="tooltip"
+                  >
+                    <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Agrega tu usuario de Telegram"
+                    className="w-full input-primary"
+                    {...register('telegram_user', {
+                      required: {
+                        value: watchContactWay == 'telegram' ? true : false,
+                        message: 'Este campo es requerido',
+                      },
+                    })}
+                  />
+
+                  {(watchTelegram || studio?.telegram_user) && (
+                    <a
+                      href={checkUrl(
+                        watchTelegram || studio?.telegram_user,
+                        'https://t.me'
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaTelegramPlane className="text-2xl ml-4" />
+                    </a>
+                  )}
+                </div>
+                {errors.telegram_user && errors.telegram_user.message && (
+                  <p className="mt-1">
+                    {errors.telegram_user && errors.telegram_user.message}
+                  </p>
+                )}
+              </label>
+            </div>
+          )}
+
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label
               htmlFor=""
