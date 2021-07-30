@@ -1,10 +1,9 @@
 import useStudio from 'hooks/use-studio'
 import { updateStudioContactInfo } from 'lib/queries/studios'
-
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -12,6 +11,7 @@ import ContactInfoLocation from './ContactInfoLocation'
 import ContactInfoMapStudio from './ContactInfoMap'
 
 const ContactInfoStudio = ({ studioId, hasStudio }) => {
+  const [phone, setPhone]: any = useState({})
   const [location, setLocation] = useState(null)
   const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -25,12 +25,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       contact_way: '',
-      phone: '',
       instagram: '',
       facebook: '',
       twitter: '',
@@ -50,10 +48,12 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
       }
 
       setValue('contact_way', studio.contact_way)
-      setValue('phone', studio.phone)
       setValue('instagram', studio.instagram)
       setValue('facebook', studio.facebook)
       setValue('twitter', studio.twitter)
+      setPhone(
+        { value: studio.phone, country_code: studio.country_code } || null
+      )
     }
   }, [studio])
 
@@ -69,7 +69,9 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateStudioContactInfo(studioId, data, true), {
+    const dataForm = { ...data, phone }
+
+    toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
@@ -119,52 +121,57 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
-            <label
-              htmlFor=""
-              className="block text-white text-sm mb-2 tracking-wide"
-            >
-              <span className="mb-2 block">NÚMERO</span>
+            <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
+              <span className="mb-3 block">NÚMERO</span>
 
-              <Controller
-                rules={{ required: true }}
-                control={control}
-                name="phone"
-                render={({ field }) => (
-                  <PhoneInput
-                    country={'co'}
-                    onlyCountries={[
-                      'co',
-                      'es',
-                      'ar',
-                      'it',
-                      'ec',
-                      'br',
-                      'pe',
-                      'us',
-                      'ur',
-                      'mx',
-                    ]}
-                    containerClass="input-primary p-1"
-                    searchStyle={{ background: 'red' }}
-                    inputStyle={{
-                      background: '#111319',
-                      border: 'none',
-                      color: '#fff',
-                    }}
-                    buttonStyle={{
-                      background: '#111319',
-                      border: 'none',
-                    }}
-                    dropdownStyle={{
-                      fontFamily: 'Inter',
-                      background: '#080a12',
-                      color: '#e2e2e2',
-                    }}
-                    {...field}
-                  />
-                )}
+              <PhoneInput
+                country={'co'}
+                copyNumbersOnly={false}
+                preferredCountries={[
+                  'co',
+                  'es',
+                  'ar',
+                  'it',
+                  'ec',
+                  'br',
+                  'pe',
+                  'us',
+                  'ur',
+                  'mx',
+                ]}
+                containerClass="input-primary p-1"
+                searchStyle={{ background: 'red' }}
+                inputStyle={{
+                  background: '#111319',
+                  border: 'none',
+                  color: '#fff',
+                }}
+                buttonStyle={{
+                  background: '#111319',
+                  border: 'none',
+                }}
+                dropdownStyle={{
+                  fontFamily: 'Inter',
+                  background: '#080a12',
+                  color: '#e2e2e2',
+                }}
+                placeholder="Selecciona primero el país"
+                onChange={(value, country: any, e, formattedValue) => {
+                  console.log(
+                    value,
+                    country,
+                    e,
+                    formattedValue,
+                    'los valores del input'
+                  )
+
+                  setPhone({
+                    value: '+' + value,
+                    country_code: country.countryCode.toUpperCase(),
+                  })
+                }}
+                value={phone.value}
               />
-              {errors.phone && <p className="mt-1">Esta campo es requerido</p>}
             </label>
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">

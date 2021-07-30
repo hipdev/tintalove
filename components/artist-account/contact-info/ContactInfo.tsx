@@ -1,10 +1,9 @@
 import useArtist from 'hooks/use-artist'
 import { updateArtistContactInfo } from 'lib/queries/artists'
-
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { FiHelpCircle } from 'react-icons/fi'
 import PhoneInput from 'react-phone-input-2'
