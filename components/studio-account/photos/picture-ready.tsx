@@ -65,7 +65,7 @@ const PictureReady = ({ artist }) => {
             update
             actualPictureId={artist.profile_picture.fileId}
             picture={picture}
-            uid={artist.uid}
+            studioId={artist.studioId}
             setPicture={setPicture}
           />
         </div>
