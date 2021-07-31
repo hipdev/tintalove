@@ -4,7 +4,7 @@ import { lists } from 'lib/actions'
 import toast from 'react-hot-toast'
 import { addPostToList, createList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
-import { FiPlus } from 'react-icons/fi'
+import { BsPlus } from 'react-icons/bs'
 
 type Props = {
   hasList?: boolean
@@ -63,33 +63,39 @@ const NoListForm = ({ hasList, user }: Props) => {
   }
 
   return (
-    <div className="mb-1">
-      <div className="bg-ocean_blue-300 p-4 rounded-md mb-6">
+    <div className="mb-5">
+      <div className="bg-gr-700 p-2 rounded-md mb-2 border border-gr-600">
         <div className="flex items-center">
-          <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
+          <div className="w-12 h-12 bg-white rounded-lg mr-2 flex-shrink-0 overflow-hidden">
+            {/* w-12 y h-12 se pueden borrar junto con el bg-white es solo para que al renderizar se vea algo xD */}
+            {/* <img
+              //src={user.photoUrl} Pinte la foto pero despues me daba un error :/ porque no podía leer la propiedad 
+              alt="User photo"
+              className="object-cover w-12 h-12 "
+            />
+           */}
+          </div>
           <div className="w-full">
-            <p className="text-gray-300">
-              {hasList ? 'Nueva lista' : 'Crea tu primera lista'}
-            </p>
             <form onSubmit={handleSubmit} className="flex items-center w-full">
               <input
                 type="text"
                 value={listName}
                 onChange={(e) => setListName(e.target.value)}
-                className="bg-transparent px-3 placeholder-white border-2 border-light-400 mr-5 w-11/12 rounded-md py-2"
-                placeholder="Mis favoritos!"
+                className="bg-transparent px-3 placeholder-gr-300 w-full rounded-md py-2 text-gr-100"
+                placeholder="Nombre de la colección"
               />
-              <button
-                type="submit"
-                className="bg-primary hover:bg-primaryHover p-2 rounded-md focus:outline-none"
-              >
-                <span className="text-white text-3xl ">
-                  <FiPlus />
-                </span>
-              </button>
             </form>
           </div>
         </div>
+      </div>
+      <div className="flex text-gr-100 space-x-2">
+        <button className="text-sm bg-gr-800 hover:bg-gr-600 p-3 rounded-md w-1/2">
+          CANCELAR
+        </button>
+        <button className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center">
+          NUEVA COLECCIÓN <BsPlus className="text-2xl ml-1" />
+          {/* Me tome la libertad de quitar la palabra CREAR del botón, creo que el icono ayuda mucho a intuir que es lo que hace y además ayuda mucho al repsonsive :D */}
+        </button>
       </div>
     </div>
   )
