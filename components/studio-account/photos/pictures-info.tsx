@@ -1,12 +1,14 @@
 import useArtistRealtime from 'hooks/realtime/use-artist'
+import { getStudioInfo } from 'lib/queries/studios'
+import useSWR from 'swr'
 import PictureAddMain from './picture-add-main'
 
 import PictureReady from './picture-ready'
 
 const PicturesInfo = ({ studioId, hasStudio }) => {
-  const { artist } = useArtistRealtime(studioId)
+  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo)
 
-  console.log(artist, 'esta data')
+  console.log(data, 'esta data')
 
   return (
     <div className="w-full pr-5 2xl:w-4/5  mt-10 text-gray-200">
@@ -16,11 +18,11 @@ const PicturesInfo = ({ studioId, hasStudio }) => {
         </h1>
       </div>
 
-      {artist?.profile_picture ? (
+      {/* {artist?.profile_picture ? (
         <PictureReady artist={artist} />
       ) : (
         <PictureAddMain studioId={studioId} hasStudio={hasStudio} />
-      )}
+      )} */}
     </div>
   )
 }
