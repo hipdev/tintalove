@@ -7,7 +7,7 @@ const useStudio = (uid) => {
   useEffect(() => {
     const fetch = async () => {
       if (uid) {
-        const { studio } = await getStudioInfo(uid)
+        const { studio } = await getStudioInfo('_', uid)
         setStudio(studio)
       }
     }
