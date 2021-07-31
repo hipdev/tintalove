@@ -4,7 +4,7 @@ import { HiOutlineCamera } from 'react-icons/hi'
 import MorePicturesArtist from './more-pictures'
 import PictureCrop from './picture-crop'
 
-const PictureReady = ({ artist }) => {
+const PictureReady = ({ studio }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -42,7 +42,7 @@ const PictureReady = ({ artist }) => {
         <h2 className="mb-3 text-xl">Foto principal</h2>
         <img
           className="rounded-md"
-          src={`${artist.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
+          src={`${studio.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
         />
 
         <label className="text-white tracking-wide flex items-center cursor-pointer mt-3">
@@ -57,15 +57,15 @@ const PictureReady = ({ artist }) => {
         </label>
       </div>
 
-      {!picture && <MorePicturesArtist artist={artist} />}
+      {!picture && <MorePicturesArtist artist={studio} />}
 
       {picture && (
         <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
           <PictureCrop
             update
-            actualPictureId={artist.profile_picture.fileId}
+            actualPictureId={studio.profile_picture.fileId}
             picture={picture}
-            studioId={artist.studioId}
+            studioId={studio.studioId}
             setPicture={setPicture}
           />
         </div>
