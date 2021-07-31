@@ -3,8 +3,9 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { SiWaze } from 'react-icons/si'
+import { SiGooglemaps, SiWaze } from 'react-icons/si'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 type Props = {
   artistData: ArtistTypes
@@ -66,7 +67,7 @@ const ArtistMap = ({ artistData }: Props) => {
                   <h1 className="mt-5 text-gray-300 text-2xl font-semibold mb-4">
                     Ubicación de {artistData.displayName}
                   </h1>
-                  <div className="text-left text-gray-400 mb-3 flex justify-around">
+                  <div className="text-left text-gray-400 mb-8 flex justify-around">
                     <div className="mr-2">
                       <p className="text-sm sm:text-md">
                         <span className="hidden sm:inline-block font-semibold mr-2">
@@ -81,7 +82,7 @@ const ArtistMap = ({ artistData }: Props) => {
                         {artistData.times}
                       </p>
                     </div>
-                    <div>
+                    <div className="grid grid-cols-2 gap-2">
                       <a
                         ref={ref}
                         href={`https://www.waze.com/ul?ll=${
@@ -94,12 +95,35 @@ const ArtistMap = ({ artistData }: Props) => {
                         target="_blank"
                         rel="noreferrer"
                         style={{ backgroundColor: '#33ccff' }}
-                        className=" flex px-2 sm:px-7 py-2 text-black rounded-full sm:rounded-md font-semibold items-center"
+                        className=" flex px-2 sm:px-3 py-2 text-black rounded-full sm:rounded-md font-semibold items-center"
                       >
                         <span className="hidden sm:inline-block ">
                           Abrir con Waze
                         </span>
                         <SiWaze className=" sm:ml-2 text-3xl sm:text-2xl text-gray-700" />
+                      </a>
+                      <a
+                        ref={ref}
+                        href={`https://maps.google.com/?q=${
+                          artistData._geoloc_marker.lat ||
+                          artistData._geoloc.lat
+                        },${
+                          artistData._geoloc_marker.lng ||
+                          artistData._geoloc.lng
+                        }`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className=" flex px-2 sm:px-2 py-2 text-gr-700 bg-gray-200 rounded-full sm:rounded-md font-semibold items-center justify-center"
+                      >
+                        <span className="hidden sm:inline-block ">
+                          Abrir con Maps
+                        </span>
+                        <Image
+                          src="/maps-icon.png"
+                          alt="Google maps Icon"
+                          width={28}
+                          height={28}
+                        />
                       </a>
                     </div>
                   </div>
