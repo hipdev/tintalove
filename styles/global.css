@@ -82,4 +82,14 @@ th:not(:last-child) {
   bottom: 2.4rem;
   position: relative;
 }
+
+input,
+textarea,
+button,
+div,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 @import 'components/styles/react-select.css';
