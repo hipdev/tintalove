@@ -2,13 +2,10 @@ import { addPostToList, getUserLists } from 'lib/queries/lists'
 import { useStateMachine } from 'little-state-machine'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import NoListForm from './NoListForm'
 import { lists } from 'lib/actions'
 import useSWR from 'swr'
-import { FiPlus } from 'react-icons/fi'
 import { VscClose } from 'react-icons/vsc'
-import Link from 'next/link'
 
 const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
@@ -55,31 +52,22 @@ const SelectList = ({ userId, post, user }) => {
   if (!data) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
-    <div className="text-gray-300">
-      <div className="flex justify-between items-center ">
-        <div className="bg-ocean_blue-300 w-full h-24 flex items-center justify-around mb-6">
-          <h1 className="text-white text-2xl font-semibold">Mis favoritos</h1>
-          {showForm ? (
-            <button
-              className="bg-light-600 hover:bg-light-900 p-2 rounded-md focus:outline-none"
-              onClick={() => setShowForm(!showForm)}
-            >
-              <VscClose className="text-white text-3xl bg-light-600" />
-            </button>
-          ) : (
-            <button
-              className="bg-primary hover:bg-primaryHover p-2 rounded-md focus:outline-none"
-              onClick={() => setShowForm(!showForm)}
-            >
-              <FiPlus className="text-white text-3xl" />
-            </button>
-          )}
+    <div>
+      <div>
+        <div className="w-full h-24 flex items-center justify-between mb-2">
+          <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
+          <button
+            className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700"
+            onClick={() => setShowForm(showForm)}
+          >
+            <VscClose className="text-gr-200 hover:text-gray-100 text-2xl" />
+          </button>
         </div>
       </div>
 
-      {showForm && <NoListForm user={user} hasList />}
+      {!showForm && <NoListForm user={user} hasList />}
 
-      <div>
+      {/*<div>
         {data.userLists.map((list) => (
           <div
             className="flex items-center mb-5 bg-ocean_blue-300 p-4 rounded-md"
@@ -99,6 +87,41 @@ const SelectList = ({ userId, post, user }) => {
             </button>
           </div>
         ))}
+      </div> */}
+
+      <div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="">
+            <div className=" bg-gray-600 rounded-lg overflow-hidden">
+              <img
+                src="https://via.placeholder.com/208x208"
+                alt=""
+                className="w-full h-full object-fill"
+              />
+            </div>
+            <p className="text-white mt-2">Tatuajes de animales</p>
+          </div>
+          <div className="">
+            <div className=" bg-gray-600 rounded-lg overflow-hidden">
+              <img
+                src="https://via.placeholder.com/208x208"
+                alt=""
+                className="w-full h-full object-fill"
+              />
+            </div>
+            <p className="text-white mt-2">Tatuajes en negro</p>
+          </div>
+          <div className="">
+            <div className=" bg-gray-600 rounded-lg overflow-hidden">
+              <img
+                src="https://via.placeholder.com/208x208"
+                alt=""
+                className="w-full h-full object-fill"
+              />
+            </div>
+            <p className="text-white mt-2">Tatuajes de animales</p>
+          </div>
+        </div>
       </div>
     </div>
   )
