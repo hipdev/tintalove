@@ -145,7 +145,7 @@ export async function updateStudioUsername(studioId, oldUsername, newUsername) {
   return true
 }
 
-export async function getStudioInfo(studioId) {
+export async function getStudioInfo(_key, studioId) {
   const docRef = doc(collection(db, 'studios'), studioId)
   const docSnap = await getDoc(docRef)
 
