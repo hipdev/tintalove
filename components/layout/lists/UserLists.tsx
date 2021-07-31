@@ -31,7 +31,7 @@ const UserLists = ({ user }) => {
             zIndex: 100,
           },
           content: {
-            background: 'rgba(17, 19, 25)',
+            background: '#030308',
             position: 'fixed',
             border: 'none',
             // inset: 'auto',
@@ -41,6 +41,9 @@ const UserLists = ({ user }) => {
             height: '100%',
             borderRadius: '0',
             boxShadow: '0px 1px 4px #000000',
+            minWidth: '25%',
+            paddingLeft: '35px',
+            paddingRight: '35px',
           },
         }}
         onRequestClose={() => actions.lists({ postId: null, listOpen: false })}

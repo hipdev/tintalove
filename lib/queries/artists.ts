@@ -261,12 +261,12 @@ export async function updateArtistContactInfo(uid, data, wizard) {
 
   const dataForm = {
     contact_way: data.contact_way,
-    facebook: data.facebook,
-    instagram: data.instagram,
-    telegram_user: data.telegram_user,
-    twitter: data.twitter,
+    facebook: data.facebook || null,
+    instagram: data.instagram || null,
+    telegram_user: data.telegram_user || null,
     phone: data.phone.value,
-    country_code: data.phone.country_code,
+    country_code: data.phone.country_code || 'CO',
+    twitter: data.twitter || null,
     updated_at: serverTimestamp(),
   }
 
