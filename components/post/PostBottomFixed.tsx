@@ -71,8 +71,8 @@ const PostBottomFixed = ({
                     {artistData.displayName}
                   </a>
                 </Link>
-                <button className="bg-gr-800  ml-4 rounded-full p-2 items-center justify-center border border-gr-600">
-                  <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse" />
+                <button className="bg-gr-800 ml-4 rounded-full p-2 border border-gr-600">
+                  <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
                 </button>
               </div>
 
