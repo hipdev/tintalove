@@ -53,7 +53,7 @@ export async function getStaticProps({ params }: any) {
     try {
       studioId = await getStudioIdByUsername(params.username)
       try {
-        const studioInfo = await getStudioInfo(studioId)
+        const studioInfo = await getStudioInfo('_', studioId)
 
         studioData = postToJSON(studioInfo?.studio)
       } catch (error) {
