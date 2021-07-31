@@ -9,8 +9,10 @@ import {
   addDoc,
   getDocs,
   QueryDocumentSnapshot,
+  DocumentData,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { StudioTypes } from 'types/studio'
 
 const db = getFirestore(firebaseApp)
 
@@ -150,7 +152,12 @@ export async function getStudioInfo(_key, studioId) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { studio: docSnap.data() }
+    const data: StudioTypes | DocumentData = {
+      ...docSnap.data(),
+      id: docSnap.id,
+    }
+
+    return { studio: data }
   } else {
     return { studio: null }
   }
