@@ -1,10 +1,11 @@
 import Compressor from 'compressorjs'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
+import { StudioTypes } from 'types/studio'
 import MorePicturesArtist from './more-pictures'
 import PictureCrop from './picture-crop'
 
-const PictureReady = ({ studio }) => {
+const PictureReady = ({ studio }: { studio: StudioTypes }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -65,7 +66,7 @@ const PictureReady = ({ studio }) => {
             update
             actualPictureId={studio.profile_picture.fileId}
             picture={picture}
-            studioId={studio.studioId}
+            studioId={studio.id}
             setPicture={setPicture}
           />
         </div>

@@ -1,4 +1,3 @@
-import useArtistRealtime from 'hooks/realtime/use-artist'
 import { getStudioInfo } from 'lib/queries/studios'
 import useSWR from 'swr'
 import { StudioTypes } from 'types/studio'
@@ -7,10 +6,7 @@ import PictureAddMain from './picture-add-main'
 import PictureReady from './picture-ready'
 
 const PicturesInfo = ({ studioId, hasStudio }) => {
-  const { data }: { data?: { studio: StudioTypes } } = useSWR(
-    ['getStudioInfo', studioId],
-    getStudioInfo
-  )
+  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo)
 
   console.log(data, 'esta data')
 
@@ -23,7 +19,7 @@ const PicturesInfo = ({ studioId, hasStudio }) => {
       </div>
 
       {data?.studio?.profile_picture ? (
-        <PictureReady studio={data?.studio?.id} />
+        <PictureReady studio={data?.studio} />
       ) : (
         <PictureAddMain studioId={studioId} hasStudio={hasStudio} />
       )}
