@@ -10,6 +10,9 @@ import {
   getDocs,
   QueryDocumentSnapshot,
   DocumentData,
+  query,
+  where,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { StudioTypes } from 'types/studio'
@@ -283,6 +286,17 @@ export async function updateStudioLocationMarker(studioId, dataMarker) {
   }
 }
 
+export async function getUsernamesByStudios() {
+  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
+  const usernames: any = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    console.log(usernames, 'array en cada loop')
+    return usernames.push({ username: doc.id })
+  })
+
+  return usernames
+}
+
 export async function updateStudioMainProfilePicture(studioId, data, wizard) {
   const studioRef = doc(collection(db, 'studios'), studioId)
   const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
@@ -320,13 +334,58 @@ export async function updateStudioMainProfilePicture(studioId, data, wizard) {
   }
 }
 
-export async function getUsernamesByStudios() {
-  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
-  const usernames: any = []
+export async function getStudioPictures(key, studioId) {
+  const q = query(
+    collection(db, 'studios_pics'),
+    where('studio_id', '==', studioId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const pictures: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    console.log(usernames, 'array en cada loop')
-    return usernames.push({ username: doc.id })
+    return pictures.push({ ...doc.data(), id: doc.id })
   })
 
-  return usernames
+  return { pictures }
+}
+
+export async function addStudioPicture(studio_id, data) {
+  const studioRef = doc(collection(db, 'studios'), studio_id)
+
+  const dataForm = {
+    ...data,
+    studio_id,
+    created_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await addDoc(collection(db, 'studios_pics'), dataForm)
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function deletePictureFromStudio(imageId, pictureId) {
+  try {
+    const artistPictureRef = doc(collection(db, 'studios_pics'), pictureId)
+    const delPicture: any = await deleteDoc(artistPictureRef)
+    console.log(delPicture, 'oiii')
+
+    const options = {
+      method: 'DELETE',
+      body: JSON.stringify({ imageId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const resImagekit = await fetch('/api/profile/delete-image', options)
+    console.log(resImagekit, 'imagekit')
+  } catch (error) {
+    throw new Error('Error eliminando la foto')
+  }
 }
