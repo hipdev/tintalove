@@ -1,13 +1,13 @@
 import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
-import { addArtistPicture, getArtistPictures } from 'lib/queries/artists'
+import { addStudioPicture, getStudioPictures } from 'lib/queries/studios'
 
 import toast from 'react-hot-toast'
 import { HiOutlineCamera } from 'react-icons/hi'
 import useSWR from 'swr'
 import MorePicturesList from './more-pictures-list'
 
-const MorePicturesArtist = ({ artist }) => {
+const MorePicturesStudio = ({ studio }) => {
   const { data, mutate: mutateToken }: any = useSWR(
     '/api/imagekit/auth',
     fetcher,
@@ -18,14 +18,12 @@ const MorePicturesArtist = ({ artist }) => {
   )
 
   const { data: dataPictures, mutate: mutatePictures }: any = useSWR(
-    ['getArtistPictures', artist?.uid],
-    getArtistPictures
+    ['getStudioPictures', studio?.id],
+    getStudioPictures
   )
 
   const handlePicture = async (e: any) => {
     e.preventDefault()
-
-    console.log(e, 'esto que')
 
     toast('Procesando foto...')
 
@@ -47,13 +45,13 @@ const MorePicturesArtist = ({ artist }) => {
         reader.onload = async () => {
           let dataFile: any = new FormData()
 
-          dataFile.append('fileName', artist?.uid || 'cropped')
+          dataFile.append('fileName', studio?.id || 'cropped')
           dataFile.append('file', reader.result)
           dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
           dataFile.append('signature', data.signature)
           dataFile.append('expire', data.expire)
           dataFile.append('token', data.token)
-          dataFile.append('folder', 'artists')
+          dataFile.append('folder', 'studios')
 
           const options = {
             method: 'POST',
@@ -72,8 +70,8 @@ const MorePicturesArtist = ({ artist }) => {
                 thumbnailUrl: fileImagekit.url,
               }
               try {
-                toast.promise(addArtistPicture(artist?.uid, content), {
-                  loading: 'Actualizando...',
+                toast.promise(addStudioPicture(studio?.id, content), {
+                  loading: 'Subiendo...',
                   success: () => {
                     mutatePictures()
                     mutateToken()
@@ -117,7 +115,7 @@ const MorePicturesArtist = ({ artist }) => {
 
       {dataPictures?.pictures?.length > 0 && (
         <MorePicturesList
-          artist={artist}
+          studio={studio}
           pictures={dataPictures?.pictures}
           mutatePictures={mutatePictures}
         />
@@ -126,4 +124,4 @@ const MorePicturesArtist = ({ artist }) => {
   )
 }
 
-export default MorePicturesArtist
+export default MorePicturesStudio

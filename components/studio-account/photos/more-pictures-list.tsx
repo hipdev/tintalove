@@ -1,4 +1,4 @@
-import { deletePictureFromArtist } from 'lib/queries/artists'
+import { deletePictureFromStudio } from 'lib/queries/studios'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
@@ -7,11 +7,11 @@ const myLoader = ({ src, width, quality }) => {
   return `${src}/tr:pr-true,w-${width},q-${quality || 75}`
 }
 
-const MorePicturesList = ({ artist, pictures, mutatePictures }) => {
+const MorePicturesList = ({ studio, pictures, mutatePictures }) => {
   const handleDelete = (fileId, pictureId) => {
     console.log(fileId)
 
-    toast.promise(deletePictureFromArtist(fileId, pictureId), {
+    toast.promise(deletePictureFromStudio(fileId, pictureId), {
       loading: 'Eliminando...',
       success: () => {
         mutatePictures()
