@@ -6,6 +6,7 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { updateArtistMainProfilePicture } from 'lib/queries/artists'
 import { AiOutlineClose } from 'react-icons/ai'
+import { updateStudioMainProfilePicture } from 'lib/queries/studios'
 
 type Props = {
   picture: any
@@ -97,6 +98,7 @@ const PictureCrop = ({
       dataFile.append('signature', data.signature)
       dataFile.append('expire', data.expire)
       dataFile.append('token', data.token)
+      dataFile.append('folder', 'studios')
 
       const options = {
         method: 'POST',
@@ -116,7 +118,7 @@ const PictureCrop = ({
           }
           try {
             toast.promise(
-              updateArtistMainProfilePicture(studioId, content, true),
+              updateStudioMainProfilePicture(studioId, content, true),
               {
                 loading: 'Actualizando...',
                 success: () => {

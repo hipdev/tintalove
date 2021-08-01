@@ -283,6 +283,43 @@ export async function updateStudioLocationMarker(studioId, dataMarker) {
   }
 }
 
+export async function updateStudioMainProfilePicture(studioId, data, wizard) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+  const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+
+  // Dont delete pictures from Imagekit anymore
+  // const options = {
+  //   method: 'DELETE',
+  //   body: JSON.stringify({ data: { imageId } }),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
+
+  // if (update) {
+  //   await fetch('/api/profile/delete-image', options)
+  // }
+
+  const dataForm = {
+    profile_picture: data,
+    updated_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, dataForm)
+
+    if (wizard) {
+      updateDoc(studioWizardRef, { step_four: true })
+    }
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
 export async function getUsernamesByStudios() {
   const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
   const usernames: any = []
