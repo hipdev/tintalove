@@ -25,7 +25,7 @@ export type StudioTypes = {
   facebook?: string
   instagram?: string
   work_as?: string
-  dataLocation: DataLocation
+  dataLocation?: DataLocation
 } | null
 
 type ProfilePicture = {
