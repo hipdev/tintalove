@@ -42,7 +42,7 @@ const PictureAddMain = ({ studioId, hasStudio }) => {
     <div className="w-4/5 mt-5">
       <p className="mb-10 text-gray-300">
         La primera foto es recomendable que sea el logo, es la que va a salir en
-        todas las busquedas.
+        todas las busquedas, foto con propoción cuadrada.
       </p>
       <div className="flex justify-between">
         {picture && (
