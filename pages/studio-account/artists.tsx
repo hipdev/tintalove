@@ -1,11 +1,11 @@
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
-import Artists from 'components/studio-account/artists/artists'
+import StudioArtists from 'components/studio-account/artists/StudioArtists'
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 import useSWR from 'swr'
 
-export default function StudioArtists({ studioId }) {
+export default function ArtistsPage({ studioId }) {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
@@ -15,7 +15,7 @@ export default function StudioArtists({ studioId }) {
 
   return (
     <LayoutStepsStudio uid={userId} user={data.user}>
-      <Artists
+      <StudioArtists
         uid={data.user.uid || null}
         hasStudio={data.user.has_studio}
         studioId={data.user.studio_id}

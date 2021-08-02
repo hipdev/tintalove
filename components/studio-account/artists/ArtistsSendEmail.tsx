@@ -2,8 +2,9 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { StudioTypes } from 'types/studio'
 
-const ArtistsSendEmail = ({ studioInfo }) => {
+const ArtistsSendEmail = ({ studioInfo }: { studioInfo: StudioTypes }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -29,9 +30,9 @@ const ArtistsSendEmail = ({ studioInfo }) => {
     }
   }, [success])
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoading(true)
-
+    console.log(data, 'la data enviada')
     const options = {
       method: 'POST',
       body: JSON.stringify(data),
@@ -40,14 +41,14 @@ const ArtistsSendEmail = ({ studioInfo }) => {
       },
     }
 
-    fetch('/api/emails/invitation-artist', options)
-      .then((response) => response.json())
-      .then((res) => {
-        if (res?.status == 200) {
-          reset()
-          toast('Notificación enviada satisfactoriamente a ' + data.artist_name)
-        }
-      })
+    const res = await fetch('/api/emails/invitation-artist', options)
+    console.log(res, 'la res')
+    if (res.status == 200) {
+      reset()
+      toast('💌 Notificación enviada a ' + data.artist_name)
+    } else {
+      toast.error('Error enviando la notificación')
+    }
 
     setLoading(false)
   }
@@ -55,7 +56,7 @@ const ArtistsSendEmail = ({ studioInfo }) => {
   return (
     <div className="mt-12">
       <h2 className="text-xl font-semibold">Invitar un artista</h2>
-      {studioInfo?.studio_active ? (
+      {studioInfo?.is_active ? (
         <>
           <p className="mb-5 text-sm text-gray-400">
             Escribe nombre y correo, le enviaremos una invitación para que pueda

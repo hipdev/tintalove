@@ -11,6 +11,7 @@ import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/WrapperAvailability'
 import useSWR from 'swr'
 import { getStudioInfo } from 'lib/queries/studios'
+import { Toaster } from 'react-hot-toast'
 
 type Props = {
   uid?: string
@@ -25,7 +26,23 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
-
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600 mb-20 mr-3',
+          style: {
+            background: '#158e72',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 3000,
+        }}
+        containerStyle={{
+          top: '5rem',
+          right: '1rem',
+        }}
+        position="bottom-right"
+      />
       <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
           <Link href="/">
