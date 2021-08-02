@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
+import { mutate } from 'swr'
 
 type Props = {
   uid?: string
@@ -61,6 +62,10 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
           setLoading(false)
           // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
+
+          setTimeout(() => {
+            mutate(['getStudioInfo', studioId])
+          }, 2000)
 
           return 'Estudio activado, ahora puedes invitar artistas 🥳'
         },
