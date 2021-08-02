@@ -97,6 +97,7 @@ const PictureCrop = ({
       dataFile.append('signature', data.signature)
       dataFile.append('expire', data.expire)
       dataFile.append('token', data.token)
+      dataFile.append('folder', 'artists')
 
       const options = {
         method: 'POST',

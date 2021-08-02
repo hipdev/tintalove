@@ -110,6 +110,7 @@ const CreatePostCrop = ({
       dataFile.append('signature', data.signature)
       dataFile.append('expire', data.expire)
       dataFile.append('token', data.token)
+      dataFile.append('folder', 'posts')
 
       const options = {
         method: 'POST',
