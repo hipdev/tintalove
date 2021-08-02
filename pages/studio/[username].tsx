@@ -1,16 +1,17 @@
 import ProfileStudio from 'components/layout-pages/ProfileStudios'
 import Layout from 'components/layout/layout'
 
-import { postToJSON } from 'lib/firebase'
+import { postsToJSON, postToJSON } from 'lib/firebase'
 
 import {
   getStudioIdByUsername,
   getUsernamesByStudios,
   getStudioInfo,
+  getStudioPictures,
 } from 'lib/queries/studios'
 import { useRouter } from 'next/router'
 
-const UsernameStudioPage = ({ studioId, studioData }: any) => {
+const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
   const router: any = useRouter()
 
   if (router.isFallback) {
@@ -23,7 +24,10 @@ const UsernameStudioPage = ({ studioId, studioData }: any) => {
 
   return (
     <Layout>
-      <ProfileStudio studioData={studioData || null} />
+      <ProfileStudio
+        studioData={studioData || null}
+        studioPictures={studioPictures || null}
+      />
     </Layout>
   )
 }
@@ -48,14 +52,17 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
   let studioId = null
   let studioData = null
+  let studioPictures = null
 
   if (params.username) {
     try {
       studioId = await getStudioIdByUsername(params.username)
       try {
         const studioInfo = await getStudioInfo('_', studioId)
+        const dataPics = await getStudioPictures('_', studioId)
 
         studioData = postToJSON(studioInfo?.studio)
+        studioPictures = postsToJSON(dataPics?.pictures)
       } catch (error) {
         console.log('Error obteniendo la info del estudio')
       }
@@ -72,6 +79,7 @@ export async function getStaticProps({ params }: any) {
     props: {
       studioId,
       studioData,
+      studioPictures,
     },
     revalidate: 2,
   }

@@ -6,24 +6,49 @@ import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
 import Link from 'next/link'
 
-const ProfileStudio = ({ studioData }) => {
+type Props = {
+  studioData: StudioTypes
+  studioPictures: any
+}
+
+const ProfileStudio = ({ studioData, studioPictures }: Props) => {
+  console.log(studioData, 'data del estudio')
+  console.log(studioPictures, 'fotos del estudio')
+
   return (
-    <div className="bg-gr-900 h-auto px-5 sm:px-0">
-      <div className="container mx-auto pt-80">
-        <div className="w-full bg-ocean_blue-200 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 rounded-lg mb-8">
+    <div className="bg-dark-800 h-auto px-5 sm:px-0">
+      {studioPictures && (
+        <div className="flex overflow-hidden max-h-80">
+          {studioPictures.map((pic) => {
+            return (
+              <div
+                className="aspect-w-6 aspect-h-4 relative w-full"
+                key={pic.id}
+              >
+                <img
+                  src={`${pic.url}`}
+                  className="w-full object-cover  max-h-80"
+                />
+              </div>
+            )
+          })}
+        </div>
+      )}
+      <div className=" py-4 md:py-3 px-5 sm:px-10 lg:px-20 container mx-auto pt-0 relative -top-10">
+        <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
             <div className="flex flex-shrink-0 w-14 h-14 bg-blue-500 rounded-lg"></div>
             <div>
               <h1 className="text-white text-2xl font-semibold tracking-wide">
-                Commun Studio
+                {studioData?.studio_name || 'Sin nombre'}
               </h1>
-              <p className="text-white">
-                Calle 10 B Sur #10 B 10, Medellín, Antioquia
+              <p className="text-gray-300">
+                {studioData?.dataLocation.formatted_address || 'Sin dirección'}
               </p>
             </div>
           </div>
           <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-items-start items-center gap-3">
-            <button className="text-white flex items-center gap-2 bg-green-500 py-4 px-10 rounded-lg focus:outline-none">
+            <button className="text-white flex items-center gap-2 bg-primary hover:bg-primaryHover py-3 px-7 rounded-lg focus:outline-none text-sm ">
               <span className="text-2xl">
                 <RiMessengerLine />
               </span>
@@ -34,19 +59,15 @@ const ProfileStudio = ({ studioData }) => {
         <div className="w-full flex flex-wrap justify-between mb-10">
           <div className="text-white w-full sm:w-1/3 xl:w-2/5 mb-5 sm:mb-0">
             <h1 className="font-semibold mb-2 tracking-wide">Biografia</h1>
-            <p className="text-gray-400">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat
-              libero veniam error facere maiores repellendus voluptatum illum,
-              ipsam iure numquam necessitatibus dolor expedita, vero vel.
-            </p>
+            <p className="text-gray-400">{studioData?.bio || 'Sin bio'}</p>
           </div>
           <div className="text-white mb-5 sm:mb-0 w-full sm:w-1/3">
             <h1 className="font-semibold mb-2 tracking-wide">Horarios</h1>
-            <p className="text-gray-400">Lunes a Viernes, de 10am - 7pm</p>
-            <p className="text-gray-400">Sábados, Domingos y Festivos </p>
-            <p className="text-gray-400">10:00am 1:00pm</p>
+            <p className="text-gray-400">
+              {studioData?.times || 'Sin horarios'}
+            </p>
           </div>
-          <div className="">
+          <div className="mr-4">
             <h1 className="text-white font-semibold mb-2 tracking-wide">
               Redes Sociales
             </h1>
