@@ -41,7 +41,7 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
           </Link>
         </div>
         {data?.studio?.is_active && (
-          <SideMenuStudio username={user?.username || null} />
+          <SideMenuStudio username={data?.studio?.username || null} />
         )}
 
         {!data?.studio?.is_active && (
