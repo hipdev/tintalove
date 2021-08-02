@@ -39,7 +39,11 @@ const PictureAddMain = ({ studioId, hasStudio }) => {
   }
 
   return (
-    <div className="w-4/5 mt-10">
+    <div className="w-4/5 mt-5">
+      <p className="mb-10 text-gray-300">
+        La primera foto es recomendable que sea el logo, es la que va a salir en
+        todas las busquedas.
+      </p>
       <div className="flex justify-between">
         {picture && (
           <label className="text-white tracking-wide flex items-center cursor-pointer">
@@ -54,7 +58,6 @@ const PictureAddMain = ({ studioId, hasStudio }) => {
           </label>
         )}
       </div>
-
       {picture && (
         <div className="flex">
           <PictureCrop
@@ -64,28 +67,27 @@ const PictureAddMain = ({ studioId, hasStudio }) => {
           />
         </div>
       )}
-
       {!picture && (
         <div className="flex justify-center">
-          <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
+          <label className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0 cursor-pointer">
             <span className="text-4xl text-light-900 mb-4">
               <FaRegUserCircle />
             </span>
             <p className="text-sm sm:text-base text-white text-center mb-4">
               JPG, GIF or PNG.
             </p>
-            <div className="relative bg-light-900 px-4 py-3 rounded-lg">
-              <label className="text-white tracking-wide">
+            <div className="relative bg-gr-500 hover:bg-gr-700 px-4 py-3 rounded-lg ">
+              <div className="text-white tracking-wide">
                 Seleccionar foto
                 <input
                   type="file"
-                  className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
+                  className="absolute top-0 right-0 bottom-0 left-0 w-full h-full opacity-0  cursor-pointer"
                   accept="image/*"
                   onChange={handlePicture}
                 />
-              </label>
+              </div>
             </div>
-          </div>
+          </label>
         </div>
       )}
     </div>
