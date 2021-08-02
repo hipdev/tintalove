@@ -1,13 +1,15 @@
 import Compressor from 'compressorjs'
 import fetcher from 'lib/fetcher'
-import { addStudioPicture, getStudioPictures } from 'lib/queries/studios'
-
-import toast from 'react-hot-toast'
+import { getStudioPictures } from 'lib/queries/studios'
+import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
 import useSWR from 'swr'
+import MorePicturesCrop from './more-pictures-crop'
 import MorePicturesList from './more-pictures-list'
 
 const MorePicturesStudio = ({ studio }) => {
+  const [picture, setPicture] = useState(null)
+
   const { data, mutate: mutateToken }: any = useSWR(
     '/api/imagekit/auth',
     fetcher,
@@ -25,8 +27,6 @@ const MorePicturesStudio = ({ studio }) => {
   const handlePicture = async (e: any) => {
     e.preventDefault()
 
-    toast('Procesando foto...')
-
     let files
     if (e.dataTransfer) {
       // usefull for DragAndDrop files
@@ -42,52 +42,57 @@ const MorePicturesStudio = ({ studio }) => {
       mimeType: 'image/jpeg',
       success(result) {
         let reader = new FileReader()
-        reader.onload = async () => {
-          let dataFile: any = new FormData()
-
-          dataFile.append('fileName', studio?.id || 'cropped')
-          dataFile.append('file', reader.result)
-          dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
-          dataFile.append('signature', data.signature)
-          dataFile.append('expire', data.expire)
-          dataFile.append('token', data.token)
-          dataFile.append('folder', 'studios')
-
-          const options = {
-            method: 'POST',
-            body: dataFile,
-          }
-
-          await fetch('https://upload.imagekit.io/api/v1/files/upload', options)
-            .then((response) => response.json())
-            .then(async (fileImagekit) => {
-              const content = {
-                filePath: fileImagekit.filePath,
-                size: fileImagekit.size,
-                fileId: fileImagekit.fileId,
-                url: fileImagekit.url,
-                name: fileImagekit.name,
-                thumbnailUrl: fileImagekit.url,
-              }
-              try {
-                toast.promise(addStudioPicture(studio?.id, content), {
-                  loading: 'Subiendo...',
-                  success: () => {
-                    mutatePictures()
-                    mutateToken()
-
-                    return 'Foto añadida 😉'
-                  },
-                  error: (err) => {
-                    return `${err.toString()}`
-                  },
-                })
-              } catch (error) {
-                console.error(error)
-              }
-            })
+        reader.onload = () => {
+          setPicture(reader.result as any)
         }
         reader.readAsDataURL(result)
+
+        // reader.onload = async () => {
+        //   let dataFile: any = new FormData()
+
+        //   dataFile.append('fileName', studio?.id || 'cropped')
+        //   dataFile.append('file', reader.result)
+        //   dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
+        //   dataFile.append('signature', data.signature)
+        //   dataFile.append('expire', data.expire)
+        //   dataFile.append('token', data.token)
+        //   dataFile.append('folder', 'studios')
+
+        //   const options = {
+        //     method: 'POST',
+        //     body: dataFile,
+        //   }
+
+        //   await fetch('https://upload.imagekit.io/api/v1/files/upload', options)
+        //     .then((response) => response.json())
+        //     .then(async (fileImagekit) => {
+        //       const content = {
+        //         filePath: fileImagekit.filePath,
+        //         size: fileImagekit.size,
+        //         fileId: fileImagekit.fileId,
+        //         url: fileImagekit.url,
+        //         name: fileImagekit.name,
+        //         thumbnailUrl: fileImagekit.url,
+        //       }
+        //       try {
+        //         toast.promise(addStudioPicture(studio?.id, content), {
+        //           loading: 'Subiendo...',
+        //           success: () => {
+        //             mutatePictures()
+        //             mutateToken()
+
+        //             return 'Foto añadida 😉'
+        //           },
+        //           error: (err) => {
+        //             return `${err.toString()}`
+        //           },
+        //         })
+        //       } catch (error) {
+        //         console.error(error)
+        //       }
+        //     })
+        // }
+        // reader.readAsDataURL(result)
       },
       error(err) {
         console.log(err.message)
@@ -102,7 +107,7 @@ const MorePicturesStudio = ({ studio }) => {
         Los usuarios podrán ver mas fotos al presionar tu imagen principal.
       </p>
 
-      <label className="text-white tracking-wide flex items-center cursor-pointer mb-10">
+      <label className="text-white tracking-wide flex items-center cursor-pointer mb-2">
         <HiOutlineCamera className="text-xl" />
         <span className="ml-2">Añadir foto</span>
         <input
@@ -112,6 +117,18 @@ const MorePicturesStudio = ({ studio }) => {
           onChange={handlePicture}
         />
       </label>
+
+      {picture && (
+        <div className="flex">
+          <MorePicturesCrop
+            picture={picture}
+            setPicture={setPicture}
+            studioId={studio?.id}
+            mutateToken={mutateToken}
+            mutatePictures={mutatePictures}
+          />
+        </div>
+      )}
 
       {dataPictures?.pictures?.length > 0 && (
         <MorePicturesList

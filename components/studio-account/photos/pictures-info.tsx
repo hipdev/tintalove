@@ -6,7 +6,7 @@ import PictureAddMain from './picture-add-main'
 import PictureReady from './picture-ready'
 
 const PicturesInfo = ({ studioId, hasStudio }) => {
-  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo)
+  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo) // esta es la que necesito que vuelva a validar
 
   console.log(data, 'esta data')
 
