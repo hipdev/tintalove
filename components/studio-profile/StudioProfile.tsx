@@ -63,7 +63,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
         <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 pb-3 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
             <img
-              src={`${studioData.profile_picture.url}/tr:pr-true,w-48,h-48,q-90`}
+              src={`${studioData?.profile_picture?.url}/tr:pr-true,w-48,h-48,q-90`}
               alt="User photo"
               className="w-14 h-14 object-cover rounded-md"
             />
