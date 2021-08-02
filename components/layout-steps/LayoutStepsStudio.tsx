@@ -9,6 +9,8 @@ import SideMenuStudioSteps from 'components/layout-steps/SideMenuStudioSteps'
 import SideMenuStudio from 'components/layout-steps/SideMenuStudio'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/WrapperAvailability'
+import useSWR from 'swr'
+import { getStudioInfo } from 'lib/queries/studios'
 
 type Props = {
   uid?: string
@@ -18,6 +20,8 @@ type Props = {
 
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
+  const { data } = useSWR(['getStudioInfo', user?.studio_id], getStudioInfo)
+
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
@@ -36,14 +40,13 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {user && user?.studio_active && (
+        {data?.studio?.is_active && (
           <SideMenuStudio username={user?.username || null} />
         )}
 
-        {!user ||
-          (user && !user?.studio_active && (
-            <SideMenuStudioSteps studioId={user.studio_id} />
-          ))}
+        {!data?.studio?.is_active && (
+          <SideMenuStudioSteps studioId={user.studio_id} />
+        )}
       </div>
 
       <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 ">

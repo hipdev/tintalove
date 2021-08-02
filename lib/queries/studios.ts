@@ -389,3 +389,17 @@ export async function deletePictureFromStudio(imageId, pictureId) {
     throw new Error('Error eliminando la foto')
   }
 }
+
+export async function activateStudio(studioId) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, { is_active: true })
+
+    return true
+  } else {
+    throw new Error('Estudio no registrado')
+  }
+}
