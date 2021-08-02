@@ -28,18 +28,20 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
       {studioPictures && (
         <div className="flex overflow-hidden max-h-80 cursor-pointer">
-          {studioPictures.map((pic) => {
-            return (
-              <div
-                className="aspect-w-6 aspect-h-4 relative w-full"
-                key={pic.id}
-              >
-                <img
-                  src={`${pic.url}`}
-                  className="w-full object-cover  max-h-80"
-                />
-              </div>
-            )
+          {studioPictures.map((pic, index) => {
+            if (index < 3) {
+              return (
+                <div
+                  className="aspect-w-6 aspect-h-4 relative w-full"
+                  key={pic.id}
+                >
+                  <img
+                    src={`${pic.url}`}
+                    className="w-full object-cover  max-h-80"
+                  />
+                </div>
+              )
+            }
           })}
         </div>
       )}
