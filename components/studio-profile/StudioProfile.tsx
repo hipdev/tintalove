@@ -1,5 +1,5 @@
 import { RiMessengerLine } from 'react-icons/ri'
-import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import { FaInstagram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
 import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
@@ -123,6 +123,17 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                   rel="noreferrer"
                 >
                   <AiFillFacebook />
+                </a>
+              )}
+
+              {studioData.twitter && (
+                <a
+                  href={checkUrl(studioData.twitter, 'https://twitter.com')}
+                  className="text-gray-400 text-2xl"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaTwitter />
                 </a>
               )}
             </div>
