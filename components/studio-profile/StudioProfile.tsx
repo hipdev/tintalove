@@ -4,12 +4,13 @@ import { AiFillFacebook } from 'react-icons/ai'
 import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
 import { checkUrl } from 'lib/utils'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import PostCallOptions from 'components/post/PostCallOptions'
 import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
+import ModalPictures from 'components/common/modal-pictures/ModalPictures'
 
 type Props = {
   studioData: StudioTypes
@@ -19,6 +20,7 @@ type Props = {
 const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   console.log(studioData, 'data del estudio')
   console.log(studioPictures, 'fotos del estudio')
+  const [openModalPics, setOpenModalPics] = useState(false)
 
   const { openModal } = useContext(LoginContext)
   const { userId } = useUserId()
@@ -26,8 +28,20 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
 
   return (
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
+      {openModalPics && (
+        <ModalPictures
+          openModal={openModalPics}
+          setOpenModal={setOpenModalPics}
+          pictures={studioPictures}
+          profilePicture={studioData?.profile_picture?.url || null}
+        />
+      )}
+
       {studioPictures && (
-        <div className="flex overflow-hidden max-h-80 cursor-pointer">
+        <div
+          className="flex overflow-hidden max-h-80 cursor-pointer"
+          onClick={() => setOpenModalPics(true)}
+        >
           {studioPictures.map((pic, index) => {
             if (index < 3) {
               return (

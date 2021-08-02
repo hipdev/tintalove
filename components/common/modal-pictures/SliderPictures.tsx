@@ -6,7 +6,7 @@ const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-820,q-${quality || 75}`
 }
 
-const ArtistSliderPictures = ({ artistPics, profilePicture, theRef }: any) => {
+const SliderPictures = ({ pictures, profilePicture, theRef }: any) => {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const ArtistSliderPictures = ({ artistPics, profilePicture, theRef }: any) => {
       <div>
         <img className="" src={profilePicture} style={{ maxHeight: '90%' }} />
       </div>
-      {artistPics?.map((pic) => (
+      {pictures?.map((pic) => (
         <div key={pic.id} style={{ maxHeight: '90%' }}>
           <img src={pic.url} />
         </div>
@@ -42,4 +42,4 @@ const ArtistSliderPictures = ({ artistPics, profilePicture, theRef }: any) => {
   )
 }
 
-export default ArtistSliderPictures
+export default SliderPictures
