@@ -1,10 +1,12 @@
-import { AiOutlineStar } from 'react-icons/ai'
 import { RiMessengerLine } from 'react-icons/ri'
-import { FaInstagram } from 'react-icons/fa'
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
 import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
-import Link from 'next/link'
+import { checkUrl } from 'lib/utils'
+import { useContext } from 'react'
+import { LoginContext } from 'pages/_app'
+import PostCallOptions from 'components/post/PostCallOptions'
 
 type Props = {
   studioData: StudioTypes
@@ -14,6 +16,8 @@ type Props = {
 const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   console.log(studioData, 'data del estudio')
   console.log(studioPictures, 'fotos del estudio')
+
+  const { openModal } = useContext(LoginContext)
 
   return (
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
@@ -47,6 +51,16 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               </p>
             </div>
           </div>
+          {!studioData ? (
+            <button
+              className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 w-full justify-center text-gray-200"
+              onClick={openModal}
+            >
+              CONTACTAR <FaWhatsapp className="text-xl ml-3" />
+            </button>
+          ) : (
+            <PostCallOptions studioData={studioData} />
+          )}
           <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-items-start items-center gap-3">
             <button className="text-white flex items-center gap-2 bg-primary hover:bg-primaryHover py-3 px-7 rounded-lg focus:outline-none text-sm ">
               <span className="text-2xl">
@@ -72,16 +86,27 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               Redes Sociales
             </h1>
             <div className="flex items-center gap-2">
-              <Link href="#">
-                <a className="text-gray-400 text-2xl">
+              {studioData.instagram && (
+                <a
+                  href={checkUrl(studioData.instagram, 'https://instagram.com')}
+                  className="text-gray-400 text-2xl"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <FaInstagram />
                 </a>
-              </Link>
-              <Link href="#">
-                <a className="text-gray-400 text-2xl">
+              )}
+
+              {studioData.facebook && (
+                <a
+                  href={checkUrl(studioData.facebook, 'https://facebook.com')}
+                  className="text-gray-400 text-2xl"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <AiFillFacebook />
                 </a>
-              </Link>
+              )}
             </div>
           </div>
         </div>
