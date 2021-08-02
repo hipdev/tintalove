@@ -4,7 +4,6 @@ import toast from 'react-hot-toast'
 import useSWR, { mutate } from 'swr'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import { updateArtistMainProfilePicture } from 'lib/queries/artists'
 import { AiOutlineClose } from 'react-icons/ai'
 import { updateStudioMainProfilePicture } from 'lib/queries/studios'
 
@@ -27,7 +26,7 @@ const PictureCrop = ({
   const [loading, setLoading] = useState(false)
 
   const [crop, setCrop]: any = useState({
-    aspect: 3 / 4,
+    aspect: 1 / 1,
     unit: '%',
     width: 100,
     // height: 100,
@@ -35,7 +34,7 @@ const PictureCrop = ({
 
   useEffect(() => {
     setCrop({
-      aspect: 3 / 4,
+      aspect: 1 / 1,
       unit: '%',
       width: 100,
       // height: 100,
@@ -124,7 +123,7 @@ const PictureCrop = ({
                 success: () => {
                   setLoading(false)
                   setPicture(null)
-                  mutate(studioId)
+                  mutate(['getStudioInfo', studioId]) // esta mal, esta pidiendo solo el studioId, no hay nada como key que seaa así
 
                   return 'Foto actualizada 😉'
                 },
