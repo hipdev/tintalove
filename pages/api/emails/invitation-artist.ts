@@ -28,7 +28,7 @@ const invitationArtistEmail = async (
 
     try {
       try {
-        // await SendGrid.send(msg)
+        await SendGrid.send(msg)
       } catch (error) {
         console.error(error)
         if (error.response) {
