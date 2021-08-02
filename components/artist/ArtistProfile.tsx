@@ -16,7 +16,7 @@ import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import ArtistsPosts from './ArtistPosts'
 import { checkUrl } from 'lib/utils'
-import ArtistModalPictures from './ArtistModalPictures'
+import ModalPictures from 'components/common/modal-pictures/ModalPictures'
 
 type Props = {
   artistData: ArtistTypes
@@ -31,7 +31,6 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
   console.log(artistData, 'data del artista')
 
   const [openModalPics, setOpenModalPics] = useState(false)
-  const [openLocationModal, setOpenLocationModal] = useState(false)
 
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
@@ -41,19 +40,10 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
   return (
     <>
       {openModalPics && (
-        <ArtistModalPictures
+        <ModalPictures
           openModal={openModalPics}
           setOpenModal={setOpenModalPics}
-          artistPics={artistPics}
-          profilePicture={artistData?.profile_picture?.url || null}
-        />
-      )}
-
-      {openLocationModal && (
-        <ArtistModalPictures
-          openModal={openLocationModal}
-          setOpenModal={setOpenLocationModal}
-          artistPics={artistPics}
+          pictures={artistPics}
           profilePicture={artistData?.profile_picture?.url || null}
         />
       )}

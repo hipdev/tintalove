@@ -1,21 +1,28 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
-import { Fragment, useEffect, useRef } from 'react'
+import { Fragment } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import ArtistSliderPictures from './ArtistSliderPictures'
+import SliderPictures from './SliderPictures'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,h-820,q-${quality || 75}`
 }
 
-const ArtistModalPictures = ({
+type Props = {
+  openModal: boolean
+  setOpenModal: any
+  pictures: [any]
+  profilePicture: string
+}
+
+const ModalPictures = ({
   openModal,
   setOpenModal,
-  artistPics,
+  pictures,
   profilePicture,
-}: any) => {
+}: Props) => {
   return (
     <Transition.Root show={openModal} as={Fragment}>
       <Dialog
@@ -56,7 +63,7 @@ const ArtistModalPictures = ({
                 >
                   <IoMdCloseCircle />
                 </button>
-                {artistPics?.length == 0 ? (
+                {pictures?.length < 1 ? (
                   <div className="w-full relative">
                     <div
                       className="aspect-w-3 aspect-h-4 relative max-h-20"
@@ -85,8 +92,8 @@ const ArtistModalPictures = ({
                     </div>
                   </div>
                 ) : (
-                  <ArtistSliderPictures
-                    artistPics={artistPics}
+                  <SliderPictures
+                    pictures={pictures}
                     profilePicture={profilePicture}
                   />
                 )}
@@ -99,4 +106,4 @@ const ArtistModalPictures = ({
   )
 }
 
-export default ArtistModalPictures
+export default ModalPictures
