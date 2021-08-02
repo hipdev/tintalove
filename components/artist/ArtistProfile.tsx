@@ -188,7 +188,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   CONTACTAR <FaWhatsapp className="text-xl ml-3" />
                 </button>
               ) : (
-                <PostCallOptions artistData={artistData} />
+                <PostCallOptions artistData={artistData} widthFull />
               )}
 
               <button

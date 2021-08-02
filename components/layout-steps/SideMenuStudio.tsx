@@ -24,7 +24,7 @@ const SideMenuStudio = ({ uid, username }: Props) => {
       </div>
 
       {username && (
-        <Link href={`/st/${username}`}>
+        <Link href={`/studio/${username}`}>
           <a className="mb-10 inline-flex items-center text-white bg-primary px-4 py-2 rounded-sm py">
             Ver perfil
             <FaRegUserCircle className="text-xl ml-4" />

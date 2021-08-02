@@ -24,6 +24,7 @@ export type StudioTypes = {
   twitter?: string
   facebook?: string
   instagram?: string
+  telegram_user?: string
   work_as?: string
   dataLocation?: DataLocation
 } | null

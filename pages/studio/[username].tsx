@@ -1,4 +1,4 @@
-import ProfileStudio from 'components/layout-pages/ProfileStudios'
+import StudioProfile from 'components/studio-profile/StudioProfile'
 import Layout from 'components/layout/layout'
 
 import { postsToJSON, postToJSON } from 'lib/firebase'
@@ -24,7 +24,7 @@ const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
 
   return (
     <Layout>
-      <ProfileStudio
+      <StudioProfile
         studioData={studioData || null}
         studioPictures={studioPictures || null}
       />
