@@ -18,6 +18,7 @@ export type StudioTypes = {
   uid?: string
   id?: string
   studio_id?: string
+  is_active?: boolean
   styles?: []
   times?: string
   twitter?: string
