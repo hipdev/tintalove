@@ -44,14 +44,18 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
         </div>
       )}
       <div className=" py-4 md:py-3 px-5 sm:px-10 lg:px-20 container mx-auto pt-0 relative -top-10">
-        <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 rounded-lg mb-8">
+        <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 pb-3 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <div className="flex flex-shrink-0 w-14 h-14 bg-blue-500 rounded-lg"></div>
+            <img
+              src={`${studioData.profile_picture.url}/tr:pr-true,w-48,h-48,q-90`}
+              alt="User photo"
+              className="w-14 h-14 object-cover rounded-md"
+            />
             <div>
               <h1 className="text-white text-2xl font-semibold tracking-wide">
                 {studioData?.studio_name || 'Sin nombre'}
               </h1>
-              <p className="text-gray-300">
+              <p className="text-gray-400">
                 {studioData?.dataLocation.formatted_address || 'Sin dirección'}
               </p>
             </div>
