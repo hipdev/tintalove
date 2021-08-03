@@ -1,3 +1,4 @@
+import 'lazysizes'
 import Link from 'next/link'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { PostTypes } from 'types/post'
@@ -55,6 +56,17 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'aspect-w-1 aspect-h-1 relative'
             }
           >
+            <img
+              src={`${post?.image?.url}/tr:q-20`}
+              sizes="(min-width: 1000px) 930px, 90vw"
+              data-srcset={`${post?.image?.url}/tr:w-500 500w,
+              ${post?.image?.url}/tr:w-640 640w,
+              ${post?.image?.url}/tr:w-1024 1024w`}
+              data-src={`${post?.image?.url}/tr:w-1024`}
+              className="lazyload"
+              alt="image"
+            />
+            {/* 
             <Image
               loader={loaderPost}
               src={post?.image?.url}
@@ -66,7 +78,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               loading="lazy"
               quality={100}
               className="w-full rounded-md  object-cover"
-            />
+            /> */}
           </div>
         </a>
       </Link>
