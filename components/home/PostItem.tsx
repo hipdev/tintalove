@@ -6,14 +6,6 @@ import { UserState } from 'types/user'
 import useSWR from 'swr'
 import PostItemListed from './PostItemListed'
 import { getPostDataById } from 'lib/queries/posts'
-import Image from 'next/image'
-
-const loaderPost = (props) => {
-  console.log(props, 'todas las props')
-  return `${props.src}/tr:pr-true,c-at_max,f-auto,w-${props.width},q-${
-    props.quality || 75
-  }`
-}
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const { data, mutate } = useSWR(
@@ -39,17 +31,6 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
       >
         <a>
-          {/* <img
-            // src="https://via.placeholder.com/309x234"
-            src={
-              post?.image?.url
-                ? `${post.image.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
-                : 'https://via.placeholder.com/309x234'
-            }
-            alt=""
-            className="w-full rounded-md  object-cover"
-          /> */}
-
           <div
             className={
               post.picture_size == 'portrait'
@@ -59,42 +40,21 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'aspect-w-1 aspect-h-1 relative'
             }
           >
-            {/* <img
+            <img
+              alt={`Este es un tatuaje de: ${post.displayName}`}
+              className="lazyload rounded-md  object-cover"
               src={`${post?.image?.url}/tr:q-20`}
-              sizes="(min-width: 1000px) 930px, 90vw"
-              data-srcset={`${post?.image?.url}/tr:w-500 500w,
-              ${post?.image?.url}/tr:w-640 640w,
-              ${post?.image?.url}/tr:w-1024 1024w`}
-              data-src={`${post?.image?.url}/tr:w-1024`}
-              className="lazyload"
-              alt="image"
-            /> */}
-
-            <Image
-              loader={loaderPost}
-              src={post?.image?.url}
-              alt="Artist photo"
-              layout="fill"
-              // width={600}
-              // height={500}
-              sizes="100%"
-              quality={100}
-              className="w-full rounded-md  object-cover"
+              data-srcset={`${post?.image?.url}/tr:w-340,q-90 600w, 
+                ${post?.image?.url}/tr:w-246,q-90 900w, 
+                ${post?.image?.url}/tr:w-320,q-90 1400w, 
+                ${post?.image?.url}/tr:w-245,q-90 2600w
+              `}
             />
           </div>
         </a>
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          {/* <Image
-            loader={myLoader}
-            src={post?.artist_picture}
-            alt="Artist photo"
-            width={35}
-            height={35}
-            quality={70}
-            className="w-7 h-7 bg-primary rounded-full"
-          /> */}
           <p className="text-white text-sm">
             {post.displayName || 'Sin nombre'}
           </p>
