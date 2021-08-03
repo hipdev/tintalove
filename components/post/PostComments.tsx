@@ -116,7 +116,6 @@ const PostComments = ({
         <form className={showInput ? 'flex w-full' : 'w-full'}>
           <input
             ref={refClickOutside}
-            autoFocus
             type="text"
             value={comment}
             onClick={() => setShowInput(true)}
@@ -137,7 +136,7 @@ const PostComments = ({
 
               {loading && (
                 <svg
-                  className="block animate-spin  ml-3 h-5 w-5 text-white"
+                  className="block animate-spin   h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -157,9 +156,9 @@ const PostComments = ({
                   ></path>
                 </svg>
               )}
-              <span className="hidden xl:block text-gray-300">
+              {/* <span className="hidden xl:block text-gray-300">
                 {loading ? 'Enviando...' : ''}
-              </span>
+              </span> */}
             </button>
           )}
         </form>

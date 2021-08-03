@@ -9,8 +9,13 @@ import {
   addDoc,
   getDocs,
   QueryDocumentSnapshot,
+  DocumentData,
+  query,
+  where,
+  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { StudioTypes } from 'types/studio'
 
 const db = getFirestore(firebaseApp)
 
@@ -145,12 +150,17 @@ export async function updateStudioUsername(studioId, oldUsername, newUsername) {
   return true
 }
 
-export async function getStudioInfo(studioId) {
+export async function getStudioInfo(_key, studioId) {
   const docRef = doc(collection(db, 'studios'), studioId)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    return { studio: docSnap.data() }
+    const data: StudioTypes | DocumentData = {
+      ...docSnap.data(),
+      id: docSnap.id,
+    }
+
+    return { studio: data }
   } else {
     return { studio: null }
   }
@@ -212,7 +222,9 @@ export async function updateStudioContactInfo(studioId, data, wizard) {
     contact_way: data.contact_way,
     facebook: data.facebook || null,
     instagram: data.instagram || null,
-    phone: data.phone,
+    telegram_user: data.telegram_user || null,
+    phone: data.phone.value,
+    country_code: data.phone.country_code || 'CO',
     twitter: data.twitter || null,
     updated_at: serverTimestamp(),
   }
@@ -228,7 +240,7 @@ export async function updateStudioContactInfo(studioId, data, wizard) {
 
     return true
   } else {
-    throw new Error('No estas registrado como artista')
+    throw new Error('No estas registrado como estudio')
   }
 }
 
@@ -283,4 +295,111 @@ export async function getUsernamesByStudios() {
   })
 
   return usernames
+}
+
+export async function updateStudioMainProfilePicture(studioId, data, wizard) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+  const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+
+  // Dont delete pictures from Imagekit anymore
+  // const options = {
+  //   method: 'DELETE',
+  //   body: JSON.stringify({ data: { imageId } }),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
+
+  // if (update) {
+  //   await fetch('/api/profile/delete-image', options)
+  // }
+
+  const dataForm = {
+    profile_picture: data,
+    updated_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, dataForm)
+
+    if (wizard) {
+      updateDoc(studioWizardRef, { step_four: true })
+    }
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function getStudioPictures(key, studioId) {
+  const q = query(
+    collection(db, 'studios_pics'),
+    where('studio_id', '==', studioId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const pictures: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return pictures.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { pictures }
+}
+
+export async function addStudioPicture(studio_id, data) {
+  const studioRef = doc(collection(db, 'studios'), studio_id)
+
+  const dataForm = {
+    ...data,
+    studio_id,
+    created_at: serverTimestamp(),
+  }
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await addDoc(collection(db, 'studios_pics'), dataForm)
+
+    return true
+  } else {
+    throw new Error('No estas registrado como artista')
+  }
+}
+
+export async function deletePictureFromStudio(imageId, pictureId) {
+  try {
+    const artistPictureRef = doc(collection(db, 'studios_pics'), pictureId)
+    const delPicture: any = await deleteDoc(artistPictureRef)
+    console.log(delPicture, 'oiii')
+
+    const options = {
+      method: 'DELETE',
+      body: JSON.stringify({ imageId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const resImagekit = await fetch('/api/profile/delete-image', options)
+    console.log(resImagekit, 'imagekit')
+  } catch (error) {
+    throw new Error('Error eliminando la foto')
+  }
+}
+
+export async function activateStudio(studioId) {
+  const studioRef = doc(collection(db, 'studios'), studioId)
+
+  const docSnap = await getDoc(studioRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(studioRef, { is_active: true })
+
+    return true
+  } else {
+    throw new Error('Estudio no registrado')
+  }
 }

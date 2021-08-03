@@ -1,11 +1,7 @@
 import PostsList from './PostsList'
 
 const Home = ({ posts }) => {
-  return (
-    <div>
-      <PostsList posts={posts} />
-    </div>
-  )
+  return <PostsList posts={posts} />
 }
 
 export default Home

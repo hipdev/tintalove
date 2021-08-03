@@ -24,7 +24,7 @@ const SideMenuStudio = ({ uid, username }: Props) => {
       </div>
 
       {username && (
-        <Link href={`/${username}`}>
+        <Link href={`/studio/${username}`}>
           <a className="mb-10 inline-flex items-center text-white bg-primary px-4 py-2 rounded-sm py">
             Ver perfil
             <FaRegUserCircle className="text-xl ml-4" />
@@ -33,25 +33,25 @@ const SideMenuStudio = ({ uid, username }: Props) => {
       )}
 
       <div className="text-light-900 pr-7">
-        <Link href="/artist/main-info">
+        <Link href="/studio-account/general">
           <a className={path == 'main-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">
-              Información personal
+              Información general
               <FaRegUserCircle className="text-xl" />
             </div>
           </a>
         </Link>
 
-        <Link href="/artist/working-info">
+        <Link href="/studio-account/artists">
           <a className={path == 'working-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">
-              Información laboral
+              Artistas
               <CgWorkAlt className="text-xl" />
             </div>
           </a>
         </Link>
 
-        <Link href="/artist/contact-info">
+        <Link href="/studio-account/contact-info">
           <a className={path == 'contact-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">
               Información de Contacto
@@ -60,10 +60,10 @@ const SideMenuStudio = ({ uid, username }: Props) => {
           </a>
         </Link>
 
-        <Link href="/artist/pictures-info">
+        <Link href="/studio-account/pictures-info">
           <a className={path == 'pictures-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">
-              Fotos de perfil
+              Fotos del estudio
               <HiCamera className="text-xl" />
             </div>
           </a>

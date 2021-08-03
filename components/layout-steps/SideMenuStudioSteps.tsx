@@ -1,10 +1,11 @@
 import useStudioWizardRealtime from 'hooks/realtime/use-studio-wizard'
-import { activateArtist } from 'lib/queries/artists'
+import { activateStudio } from 'lib/queries/studios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
+import { mutate } from 'swr'
 
 type Props = {
   uid?: string
@@ -55,14 +56,18 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
     setLoading(true)
 
     if (countReadySteps == 4) {
-      toast.promise(activateArtist(studioId), {
+      toast.promise(activateStudio(studioId), {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
           // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
-          return 'Estudio activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+          setTimeout(() => {
+            mutate(['getStudioInfo', studioId])
+          }, 2000)
+
+          return 'Estudio activado, ahora puedes invitar artistas 🥳'
         },
         error: (err) => {
           setLoading(false)

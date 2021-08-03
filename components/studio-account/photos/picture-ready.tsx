@@ -1,9 +1,11 @@
 import Compressor from 'compressorjs'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
-import PictureCrop from './PictureCrop'
+import { StudioTypes } from 'types/studio'
+import MorePicturesStudio from './more-pictures'
+import PictureCrop from './picture-crop'
 
-const PictureReady = ({ artist }) => {
+const PictureReady = ({ studio }: { studio: StudioTypes }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -36,17 +38,17 @@ const PictureReady = ({ artist }) => {
   }
 
   return (
-    <div className="flex mt-7">
-      <div className="w-2/5">
+    <div className="flex mt-7 flex-wrap">
+      <div className="w-full sm:w-2/5">
         <h2 className="mb-3 text-xl">Foto principal</h2>
         <img
           className="rounded-md"
-          src={`${artist.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
+          src={`${studio.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
         />
 
         <label className="text-white tracking-wide flex items-center cursor-pointer mt-3">
           <HiOutlineCamera className="text-xl" />
-          <span className="ml-2">Cambiar foto principal</span>
+          <span className="ml-5">Cambiar foto principal</span>
           <input
             type="file"
             className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
@@ -56,32 +58,15 @@ const PictureReady = ({ artist }) => {
         </label>
       </div>
 
-      {!picture && (
-        <div className="w-3/5 pl-10">
-          <h2 className="mb-3 text-xl">Agregar mas fotos</h2>
-          <p className="text-sm  mb-2">
-            Los usuarios podrán ver mas fotos al presionar tu imagen principal.
-          </p>
-          <label className="text-white tracking-wide flex items-center cursor-pointer">
-            <HiOutlineCamera className="text-xl" />
-            <span className="ml-2">Añadir foto</span>
-            {/* <input
-              type="file"
-              className="hidden top-0 right-0 bottom-0 left-0 w-full h-full opacity-0"
-              accept="image/*"
-              onChange={handlePicture}
-            /> */}
-          </label>
-        </div>
-      )}
+      {!picture && <MorePicturesStudio studio={studio} />}
 
       {picture && (
-        <div className="w-3/5 pl-10">
+        <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
           <PictureCrop
             update
-            actualPictureId={artist.profile_picture.fileId}
+            actualPictureId={studio.profile_picture.fileId}
             picture={picture}
-            uid={artist.uid}
+            studioId={studio.id}
             setPicture={setPicture}
           />
         </div>
