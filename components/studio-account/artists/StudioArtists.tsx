@@ -16,7 +16,7 @@ const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const Artists = ({ uid, studioId, hasStudio }) => {
+const StudioArtists = ({ uid, studioId, hasStudio }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
@@ -162,4 +162,4 @@ const Artists = ({ uid, studioId, hasStudio }) => {
   ) : null
 }
 
-export default Artists
+export default StudioArtists

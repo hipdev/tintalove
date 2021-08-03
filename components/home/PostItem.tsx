@@ -1,3 +1,4 @@
+import 'lazysizes'
 import Link from 'next/link'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { PostTypes } from 'types/post'
@@ -7,8 +8,11 @@ import PostItemListed from './PostItemListed'
 import { getPostDataById } from 'lib/queries/posts'
 import Image from 'next/image'
 
-const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,h-235,q-${quality || 75}`
+const loaderPost = (props) => {
+  console.log(props, 'todas las props')
+  return `${props.src}/tr:pr-true,c-at_max,f-auto,w-${props.width},q-${
+    props.quality || 75
+  }`
 }
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
@@ -55,6 +59,17 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'aspect-w-1 aspect-h-1 relative'
             }
           >
+            {/* <img
+              src={`${post?.image?.url}/tr:q-20`}
+              sizes="(min-width: 1000px) 930px, 90vw"
+              data-srcset={`${post?.image?.url}/tr:w-500 500w,
+              ${post?.image?.url}/tr:w-640 640w,
+              ${post?.image?.url}/tr:w-1024 1024w`}
+              data-src={`${post?.image?.url}/tr:w-1024`}
+              className="lazyload"
+              alt="image"
+            /> */}
+
             <Image
               loader={loaderPost}
               src={post?.image?.url}
@@ -63,7 +78,6 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               // width={600}
               // height={500}
               sizes="100%"
-              loading="lazy"
               quality={100}
               className="w-full rounded-md  object-cover"
             />

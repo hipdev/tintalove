@@ -5,10 +5,13 @@ import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import { AiOutlineCamera } from 'react-icons/ai'
-import SideMenuStudioSteps from 'components/studio-account/SideMenuStudioSteps'
-import SideMenuStudio from 'components/studio-account/SideMenuStudio'
+import SideMenuStudioSteps from 'components/layout-steps/SideMenuStudioSteps'
+import SideMenuStudio from 'components/layout-steps/SideMenuStudio'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/WrapperAvailability'
+import useSWR from 'swr'
+import { getStudioInfo } from 'lib/queries/studios'
+import { Toaster } from 'react-hot-toast'
 
 type Props = {
   uid?: string
@@ -18,10 +21,28 @@ type Props = {
 
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
+  const { data } = useSWR(['getStudioInfo', user?.studio_id], getStudioInfo)
+
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
-
+      <Toaster
+        toastOptions={{
+          className: 'bg-red-600 mb-20 mr-3',
+          style: {
+            background: '#158e72',
+            border: 'none',
+            borderRadius: '3px',
+            color: '#fff',
+          },
+          duration: 3000,
+        }}
+        containerStyle={{
+          top: '5rem',
+          right: '1rem',
+        }}
+        position="bottom-right"
+      />
       <div className="w-full lg:w-448 bg-dark-800 pl-10 2xl:pl-12 pt-8">
         <div className="w-52 relative h-11 mb-20 hidden lg:block">
           <Link href="/">
@@ -36,14 +57,13 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {user && user?.studio_active && (
-          <SideMenuStudio username={user?.username || null} />
+        {data?.studio?.is_active && (
+          <SideMenuStudio username={data?.studio?.username || null} />
         )}
 
-        {!user ||
-          (user && !user?.studio_active && (
-            <SideMenuStudioSteps studioId={user.studio_id} />
-          ))}
+        {!data?.studio?.is_active && (
+          <SideMenuStudioSteps studioId={user.studio_id} />
+        )}
       </div>
 
       <div className="w-full pl-7 sm:pl-14 2xl:pl-20 bg-dark-500 ">

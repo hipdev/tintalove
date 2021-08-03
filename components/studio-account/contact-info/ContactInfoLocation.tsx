@@ -43,10 +43,6 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
     }
   }, [studioInfo])
 
-  // useScript(
-  //   'https://maps.googleapis.com/maps/api/js?key=AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY&libraries=places&callback=initMap'
-  // )
-
   const ref = useOnclickOutside(() => {
     // When user clicks outside of the component, we can dismiss
     // the searched suggestions by calling this method

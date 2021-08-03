@@ -4,7 +4,7 @@ import { CgWorkAlt } from 'react-icons/cg'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { FiPhoneCall } from 'react-icons/fi'
 import { HiCamera } from 'react-icons/hi'
-import BottomMenuMobileArtist from './BottomMenuMobile'
+import BottomMenuMobileArtist from '../artist-account/BottomMenuMobile'
 
 type Props = {
   uid?: string

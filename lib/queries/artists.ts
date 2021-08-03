@@ -261,12 +261,12 @@ export async function updateArtistContactInfo(uid, data, wizard) {
 
   const dataForm = {
     contact_way: data.contact_way,
-    facebook: data.facebook,
-    instagram: data.instagram,
-    telegram_user: data.telegram_user,
-    twitter: data.twitter,
+    facebook: data.facebook || null,
+    instagram: data.instagram || null,
+    telegram_user: data.telegram_user || null,
     phone: data.phone.value,
-    country_code: data.phone.country_code,
+    country_code: data.phone.country_code || 'CO',
+    twitter: data.twitter || null,
     updated_at: serverTimestamp(),
   }
 
@@ -332,8 +332,6 @@ export async function addArtistPicture(uid, data) {
     artist_id: uid,
     created_at: serverTimestamp(),
   }
-
-  console.log(dataForm, 'esto')
 
   const docSnap = await getDoc(artistRef)
 
@@ -445,8 +443,6 @@ export async function getArtistAvailability(key, uid) {
 }
 
 export async function getArtistPictures(key, artistId) {
-  console.log(artistId, 'id del artista')
-
   const q = query(
     collection(db, 'artists_pics'),
     where('artist_id', '==', artistId)
@@ -462,16 +458,20 @@ export async function getArtistPictures(key, artistId) {
 }
 
 export async function deletePictureFromArtist(imageId, pictureId) {
-  const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
+  try {
+    const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
+    await deleteDoc(artistPictureRef)
 
-  const options = {
-    method: 'DELETE',
-    body: JSON.stringify({ imageId }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    const options = {
+      method: 'DELETE',
+      body: JSON.stringify({ imageId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await fetch('/api/profile/delete-image', options)
+  } catch (error) {
+    throw new Error('Error eliminando la foto')
   }
-
-  await fetch('/api/profile/delete-image', options)
-  await deleteDoc(artistPictureRef)
 }
