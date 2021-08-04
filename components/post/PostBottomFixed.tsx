@@ -77,7 +77,7 @@ const PostBottomFixed = ({
               </div>
 
               <h2 className="text-sm text-gray-400">
-                {artistData.city_name}, {artistData.province}{' '}
+                {artistData.city_name}, {artistData.province}
               </h2>
             </div>
           </div>
