@@ -11,6 +11,7 @@ import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
 import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
 import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
+import SelectStudio from './SelectStudio'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -155,10 +156,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   <span className="mb-3 block">
                     SELECCIONA EL ESTUDIO DONDE TRABAJAS
                   </span>
-                  <input
-                    className="input-primary w-full"
-                    placeholder="Buscar estudio"
-                  />
+                  <SelectStudio />
                 </label>
                 <div className="mt-1">
                   <p>
