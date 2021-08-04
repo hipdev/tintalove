@@ -39,41 +39,21 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 ? 'aspect-w-4 aspect-h-3 relative'
                 : 'aspect-w-1 aspect-h-1 relative'
             }
+
+            // JULI ACA ABAJO LE HICIMOS LA OPTIMIZACION DE LAS IMGS DEPENDIENDO DE LA
+            // PANTALLA PERO EN LA LINEA 53 Y 54 NO SABEMOS COMO MEDIRLAS, PROBAMOS EN EL CELULAR SE VEN BIEN Y PESAN MENOS
+            // DE 20 KB, PERO SOBRA EL RATIO 3X Y 4X, NO SABEMOS COMO MEDIRLO. PERO DE RESTO EN 2X Y 1X SE VE MELO Y NO PESA NADA
           >
             <img
-<<<<<<< HEAD
-              src={`${post?.image?.url}/tr:q-20`}
-              sizes="(min-width: 1000px) 930px, 90vw"
-              data-srcset={`${post?.image?.url}/tr:w-500,q-50 3x,
-              ${post?.image?.url}/tr:w-640,q-50 2x,
-              ${post?.image?.url}/tr:w-1024,q-40 1x`}
-              data-src={`${post?.image?.url}/tr:w-1024,q-40 1x`}
-              className="lazyload"
-              alt="image"
-            />
-
-            {/*<Image
-              loader={loaderPost}
-              src={post?.image?.url}
-              alt="Artist photo"
-              layout="fill"
-              // width={600}
-              // height={500}
-              sizes="100%"
-              quality={100}
-              className="w-full rounded-md  object-cover"
-            />*/}
-=======
               alt={`Este es un tatuaje de: ${post.displayName}`}
               className="lazyload rounded-md  object-cover"
               src={`${post?.image?.url}/tr:w-340,q-20`}
-              data-srcset={`${post?.image?.url}/tr:w-340,q-80 1x, 
-                ${post?.image?.url}/tr:w-246,q-80 2x, 
+              data-srcset={`${post?.image?.url}/tr:w-340,q-70 1x, 
+                ${post?.image?.url}/tr:w-246,q-90 2x, 
                 ${post?.image?.url}/tr:w-320,q-80 3x, 
                 ${post?.image?.url}/tr:w-245,q-80 4x
               `}
             />
->>>>>>> 52f1a280c5ad284658ce3565077e3da7f1c167e0
           </div>
         </a>
       </Link>
