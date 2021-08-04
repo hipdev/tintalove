@@ -10,7 +10,7 @@ import { updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
 import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
-import ArtistContactInfoMapStudio from './contact-info/ContactInfoMap'
+import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -140,7 +140,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                 <input
                   className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
                   type="radio"
-                  value="company"
+                  value="partner"
                   {...register('work_as')}
                 />
                 <span className="ml-2">Trabajo con un estudio</span>
@@ -149,7 +149,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
               {errors.work_as && <p>Esta campo es requerido</p>}
             </div>
 
-            {watchWorkAs == 'company' && (
+            {watchWorkAs == 'partner' && (
               <div className="mt-7">
                 <label className="text-sm mb-3 tracking-wide">
                   <span className="mb-3 block">
@@ -172,6 +172,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                 </div>
               </div>
             )}
+
             {watchWorkAs == 'freelance' && (
               <div className="mt-7">
                 <label
@@ -193,7 +194,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
             )}
           </div>
 
-          {location && (
+          {location && watchWorkAs == 'freelance' && (
             <ArtistContactInfoMapStudio
               studioId={uid}
               cityLocation={location}

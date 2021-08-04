@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useSWR from 'swr'
 import { Loader } from '@googlemaps/js-api-loader'
-import WorkingInfo from 'components/artist-account/WorkingInfo'
+import WorkingInfo from 'components/artist-account/working-info/WorkingInfo'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
 import useUserId from 'hooks/use-user-id'
