@@ -6,14 +6,6 @@ import { UserState } from 'types/user'
 import useSWR from 'swr'
 import PostItemListed from './PostItemListed'
 import { getPostDataById } from 'lib/queries/posts'
-import Image from 'next/image'
-
-const loaderPost = (props) => {
-  console.log(props, 'todas las props')
-  return `${props.src}/tr:pr-true,c-at_max,f-auto,w-${props.width},q-${
-    props.quality || 75
-  }`
-}
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const { data, mutate } = useSWR(
@@ -39,17 +31,6 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
       >
         <a>
-          {/* <img
-            // src="https://via.placeholder.com/309x234"
-            src={
-              post?.image?.url
-                ? `${post.image.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
-                : 'https://via.placeholder.com/309x234'
-            }
-            alt=""
-            className="w-full rounded-md  object-cover"
-          /> */}
-
           <div
             className={
               post.picture_size == 'portrait'
@@ -60,6 +41,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             }
           >
             <img
+<<<<<<< HEAD
               src={`${post?.image?.url}/tr:q-20`}
               sizes="(min-width: 1000px) 930px, 90vw"
               data-srcset={`${post?.image?.url}/tr:w-500,q-50 3x,
@@ -81,20 +63,22 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               quality={100}
               className="w-full rounded-md  object-cover"
             />*/}
+=======
+              alt={`Este es un tatuaje de: ${post.displayName}`}
+              className="lazyload rounded-md  object-cover"
+              src={`${post?.image?.url}/tr:w-340,q-20`}
+              data-srcset={`${post?.image?.url}/tr:w-340,q-80 1x, 
+                ${post?.image?.url}/tr:w-246,q-80 2x, 
+                ${post?.image?.url}/tr:w-320,q-80 3x, 
+                ${post?.image?.url}/tr:w-245,q-80 4x
+              `}
+            />
+>>>>>>> 52f1a280c5ad284658ce3565077e3da7f1c167e0
           </div>
         </a>
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          {/* <Image
-            loader={myLoader}
-            src={post?.artist_picture}
-            alt="Artist photo"
-            width={35}
-            height={35}
-            quality={70}
-            className="w-7 h-7 bg-primary rounded-full"
-          /> */}
           <p className="text-white text-sm">
             {post.displayName || 'Sin nombre'}
           </p>
