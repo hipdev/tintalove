@@ -17,6 +17,7 @@ import { LoginContext } from 'pages/_app'
 import ArtistsPosts from './ArtistPosts'
 import { checkUrl } from 'lib/utils'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
+import { BsHeart } from 'react-icons/bs'
 
 type Props = {
   artistData: ArtistTypes
@@ -181,11 +182,14 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 <PostCallOptions artistData={artistData} widthFull />
               )}
 
-              <button
+              {/*<button
                 onClick={() => console.log('click en estrella')}
                 className="absolute top-0 right-0 -mt-6 mr-5 w-12 h-12 flex justify-center items-center text-white text-2xl bg-green-600 rounded-full focus:outline-none"
               >
                 <AiOutlineStar />
+              </button>*/}
+              <button className="bg-gr-800 absolute top-0 right-0 -mt-6 mr-5  ml-4 rounded-full p-2 border border-gr-600">
+                <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
               </button>
             </div>
           </div>
