@@ -59,18 +59,18 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'aspect-w-1 aspect-h-1 relative'
             }
           >
-            {/* <img
+            <img
               src={`${post?.image?.url}/tr:q-20`}
               sizes="(min-width: 1000px) 930px, 90vw"
-              data-srcset={`${post?.image?.url}/tr:w-500 500w,
-              ${post?.image?.url}/tr:w-640 640w,
-              ${post?.image?.url}/tr:w-1024 1024w`}
-              data-src={`${post?.image?.url}/tr:w-1024`}
+              data-srcset={`${post?.image?.url}/tr:w-500,q-50 3x,
+              ${post?.image?.url}/tr:w-640,q-50 2x,
+              ${post?.image?.url}/tr:w-1024,q-40 1x`}
+              data-src={`${post?.image?.url}/tr:w-1024,q-40 1x`}
               className="lazyload"
               alt="image"
-            /> */}
+            />
 
-            <Image
+            {/*<Image
               loader={loaderPost}
               src={post?.image?.url}
               alt="Artist photo"
@@ -80,7 +80,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               sizes="100%"
               quality={100}
               className="w-full rounded-md  object-cover"
-            />
+            />*/}
           </div>
         </a>
       </Link>
