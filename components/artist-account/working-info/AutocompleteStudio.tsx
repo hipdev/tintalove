@@ -51,7 +51,7 @@ const AutocompleteStudio = (props) => {
     }
   }, [props])
 
-  return <div className="w-full rounded-none bg-gr-" ref={containerRef} />
+  return <div className="w-full rounded-none " ref={containerRef} />
 }
 
 export default AutocompleteStudio
