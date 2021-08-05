@@ -30,13 +30,13 @@ const PostArtist = () => {
               </span>
               <span className="hidden md:block">HORIZONTAL</span>
             </button>
-            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
+            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
               <span className="text-2xl">
                 <BsTablet />
               </span>
               <span className="hidden md:block">VERTICAL</span>
             </button>
-            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
+            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
               <span className="text-2xl">
                 <CgDice1 />
               </span>
@@ -55,7 +55,7 @@ const PostArtist = () => {
                 id="titulo"
                 type="text"
                 placeholder="Agrega un titulo a tu publicación"
-                className="w-full placeholder-light-200 bg-ocean_blue-300 p-3 rounded-md text-white"
+                className="w-full placeholder-light-200 bg-gr-800 p-3 rounded-md text-white"
               />
             </div>
             <div className="w-full flex flex-col mb-8">
@@ -66,7 +66,7 @@ const PostArtist = () => {
                 id="estilos"
                 type="text"
                 placeholder="En qué estilo está hecho este tatuaje"
-                className="w-full placeholder-light-200 bg-ocean_blue-300 p-3 rounded-md text-white"
+                className="w-full placeholder-light-200 bg-gr-800 p-3 rounded-md text-white"
               />
             </div>
             <div className="w-full flex flex-col">
@@ -78,7 +78,7 @@ const PostArtist = () => {
                 id="descripción"
                 rows={6}
                 placeholder="Cuéntanos más detalles acerca de este tatuaje"
-                className="w-full placeholder-light-200 bg-ocean_blue-300 p-3 rounded-md resize-none text-white"
+                className="w-full placeholder-light-200 bg-gr-800 p-3 rounded-md resize-none text-white"
               ></textarea>
             </div>
           </form>
