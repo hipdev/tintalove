@@ -43,6 +43,8 @@ export async function getStaticPaths() {
     },
   }))
 
+  console.log(paths, 'urls permitidas')
+
   return {
     paths,
     fallback: true,
@@ -57,14 +59,17 @@ export async function getStaticProps({ params }: any) {
   if (params.username) {
     try {
       studioId = await getStudioIdByUsername(params.username)
-      try {
-        const studioInfo = await getStudioInfo('_', studioId)
-        const dataPics = await getStudioPictures('_', studioId)
 
-        studioData = postToJSON(studioInfo?.studio)
-        studioPictures = postsToJSON(dataPics?.pictures)
-      } catch (error) {
-        console.log('Error obteniendo la info del estudio')
+      if (studioId) {
+        try {
+          const studioInfo = await getStudioInfo('_', studioId)
+          const dataPics = await getStudioPictures('_', studioId)
+
+          studioData = postToJSON(studioInfo?.studio)
+          studioPictures = postsToJSON(dataPics?.pictures)
+        } catch (error) {
+          console.log('Error obteniendo la info del estudio')
+        }
       }
     } catch (err) {
       if (err.status !== 404) {

@@ -135,3 +135,65 @@
   width: 42px !important;
   border-right: 2px solid #41444f !important;
 }
+
+/* Algolia  */
+
+.au-studio .aa-DetachedSearchButton,
+.au-studio .aa-Form {
+  background: #111319 !important;
+  color: white !important;
+}
+.au-studio .aa-Form:focus-within {
+  border: 1px solid #158e72 !important;
+  box-shadow: none;
+}
+
+.au-studio .aa-Input::placeholder,
+.au-studio .aa-ItemContentTitle {
+  color: #888 !important;
+}
+.au-studio .aa-ItemContent mark {
+  color: #e6e6e6 !important;
+}
+
+.au-studio .aa-SubmitIcon,
+.au-studio .aa-ItemIcon {
+  color: #158e72 !important;
+}
+
+.au-studio .aa-Item {
+  padding: 0 !important;
+}
+.au-studio .aa-ItemLink {
+  padding-left: 5px;
+}
+
+/* Panel Algolia */
+.au-studio.aa-Panel {
+  background-color: #06080c !important;
+}
+.au-studio .aa-ItemTitle {
+  color: #7b7b7b !important;
+}
+.au-studio .aa-GradientBottom {
+  background: linear-gradient(417deg, #06080c, #0c0c0c) !important;
+}
+
+/* Algolia movil */
+
+.au-studio .aa-DetachedFormContainer {
+  background: black !important;
+}
+.au-studio .aa-DetachedCancelButton:hover {
+  box-shadow: inset 0 0 0 1px #808080 !important;
+}
+.au-studio .aa-DetachedCancelButton {
+  color: #d8d8d8 !important;
+}
+
+.au-studio .aa-Input {
+  color: #1bb18f !important;
+}
+.au-studio .aa-ClearButton {
+  color: white !important;
+}

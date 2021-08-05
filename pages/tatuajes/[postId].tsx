@@ -142,7 +142,6 @@ export const getStaticProps = async ({ params }) => {
       commentsData = postsToJSON(dataComments.comments)
       morePostsArtist = postsToJSON(dataPostByArtist.posts)
       relatedPosts = postsToJSON(dataRelatedPosts.posts)
-      console.log(relatedPosts, 'los otros posts')
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }
