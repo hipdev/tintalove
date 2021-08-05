@@ -18,7 +18,7 @@ const options = tattooStyles.map((style) => {
 })
 
 const WorkingInfo = ({ uid, isArtist }) => {
-  const [studioName, setStudioName] = useState('')
+  const [studioName, setStudioName] = useState('Opi')
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
