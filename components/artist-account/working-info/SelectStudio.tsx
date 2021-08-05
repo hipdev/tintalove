@@ -17,7 +17,7 @@ const SelectStudio = ({ state }) => {
         openOnFocus={true}
         debug={true}
         getSources={(props) => {
-          console.log(props, 'props de getSources')
+          // console.log(props, 'props de getSources')
           return [
             {
               sourceId: 'studios',
@@ -41,6 +41,7 @@ const SelectStudio = ({ state }) => {
                     <AutocompleteStudioItem
                       hit={item}
                       components={components}
+                      setStudioName={state.setStudioName}
                     />
                   )
                 },

@@ -21,6 +21,7 @@ const AutocompleteStudio = (props) => {
       initialState: {
         query: props.defaultState || '',
       },
+
       // detachedMediaQuery: '',
       translations: {
         detachedCancelButtonText: 'Cancelar',

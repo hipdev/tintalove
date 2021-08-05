@@ -1,12 +1,17 @@
-export function AutocompleteStudioItem({ hit, components }) {
-  console.log(hit, components, 'esto que es')
+export function AutocompleteStudioItem({ hit, components, setStudioName }) {
+  // console.log(hit, components, 'esto que es')
   return (
-    <a href={hit.url} className="aa-ItemLink">
+    <button
+      className="aa-ItemLink"
+      onClick={() => {
+        setStudioName({ studio_id: hit.objectID, studio_name: hit.studio_name })
+      }}
+    >
       <div className="aa-ItemContent">
         <div className="aa-ItemTitle">
           <components.Highlight hit={hit} attribute={'studio_name'} />
         </div>
       </div>
-    </a>
+    </button>
   )
 }
