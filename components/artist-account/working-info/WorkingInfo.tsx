@@ -18,12 +18,14 @@ const options = tattooStyles.map((style) => {
 })
 
 const WorkingInfo = ({ uid, isArtist }) => {
-  const [studioName, setStudioName] = useState('Opi')
+  const [studioName, setStudioName] = useState()
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const { artist } = useArtist(uid)
   const router = useRouter()
+
+  console.log(studioName, 'nombre del estudio')
 
   const {
     register,
