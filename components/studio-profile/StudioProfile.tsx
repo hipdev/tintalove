@@ -27,7 +27,13 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   if (!studioData?.is_active) {
-    return <div>Este estudio no esta activo</div>
+    return (
+      <div className="bg-dark-800 h-screen">
+        <p className="text-gray-300 font-bold text-4xl text-center pt-12">
+          Este estudio no esta activo
+        </p>
+      </div>
+    )
   }
 
   return (
