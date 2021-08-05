@@ -159,7 +159,10 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   <span className="mb-3 block">
                     SELECCIONA EL ESTUDIO DONDE TRABAJAS
                   </span>
-                  <SelectStudio state={{ studioName, setStudioName }} />
+                  <SelectStudio
+                    state={{ studioName, setStudioName }}
+                    artist={artist}
+                  />
                 </label>
                 <div className="mt-1">
                   <p>
