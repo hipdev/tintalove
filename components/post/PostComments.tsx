@@ -121,7 +121,7 @@ const PostComments = ({
             onClick={() => setShowInput(true)}
             onFocus={() => setShowInput(true)}
             placeholder="Escribe un comentario..."
-            className="w-full bg-ocean_blue-300 border border-light-700 px-5 py-3 rounded-lg  text-gray-300 flex-shrink truncate "
+            className="w-full bg-gr-800 border border-light-700 px-5 py-3 rounded-lg text-gray-300 flex-shrink truncate "
             onChange={(e) => setComment(e.target.value)}
           />
           {showInput && (
