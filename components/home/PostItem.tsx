@@ -45,7 +45,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
               className="lazyload rounded-md object-cover"
               src={`${post?.image?.url}/tr:w-340,q-20`}
               data-srcset={`${post?.image?.url}/tr:w-340,q-70 1x,
-                ${post?.image?.url}/tr:w-550,q-60 2x,  
+                ${post?.image?.url}/tr:w-0.5,q-85 2x,  
                 ${post?.image?.url}/tr:w-270,q-85 3x, 
                 ${post?.image?.url}/tr:w-245,q-90 4x
               `}
