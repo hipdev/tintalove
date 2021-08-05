@@ -19,7 +19,7 @@ const AutocompleteStudio = (props) => {
 
     const search = autocomplete({
       initialState: {
-        query: 'Opi',
+        query: props.defaultState || '',
       },
       // detachedMediaQuery: '',
       translations: {
