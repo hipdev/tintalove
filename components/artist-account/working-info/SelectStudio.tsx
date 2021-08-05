@@ -9,7 +9,7 @@ const appId = 'JE20HAUJXG'
 const apiKey = 'db9dbba9f07212053022eec3e364876a'
 const searchClient = algoliasearch(appId, apiKey)
 
-const SelectStudio = ({ state }) => {
+const SelectStudio = ({ state, artist }) => {
   return (
     <div>
       <AutocompleteStudio
@@ -42,6 +42,7 @@ const SelectStudio = ({ state }) => {
                       hit={item}
                       components={components}
                       setStudioName={state.setStudioName}
+                      artist={artist}
                     />
                   )
                 },
