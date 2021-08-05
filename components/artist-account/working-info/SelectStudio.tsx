@@ -13,7 +13,7 @@ const SelectStudio = ({ state }) => {
   return (
     <div>
       <AutocompleteStudio
-        defaultState={state.studioName}
+        defaultState={state.studioName?.studio_name}
         openOnFocus={true}
         debug={true}
         getSources={(props) => {
