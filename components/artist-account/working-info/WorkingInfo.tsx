@@ -156,18 +156,32 @@ const WorkingInfo = ({ uid, isArtist }) => {
             {watchWorkAs == 'partner' && (
               <div className="mt-7">
                 <label className="text-sm mb-3 tracking-wide">
-                  <span className="mb-3 block">
+                  <span className="mb-3 flex">
                     SELECCIONA EL ESTUDIO DONDE TRABAJAS
+                    <span
+                      aria-label="Si no lo encuentras debes registrarlo o solicitar que lo hagan en tu trabajo"
+                      data-microtip-position="bottom"
+                      role="tooltip"
+                    >
+                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                    </span>
                   </span>
                   <SelectStudio
                     state={{ studioName, setStudioName }}
                     artist={artist}
                   />
                 </label>
-                <div className="mt-1">
-                  <p>
-                    ¿No encuentras tu estudio?
-                    <Link href="#">
+                <div className="mt-3">
+                  <p className="flex">
+                    ¿Tienes un estudio?{' '}
+                    <span
+                      aria-label="Registrar un estudio en Tinta Love, es gratis."
+                      data-microtip-position="top"
+                      role="tooltip"
+                    >
+                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                    </span>
+                    <Link href="/studio-account/general">
                       <a className="ml-2 text-primary underline">
                         Regístralo aquí
                       </a>
