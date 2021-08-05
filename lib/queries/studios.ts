@@ -290,7 +290,6 @@ export async function getUsernamesByStudios() {
   const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
   const usernames: any = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    console.log(usernames, 'array en cada loop')
     return usernames.push({ username: doc.id })
   })
 

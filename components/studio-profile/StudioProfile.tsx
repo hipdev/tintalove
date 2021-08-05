@@ -26,6 +26,10 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
+  if (!studioData?.is_active) {
+    return <div>Este estudio no esta activo</div>
+  }
+
   return (
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
       {openModalPics && (
@@ -37,7 +41,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
         />
       )}
 
-      {studioPictures && (
+      {studioPictures.length > 0 && (
         <div
           className="flex overflow-hidden max-h-80 cursor-pointer"
           onClick={() => setOpenModalPics(true)}
@@ -62,17 +66,19 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
       <div className=" py-4 md:py-3 px-5 sm:px-10 lg:px-20 container mx-auto pt-0 relative -top-10">
         <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 pb-3 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <img
-              src={`${studioData?.profile_picture?.url}/tr:pr-true,w-48,h-48,q-90`}
-              alt="User photo"
-              className="w-14 h-14 object-cover rounded-md"
-            />
+            {studioData?.profile_picture?.url && (
+              <img
+                src={`${studioData?.profile_picture?.url}/tr:pr-true,w-48,h-48,q-90`}
+                alt="User photo"
+                className="w-14 h-14 object-cover rounded-md"
+              />
+            )}
             <div>
               <h1 className="text-white text-2xl font-semibold tracking-wide">
                 {studioData?.studio_name || 'Sin nombre'}
               </h1>
               <p className="text-gray-400">
-                {studioData?.dataLocation.formatted_address || 'Sin dirección'}
+                {studioData?.dataLocation?.formatted_address || 'Sin dirección'}
               </p>
             </div>
           </div>
