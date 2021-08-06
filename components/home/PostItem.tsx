@@ -42,12 +42,12 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
           >
             <img
               alt={`Este es un tatuaje de: ${post.displayName}`}
-              className="lazyload rounded-md  object-cover"
+              className="lazyload rounded-md object-cover"
               src={`${post?.image?.url}/tr:w-340,q-20`}
-              data-srcset={`${post?.image?.url}/tr:w-340,q-80 1x, 
-                ${post?.image?.url}/tr:w-246,q-80 2x, 
-                ${post?.image?.url}/tr:w-320,q-80 3x, 
-                ${post?.image?.url}/tr:w-245,q-80 4x
+              data-srcset={`${post?.image?.url}/tr:w-340,q-70 1x,
+                ${post?.image?.url}/tr:w-0.5,q-85 2x,  
+                ${post?.image?.url}/tr:w-270,q-85 3x, 
+                ${post?.image?.url}/tr:w-245,q-90 4x
               `}
             />
           </div>
