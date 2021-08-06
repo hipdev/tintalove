@@ -1,10 +1,26 @@
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
+import { deleteArtistRequest } from 'lib/queries/artists'
+import toast from 'react-hot-toast'
 import { AiFillWarning, AiOutlineDelete } from 'react-icons/ai'
 import { FiHelpCircle } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
+import { mutate } from 'swr'
 
 const WorkingRequests = ({ requests }) => {
+  const handleDeleteRequest = (request) => {
+    toast.promise(deleteArtistRequest(request.id), {
+      loading: 'Eliminando...',
+      success: () => {
+        mutate(['getArtistRequests', request.artist_id])
+        return 'Solicitud eliminada'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
+  }
+
   return (
     <div className="mt-5">
       <h2 className="font-semibold uppercase">Solicitudes actuales</h2>
@@ -91,18 +107,23 @@ const WorkingRequests = ({ requests }) => {
                         </div>
                       </div>
 
-                      <div>
-                        <span
-                          aria-label="Eliminar solicitud"
-                          data-microtip-position="top"
-                          role="tooltip"
-                        >
-                          <AiOutlineDelete
-                            className="h-5 w-5 text-red-400 cursor-pointer"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteRequest(item)}
+                      >
+                        <div>
+                          <span
+                            aria-label="Eliminar solicitud"
+                            data-microtip-position="top"
+                            role="tooltip"
+                          >
+                            <AiOutlineDelete
+                              className="h-5 w-5 text-red-400 cursor-pointer"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </div>
+                      </button>
                     </div>
                   </li>
                 )

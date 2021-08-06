@@ -479,7 +479,6 @@ export async function deletePictureFromArtist(imageId, pictureId) {
 // Solicitudes de trabajo de artistas hacia estudios
 
 export async function sendArtistWorkRequest(studio, artist) {
-  console.log(studio, artist, 'data para enviar')
   const q = query(
     collection(db, 'artists_requests'),
     where('artist_id', '==', artist.artist_id),
@@ -506,7 +505,7 @@ export async function sendArtistWorkRequest(studio, artist) {
 
     return true
   } else {
-    throw new Error(`Ya enviaste una invitación a ${studio.studio_name}`)
+    throw new Error(`Ya tienes una con ${studio.studio_name}`)
   }
 }
 
@@ -523,4 +522,15 @@ export async function getArtistRequests(_key, artistId) {
   })
 
   return { requests }
+}
+
+export async function deleteArtistRequest(requestId) {
+  try {
+    const artistRequest = doc(collection(db, 'artists_requests'), requestId)
+    await deleteDoc(artistRequest)
+
+    return true
+  } catch (error) {
+    throw new Error('Error eliminando la solicitud')
+  }
 }
