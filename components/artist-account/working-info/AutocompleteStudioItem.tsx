@@ -18,7 +18,7 @@ export function AutocompleteStudioItem({
 }: Props) {
   const sendArtistRequest = async () => {
     setStudioName({ studio_id: hit.objectID, studio_name: hit.studio_name })
-    console.log(hit, artist, 'data to send')
+
     toast.promise(sendArtistWorkRequest(hit, artist), {
       loading: 'Enviando...',
       success: () => {

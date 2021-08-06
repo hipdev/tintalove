@@ -12,9 +12,9 @@ const AutocompleteStudio = (props) => {
     }
 
     const search = autocomplete({
-      initialState: {
-        query: props.defaultState || '',
-      },
+      // initialState: {
+      //   query: props.defaultState || '',
+      // },
 
       // detachedMediaQuery: '',
       translations: {
@@ -25,7 +25,7 @@ const AutocompleteStudio = (props) => {
       //   console.log(state, 'enviado')
       // },
 
-      placeholder: props.defaultState || 'Buscar estudio',
+      placeholder: 'Buscar estudio',
       classNames: {
         root: 'au-studio',
         panel: 'au-studio',
