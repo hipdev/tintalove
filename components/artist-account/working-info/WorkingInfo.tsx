@@ -12,6 +12,7 @@ import 'microtip/microtip.css'
 import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
 import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
 import SelectStudio from './SelectStudio'
+import WorkingRequests from './WorkingRequests'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -188,6 +189,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
                     </Link>
                   </p>
                 </div>
+
+                <WorkingRequests artistId={artist?.artist_id} />
               </div>
             )}
 

@@ -476,6 +476,8 @@ export async function deletePictureFromArtist(imageId, pictureId) {
   }
 }
 
+// Solicitudes de trabajo de artistas hacia estudios
+
 export async function sendArtistWorkRequest(studio, artist) {
   console.log(studio, artist, 'data para enviar')
   const q = query(
@@ -505,4 +507,19 @@ export async function sendArtistWorkRequest(studio, artist) {
   } else {
     throw new Error(`Ya enviaste una invitación a ${studio.studio_name}`)
   }
+}
+
+export async function getArtistRequests(_key, artistId) {
+  const q = query(
+    collection(db, 'artists_requests'),
+    where('artist_id', '==', artistId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const requests: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return requests.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { requests }
 }
