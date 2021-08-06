@@ -3,7 +3,7 @@ import { StudioTypes } from 'types/studio'
 
 const StudioCard = ({ studios }: { studios: StudioTypes }) => {
   return (
-    <div className="w-full h-full bg-ocean_blue-800 p-5 rounded-md">
+    <div className="w-full h-full bg-gr-800 p-5 rounded-md">
       <div className="flex justify-between">
         <div className="flex flex-wrap gap-5">
           <div className="bg-black w-14 sm:w-16 h-14 sm:h-16 rounded-xl">
