@@ -27,6 +27,9 @@ const AutocompleteStudio = (props) => {
         detachedCancelButtonText: 'Cancelar',
         submitButtonTitle: 'Enviar',
       },
+      // onSubmit: (state) => {
+      //   console.log(state, 'enviado')
+      // },
 
       placeholder: props.defaultState || 'Buscar estudio',
       classNames: {

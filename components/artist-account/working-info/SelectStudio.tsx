@@ -15,7 +15,6 @@ const SelectStudio = ({ state, artist }) => {
       <AutocompleteStudio
         defaultState={state.studioName?.studio_name || ''}
         openOnFocus={true}
-        debug={true}
         getSources={(props) => {
           // console.log(props, 'props de getSources')
           return [

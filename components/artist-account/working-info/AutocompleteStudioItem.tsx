@@ -18,16 +18,15 @@ export function AutocompleteStudioItem({
   const sendArtistRequest = async () => {
     setStudioName({ studio_id: hit.objectID, studio_name: hit.studio_name })
     console.log(hit, artist, 'data to send')
-    // toast.promise(sendArtistWorkRequest(hit, artist), {
-    //   loading: 'Actualizando...',
-    //   success: () => {
-    //     return 'Artista actualizado 😉'
-    //   },
-    //   error: (err) => {
-
-    //     return `${err.toString()}`
-    //   },
-    // })
+    toast.promise(sendArtistWorkRequest(hit, artist), {
+      loading: 'Enviando...',
+      success: () => {
+        return 'Solicitud enviada 😉'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
   }
   // console.log(hit, components, 'esto que es')
   return (
