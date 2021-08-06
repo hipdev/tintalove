@@ -1,13 +1,11 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
-import { HiOutlineSelector } from 'react-icons/hi'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { TiLocationOutline } from 'react-icons/ti'
 import toast from 'react-hot-toast'
 import { updateUserSearchCity } from 'lib/queries/users'
 import { useRouter } from 'next/router'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
 const SelectCity = ({ user, cities }) => {
@@ -54,7 +52,7 @@ const SelectCity = ({ user, cities }) => {
             <div className="block mt-1 relative w-full">
               <Listbox.Button
                 className="bg-transparent relative w-full rounded-md text-gr-200
-                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none   hidden md:block cu"
+                shadow-sm pl-3 pr-2 lg:pr-3 xl:pr-10 pb-1 text-left cursor-pointer focus:outline-none   hidden md:block cu"
               >
                 <div className="flex">
                   <TiLocationOutline className="text-2xl text-gr-200 mr-4" />
@@ -85,7 +83,7 @@ const SelectCity = ({ user, cities }) => {
                     <Listbox.Option
                       key={city.geohash}
                       className={({ active }) =>
-                        (active ? 'text-white bg-primary' : 'text-gray-900') +
+                        (active ? 'text-white bg-gn-400' : 'text-gray-900') +
                         ' cursor-default select-none relative py-2 pl-3 pr-9'
                       }
                       value={city}
@@ -114,7 +112,7 @@ const SelectCity = ({ user, cities }) => {
                           {selected ? (
                             <span
                               className={
-                                (active ? 'text-white' : 'text-primary') +
+                                (active ? 'text-white' : 'text-gn-400') +
                                 ' absolute inset-y-0 right-0 flex items-center pr-4'
                               }
                             >

@@ -63,14 +63,14 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
       {!picture && (
         <div className="flex justify-center">
-          <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
-            <span className="text-4xl text-light-900 mb-4">
+          <div className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gr-100 rounded-xl mb-5 sm:mb-0">
+            <span className="text-4xl text-gr-500 mb-4">
               <FaRegUserCircle />
             </span>
             <p className="text-sm sm:text-base text-white text-center mb-4">
               JPG, GIF or PNG.
             </p>
-            <div className="relative bg-light-900 px-4 py-3 rounded-lg">
+            <div className="relative bg-gr-500 px-4 py-3 rounded-lg">
               <label className="text-white tracking-wide">
                 Seleccionar foto
                 <input

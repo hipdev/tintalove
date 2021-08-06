@@ -284,7 +284,7 @@ const MainInfo = ({ uid }) => {
                 onChange={handleCounter}
                 rows={6}
                 placeholder="Cuentale al mundo sobre ti"
-                className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
+                className="w-full text-gray-400  bg-transparent border-2 border-gr-500 p-2 rounded-xl placeholder-gr-500 outline-none resize-none"
               ></textarea>
             </div>
           </div>

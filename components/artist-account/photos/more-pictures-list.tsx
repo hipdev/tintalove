@@ -47,7 +47,7 @@ const MorePicturesList = ({ artist, pictures, mutatePictures }) => {
             className="group-hover:absolute right-1 bottom-2 z-10"
             onClick={() => handleDelete(pic.fileId, pic.id)}
           >
-            <AiOutlineDelete className="text-2xl text-primary " />
+            <AiOutlineDelete className="text-2xl text-gn-400 " />
           </button>
           <div className="group-hover:absolute w-full -bottom-2.5 bg-gradient-to-b from-transparent to-black h-20"></div>
         </div>

@@ -121,14 +121,14 @@ const PostComments = ({
             onClick={() => setShowInput(true)}
             onFocus={() => setShowInput(true)}
             placeholder="Escribe un comentario..."
-            className="w-full bg-gr-800 border border-light-700 px-5 py-3 rounded-lg text-gray-300 flex-shrink truncate "
+            className="w-full bg-gr-800 border border-gr-600 px-5 py-3 rounded-lg text-gray-300 flex-shrink truncate "
             onChange={(e) => setComment(e.target.value)}
           />
           {showInput && (
             <button
               style={{ position: 'relative', right: '2px' }}
               ref={refClickOutside}
-              className="flex items-center justify-center bg-green-400 hover:bg-primaryHover  rounded-r-lg px-3"
+              className="flex items-center justify-center bg-green-400 hover:bg-gn-500  rounded-r-lg px-3"
               onClick={sendComment}
               disabled={loading}
             >

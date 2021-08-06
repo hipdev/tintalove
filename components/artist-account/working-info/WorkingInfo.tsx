@@ -132,7 +132,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
             <div className="mb-4">
               <label className="cursor-pointer">
                 <input
-                  className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
+                  className="form-radio rounded-full text-gn-400 bg-dark-800  focus:ring-0"
                   type="radio"
                   value="freelance"
                   {...register('work_as')}
@@ -142,7 +142,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
               <label className="cursor-pointer">
                 <input
-                  className="form-radio rounded-full text-primary bg-dark-800  focus:ring-0"
+                  className="form-radio rounded-full text-gn-400 bg-dark-800  focus:ring-0"
                   type="radio"
                   value="partner"
                   {...register('work_as')}
@@ -182,7 +182,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                       <FiHelpCircle className="text-xl ml-3 cursor-help" />
                     </span>
                     <Link href="/studio-account/general">
-                      <a className="ml-2 text-primary underline">
+                      <a className="ml-2 text-gn-400 underline">
                         Regístralo aquí
                       </a>
                     </Link>

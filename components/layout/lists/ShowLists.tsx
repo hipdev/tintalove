@@ -1,5 +1,4 @@
 import { useStateMachine } from 'little-state-machine'
-import Link from 'next/link'
 import { lists } from 'lib/actions'
 import { getUserLists } from 'lib/queries/lists'
 import useSWR from 'swr'
@@ -59,7 +58,7 @@ const ShowLists = ({ userId }) => {
           <p className="text-white mt-2">Tatuajes de animales</p>
         </div>
       </div>
-      <button className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center">
+      <button className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-gn-500 p-2 sm:p-3 rounded-md flex justify-center items-center">
         CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
       </button>
     </div>

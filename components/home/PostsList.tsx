@@ -1,6 +1,5 @@
 import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
-import { MdFilterList } from 'react-icons/md'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
 import PostItem from './PostItem'

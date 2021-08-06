@@ -81,7 +81,7 @@ const SelectList = ({ userId, post, user }) => {
               onClick={() => savePostOnList(list.id)}
             >
               {list.list_name}
-              <span className="text-light-600 text-sm align-top">
+              <span className="text-gr-600 text-sm align-top">
                 1 publicación
               </span>
             </button>

@@ -17,7 +17,7 @@ const SideMenuStudio = ({ uid, username }: Props) => {
   return (
     <div className="mb-10 lg:mb-0">
       <div className="mb-10 mt-12">
-        <p className="text-primary text-xl font-semibold">Estar en TintaLove</p>
+        <p className="text-gn-400 text-xl font-semibold">Estar en TintaLove</p>
         <h1 className="text-2xl text-white font-bold tracking-wide">
           Es mostrarte al mundo
         </h1>
@@ -25,14 +25,14 @@ const SideMenuStudio = ({ uid, username }: Props) => {
 
       {username && (
         <Link href={`/studio/${username}`}>
-          <a className="mb-10 inline-flex items-center text-white bg-primary px-4 py-2 rounded-sm py">
+          <a className="mb-10 inline-flex items-center text-white bg-gn-400 px-4 py-2 rounded-sm py">
             Ver perfil
             <FaRegUserCircle className="text-xl ml-4" />
           </a>
         </Link>
       )}
 
-      <div className="text-light-900 pr-7">
+      <div className="text-gr-500 pr-7">
         <Link href="/studio-account/general">
           <a className={path == 'main-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">

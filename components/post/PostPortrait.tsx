@@ -109,7 +109,7 @@ const PostPortrait = ({
             <h1 className="text-white text-2xl font-semibold tracking-wide mb-2 leading-7">
               {postData.description || 'Sin descripción'}
             </h1>
-            <p className="text-light-200 text-sm">
+            <p className="text-gr-100 text-sm">
               #Realismo #Color #Payaso #Retrato
             </p>
             <a className="text-sm text-gray-400 font-semibold" href="#">

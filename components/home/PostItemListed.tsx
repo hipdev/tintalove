@@ -132,7 +132,7 @@ const PostItemListed = ({
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
-                    className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm"
+                    className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-gn-400 text-base font-medium text-white hover:bg-gn-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gn-400 sm:text-sm"
                     onClick={() => removeFromList()}
                   >
                     Sí, eliminar.

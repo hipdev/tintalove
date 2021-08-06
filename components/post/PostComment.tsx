@@ -55,14 +55,14 @@ const PostComment = ({
           <h4 className="text-gray-200 font-raleway font-semibold tracking-wide">
             {comment.displayName}
           </h4>
-          <p className="text-light-400 text-xs ml-2 mb-[3px]">{distanceGone}</p>
+          <p className="text-gr-400 text-xs ml-2 mb-[3px]">{distanceGone}</p>
         </div>
-        <p className="text-light-200 text-sm mt-1">{comment.comment}</p>
+        <p className="text-gr-100 text-sm mt-1">{comment.comment}</p>
       </div>
       {userId && userId == comment.user_id && (
         <div className="absolute right-4 top-3 hidden group-hover:block cursor-pointer">
           <AiOutlineDelete
-            className="text-primary text-2xl"
+            className="text-gn-400 text-2xl"
             title="Eliminar comentario"
             onClick={handleDelete}
           />

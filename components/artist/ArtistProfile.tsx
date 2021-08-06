@@ -4,7 +4,6 @@ import { FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { RiCalendarLine } from 'react-icons/ri'
 import { RiRoadMapLine } from 'react-icons/ri'
 import { FiClock } from 'react-icons/fi'
-import { AiOutlineStar } from 'react-icons/ai'
 import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
 import Image from 'next/image'
@@ -89,7 +88,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 {artistData?.displayName}
               </h1>
               <div className="flex items-center gap-2 mb-4 lg:mb-0">
-                <h6 className="text-light-200 text-base lg:text-sm">
+                <h6 className="text-gr-100 text-base lg:text-sm">
                   {artistData?.city_name}, {artistData?.province}
                 </h6>
               </div>
@@ -104,7 +103,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="text-2xl text-light-200">
+                    <span className="text-2xl text-gr-100">
                       <FiInstagram />
                     </span>
                   </a>
@@ -115,7 +114,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="text-2xl text-light-200">
+                    <span className="text-2xl text-gr-100">
                       <AiFillFacebook />
                     </span>
                   </a>
@@ -127,7 +126,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="text-2xl text-light-200">
+                    <span className="text-2xl text-gr-100">
                       <FaTwitter />
                     </span>
                   </a>
@@ -136,25 +135,25 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
               <div className="mb-6">
                 <div className="flex space-x-2 mt-5 mb-4">
-                  <span className="text-light-500">
+                  <span className="text-gr-300">
                     <RiCalendarLine className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-sm">
+                  <p className="text-gr-300 text-sm">
                     <span className="font-semibold">Disponibilidad: </span>{' '}
                     {artistData?.available_label || 'Sin disponibilidad'}
                   </p>
                 </div>
 
                 <div className="flex space-x-2 my-2 mb-4">
-                  <span className="text-light-500">
+                  <span className="text-gr-300">
                     <Link href={`/${artistData.username}/map`}>
-                      <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                      <a className="text-gr-300 text-sm hover:text-gn-500 text-left">
                         <RiRoadMapLine className="text-xl" />
                       </a>
                     </Link>
                   </span>
                   <Link href={`/${artistData.username}/map`}>
-                    <a className="text-light-500 text-sm hover:text-gn-500 text-left">
+                    <a className="text-gr-300 text-sm hover:text-gn-500 text-left">
                       {artistData?.dataLocation?.formatted_address ||
                         'Sin dirección'}
                     </a>
@@ -162,10 +161,10 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 </div>
 
                 <div className="flex space-x-2 mb-5">
-                  <span className="text-light-500">
+                  <span className="text-gr-300">
                     <FiClock className="text-xl" />
                   </span>
-                  <p className="text-light-500 text-sm">
+                  <p className="text-gr-300 text-sm">
                     {artistData?.times || 'Sin asignar'}
                   </p>
                 </div>
@@ -182,14 +181,8 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 <PostCallOptions artistData={artistData} widthFull />
               )}
 
-              {/*<button
-                onClick={() => console.log('click en estrella')}
-                className="absolute top-0 right-0 -mt-6 mr-5 w-12 h-12 flex justify-center items-center text-white text-2xl bg-green-600 rounded-full focus:outline-none"
-              >
-                <AiOutlineStar />
-              </button>*/}
               <button className="bg-gr-800 ml-4 rounded-full p-2 border border-gr-600 absolute top-0 right-0 -mt-6 mr-5 ">
-                <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
+                <BsHeart className="text-2xl hover:text-gn-500 text-gn-400 animate-pulse relative top-0.5" />
               </button>
             </div>
           </div>

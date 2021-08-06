@@ -232,8 +232,8 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                 <input
                   className={
                     availableUserName || watchUserName == studioUsername
-                      ? 'input-primary w-full pl-[126px] text-green-500'
-                      : 'input-primary w-full pl-[126px] text-red-500'
+                      ? 'input-primary w-full pl-[153px] text-green-500'
+                      : 'input-primary w-full pl-[153px] text-red-500'
                   }
                   type="text"
                   autoComplete="off"
@@ -242,7 +242,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
                   onChange={handleUserName}
                 />
                 <span className="absolute top-[13px] left-[10px]">
-                  tintalove.com/st/
+                  tintalove.com/studio/
                 </span>
 
                 <div className="absolute right-2 top-3">

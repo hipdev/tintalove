@@ -70,7 +70,7 @@ const PictureAddMain = ({ studioId, hasStudio }) => {
       {!picture && (
         <div className="flex justify-center">
           <label className="w-96 h-72 flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0 cursor-pointer">
-            <span className="text-4xl text-light-900 mb-4">
+            <span className="text-4xl text-gr-500 mb-4">
               <FaRegUserCircle />
             </span>
             <p className="text-sm sm:text-base text-white text-center mb-4">

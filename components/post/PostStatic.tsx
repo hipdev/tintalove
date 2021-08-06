@@ -2,7 +2,6 @@ import Masonry from 'react-masonry-css'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import useSWR from 'swr'
-import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import PostPortrait from './PostPortrait'
@@ -61,7 +60,7 @@ const PostStatic = ({
         closeModal={closeModal}
       />
 
-      <div className="border-t-2 border-b-2 border-light-800 py-5">
+      <div className="border-t-2 border-b-2 border-gr-200 py-5">
         <div className="flex flex-wrap justify-between sm:justify-between mb-5">
           <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
             Más de {artistData.displayName}

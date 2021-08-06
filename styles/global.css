@@ -6,10 +6,10 @@
 
 /* Write you own custom component styles here */
 .input-primary {
-  @apply text-gray-400 bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none;
+  @apply text-gray-400 bg-transparent border border-gr-500 p-2 py-3 rounded-md placeholder-gr-500 outline-none;
 }
 .btn-primary {
-  @apply text-white bg-primary py-3 rounded-md hover:bg-primaryHover outline-none focus:outline-none;
+  @apply text-white bg-gn-400 py-3 rounded-md hover:bg-gn-500 outline-none focus:outline-none;
 }
 
 @tailwind utilities;

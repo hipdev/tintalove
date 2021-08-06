@@ -6,7 +6,6 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { useRouter } from 'next/router'
 import { createArtistPost } from 'lib/queries/posts'
-import { BsArrowRight } from 'react-icons/bs'
 
 type Props = {
   picture: any
@@ -174,7 +173,7 @@ const CreatePostCrop = ({
       <div className="flex gap-4 sm:gap-8 text-white ml-5 justify-center mb-5">
         <button className="py-3 px-4 focus:outline-none">CANCELAR</button>
         <button
-          className="flex items-center gap-3 py-3 px-5 sm:px-20 bg-primary hover:bg-primaryHover rounded-md focus:outline-none"
+          className="flex items-center gap-3 py-3 px-5 sm:px-20 bg-gn-400 hover:bg-gn-500 rounded-md focus:outline-none"
           onClick={getCropData}
           disabled={loading}
         >

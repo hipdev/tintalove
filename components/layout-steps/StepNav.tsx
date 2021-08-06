@@ -53,8 +53,8 @@ const StepNav = () => {
             <Menu>
               {({ open }) => (
                 <>
-                  <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
-                    <VscChevronDown className="text-2xl mr-3" />
+                  <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none flex-shrink-0">
+                    <VscChevronDown className="text-2xl mr-1" />
                     <span className="mr-3">{data.user.displayName}</span>
                     <img
                       className="w-12 h-12 rounded-full"

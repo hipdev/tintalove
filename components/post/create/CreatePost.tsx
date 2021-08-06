@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import Select from 'react-select'
 import CreatePostPicture from './CreatePostPicture'
-import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
-import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
-import { BsArrowRight } from 'react-icons/bs'
-import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
+import { BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
 
 const CreatePost = ({ user }) => {
@@ -91,7 +88,7 @@ const CreatePost = ({ user }) => {
           <label className="flex flex-col mb-5">
             <span className="block mb-2">Descripción corta</span>
             <textarea
-              className="input-primary placeholder-light-200 bg-gr-800 resize-none"
+              className="input-primary placeholder-gr-100 bg-gr-800 resize-none"
               placeholder="Ej: Gato en sombras, con un toque de puntillismo..."
               rows={3}
               value={description}

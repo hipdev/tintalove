@@ -5,7 +5,6 @@ import { Fragment, useState } from 'react'
 import toast from 'react-hot-toast'
 import { updateAvailability } from 'lib/queries/artists'
 import { mutate } from 'swr'
-import { IoMdCheckmarkCircle } from 'react-icons/io'
 import { RiCheckboxCircleFill } from 'react-icons/ri'
 
 const agenda = [

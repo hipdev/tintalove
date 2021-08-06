@@ -1,7 +1,6 @@
 import Compressor from 'compressorjs'
 
 import { useState } from 'react'
-import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
@@ -51,7 +50,7 @@ const CreatePostPicture = ({
       <div className="flex justify-between">
         {picture && (
           <label className="text-white tracking-wide flex items-center cursor-pointer">
-            <HiOutlineCamera className="text-xl" />{' '}
+            <HiOutlineCamera className="text-xl" />
             <span className="ml-2">Cambiar foto</span>
             <input
               type="file"
@@ -80,12 +79,12 @@ const CreatePostPicture = ({
           <label className="w-full h-448 sm:h-609 relative flex flex-col justify-center items-center border-4 border-dashed border-gray-200 rounded-xl mb-5 sm:mb-0">
             <div className="flex flex-col items-center justify-center w-full h-448 sm:h-609">
               <div className="grid place-items-center w-24 h-24 bg-dark-500 rounded-full mb-5">
-                <span className="text-green-500 text-5xl">
+                <span className="text-gn-300 text-5xl">
                   <BsArrowUp />
                 </span>
               </div>
               <p className="text-white">JPG, GIF or PNG. Max size of 800K</p>
-              <button className="text-white bg-primary hover:bg-primaryHover mt-5 py-3 px-6 rounded-md focus:outline-none">
+              <button className="text-white bg-gn-400 hover:bg-gn-500 mt-5 py-3 px-6 rounded-md focus:outline-none">
                 Seleccionar Archivo
               </button>
             </div>
@@ -98,7 +97,7 @@ const CreatePostPicture = ({
           </label>
           <div className="flex flex-wrap items-center justify-center  text-white gap-4 mt-6 mb-5 sm:mb-10 xl:mb-32">
             <h1 className="w-full md:w-auto tracking-wide">PROPORCIÓN:</h1>
-            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-primary py-6 px-4 rounded-full md:rounded-md hover:bg-primaryHover focus:outline-none">
+            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gn-400 py-6 px-4 rounded-full md:rounded-md hover:bg-gn-500 focus:outline-none">
               <span className="text-2xl">
                 <BsTabletLandscape />
               </span>

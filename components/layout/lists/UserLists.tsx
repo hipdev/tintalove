@@ -1,5 +1,4 @@
 import { useStateMachine } from 'little-state-machine'
-import { AiOutlineUnorderedList } from 'react-icons/ai'
 import Modal from 'react-modal'
 import { lists } from 'lib/actions'
 import NoListForm from './NoListForm'

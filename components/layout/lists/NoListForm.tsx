@@ -92,7 +92,7 @@ const NoListForm = ({ hasList, user }: Props) => {
         <button className="text-sm bg-gr-800 hover:bg-gr-600 p-3 rounded-md w-1/2">
           CANCELAR
         </button>
-        <button className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center">
+        <button className="text-sm bg-gn-400 hover:bg-gn-500 p-2 sm:p-3 rounded-md w-full flex justify-center items-center">
           NUEVA COLECCIÓN <BsPlus className="text-2xl ml-1" />
           {/* Me tome la libertad de quitar la palabra CREAR del botón, creo que el icono ayuda mucho a intuir que es lo que hace y además ayuda mucho al repsonsive :D */}
         </button>

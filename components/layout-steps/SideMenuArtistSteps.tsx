@@ -94,7 +94,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
         position="bottom-right"
       />
       <div className="mb-10 mt-12">
-        <p className="text-primary text-xl font-semibold">Estar en TintaLove</p>
+        <p className="text-gn-400 text-xl font-semibold">Estar en TintaLove</p>
         <h1 className="text-2xl text-white font-bold tracking-wide">
           Es mostrar tu talento
         </h1>
@@ -103,7 +103,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
       <div className="mb-10">
         <div className="h-3 w-64 bg-gray-800 rounded-xl relative">
           <div
-            className={`h-3 ${step} transition-width bg-primary rounded-xl`}
+            className={`h-3 ${step} transition-width bg-gn-400 rounded-xl`}
           ></div>
         </div>
         <span className="text-white text-sm block mt-2">
@@ -114,7 +114,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
       {countReadySteps == 4 && (
         <button
           onClick={handleActivateProfile}
-          className="text-white mb-10 bg-primary px-4 rounded-sm py-2 flex items-center hover:bg-primaryHover"
+          className="text-white mb-10 bg-gn-400 px-4 rounded-sm py-2 flex items-center hover:bg-gn-500"
           disabled={loading}
         >
           Activar perfil
@@ -124,20 +124,18 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
 
       <Link href="/artist/main-info">
         <a className="block relative pb-10">
-          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
+          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-gr-500 border border-dashed"></div>
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
                   path == 'main-info'
-                    ? 'border-primary' + circle
-                    : 'border-light-900' + circle
+                    ? 'border-gn-400' + circle
+                    : 'border-gr-500' + circle
                 }
               >
                 <span
-                  className={
-                    path == 'main-info' ? 'text-white' : 'text-light-900'
-                  }
+                  className={path == 'main-info' ? 'text-white' : 'text-gr-500'}
                 >
                   1
                 </span>
@@ -148,7 +146,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
                 className={
                   path == 'main-info'
                     ? 'text-white ' + textWhite
-                    : 'text-light-900 ' + textWhite
+                    : 'text-gr-500 ' + textWhite
                 }
               >
                 Información personal
@@ -160,19 +158,19 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
 
       <Link href="/artist/working-info">
         <a className="block relative pb-10">
-          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
+          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-gr-500 border border-dashed"></div>
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
                   path == 'working-info'
-                    ? 'border-primary' + circle
-                    : 'border-light-900' + circle
+                    ? 'border-gn-400' + circle
+                    : 'border-gr-500' + circle
                 }
               >
                 <span
                   className={
-                    path == 'working-info' ? 'text-white' : 'text-light-900'
+                    path == 'working-info' ? 'text-white' : 'text-gr-500'
                   }
                 >
                   2
@@ -184,7 +182,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
                 className={
                   path == 'working-info'
                     ? 'text-white ' + textWhite
-                    : 'text-light-900 ' + textWhite
+                    : 'text-gr-500 ' + textWhite
                 }
               >
                 Información laboral
@@ -196,19 +194,19 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
 
       <Link href="/artist/contact-info">
         <a className="block relative pb-10">
-          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-light-900 border border-dashed"></div>
+          <div className="-ml-px absolute mt-6 top-4 left-4 w-0.5 h-8 bg-gr-500 border border-dashed"></div>
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
                   path == 'contact-info'
-                    ? 'border-primary' + circle
-                    : 'border-light-900' + circle
+                    ? 'border-gn-400' + circle
+                    : 'border-gr-500' + circle
                 }
               >
                 <span
                   className={
-                    path == 'contact-info' ? 'text-white' : 'text-light-900'
+                    path == 'contact-info' ? 'text-white' : 'text-gr-500'
                   }
                 >
                   3
@@ -220,7 +218,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
                 className={
                   path == 'contact-info'
                     ? 'text-white ' + textWhite
-                    : 'text-light-900 ' + textWhite
+                    : 'text-gr-500 ' + textWhite
                 }
               >
                 Información de Contacto
@@ -237,13 +235,13 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
               <span
                 className={
                   path == 'pictures-info'
-                    ? 'border-primary ' + circle
-                    : 'border-light-900 ' + circle
+                    ? 'border-gn-400 ' + circle
+                    : 'border-gr-500 ' + circle
                 }
               >
                 <span
                   className={
-                    path == 'pictures-info' ? 'text-white' : 'text-light-900'
+                    path == 'pictures-info' ? 'text-white' : 'text-gr-500'
                   }
                 >
                   4
@@ -255,7 +253,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
                 className={
                   path == 'pictures-info'
                     ? 'text-white ' + textWhite
-                    : 'text-light-900 ' + textWhite
+                    : 'text-gr-500 ' + textWhite
                 }
               >
                 Fotos de perfil

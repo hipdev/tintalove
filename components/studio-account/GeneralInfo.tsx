@@ -263,8 +263,8 @@ const GeneralInfo = ({ uid }) => {
                   <input
                     className={
                       availableUserName
-                        ? 'input-primary w-full pl-[126px] text-green-500'
-                        : 'input-primary w-full pl-[126px] text-red-500'
+                        ? 'input-primary w-full pl-[153px] text-green-500'
+                        : 'input-primary w-full pl-[153px] text-red-500'
                     }
                     type="text"
                     autoComplete="off"
@@ -273,7 +273,7 @@ const GeneralInfo = ({ uid }) => {
                     onChange={handleUserName}
                   />
                   <span className="absolute top-[13px] left-[10px]">
-                    tintalove.com/st/
+                    tintalove.com/studio/
                   </span>
 
                   <div className="absolute right-2 top-3">
@@ -328,7 +328,7 @@ const GeneralInfo = ({ uid }) => {
                 onChange={handleCounter}
                 rows={6}
                 placeholder="Cuentale al mundo sobre ti"
-                className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
+                className="w-full text-gray-400  bg-transparent border-2 border-gr-500 p-2 rounded-xl placeholder-gr-500 outline-none resize-none"
               ></textarea>
 
               {errors?.bio && <span>Este campo es requerido</span>}
