@@ -1,5 +1,6 @@
 import { sendArtistWorkRequest } from 'lib/queries/artists'
 import toast from 'react-hot-toast'
+import { mutate } from 'swr'
 import { ArtistTypes } from 'types/artist'
 
 type Props = {
@@ -21,6 +22,7 @@ export function AutocompleteStudioItem({
     toast.promise(sendArtistWorkRequest(hit, artist), {
       loading: 'Enviando...',
       success: () => {
+        mutate(['getArtistRequests', artist.artist_id])
         return 'Solicitud enviada 😉'
       },
       error: (err) => {

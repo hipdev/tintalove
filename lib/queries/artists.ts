@@ -494,7 +494,8 @@ export async function sendArtistWorkRequest(studio, artist) {
       studio_id: studio.objectID, // id from Algolia
       artist_id: artist.artist_id,
       studio_name: studio.studio_name,
-      studio_address: studio.formatted_address,
+      studio_address:
+        studio.dataLocation.formatted_address || studio.formatted_address,
       studio_picture: studio.profile_picture.url || null,
       artist_picture: artist.profile_picture.url || null,
       displayName: artist.displayName,
