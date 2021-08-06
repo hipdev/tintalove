@@ -402,3 +402,31 @@ export async function activateStudio(studioId) {
     throw new Error('Estudio no registrado')
   }
 }
+
+// Peticiones
+
+export async function getRequestsByStudio(_key, studioId) {
+  const q = query(
+    collection(db, 'artists_requests'),
+    where('studio_id', '==', studioId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const requests: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return requests.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { requests }
+}
+
+export async function cancelArtistRequest(requestId) {
+  try {
+    const artistRequest = doc(collection(db, 'artists_requests'), requestId)
+    await deleteDoc(artistRequest)
+
+    return true
+  } catch (error) {
+    throw new Error('Error eliminando la solicitud')
+  }
+}

@@ -1,122 +1,130 @@
-import { AiOutlineDelete } from 'react-icons/ai'
-import { MdCheckCircle, MdMail } from 'react-icons/md'
+import format from 'date-fns/format'
+import { es } from 'date-fns/locale'
+import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai'
+import { MdCancel, MdCheckCircle, MdMail } from 'react-icons/md'
+import { GiCancel } from 'react-icons/gi'
 import 'microtip/microtip.css'
+import { getRequestsByStudio } from 'lib/queries/studios'
+import useSWR from 'swr'
+import { parsePhoneNumber } from 'libphonenumber-js'
+import { BsPersonCheck } from 'react-icons/bs'
+import { FiHelpCircle } from 'react-icons/fi'
 
-const applications = [
-  {
-    applicant: {
-      name: 'Dann Coly',
-      email: 'dancoly@gmail.com',
-      imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    date: '2020-01-07',
-    dateFull: 'Enero 7 de 2021',
-    stage: 'Es parte del estudio',
-    href: '#',
-  },
-  {
-    applicant: {
-      name: 'Kristen Ramos',
-      email: 'kristen.ramos@example.com',
-      imageUrl:
-        'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    date: '2020-01-07',
-    dateFull: 'January 7, 2020',
-    stage: 'Es parte del estudio',
-    href: '#',
-  },
-  {
-    applicant: {
-      name: 'Ted Fox',
-      email: 'ted.fox@example.com',
-      imageUrl:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    date: '2020-01-07',
-    dateFull: 'January 7, 2020',
-    stage: 'Es parte del estudio',
-    href: '#',
-  },
-]
-const ArtistsAccountList = ({ studioInfo }) => {
+const ArtistsAccountList = ({ studio }) => {
+  const { data } = useSWR(
+    ['getRequestsByStudio', studio?.id],
+    getRequestsByStudio
+  )
+
+  console.log(data, 'requests')
+
   return (
     <>
-      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-5">
-        <ul className="divide-y divide-gray-200">
-          {studioInfo?.artists &&
-            applications.map((application) => (
-              <li
-                key={application.applicant.email}
-                className="block hover:bg-gray-900"
-              >
-                <div className="flex items-center px-4 py-3 sm:px-6">
-                  <div className="min-w-0 flex-1 flex items-center">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-12 w-12 rounded-full"
-                        src={application.applicant.imageUrl}
-                        alt=""
-                      />
-                    </div>
-                    <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                      <div>
-                        <a
-                          href="#"
-                          rel="noreferrer"
-                          target="_blank"
-                          className="text-sm font-medium text-primary truncate"
-                        >
-                          {application.applicant.name}
-                        </a>
+      <h3 className="mt-4 text-sm">SOLICITUDES ACTUALES</h3>
 
+      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
+        <ul className="divide-y divide-gray-200">
+          {data?.requests?.map((request) => (
+            <li
+              key={request.artist_email || request.artist_phone}
+              className="block hover:bg-gray-900"
+            >
+              <div className="flex items-center px-4 py-3 sm:px-6">
+                <div className="min-w-0 flex-1 flex items-center">
+                  <div className="flex-shrink-0">
+                    <img
+                      className="h-12 w-12 rounded-full"
+                      src={request.artist_picture}
+                      alt=""
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                    <div>
+                      <a
+                        href="#"
+                        rel="noreferrer"
+                        target="_blank"
+                        className="text-sm font-medium text-primary truncate"
+                      >
+                        {request.artist_name}
+                      </a>
+
+                      <p className="mt-2 flex items-center text-sm text-gray-500">
+                        <MdMail
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span className="truncate">
+                          {parsePhoneNumber(
+                            request.artist_phone
+                          ).formatInternational()}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="hidden md:block">
+                      <div>
+                        <p className="text-sm text-gray-400">
+                          Aplicó en{' '}
+                          <time
+                            dateTime={format(
+                              request?.created_at.toMillis(),
+                              'yyyy'
+                            )}
+                          >
+                            <span className="capitalize">
+                              {format(
+                                request?.created_at.toMillis(),
+                                'MMMM d, yyyy',
+                                { locale: es }
+                              )}
+                            </span>
+                          </time>
+                        </p>
                         <p className="mt-2 flex items-center text-sm text-gray-500">
-                          <MdMail
-                            className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                          <FiHelpCircle
+                            className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary"
                             aria-hidden="true"
                           />
-                          <span className="truncate">
-                            {application.applicant.email}
-                          </span>
+                          <span>Esperando respuesta</span>
                         </p>
-                      </div>
-                      <div className="hidden md:block">
-                        <div>
-                          <p className="text-sm text-gray-400">
-                            Aplicó en{' '}
-                            <time dateTime={application.date}>
-                              {application.dateFull}
-                            </time>
-                          </p>
-                          <p className="mt-2 flex items-center text-sm text-gray-500">
-                            <MdCheckCircle
-                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                              aria-hidden="true"
-                            />
-                            {application.stage}
-                          </p>
-                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="flex">
                   <div>
+                    <div>
+                      <span
+                        aria-label="Eliminar "
+                        data-microtip-position="top"
+                        role="tooltip"
+                      >
+                        <MdCancel
+                          className="h-6 w-6 text-red-400 cursor-pointer"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="ml-7">
                     <span
-                      aria-label="Eliminar "
+                      aria-label="Aceptar "
                       data-microtip-position="top"
                       role="tooltip"
                     >
-                      <AiOutlineDelete
-                        className="h-5 w-5 text-red-400 cursor-pointer"
+                      <BsPersonCheck
+                        className="h-6 w-6 text-primary cursor-pointer"
                         aria-hidden="true"
                       />
                     </span>
                   </div>
                 </div>
-              </li>
-            ))}
+              </div>
+            </li>
+          ))}
 
-          {!studioInfo?.artists && (
+          {data?.requests?.length < 1 && (
             <p className="text-gray-300 p-4">
               Aquí aparecerán los artistas que solicitarón unirse a tu estudio.
             </p>
