@@ -1,3 +1,5 @@
+import { sendArtistWorkRequest } from 'lib/queries/artists'
+import toast from 'react-hot-toast'
 import { ArtistTypes } from 'types/artist'
 
 type Props = {
@@ -15,6 +17,17 @@ export function AutocompleteStudioItem({
 }: Props) {
   const sendArtistRequest = async () => {
     setStudioName({ studio_id: hit.objectID, studio_name: hit.studio_name })
+    console.log(hit, artist, 'data to send')
+    // toast.promise(sendArtistWorkRequest(hit, artist), {
+    //   loading: 'Actualizando...',
+    //   success: () => {
+    //     return 'Artista actualizado 😉'
+    //   },
+    //   error: (err) => {
+
+    //     return `${err.toString()}`
+    //   },
+    // })
   }
   // console.log(hit, components, 'esto que es')
   return (
