@@ -423,7 +423,7 @@ export async function getRequestsByStudio(_key, studioId) {
 export async function cancelArtistRequest(requestId) {
   try {
     const artistRequest = doc(collection(db, 'artists_requests'), requestId)
-    await deleteDoc(artistRequest)
+    await updateDoc(artistRequest, { approval: 'CANCELED' })
 
     return true
   } catch (error) {
