@@ -61,7 +61,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         </div>
         <div className="flex space-x-5">
           {post.counter_comments ? (
-            <div className="flex items-center hola space-x-2 text-white">
+            <div className="flex items-center space-x-2 text-white">
               <p className="">{post.counter_comments || 12}</p>
               <span>
                 <FaRegCommentDots />

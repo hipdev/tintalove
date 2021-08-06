@@ -20,8 +20,6 @@ const ListPost = ({
     if (!user && !user?.displayName) {
       toast('Ups, está no es tu lista')
     } else {
-      console.log('hola')
-
       toast.promise(removePostFromList(post.post_id, user.uid), {
         loading: 'Eliminando de tu lista...',
         success: () => {
