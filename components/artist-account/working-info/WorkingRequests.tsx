@@ -12,7 +12,7 @@ const WorkingRequests = ({ artistId }) => {
     <div className="mt-5">
       <h2 className="font-semibold uppercase">Solicitudes actuales</h2>
 
-      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-5">
+      <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
         <ul className="divide-y divide-gray-200">
           {data?.requests.map((item) => (
             <li key={item.id} className="block hover:bg-black">
