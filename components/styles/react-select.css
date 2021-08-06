@@ -1,7 +1,3 @@
-.juan__control {
-  background: black;
-}
-
 [aria-label][role~='tooltip']:hover::before,
 [aria-label][role~='tooltip']:hover::after,
 [aria-label][role~='tooltip']:focus::before,
