@@ -6,13 +6,14 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import useArtist from 'hooks/use-artist'
-import { updateArtistWorkingInfo } from 'lib/queries/artists'
+import { getArtistRequests, updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
 import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
 import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
 import SelectStudio from './SelectStudio'
 import WorkingRequests from './WorkingRequests'
+import useSWR from 'swr'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -25,6 +26,11 @@ const WorkingInfo = ({ uid, isArtist }) => {
   const [success, setSuccess] = useState(false)
   const { artist } = useArtist(uid)
   const router = useRouter()
+
+  const { data } = useSWR(
+    ['getArtistRequests', artist?.artist_id],
+    getArtistRequests
+  )
 
   console.log(studioName, 'nombre del estudio')
 
@@ -156,41 +162,56 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
             {watchWorkAs == 'partner' && (
               <div className="mt-7">
-                <label className="text-sm mb-3 tracking-wide">
-                  <span className="mb-3 flex">
-                    SELECCIONA EL ESTUDIO DONDE TRABAJAS
-                    <span
-                      aria-label="Si no lo encuentras debes registrarlo o solicitar que lo hagan en tu trabajo"
-                      data-microtip-position="bottom"
-                      role="tooltip"
-                    >
-                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                    </span>
-                  </span>
-                  <SelectStudio
-                    state={{ studioName, setStudioName }}
-                    artist={artist}
-                  />
-                </label>
-                <div className="mt-3">
-                  <p className="flex">
-                    ¿Tienes un estudio?{' '}
-                    <span
-                      aria-label="Registrar un estudio en Tinta Love, es gratis."
-                      data-microtip-position="top"
-                      role="tooltip"
-                    >
-                      <FiHelpCircle className="text-xl ml-3 cursor-help" />
-                    </span>
-                    <Link href="/studio-account/general">
-                      <a className="ml-2 text-primary underline">
-                        Regístralo aquí
-                      </a>
-                    </Link>
-                  </p>
-                </div>
+                {data?.requests.length < 2 ? (
+                  <>
+                    <label className="text-sm mb-3 tracking-wide">
+                      <span className="mb-3 flex">
+                        SELECCIONA EL ESTUDIO DONDE TRABAJAS
+                        <span
+                          aria-label="Si no lo encuentras debes registrarlo o solicitar que lo hagan en tu trabajo"
+                          data-microtip-position="bottom"
+                          role="tooltip"
+                        >
+                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                        </span>
+                      </span>
+                      <SelectStudio
+                        state={{ studioName, setStudioName }}
+                        artist={artist}
+                      />
+                    </label>
+                    <div className="mt-3">
+                      <p className="flex">
+                        ¿Tienes un estudio?{' '}
+                        <span
+                          aria-label="Registrar un estudio en Tinta Love, es gratis."
+                          data-microtip-position="top"
+                          role="tooltip"
+                        >
+                          <FiHelpCircle className="text-xl ml-3 cursor-help" />
+                        </span>
+                        <Link href="/studio-account/general">
+                          <a className="ml-2 text-primary underline">
+                            Regístralo aquí
+                          </a>
+                        </Link>
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    <h2 className="uppercase font-semibold text-gray-300">
+                      Lograste el límite
+                    </h2>
+                    <p className="text-gray-400">
+                      Si quieres volver a buscar estudios no puedes tener mas de
+                      2 solicitudes en proceso o ser parte de 2 estudios
+                      actualmente.
+                    </p>
+                  </div>
+                )}
 
-                <WorkingRequests artistId={artist?.artist_id} />
+                <WorkingRequests requests={data?.requests || null} />
               </div>
             )}
 
