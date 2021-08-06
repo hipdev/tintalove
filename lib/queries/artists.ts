@@ -475,3 +475,31 @@ export async function deletePictureFromArtist(imageId, pictureId) {
     throw new Error('Error eliminando la foto')
   }
 }
+
+export async function sendArtistWorkRequest(studio, artist) {
+  const q = query(
+    collection(db, 'artists_requests'),
+    where('artist_id', '==', artist.id),
+    where('studio_id', '==', studio.id)
+  )
+
+  const querySnapshot = await getDocs(q)
+
+  if (querySnapshot.empty) {
+    await addDoc(collection(db, 'artists_requests'), {
+      created_at: serverTimestamp(),
+      studioId: studio.objectID, // id from Algolia
+      artist_id: artist.id,
+      studio_name: studio.studio_name,
+      studio_address: studio.formatted_address,
+      displayName: artist.displayName,
+      email: artist.email || null,
+      phone: artist.phone || null,
+      approval: 'PENDING',
+    })
+
+    return true
+  } else {
+    throw new Error(`Ya enviaste una invitación a ${studio.studio_name}`)
+  }
+}
