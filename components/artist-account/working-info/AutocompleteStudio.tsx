@@ -28,7 +28,7 @@ const AutocompleteStudio = (props) => {
         submitButtonTitle: 'Enviar',
       },
 
-      placeholder: 'Buscar estudio',
+      placeholder: props.defaultState || 'Buscar estudio',
       classNames: {
         root: 'au-studio',
         panel: 'au-studio',

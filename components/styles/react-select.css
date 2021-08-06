@@ -2,6 +2,17 @@
   background: black;
 }
 
+[aria-label][role~='tooltip']:hover::before,
+[aria-label][role~='tooltip']:hover::after,
+[aria-label][role~='tooltip']:focus::before,
+[aria-label][role~='tooltip']:focus::after {
+  width: 8rem;
+  white-space: normal;
+}
+[aria-label][role~='tooltip']::after {
+  background: #111111 !important;
+}
+
 .create_artist__control {
   background: #111319 !important;
   padding: 4px !important;
