@@ -477,10 +477,11 @@ export async function deletePictureFromArtist(imageId, pictureId) {
 }
 
 export async function sendArtistWorkRequest(studio, artist) {
+  console.log(studio, artist, 'data para enviar')
   const q = query(
     collection(db, 'artists_requests'),
-    where('artist_id', '==', artist.id),
-    where('studio_id', '==', studio.id)
+    where('artist_id', '==', artist.artist_id),
+    where('studio_id', '==', studio.objectID)
   )
 
   const querySnapshot = await getDocs(q)
@@ -488,10 +489,12 @@ export async function sendArtistWorkRequest(studio, artist) {
   if (querySnapshot.empty) {
     await addDoc(collection(db, 'artists_requests'), {
       created_at: serverTimestamp(),
-      studioId: studio.objectID, // id from Algolia
-      artist_id: artist.id,
+      studio_id: studio.objectID, // id from Algolia
+      artist_id: artist.artist_id,
       studio_name: studio.studio_name,
       studio_address: studio.formatted_address,
+      studio_picture: studio.profile_picture.url || null,
+      artist_picture: artist.profile_picture.url || null,
       displayName: artist.displayName,
       email: artist.email || null,
       phone: artist.phone || null,
