@@ -48,7 +48,7 @@ const CreatePost = ({ user }) => {
                   className={pictureSize == 'portrait' ? 'text-primary' : ''}
                 >
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
                     onClick={() => setPictureSize('portrait')}
                   >
                     <span className="text-2xl">
@@ -61,7 +61,7 @@ const CreatePost = ({ user }) => {
                   className={pictureSize == 'landscape' ? 'text-primary' : ''}
                 >
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
                     onClick={() => setPictureSize('landscape')}
                   >
                     <span className="text-2xl">
@@ -72,7 +72,7 @@ const CreatePost = ({ user }) => {
                 </div>
                 <div className={pictureSize == 'square' ? 'text-primary' : ''}>
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
                     onClick={() => setPictureSize('square')}
                   >
                     <span className="text-2xl">
@@ -91,7 +91,7 @@ const CreatePost = ({ user }) => {
           <label className="flex flex-col mb-5">
             <span className="block mb-2">Descripción corta</span>
             <textarea
-              className="input-primary placeholder-light-200 bg-ocean_blue-300 resize-none"
+              className="input-primary placeholder-light-200 bg-gr-800 resize-none"
               placeholder="Ej: Gato en sombras, con un toque de puntillismo..."
               rows={3}
               value={description}
@@ -121,7 +121,7 @@ const CreatePost = ({ user }) => {
                   className={pictureSize == 'portrait' ? 'text-primary' : ''}
                 >
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 xl:mb-5"
                     onClick={() => setPictureSize('portrait')}
                   >
                     <span className="text-2xl">
@@ -134,7 +134,7 @@ const CreatePost = ({ user }) => {
                   className={pictureSize == 'landscape' ? 'text-primary' : ''}
                 >
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none mb-0 md:mb-5 mx-2"
                     onClick={() => setPictureSize('landscape')}
                   >
                     <span className="text-2xl">
@@ -145,7 +145,7 @@ const CreatePost = ({ user }) => {
                 </div>
                 <div className={pictureSize == 'square' ? 'text-primary' : ''}>
                   <button
-                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
+                    className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none"
                     onClick={() => setPictureSize('square')}
                   >
                     <span className="text-2xl">

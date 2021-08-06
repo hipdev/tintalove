@@ -4,7 +4,7 @@ import ArtistCard from './ArtistCard'
 
 const ArtistsList = ({ artistsData }) => {
   return (
-    <div className="bg-ocean_blue-900 h-auto">
+    <div className="bg-dark-800 h-auto">
       <div className="container mx-auto pt-32">
         <div className="flex flex-col sm:flex-col xl:flex-row items-center justify-between mb-10">
           <div className="flex items-center mb-4 xl:mb-0">

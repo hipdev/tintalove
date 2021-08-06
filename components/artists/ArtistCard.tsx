@@ -8,7 +8,7 @@ import { ArtistTypes } from 'types/artist'
 
 const ArtistCard = ({ artist }: { artist: ArtistTypes }) => {
   return (
-    <div className="w-full h-full bg-ocean_blue-800 p-5 rounded-md">
+    <div className="w-full h-full bg-gr-800 p-5 rounded-md">
       <div className="flex justify-between mb-8">
         <div className="flex flex-wrap gap-5">
           <div className="bg-black w-14  h-14  rounded-xl">
@@ -23,7 +23,7 @@ const ArtistCard = ({ artist }: { artist: ArtistTypes }) => {
             </p>
           </div>
         </div>
-        <div className="w-14 h-14 bg-light-600 rounded-full flex flex-shrink-0 items-center justify-center">
+        <div className="w-14 h-14 bg-gr-600 rounded-full flex flex-shrink-0 items-center justify-center">
           <span className="text-white text-2xl">
             <AiOutlineStar />
           </span>

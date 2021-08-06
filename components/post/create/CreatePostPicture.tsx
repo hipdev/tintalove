@@ -104,13 +104,13 @@ const CreatePostPicture = ({
               </span>
               <span className="hidden md:block">HORIZONTAL</span>
             </button>
-            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
+            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
               <span className="text-2xl">
                 <BsTablet />
               </span>
               <span className="hidden md:block">VERTICAL</span>
             </button>
-            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-ocean_blue-300 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
+            <button className="w-14 h-14 md:h-0 md:w-48 sm:w-auto flex items-center justify-center gap-3 bg-gr-800 py-6 px-4 rounded-full md:rounded-md focus:outline-none">
               <span className="text-2xl">
                 <CgDice1 />
               </span>

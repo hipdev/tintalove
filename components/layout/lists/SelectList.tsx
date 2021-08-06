@@ -70,7 +70,7 @@ const SelectList = ({ userId, post, user }) => {
       {/*<div>
         {data.userLists.map((list) => (
           <div
-            className="flex items-center mb-5 bg-ocean_blue-300 p-4 rounded-md"
+            className="flex items-center mb-5 bg-gr-800 p-4 rounded-md"
             key={list.id}
           >
             <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
