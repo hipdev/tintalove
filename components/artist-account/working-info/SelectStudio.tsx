@@ -13,7 +13,7 @@ const SelectStudio = ({ state, artist }) => {
   return (
     <div>
       <AutocompleteStudio
-        defaultState={state.studioName?.studio_name}
+        defaultState={state.studioName?.studio_name || ''}
         openOnFocus={true}
         debug={true}
         getSources={(props) => {
@@ -30,6 +30,7 @@ const SelectStudio = ({ state, artist }) => {
                       query: props.query,
                       params: {
                         hitsPerPage: 4,
+                        filters: 'is_active:true', // Asi se filtra hptaa!!
                       },
                     },
                   ],
