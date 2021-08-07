@@ -39,7 +39,10 @@ export default function MainInfoPage() {
             {data.user.is_artist ? (
               <MainInfoEdit uid={data.user.uid || null} />
             ) : (
-              <MainInfo uid={data.user.uid || null} />
+              <MainInfo
+                uid={data.user.uid || null}
+                email={data.user.email || null}
+              />
             )}
           </>
         )}

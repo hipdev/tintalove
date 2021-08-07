@@ -14,7 +14,7 @@ import { createArtist, userNameAvailable } from 'lib/queries/artists'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
-const MainInfo = ({ uid }) => {
+const MainInfo = ({ uid, email }) => {
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -23,6 +23,7 @@ const MainInfo = ({ uid }) => {
       availableUsername: false,
       validUserName: false,
       displayName: '',
+      email: email || '',
       username: '',
       bio: '',
     },
@@ -150,6 +151,7 @@ const MainInfo = ({ uid }) => {
         .trim(),
       bio: data.bio.replace(/\s\s+/g, ' ').trim(),
       username: data.username,
+      email: data.email,
       ...placeInfo,
     }
 
@@ -286,6 +288,20 @@ const MainInfo = ({ uid }) => {
                 placeholder="Cuentale al mundo sobre ti"
                 className="w-full text-gray-400  bg-transparent border-2 border-light-900 p-2 rounded-xl placeholder-light-900 outline-none resize-none"
               ></textarea>
+            </div>
+
+            <div className="col-span-6 md:col-span-3 mb-6">
+              <label className="block text-white text-sm mb-2 tracking-wide">
+                <span className="mb-3 block uppercase">Correo principal</span>
+                <input
+                  type="email"
+                  {...register('email')}
+                  autoComplete="off"
+                  placeholder="Tu correo electrónico"
+                  className="input-primary w-full"
+                  required
+                />
+              </label>
             </div>
           </div>
 

@@ -45,19 +45,6 @@ export default function MainInfoPage() {
           )}
         </>
       )}
-
-      {data.user.has_studio ? (
-        <div>
-          {status === 'ready' && (
-            <GeneralInfoEdit
-              studioId={data.user.studio_id || null}
-              uid={data.user.uid || null}
-            />
-          )}
-        </div>
-      ) : (
-        <GeneralInfo uid={data.user.uid || null} />
-      )}
     </LayoutStepsStudio>
   )
 }
