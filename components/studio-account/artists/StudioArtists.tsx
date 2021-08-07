@@ -11,6 +11,7 @@ import ArtistsSendEmail from './ArtistsSendEmail'
 import ArtistsAccountList from './ArtistsRequests'
 import useStudio from 'hooks/use-studio'
 import { updateStudioArtists } from 'lib/queries/studios'
+import ArtistsLists from './ArtistsLists'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -89,6 +90,7 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
       </h1>
 
       <ArtistsAccountList studio={studio} />
+      <ArtistsLists studio={studio} />
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
