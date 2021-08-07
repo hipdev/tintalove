@@ -464,3 +464,20 @@ export async function acceptArtistRequest(request) {
     throw new Error(`${request.artist_name} ya hace parte del estudio`)
   }
 }
+
+// Artistas por estudio
+
+export async function getArtistsByStudio(_key, studioId) {
+  const q = query(
+    collection(db, 'studio_artists'),
+    where('studio_id', '==', studioId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const artists: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return artists.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { artists }
+}
