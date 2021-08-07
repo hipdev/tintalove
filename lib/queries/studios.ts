@@ -430,3 +430,37 @@ export async function cancelArtistRequest(requestId) {
     throw new Error('Error eliminando la solicitud')
   }
 }
+
+export async function acceptArtistRequest(request) {
+  const artistRequest = doc(collection(db, 'artists_requests'), request.id)
+
+  const q = query(
+    collection(db, 'studios_artists'),
+    where('artist_id', '==', request.artist_id),
+    where('studio_id', '==', request.studio_id)
+  )
+
+  const querySnapshot = await getDocs(q)
+
+  if (querySnapshot.empty) {
+    await addDoc(collection(db, 'studios_artists'), {
+      created_at: serverTimestamp(),
+      studio_id: request.studio_id, // id from Algolia
+      artist_id: request.artist_id,
+      studio_name: request.studio_name,
+      studio_address: request.studio_address,
+      studio_picture: request.studio_picture,
+      artist_picture: request.artist_picture,
+      artist_name: request.artist_name,
+      artist_email: request.artist_email || null,
+      artist_phone: request.artist_phone || null,
+      is_active: true,
+    })
+
+    await updateDoc(artistRequest, { approval: 'APPROVED' })
+
+    return true
+  } else {
+    throw new Error(`${request.artist_name} ya hace parte del estudio`)
+  }
+}

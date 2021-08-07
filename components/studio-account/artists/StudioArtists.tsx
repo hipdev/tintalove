@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 
 import ArtistsSendEmail from './ArtistsSendEmail'
-import ArtistsAccountList from './ArtistsList'
+import ArtistsAccountList from './ArtistsRequests'
 import useStudio from 'hooks/use-studio'
 import { updateStudioArtists } from 'lib/queries/studios'
 
