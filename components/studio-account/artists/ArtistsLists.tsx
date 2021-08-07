@@ -1,20 +1,12 @@
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
-import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai'
-import { MdCancel, MdCheckCircle, MdMail } from 'react-icons/md'
-import { GiCancel } from 'react-icons/gi'
+import { MdCancel } from 'react-icons/md'
 import 'microtip/microtip.css'
-import {
-  acceptArtistRequest,
-  cancelArtistRequest,
-  getArtistsByStudio,
-  getRequestsByStudio,
-} from 'lib/queries/studios'
+import { getArtistsByStudio } from 'lib/queries/studios'
 import useSWR from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
-import { BsPersonCheck } from 'react-icons/bs'
-import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
+import { IoMdCall } from 'react-icons/io'
 
 const ArtistsLists = ({ studio }) => {
   const { data, mutate } = useSWR(
@@ -24,29 +16,17 @@ const ArtistsLists = ({ studio }) => {
 
   console.log(data, 'requests')
 
-  const handleDeleteRequest = (requestId) => {
-    toast.promise(cancelArtistRequest(requestId), {
-      loading: 'Eliminando...',
-      success: () => {
-        mutate()
-        return 'Solicitud eliminada'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
-  }
-  const handleAcceptRequest = (request) => {
-    toast.promise(acceptArtistRequest(request), {
-      loading: 'Aceptando...',
-      success: () => {
-        mutate()
-        return 'Solicitud aceptada'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
+  const handleDeleteArtist = (requestId) => {
+    // toast.promise(cancelArtistRequest(requestId), {
+    //   loading: 'Eliminando...',
+    //   success: () => {
+    //     mutate()
+    //     return 'Solicitud eliminada'
+    //   },
+    //   error: (err) => {
+    //     return `${err.toString()}`
+    //   },
+    // })
   }
 
   return (
@@ -55,11 +35,11 @@ const ArtistsLists = ({ studio }) => {
         <>
           <h3 className="mt-4 text-sm">TUS ARTISTAS</h3>
 
-          <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
+          <div className="bg-dark-800 shadow  sm:rounded-md mb-10 mt-2 ">
             <ul className="divide-y divide-gray-200">
               {data?.artists?.map((request) => {
                 return (
-                  <li key={request.id} className="block hover:bg-gray-900">
+                  <li key={request.id} className="block hover:bg-black ">
                     <div className="flex items-center px-4 py-3 sm:px-6">
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
@@ -81,7 +61,7 @@ const ArtistsLists = ({ studio }) => {
                             </a>
 
                             <p className="mt-2 flex items-center text-sm text-gray-500">
-                              <MdMail
+                              <IoMdCall
                                 className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                 aria-hidden="true"
                               />
@@ -111,19 +91,12 @@ const ArtistsLists = ({ studio }) => {
                                   </span>
                                 </time>
                               </p>
-                              <p className="mt-2 flex items-center text-sm text-gray-500">
-                                <FiHelpCircle
-                                  className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary"
-                                  aria-hidden="true"
-                                />
-                                <span>Esperando respuesta</span>
-                              </p>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="flex">
-                        <div onClick={() => handleDeleteRequest(request.id)}>
+                        <div onClick={() => handleDeleteArtist(request.id)}>
                           <div>
                             <span
                               aria-label="Eliminar "
@@ -136,22 +109,6 @@ const ArtistsLists = ({ studio }) => {
                               />
                             </span>
                           </div>
-                        </div>
-
-                        <div
-                          className="ml-7"
-                          onClick={() => handleAcceptRequest(request)}
-                        >
-                          <span
-                            aria-label="Aceptar "
-                            data-microtip-position="top"
-                            role="tooltip"
-                          >
-                            <BsPersonCheck
-                              className="h-6 w-6 text-primary cursor-pointer"
-                              aria-hidden="true"
-                            />
-                          </span>
                         </div>
                       </div>
                     </div>
