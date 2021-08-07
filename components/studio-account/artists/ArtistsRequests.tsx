@@ -4,14 +4,18 @@ import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai'
 import { MdCancel, MdCheckCircle, MdMail } from 'react-icons/md'
 import { GiCancel } from 'react-icons/gi'
 import 'microtip/microtip.css'
-import { cancelArtistRequest, getRequestsByStudio } from 'lib/queries/studios'
+import {
+  acceptArtistRequest,
+  cancelArtistRequest,
+  getRequestsByStudio,
+} from 'lib/queries/studios'
 import useSWR from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
-const ArtistsAccountList = ({ studio }) => {
+const ArtistsRequests = ({ studio }) => {
   const { data, mutate } = useSWR(
     ['getRequestsByStudio', studio?.id],
     getRequestsByStudio
@@ -25,6 +29,18 @@ const ArtistsAccountList = ({ studio }) => {
       success: () => {
         mutate()
         return 'Solicitud eliminada'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
+  }
+  const handleAcceptRequest = (request) => {
+    toast.promise(acceptArtistRequest(request), {
+      loading: 'Aceptando...',
+      success: () => {
+        mutate()
+        return 'Solicitud aceptada'
       },
       error: (err) => {
         return `${err.toString()}`
@@ -120,7 +136,10 @@ const ArtistsAccountList = ({ studio }) => {
                         </div>
                       </div>
 
-                      <div className="ml-7">
+                      <div
+                        className="ml-7"
+                        onClick={() => handleAcceptRequest(request)}
+                      >
                         <span
                           aria-label="Aceptar "
                           data-microtip-position="top"
@@ -136,6 +155,12 @@ const ArtistsAccountList = ({ studio }) => {
                   </div>
                 </li>
               )
+            } else {
+              return (
+                <p className="text-gray-300 p-4">
+                  Sin solicitudes actualmente.
+                </p>
+              )
             }
           })}
 
@@ -150,4 +175,4 @@ const ArtistsAccountList = ({ studio }) => {
   )
 }
 
-export default ArtistsAccountList
+export default ArtistsRequests
