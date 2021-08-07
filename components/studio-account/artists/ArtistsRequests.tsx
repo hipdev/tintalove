@@ -9,14 +9,14 @@ import {
   cancelArtistRequest,
   getRequestsByStudio,
 } from 'lib/queries/studios'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
 const ArtistsRequests = ({ studio }) => {
-  const { data, mutate } = useSWR(
+  const { data, mutate: mutateRequest } = useSWR(
     ['getRequestsByStudio', studio?.id],
     getRequestsByStudio
   )
@@ -27,7 +27,7 @@ const ArtistsRequests = ({ studio }) => {
     toast.promise(cancelArtistRequest(requestId), {
       loading: 'Eliminando...',
       success: () => {
-        mutate()
+        mutateRequest()
         return 'Solicitud eliminada'
       },
       error: (err) => {
@@ -39,7 +39,8 @@ const ArtistsRequests = ({ studio }) => {
     toast.promise(acceptArtistRequest(request), {
       loading: 'Aceptando...',
       success: () => {
-        mutate()
+        mutateRequest()
+        mutate(['getArtistsByStudio', studio?.id])
         return 'Solicitud aceptada'
       },
       error: (err) => {
@@ -157,7 +158,7 @@ const ArtistsRequests = ({ studio }) => {
               )
             } else {
               return (
-                <p className="text-gray-300 p-4">
+                <p key="no-request" className="text-gray-300 p-4">
                   Sin solicitudes actualmente.
                 </p>
               )

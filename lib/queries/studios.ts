@@ -445,6 +445,7 @@ export async function acceptArtistRequest(request) {
   if (querySnapshot.empty) {
     await addDoc(collection(db, 'studios_artists'), {
       created_at: serverTimestamp(),
+      request_id: request.id,
       studio_id: request.studio_id, // id from Algolia
       artist_id: request.artist_id,
       studio_name: request.studio_name,
@@ -469,7 +470,7 @@ export async function acceptArtistRequest(request) {
 
 export async function getArtistsByStudio(_key, studioId) {
   const q = query(
-    collection(db, 'studio_artists'),
+    collection(db, 'studios_artists'),
     where('studio_id', '==', studioId)
   )
 
