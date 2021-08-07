@@ -28,6 +28,7 @@ const MainInfoForm = ({ uid, artist }) => {
       availableUsername: true,
       validUserName: true,
       displayName: artist.displayName || '',
+      email: artist.email || '',
       username: artist.username || '',
       bio: artist.bio,
     },
@@ -160,7 +161,11 @@ const MainInfoForm = ({ uid, artist }) => {
       return
     }
 
-    let formData = { bio: data.bio, displayName: data.displayName }
+    let formData = {
+      bio: data.bio,
+      displayName: data.displayName,
+      email: data.email,
+    }
 
     console.log(placeInfo, 'esto es placeInfo, aqui esta el error')
 
@@ -297,7 +302,7 @@ const MainInfoForm = ({ uid, artist }) => {
               )}
           </div>
 
-          <div className="col-span-6 mb-6">
+          <div className="col-span-6">
             <div className="flex justify-between items-center mb-3">
               <label
                 htmlFor=""
@@ -317,9 +322,24 @@ const MainInfoForm = ({ uid, artist }) => {
               className="w-full input-primary resize-none"
             ></textarea>
           </div>
+
+          <div className="col-span-6 md:col-span-3 mb-6">
+            <label className="block text-white text-sm mb-2 tracking-wide">
+              <span className="mb-3 block uppercase">Correo principal</span>
+              <input
+                type="email"
+                {...register('email')}
+                autoComplete="off"
+                placeholder="Tu correo electrónico"
+                className="input-primary w-full"
+                required
+              />
+            </label>
+          </div>
         </div>
 
         {artist.displayName != watchMultiple.displayName ||
+        artist.email != watchMultiple.email ||
         artist.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">

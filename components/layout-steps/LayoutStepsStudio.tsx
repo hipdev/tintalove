@@ -23,6 +23,8 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
   const { data } = useSWR(['getStudioInfo', user?.studio_id], getStudioInfo)
 
+  console.log(data, 'studio data')
+
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
       <HeadContainer />
@@ -57,11 +59,9 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {data?.studio?.is_active && (
+        {data?.studio?.is_active ? (
           <SideMenuStudio username={data?.studio?.username || null} />
-        )}
-
-        {data?.studio && !data.studio.is_active && (
+        ) : (
           <SideMenuStudioSteps studioId={user.studio_id} />
         )}
       </div>
