@@ -1,33 +1,15 @@
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
-import { MdCancel } from 'react-icons/md'
 import 'microtip/microtip.css'
 import useSWR from 'swr'
-import { parsePhoneNumber } from 'libphonenumber-js'
-import toast from 'react-hot-toast'
 import { IoMdCall } from 'react-icons/io'
 import { getStudiosByArtistId } from 'lib/queries/artists'
 
 const StudiosList = ({ artistId }) => {
-  const { data, mutate } = useSWR(
+  const { data } = useSWR(
     ['getStudiosByArtistId', artistId],
     getStudiosByArtistId
   )
-
-  console.log(data, 'estudios')
-
-  const handleDeleteArtist = (requestId) => {
-    // toast.promise(cancelArtistRequest(requestId), {
-    //   loading: 'Eliminando...',
-    //   success: () => {
-    //     mutate()
-    //     return 'Solicitud eliminada'
-    //   },
-    //   error: (err) => {
-    //     return `${err.toString()}`
-    //   },
-    // })
-  }
 
   return (
     <>
