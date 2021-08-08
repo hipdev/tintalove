@@ -14,6 +14,7 @@ import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
 import SelectStudio from './SelectStudio'
 import WorkingRequests from './WorkingRequests'
 import useSWR from 'swr'
+import StudiosList from './StudiosList'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -212,6 +213,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
                 )}
 
                 <WorkingRequests requests={data?.requests || null} />
+                <StudiosList artistId={uid || null} />
               </div>
             )}
 

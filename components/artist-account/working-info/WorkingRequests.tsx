@@ -130,7 +130,7 @@ const WorkingRequests = ({ requests }) => {
               } else {
                 return (
                   <p className="px-3 py-2" key="all-approved">
-                    Sin solicitudes vigentes
+                    Sin solicitudes en proceso o canceladas.
                   </p>
                 )
               }
