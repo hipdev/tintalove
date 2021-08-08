@@ -14,7 +14,7 @@ const ArtistsLists = ({ studio }) => {
     getArtistsByStudio
   )
 
-  console.log(data, 'requests')
+  console.log(data, 'artistas')
 
   const handleDeleteArtist = (requestId) => {
     // toast.promise(cancelArtistRequest(requestId), {
@@ -31,7 +31,7 @@ const ArtistsLists = ({ studio }) => {
 
   return (
     <>
-      {data?.artists ? (
+      {data?.artists.length > 0 ? (
         <>
           <h3 className="mt-4 text-sm">TUS ARTISTAS</h3>
 
