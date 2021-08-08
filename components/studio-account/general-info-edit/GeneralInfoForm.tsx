@@ -28,6 +28,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       studio_name: studio.studio_name || '',
       username: studio.username || '',
       bio: studio.bio,
+      email: studio.email || '',
     },
   })
 
@@ -164,7 +165,11 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       return
     }
 
-    let formData = { bio: data.bio, studio_name: data.studio_name }
+    let formData = {
+      bio: data.bio,
+      studio_name: data.studio_name,
+      email: data.email,
+    }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
     toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
@@ -317,9 +322,24 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
               className="w-full input-primary resize-none"
             ></textarea>
           </div>
+
+          <div className="col-span-6 md:col-span-3 mb-6">
+            <label className="block text-white text-sm mb-2 tracking-wide">
+              <span className="mb-3 block uppercase">Correo principal</span>
+              <input
+                type="email"
+                {...register('email')}
+                autoComplete="off"
+                placeholder="Tu correo electrónico"
+                className="input-primary w-full"
+                required
+              />
+            </label>
+          </div>
         </div>
 
         {studio.studio_name != watchMultiple.studio_name ||
+        studio.email != watchMultiple.email ||
         studio.formatted_address != placeInfo?.formatted_address ||
         studio.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
