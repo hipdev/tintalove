@@ -535,3 +535,18 @@ export async function deleteArtistRequest(requestId) {
     throw new Error('Error eliminando la solicitud')
   }
 }
+
+export async function getStudiosByArtistId(_key, artistId) {
+  const q = query(
+    collection(db, 'studios_artists'),
+    where('artist_id', '==', artistId)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const studios: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return studios.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { studios }
+}
