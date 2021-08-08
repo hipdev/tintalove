@@ -3,7 +3,7 @@ import algoliasearch from 'algoliasearch/lite'
 
 import '@algolia/autocomplete-theme-classic'
 import AutocompleteStudio from './AutocompleteStudio'
-import { AutocompleteStudioItem } from './AutocompleteStudioItem'
+import { AutocompleteStudioItem } from './AutocompleteStudioItemSendRequest'
 
 const appId = 'JE20HAUJXG'
 const apiKey = 'db9dbba9f07212053022eec3e364876a'
