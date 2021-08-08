@@ -33,6 +33,7 @@ const GeneralInfo = ({ uid }) => {
       studio_name: '',
       username: '',
       bio: '',
+      email: '',
     },
   })
 
@@ -171,6 +172,7 @@ const GeneralInfo = ({ uid }) => {
         .trim(),
       bio: data.bio.replace(/\s\s+/g, ' ').trim(),
       username: data.username,
+      email: data.email,
       ...placeInfo,
     }
 
@@ -332,6 +334,20 @@ const GeneralInfo = ({ uid }) => {
               ></textarea>
 
               {errors?.bio && <span>Este campo es requerido</span>}
+            </div>
+
+            <div className="col-span-6 md:col-span-3 mb-6">
+              <label className="block text-white text-sm mb-2 tracking-wide">
+                <span className="mb-3 block uppercase">Correo principal</span>
+                <input
+                  type="email"
+                  {...register('email')}
+                  autoComplete="off"
+                  placeholder="Tu correo electrónico"
+                  className="input-primary w-full"
+                  required
+                />
+              </label>
             </div>
           </div>
 

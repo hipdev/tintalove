@@ -5,7 +5,7 @@ import { activateArtist } from 'lib/queries/artists'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
 
 type Props = {
@@ -80,19 +80,6 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
 
   return (
     <div className="mb-10 lg:mb-0">
-      <Toaster
-        toastOptions={{
-          className: 'bg-red-600',
-          style: {
-            background: '#158e72',
-            border: 'none',
-            borderRadius: '3px',
-            color: '#fff',
-          },
-          duration: 2000,
-        }}
-        position="bottom-right"
-      />
       <div className="mb-10 mt-12">
         <p className="text-primary text-xl font-semibold">Estar en TintaLove</p>
         <h1 className="text-2xl text-white font-bold tracking-wide">
