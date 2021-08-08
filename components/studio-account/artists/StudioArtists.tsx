@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
 
 import ArtistsSendEmail from './ArtistsSendEmail'
-import ArtistsAccountList from './ArtistsRequests'
+import ArtistsRequests from './ArtistsRequests'
 import useStudio from 'hooks/use-studio'
 import { updateStudioArtists } from 'lib/queries/studios'
 import ArtistsLists from './ArtistsLists'
@@ -89,7 +89,7 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
         Artistas
       </h1>
 
-      <ArtistsAccountList studio={studio} />
+      <ArtistsRequests studio={studio} />
       <ArtistsLists studio={studio} />
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
