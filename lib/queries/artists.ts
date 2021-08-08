@@ -497,6 +497,7 @@ export async function sendArtistWorkRequest(studio, artist) {
         studio.dataLocation.formatted_address || studio.formatted_address,
       studio_picture: studio.profile_picture.url || null,
       artist_picture: artist.profile_picture.url || null,
+      studio_email: studio.email || null,
       artist_name: artist.displayName,
       artist_email: artist.email || null,
       artist_phone: artist.phone || null,
