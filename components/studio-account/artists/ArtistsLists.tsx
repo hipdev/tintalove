@@ -2,7 +2,7 @@ import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
 import { MdCancel } from 'react-icons/md'
 import 'microtip/microtip.css'
-import { getArtistsByStudio } from 'lib/queries/studios'
+import { deleteArtistFromStudio, getArtistsByStudio } from 'lib/queries/studios'
 import useSWR from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import toast from 'react-hot-toast'
@@ -14,17 +14,19 @@ const ArtistsLists = ({ studio }) => {
     getArtistsByStudio
   )
 
-  const handleDeleteArtist = (requestId) => {
-    // toast.promise(cancelArtistRequest(requestId), {
-    //   loading: 'Eliminando...',
-    //   success: () => {
-    //     mutate()
-    //     return 'Solicitud eliminada'
-    //   },
-    //   error: (err) => {
-    //     return `${err.toString()}`
-    //   },
-    // })
+  console.log(data, 'artists')
+
+  const handleDeleteArtistFromStudio = (studioArtist) => {
+    toast.promise(deleteArtistFromStudio(studioArtist), {
+      loading: 'Eliminando...',
+      success: () => {
+        mutate()
+        return 'Artista eliminado'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
   }
 
   return (
@@ -94,7 +96,9 @@ const ArtistsLists = ({ studio }) => {
                         </div>
                       </div>
                       <div className="flex">
-                        <div onClick={() => handleDeleteArtist(request.id)}>
+                        <div
+                          onClick={() => handleDeleteArtistFromStudio(request)}
+                        >
                           <div>
                             <span
                               aria-label="Eliminar "
