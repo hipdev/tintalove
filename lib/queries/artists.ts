@@ -506,7 +506,7 @@ export async function sendArtistWorkRequest(studio, artist) {
 
     return true
   } else {
-    throw new Error(`Ya tienes una con ${studio.studio_name}`)
+    throw new Error(`Ya enviaste una a ${studio.studio_name}`)
   }
 }
 
