@@ -10,6 +10,7 @@ import {
   getStudioPictures,
 } from 'lib/queries/studios'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
   const router: any = useRouter()
@@ -19,11 +20,26 @@ const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
   }
 
   if (!studioId) {
-    return <p>No existe ese estudio</p>
+    return (
+      <div className="text-gray-300 flex flex-col justify-center items-center">
+        <p className="text-4xl font-bold  text-center pt-20">
+          No existe ese estudio
+        </p>
+
+        <Link href="/">
+          <a className="mt-10 font-semibold uppercase hover:text-gn-300">
+            Volver
+          </a>
+        </Link>
+      </div>
+    )
   }
+
+  console.log(studioData, 'data del estudio')
 
   return (
     <Layout>
+      {/* {studioData} */}
       <StudioProfile
         studioData={studioData || null}
         studioPictures={studioPictures || null}
