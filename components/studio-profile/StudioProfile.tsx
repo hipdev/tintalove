@@ -35,6 +35,9 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
       </div>
     )
   }
+  const hasPictures = studioPictures.length > 0
+
+  console.log(hasPictures)
 
   return (
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
@@ -47,7 +50,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
         />
       )}
 
-      {studioPictures.length > 0 && (
+      {hasPictures && (
         <div
           className="flex overflow-hidden max-h-80 cursor-pointer"
           onClick={() => setOpenModalPics(true)}
@@ -69,7 +72,12 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           })}
         </div>
       )}
-      <div className=" py-4 md:py-3 px-5 sm:px-10 lg:px-20 container mx-auto pt-0 relative -top-10">
+      <div
+        className={
+          'py-4 md:py-3 px-5 sm:px-10 lg:px-20 container mx-auto pt-0 relative -top-10 ' +
+          (!hasPictures ? 'top-7 sm:top-10' : '')
+        }
+      >
         <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 pb-3 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
             {studioData?.profile_picture?.url && (
