@@ -543,8 +543,7 @@ export async function deleteArtistFromStudio(studioArtist) {
     { merge: true }
   )
 
-  const res = await batch.commit()
+  await batch.commit()
 
-  console.log(res, 'res del batch')
   return true
 }
