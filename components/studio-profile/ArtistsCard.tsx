@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import Link from 'next/link'
 
-const ArtistsCards = ({ artistId }: { artistId: string }) => {
+const ArtistsCard = ({ artistId }: { artistId: string }) => {
   const { data } = useSWR(['getArtistInfo', artistId], getArtistInfo)
 
   return (
@@ -65,4 +65,4 @@ const ArtistsCards = ({ artistId }: { artistId: string }) => {
   )
 }
 
-export default ArtistsCards
+export default ArtistsCard
