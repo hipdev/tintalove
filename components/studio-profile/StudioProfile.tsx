@@ -163,14 +163,20 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           <h1 className="text-white font-semibold mb-10">
             Artistas del estudio
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <StudioCard studios={studioData} />
-            <StudioCard studios={studioData} />
-            <StudioCard studios={studioData} />
-            <StudioCard studios={studioData} />
-            <StudioCard studios={studioData} />
-            <StudioCard studios={studioData} />
-          </div>
+          {studioData?.artists?.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <StudioCard studios={studioData} />
+              <StudioCard studios={studioData} />
+              <StudioCard studios={studioData} />
+              <StudioCard studios={studioData} />
+              <StudioCard studios={studioData} />
+              <StudioCard studios={studioData} />
+            </div>
+          ) : (
+            <p className="text-gray-400">
+              Este estudio no tiene artistas vinculados
+            </p>
+          )}
         </div>
       </div>
     </div>
