@@ -11,6 +11,7 @@ import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
+import ArtistsCards from './ArtistsCards'
 
 type Props = {
   studioData: StudioTypes
@@ -19,7 +20,7 @@ type Props = {
 
 const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   console.log(studioData, 'data del estudio')
-  console.log(studioPictures, 'fotos del estudio')
+
   const [openModalPics, setOpenModalPics] = useState(false)
 
   const { openModal } = useContext(LoginContext)
@@ -36,8 +37,6 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
     )
   }
   const hasPictures = studioPictures.length > 0
-
-  console.log(hasPictures)
 
   return (
     <div className="bg-dark-800 h-auto px-5 sm:px-0">
@@ -164,14 +163,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
             Artistas del estudio
           </h1>
           {studioData?.artists?.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <StudioCard studios={studioData} />
-              <StudioCard studios={studioData} />
-              <StudioCard studios={studioData} />
-              <StudioCard studios={studioData} />
-              <StudioCard studios={studioData} />
-              <StudioCard studios={studioData} />
-            </div>
+            <ArtistsCards artists={studioData?.artists || []} />
           ) : (
             <p className="text-gray-400">
               Este estudio no tiene artistas vinculados

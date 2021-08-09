@@ -41,7 +41,7 @@ export async function getArtistIdByUsername(username) {
   }
 }
 
-export async function getArtistInfo(uid) {
+export async function getArtistInfo(_key, uid) {
   const docRef = doc(collection(db, 'artists'), uid)
   const docSnap = await getDoc(docRef)
 
