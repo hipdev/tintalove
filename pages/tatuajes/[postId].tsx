@@ -126,7 +126,7 @@ export const getStaticProps = async ({ params }) => {
   if (params.postId) {
     try {
       const dataPost: any = await getPostDataById('get-post', params.postId)
-      const dataArtist = await getArtistInfo(dataPost.post.artist_id)
+      const dataArtist = await getArtistInfo('_', dataPost.post.artist_id)
       const dataComments = await getPostComments(params.postId)
 
       const dataPostByArtist = await getMorePostFromArtist(

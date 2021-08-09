@@ -7,7 +7,7 @@ const useArtist = (uid) => {
   useEffect(() => {
     const fetch = async () => {
       if (uid) {
-        const { artist } = await getArtistInfo(uid)
+        const { artist } = await getArtistInfo('_', uid)
         setArtist(artist)
       }
     }

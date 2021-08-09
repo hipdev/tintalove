@@ -66,7 +66,7 @@ export async function getStaticProps({ params }: any) {
       artistId = await getArtistIdByUsername(params.username)
 
       try {
-        const data = await getArtistInfo(artistId)
+        const data = await getArtistInfo('_key', artistId)
 
         artistData = postToJSON(data?.artist)
         // Si falla uno fallan todos por esta dentro del mismo trycatch
