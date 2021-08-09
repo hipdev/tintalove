@@ -16,6 +16,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { ArtistTypes } from 'types/artist'
 
 const db = getFirestore(firebaseApp)
 
@@ -41,7 +42,10 @@ export async function getArtistIdByUsername(username) {
   }
 }
 
-export async function getArtistInfo(_key, uid) {
+export async function getArtistInfo(
+  _key,
+  uid
+): Promise<{ artist: ArtistTypes }> {
   const docRef = doc(collection(db, 'artists'), uid)
   const docSnap = await getDoc(docRef)
 

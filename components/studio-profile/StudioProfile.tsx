@@ -159,11 +159,15 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           </div>
         </div>
         <div>
-          <h1 className="text-white font-semibold mb-10">
+          <h1 className="text-gray-300 font-semibold mb-7 text-xl">
             Artistas del estudio
           </h1>
           {studioData?.artists?.length > 0 ? (
-            <ArtistsCards artists={studioData?.artists || []} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {studioData.artists.map((artistId) => (
+                <ArtistsCards key={artistId} artistId={artistId || ''} />
+              ))}
+            </div>
           ) : (
             <p className="text-gray-400">
               Este estudio no tiene artistas vinculados

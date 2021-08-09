@@ -19,6 +19,7 @@ export type ArtistTypes = {
   profile_picture?: ProfilePicture
   uid?: string
   studio_id?: string
+  studios?: []
   styles?: []
   times?: string
   twitter?: string
