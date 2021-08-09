@@ -14,6 +14,7 @@ import {
   where,
   deleteDoc,
   arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { StudioTypes } from 'types/studio'
@@ -481,34 +482,7 @@ export async function acceptArtistRequest(request) {
     )
     batch.set(artistRequest, { approval: 'APPROVED' }, { merge: true })
 
-    const res = await batch.commit()
-
-    console.log(res, 'el batch terminado')
-
-    // await addDoc(collection(db, 'studios_artists'), {
-    //   created_at: serverTimestamp(),
-    //   request_id: request.id,
-    //   studio_id: request.studio_id, // id from Algolia
-    //   artist_id: request.artist_id,
-    //   studio_name: request.studio_name,
-    //   studio_address: request.studio_address,
-    //   studio_picture: request.studio_picture,
-    //   artist_picture: request.artist_picture,
-    //   artist_name: request.artist_name,
-    //   artist_email: request.artist_email || null,
-    //   artist_phone: request.artist_phone || null,
-    //   is_active: true,
-    // })
-
-    // await updateDoc(artistRef, {
-    //   studios: arrayUnion(request.studioId),
-    // })
-
-    // await updateDoc(studioRef, {
-    //   artists: arrayUnion(request.artistId),
-    // })
-
-    // await updateDoc(artistRequest, { approval: 'APPROVED' })
+    await batch.commit()
 
     return true
   } else {
@@ -531,4 +505,46 @@ export async function getArtistsByStudio(_key, studioId) {
   })
 
   return { artists }
+}
+
+export async function deleteArtistFromStudio(studioArtist) {
+  const studioArtistReq = doc(
+    collection(db, 'studios_artists'),
+    studioArtist.id
+  )
+  const artistRequest = doc(
+    collection(db, 'artists_requests'),
+    studioArtist.request_id
+  )
+  const artistRef = doc(collection(db, 'artists'), studioArtist.artist_id)
+  const studioRef = doc(collection(db, 'studios'), studioArtist.studio_id)
+
+  const batch = writeBatch(db)
+
+  batch.delete(studioArtistReq)
+  batch.set(
+    artistRef,
+    {
+      studios: arrayRemove(studioArtist.studio_id),
+    },
+    { merge: true }
+  )
+
+  batch.set(
+    studioRef,
+    {
+      artists: arrayRemove(studioArtist.artist_id),
+    },
+    { merge: true }
+  )
+  batch.set(
+    artistRequest,
+    { approval: 'CANCELED', fired_at: serverTimestamp() },
+    { merge: true }
+  )
+
+  const res = await batch.commit()
+
+  console.log(res, 'res del batch')
+  return true
 }
