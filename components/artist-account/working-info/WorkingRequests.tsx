@@ -101,6 +101,19 @@ const WorkingRequests = ({ requests }) => {
                                     </span>
                                   </>
                                 )}
+                                {/* Cuando se elimina un artista mostramos esto */}
+                                {item?.fired_at && (
+                                  <p className="ml-2">
+                                    El estudio te ha eliminado en{' '}
+                                    <span>
+                                      {format(
+                                        item?.fired_at.toMillis(),
+                                        'MMMM d, yyyy',
+                                        { locale: es }
+                                      )}
+                                    </span>
+                                  </p>
+                                )}
                               </p>
                             </div>
                           </div>
