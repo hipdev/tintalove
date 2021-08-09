@@ -21,9 +21,11 @@ const WorkingRequests = ({ requests }) => {
     })
   }
 
-  const showTitle = requests.some(
-    (item) => item.approval == 'PENDING' || item.approval == 'CANCELED'
-  )
+  const showTitle =
+    requests &&
+    requests.some(
+      (item) => item.approval == 'PENDING' || item.approval == 'CANCELED'
+    )
 
   return (
     <div className="mt-5">
