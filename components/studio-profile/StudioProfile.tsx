@@ -1,7 +1,5 @@
-import { RiMessengerLine } from 'react-icons/ri'
 import { FaInstagram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
-import StudioCard from './StudioCard'
 import { StudioTypes } from 'types/studio'
 import { checkUrl } from 'lib/utils'
 import { useContext, useState } from 'react'
@@ -11,7 +9,7 @@ import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
-import ArtistsCards from './ArtistsCards'
+import ArtistsCard from './ArtistsCard'
 
 type Props = {
   studioData: StudioTypes
@@ -165,7 +163,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           {studioData?.artists?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {studioData.artists.map((artistId) => (
-                <ArtistsCards key={artistId} artistId={artistId || ''} />
+                <ArtistsCard key={artistId} artistId={artistId || ''} />
               ))}
             </div>
           ) : (
