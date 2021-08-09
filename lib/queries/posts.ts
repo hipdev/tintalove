@@ -82,6 +82,24 @@ export async function getPostsInfo() {
   return { posts }
 }
 
+export async function getLastThreePostsByArtist(_key, artistId) {
+  const q = query(
+    collection(db, 'posts'),
+    where('is_active', '==', true),
+    where('artist_id', '==', artistId),
+    limit(3)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    // console.log('consultando artistas', doc.data())
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { posts }
+}
+
 export async function getMorePostFromArtist(artistId, postId) {
   const q = query(
     collection(db, 'posts'),
