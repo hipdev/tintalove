@@ -1,11 +1,17 @@
-import { getArtistInfo } from 'lib/queries/artists'
+import { getArtistInfo, getArtistPictures } from 'lib/queries/artists'
 import useSWR from 'swr'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import Link from 'next/link'
+import { getLastThreePostsByArtist } from 'lib/queries/posts'
 
 const ArtistsCard = ({ artistId }: { artistId: string }) => {
   const { data } = useSWR(['getArtistInfo', artistId], getArtistInfo)
+  const { data: artistPosts } = useSWR(
+    ['getLastThreePostsByArtist', artistId],
+    getLastThreePostsByArtist
+  )
 
+  console.log(artistPosts, 'las fotos')
   return (
     <div className="w-full h-full bg-gr-800 p-5 rounded-md">
       <div className="flex justify-between">
@@ -51,15 +57,19 @@ const ArtistsCard = ({ artistId }: { artistId: string }) => {
         )}
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 ">
-        <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
-          <img src="" alt="" className="h-32 w-full" />
-        </div>
-        <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
-          <img src="" alt="" className="h-32 w-full" />
-        </div>
-        <div className="bg-gray-300 h-full w-full rounded-md overflow-hidden hidden sm:block">
-          <img src="" alt="" className="h-32 w-full" />
-        </div>
+        {artistPosts?.posts?.map((post) => {
+          return (
+            <Link href={`/tatuajes/${post.id}`} key={post.id}>
+              <a className="bg-gray-300 h-full w-full rounded-md overflow-hidden">
+                <img
+                  src={`${post?.image?.url}/tr:pr-true,w-120,h-160,q-90`}
+                  alt=""
+                  className="h-32 w-full object-cover rounded-md"
+                />
+              </a>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )
