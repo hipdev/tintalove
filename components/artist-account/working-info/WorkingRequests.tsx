@@ -21,9 +21,15 @@ const WorkingRequests = ({ requests }) => {
     })
   }
 
+  const showTitle = requests.some(
+    (item) => item.approval == 'PENDING' || item.approval == 'CANCELED'
+  )
+
   return (
     <div className="mt-5">
-      <h2 className="font-semibold uppercase">Solicitudes actuales</h2>
+      {showTitle && (
+        <h2 className="font-semibold uppercase">Solicitudes actuales</h2>
+      )}
 
       <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
         <ul className="divide-y divide-gray-200">
@@ -139,12 +145,6 @@ const WorkingRequests = ({ requests }) => {
                       </button>
                     </div>
                   </li>
-                )
-              } else {
-                return (
-                  <p className="px-3 py-2" key="all-approved">
-                    Sin solicitudes en proceso o canceladas.
-                  </p>
                 )
               }
             })}
