@@ -15,6 +15,8 @@ type Props = {
   dataForm?: any
   artist?: any
   pictureSize?: string
+  setWithPicture: any
+  setPicture: any
 }
 
 const CreatePostCrop = ({
@@ -23,6 +25,8 @@ const CreatePostCrop = ({
   pictureSize,
   dataForm,
   artist,
+  setWithPicture,
+  setPicture,
 }: Props) => {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -172,7 +176,15 @@ const CreatePostCrop = ({
       </div>
 
       <div className="flex gap-4 sm:gap-8 text-white ml-5 justify-center mb-5">
-        <button className="py-3 px-4 focus:outline-none">CANCELAR</button>
+        <button
+          onClick={() => {
+            setWithPicture(false)
+            setPicture(null)
+          }}
+          className="py-3 px-4 focus:outline-none"
+        >
+          CANCELAR
+        </button>
         <button
           className="flex items-center gap-3 py-3 px-5 sm:px-20 bg-primary hover:bg-primaryHover rounded-md focus:outline-none"
           onClick={getCropData}
