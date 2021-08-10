@@ -51,7 +51,8 @@ const PostComments = ({
 
   console.log(windowSize, 'ancho de la ventana')
 
-  const sendComment = () => {
+  const sendComment = (e) => {
+    e.preventDefault()
     setLoading(true)
 
     if (!user) {
