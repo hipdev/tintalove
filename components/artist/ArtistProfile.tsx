@@ -29,8 +29,6 @@ const loaderPost = ({ src, quality }: any) => {
 }
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
-  console.log(artistData, 'data del artista')
-
   const [openModalPics, setOpenModalPics] = useState(false)
 
   const { userId } = useUserId()
@@ -49,7 +47,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
         />
       )}
 
-      <div className="min-h-screen pt-5 sm:pt-20 px-5 sm:px-10 lg:px-20 pb-20">
+      <div className="min-h-screen pt-5 sm:pt-14 px-5 sm:px-10 lg:px-20 pb-20">
         <div className="flex flex-col sm:flex-row ">
           <div className="w-full sm:w-2/6 rounded-lg overflow-hidden mb-5 lg:mb-0 sm:max-w-xs">
             {/* <img

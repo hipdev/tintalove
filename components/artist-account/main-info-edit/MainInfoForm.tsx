@@ -20,7 +20,6 @@ import {
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
-  console.log(artist, 'artist Data')
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -166,8 +165,6 @@ const MainInfoForm = ({ uid, artist }) => {
       displayName: data.displayName,
       email: data.email,
     }
-
-    console.log(placeInfo, 'esto es placeInfo, aqui esta el error')
 
     if (placeInfo) formData = { ...placeInfo, ...formData } // Aqui meto PlaceInfo cuando cambian la ciudad
 

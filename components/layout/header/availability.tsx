@@ -22,7 +22,6 @@ const Availability = ({
   user: UserState
   availableId: number
 }) => {
-  console.log(availableId, 'esto')
   const [selected, setSelected] = useState(
     availableId ? agenda[availableId - 1] : agenda[1]
   )

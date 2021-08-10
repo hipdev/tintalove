@@ -33,8 +33,6 @@ const WorkingInfo = ({ uid, isArtist }) => {
     getArtistRequests
   )
 
-  console.log(studioName, 'nombre del estudio')
-
   const {
     register,
     setValue,

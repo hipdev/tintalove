@@ -39,7 +39,6 @@ export function listenStudioWizardById(studioId, setStudioWizard) {
 }
 
 export async function getUsersRealtime() {
-  console.log('entrando aqui')
   const unsubscribe = onSnapshot(
     collection(db, 'users'),
     (snapshot) => {
