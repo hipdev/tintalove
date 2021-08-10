@@ -9,6 +9,7 @@ import { UserState } from 'types/user'
 import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const loaderPost = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
@@ -114,13 +115,28 @@ const PostPortrait = ({
             <h1 className="text-white text-2xl font-semibold tracking-wide mb-2 leading-7">
               {postData.description || 'Sin descripción'}
             </h1>
-            <p className="text-light-200 text-sm">
-              #Realismo #Color #Payaso #Retrato
+            <p className="text-gray-400 text-sm">
+              {postData.styles.join(',  ')}
             </p>
-            <a className="text-sm text-gray-400 font-semibold" href="#">
-              Realizado en:{' '}
-              <span className="text-gn-500">Tinta Studio Tattoo</span>
-            </a>
+            <p className="text-sm text-gray-400">
+              {postData.is_partner ? (
+                <>
+                  Realizado en:{' '}
+                  <Link href="#">
+                    <a className="text-gn-500">Tinta Studio Tattoo</a>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  Realizado en el estudio privado de{' '}
+                  <Link href={`/${postData.username}`}>
+                    <a className="text-gn-500 font-semibold capitalize">
+                      {postData.username}
+                    </a>
+                  </Link>
+                </>
+              )}
+            </p>
           </div>
         </div>
 
