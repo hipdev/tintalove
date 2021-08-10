@@ -51,8 +51,6 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
 
       const { lat, lng }: any = await getLatLng(results[0])
 
-      console.log(lat, lng, 'los lat y long')
-
       const cityHash = geohashForLocation([lat, lng])
 
       const fullAddress = results[0].formatted_address.split(',')

@@ -53,7 +53,6 @@ export async function getPostsByCity(latLng) {
       }
     }
 
-    //   console.log(matchingDocs, 'docs aqui')
     return matchingDocs
   })
   return { posts }

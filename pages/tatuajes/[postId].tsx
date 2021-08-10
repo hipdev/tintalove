@@ -46,7 +46,7 @@ export default function TattoosPage({
       <Script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js" />
       {postData && artistData && (
         <>
-          <div onScroll={() => console.log('me scrollearon')}>
+          <div>
             <Modal
               // overlayRef={(ref) => setRef(ref)}
               isOpen={!(router.query.postId == 'all')}

@@ -53,8 +53,6 @@ const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
     )
   }
 
-  console.log(studioData, 'data del estudio')
-
   return (
     <Layout>
       {/* {studioData} */}
@@ -78,8 +76,6 @@ export async function getStaticPaths() {
       username: doc.username,
     },
   }))
-
-  console.log(paths, 'urls permitidas')
 
   return {
     paths,
