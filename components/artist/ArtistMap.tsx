@@ -103,7 +103,6 @@ const ArtistMap = ({ artistData }: Props) => {
                         <SiWaze className=" sm:ml-2 text-3xl sm:text-2xl text-gray-700" />
                       </a>
                       <a
-                        ref={ref}
                         href={`https://maps.google.com/?q=${
                           artistData._geoloc_marker.lat ||
                           artistData._geoloc.lat

@@ -28,6 +28,8 @@ export type StudioTypes = {
   telegram_user?: string
   work_as?: string
   dataLocation?: DataLocation
+  _geoloc?: AlgoliaGeolocation
+  _geoloc_marker?: AlgoliaGeolocation
 } | null
 
 type ProfilePicture = {
