@@ -48,7 +48,12 @@ const PostPortrait = ({
 
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between">
-      <div className="w-full sm:w-3/5 2xl:w-2/5 md:pr-20">
+      <div
+        className={
+          'w-full sm:w-3/5 md:pr-10 ' +
+          (postData.picture_size == 'portrait' ? '2xl:w-2/5' : 'md:pr-20 ')
+        }
+      >
         <div className="mb-5 flex justify-center xl:justify-start ">
           {/* <img
           // src="https://via.placeholder.com/1100x621"
