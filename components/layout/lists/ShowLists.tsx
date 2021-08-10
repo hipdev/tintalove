@@ -24,19 +24,26 @@ const ShowLists = ({ userId }) => {
     <div className="max-w-sm">
       <div className="flex mb-8 justify-between items-center">
         <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
-        <button className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700">
+        <button
+          onClick={() => actions.lists({ postId: null, listOpen: false })}
+          className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700"
+        >
           <VscClose className="text-gr-200 hover:text-gray-100 text-2xl" />
         </button>
       </div>
       <div className="grid grid-cols-2 gap-4">
         {data?.userLists?.map((list) => {
           return (
-            <div key={list.id}>
-              <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
-                <ListImage listId={list?.id} />
-              </div>
-              <p className="text-gray-400 mt-2">{list.list_name}</p>
-            </div>
+            <Link href={`/list/${list.id}`} key={list.id}>
+              <a className="group">
+                <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
+                  <ListImage listId={list?.id} />
+                </div>
+                <p className="text-gray-400 mt-2 group-hover:text-gray-100">
+                  {list.list_name}
+                </p>
+              </a>
+            </Link>
           )
         })}
       </div>
