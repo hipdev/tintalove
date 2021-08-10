@@ -547,3 +547,15 @@ export async function deleteArtistFromStudio(studioArtist) {
 
   return true
 }
+
+export async function getMultipleStudiosInfo(_key, studiosIds) {
+  const studios = await Promise.all(
+    studiosIds.map(async (studioId) => {
+      const studioRef = doc(collection(db, 'studios'), studioId)
+      const docSnap = await getDoc(studioRef)
+      return { ...docSnap.data(), id: docSnap.id }
+    })
+  )
+
+  return { studios }
+}
