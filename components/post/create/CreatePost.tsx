@@ -7,10 +7,12 @@ import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
 import { BsArrowRight } from 'react-icons/bs'
 import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
+import SelectStudioToPost from './SelectStudio'
 
 const CreatePost = ({ user }) => {
   const [description, setDescription] = useState('')
   const [styles, setStyles] = useState([])
+  const [studio, setStudio] = useState()
   const [withPicture, setWithPicture] = useState(false)
   const [pictureSize, setPictureSize] = useState('portrait')
 
@@ -20,9 +22,20 @@ const CreatePost = ({ user }) => {
     return { value: style, label: style }
   })
 
+  const optionsStudios = artist?.styles.map((style) => {
+    return { value: style, label: style }
+  })
+
   const handleStyles = (styles) => {
     setStyles(styles)
   }
+
+  console.log(artist?.studios?.length, 'artist Info')
+  console.log(studio, 'studio Info')
+
+  const hasTwoStudios = artist?.studios?.length == 2
+  const isPartner = artist?.work_as == 'partner'
+  const onlyOneStudio = (artist?.studios && artist?.studios[0]) || null
 
   return (
     <div className="bg-dark-800 pt-10 h-3/6 xl:h-screen overflow-auto">
@@ -30,7 +43,14 @@ const CreatePost = ({ user }) => {
         <div className="w-full xl:w-2/3 pr-0 xl:pr-10">
           <CreatePostPicture
             uid={user.uid}
-            dataForm={{ description, styles }}
+            dataForm={{
+              description,
+              styles,
+              studio,
+              hasTwoStudios,
+              isPartner,
+              onlyOneStudio,
+            }}
             setWithPicture={setWithPicture}
             pictureSize={pictureSize}
             artist={artist || null}
@@ -110,6 +130,10 @@ const CreatePost = ({ user }) => {
               onChange={handleStyles}
             />
           </label>
+
+          {hasTwoStudios && isPartner && (
+            <SelectStudioToPost artist={artist} setStudio={setStudio} />
+          )}
 
           {withPicture && (
             <div className="hidden xl:block mt-14 text-center">

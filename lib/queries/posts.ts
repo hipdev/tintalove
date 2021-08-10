@@ -58,6 +58,8 @@ export async function createArtistPost(
     artist_picture: artist.profile_picture.url,
     styles,
     description: dataForm.description,
+    is_partner: dataForm.is_partner,
+    studio_id: dataForm?.studio_id || null,
     picture_size,
     _geoloc: artist._geoloc,
     geohash: artist.geohash || artist.city_hash,

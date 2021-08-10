@@ -100,7 +100,35 @@ const CreatePostCrop = ({
     const canvas = getResizedCanvas()
     const file: any = canvas.toDataURL('image/jpeg')
 
+    if (dataForm.hasTwoStudios && dataForm.isPartner && !dataForm.studio) {
+      setLoading(false)
+      toast('Debes seleccionar un estudio')
+      return
+    }
+
     if (dataForm.description != '' && dataForm.styles.length > 0) {
+      console.log(dataForm, 'form data')
+      let formData
+
+      if (dataForm.isPartner) {
+        formData = {
+          description: dataForm.description,
+          studio_id: dataForm.hasTwoStudios
+            ? dataForm.studio.value
+            : dataForm.onlyOneStudio,
+          styles: dataForm.styles,
+          is_partner: dataForm.isPartner,
+        }
+      } else {
+        formData = {
+          description: dataForm.description,
+          styles: dataForm.styles,
+          is_partner: dataForm.isPartner,
+        }
+      }
+
+      console.log(formData, 'la data a enviar')
+
       mutate('/api/imagekit/auth')
       if (!crop || !canvas) {
         setLoading(false)
@@ -134,7 +162,7 @@ const CreatePostCrop = ({
           }
           try {
             toast.promise(
-              createArtistPost(uid, pictureInfo, dataForm, artist, pictureSize),
+              createArtistPost(uid, pictureInfo, formData, artist, pictureSize),
               {
                 loading: 'Creando post...',
                 success: () => {
@@ -152,6 +180,7 @@ const CreatePostCrop = ({
             console.error(error)
           }
         })
+      setLoading(false)
     } else {
       toast('Agrega la descripción y al menos un estilo')
       setLoading(false)
