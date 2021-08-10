@@ -1,5 +1,4 @@
 export function ProductItem({ hit, components }) {
-  console.log(hit, components, 'esto que es')
   return (
     <a href={hit.url} className="aa-ItemLink">
       <div className="aa-ItemContent">

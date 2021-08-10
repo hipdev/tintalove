@@ -115,13 +115,11 @@ export async function isPostListed(postId, userId) {
 }
 
 export async function getUserLists(key, userId) {
-  console.log(key, userId, 'params')
   const q = query(collection(db, 'lists'), where('user_id', '==', userId))
 
   const querySnapshot = await getDocs(q)
   const userLists: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    // console.log('consultando artistas', doc.data())
     return userLists.push({ ...doc.data(), id: doc.id })
   })
 
@@ -129,7 +127,6 @@ export async function getUserLists(key, userId) {
 }
 
 export async function removePostFromList(postId, userId) {
-  console.log(postId, userId, 'esto que')
   const q = query(
     collection(db, 'lists_items'),
     where('user_id', '==', userId),
@@ -159,7 +156,6 @@ export async function removePostFromList(postId, userId) {
     counter.incrementBy(-1)
   })
 
-  console.log(querySnapshot.empty, 'esto que')
   return true
 }
 
@@ -182,7 +178,6 @@ export async function getUserListItems(key, listId) {
   const querySnapshot = await getDocs(q)
   const userListItems: Array<any> = []
   querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    // console.log('consultando artistas', doc.data())
     return userListItems.push({ ...doc.data(), id: doc.id })
   })
 

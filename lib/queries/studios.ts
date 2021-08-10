@@ -373,8 +373,7 @@ export async function addStudioPicture(studio_id, data) {
 export async function deletePictureFromStudio(imageId, pictureId) {
   try {
     const artistPictureRef = doc(collection(db, 'studios_pics'), pictureId)
-    const delPicture: any = await deleteDoc(artistPictureRef)
-    console.log(delPicture, 'oiii')
+    await deleteDoc(artistPictureRef)
 
     const options = {
       method: 'DELETE',
@@ -384,8 +383,7 @@ export async function deletePictureFromStudio(imageId, pictureId) {
       },
     }
 
-    const resImagekit = await fetch('/api/profile/delete-image', options)
-    console.log(resImagekit, 'imagekit')
+    await fetch('/api/profile/delete-image', options)
   } catch (error) {
     throw new Error('Error eliminando la foto')
   }

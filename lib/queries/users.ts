@@ -19,7 +19,6 @@ export async function createUser(user: User) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    // console.log('Document data:', docSnap.data())
     return true
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
@@ -39,7 +38,6 @@ export async function createPhoneUser(user: User) {
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    // console.log('Document data:', docSnap.data())
     return true
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
@@ -48,7 +46,6 @@ export async function createPhoneUser(user: User) {
       phoneNumber: user.phoneNumber,
       created_at: serverTimestamp(),
     })
-    console.log('Creado el usuario')
     return true
   }
 }
@@ -58,7 +55,6 @@ export async function getUserInfo(uid) {
   const docSnap: DocumentSnapshot<UserState> = await getDoc(docRef)
 
   if (docSnap.exists()) {
-    // console.log('Document data:', docSnap.data())
     const data: UserState = { ...docSnap.data(), uid: docSnap.id }
     return { user: data }
   } else {

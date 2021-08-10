@@ -8,8 +8,6 @@ import PictureReady from './picture-ready'
 const PicturesInfo = ({ studioId, hasStudio }) => {
   const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo) // esta es la que necesito que vuelva a validar
 
-  console.log(data, 'esta data')
-
   return (
     <div className="w-full pr-5 2xl:w-4/5  mt-10 text-gray-200">
       <div className="flex justify-between">

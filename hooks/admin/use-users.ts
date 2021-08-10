@@ -6,7 +6,6 @@ const useUsers = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      console.log('buscando users')
       const { users } = await getUsersRealtime()
       setUsers(users)
     }

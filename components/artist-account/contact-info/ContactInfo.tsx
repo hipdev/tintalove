@@ -176,14 +176,6 @@ const ContactInfo = ({ uid, isArtist }) => {
                 }}
                 placeholder="Selecciona primero el país"
                 onChange={(value, country: any, e, formattedValue) => {
-                  console.log(
-                    value,
-                    country,
-                    e,
-                    formattedValue,
-                    'los valores del input'
-                  )
-
                   setPhone({
                     value: '+' + value,
                     country_code: country.countryCode.toUpperCase(),

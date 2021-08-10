@@ -26,8 +26,6 @@ const containerStyle = {
 }
 
 const ProfileStudio = ({ studioData, studioPictures }: Props) => {
-  console.log(studioData, 'data del estudio')
-
   const [openModalPics, setOpenModalPics] = useState(false)
 
   const { openModal } = useContext(LoginContext)
