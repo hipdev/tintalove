@@ -8,8 +8,6 @@ export default function UsersPage() {
   console.log(state, 'user')
   const isAdmin = state?.user?.is_admin
 
-  console.log(isAdmin, 'es admin?')
-
   return (
     <Layout>
       <IsAuth>{isAdmin ? <AdminUsers /> : null}</IsAuth>

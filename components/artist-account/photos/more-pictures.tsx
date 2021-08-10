@@ -25,8 +25,6 @@ const MorePicturesArtist = ({ artist }) => {
   const handlePicture = async (e: any) => {
     e.preventDefault()
 
-    console.log(e, 'esto que')
-
     toast('Procesando foto...')
 
     let files

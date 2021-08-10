@@ -63,7 +63,7 @@ const ModalPictures = ({
                 >
                   <IoMdCloseCircle />
                 </button>
-                {pictures?.length < 1 ? (
+                {pictures?.length < 0 ? (
                   <div className="w-full relative">
                     <div
                       className="aspect-w-3 aspect-h-4 relative max-h-20"
