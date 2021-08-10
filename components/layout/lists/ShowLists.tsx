@@ -6,9 +6,12 @@ import useSWR from 'swr'
 import { VscClose } from 'react-icons/vsc'
 import { BsPlus } from 'react-icons/bs'
 import ListImage from './ListImage'
+import { useRouter } from 'next/router'
 
 const ShowLists = ({ userId }) => {
   // const [userLists] = useLists(userId)
+
+  const router = useRouter()
 
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
 
@@ -31,19 +34,24 @@ const ShowLists = ({ userId }) => {
           <VscClose className="text-gr-200 hover:text-gray-100 text-2xl" />
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         {data?.userLists?.map((list) => {
           return (
-            <Link href={`/list/${list.id}`} key={list.id}>
-              <a className="group">
-                <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
-                  <ListImage listId={list?.id} />
-                </div>
-                <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-                  {list.list_name}
-                </p>
-              </a>
-            </Link>
+            <button
+              onClick={() => {
+                router.push(`/list/${list.id}`)
+                actions.lists({ postId: null, listOpen: false })
+              }}
+              className="group"
+              key={list.id}
+            >
+              <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
+                <ListImage listId={list?.id} />
+              </div>
+              <p className="text-gray-400 mt-2 group-hover:text-gray-100">
+                {list.list_name}
+              </p>
+            </button>
           )
         })}
       </div>

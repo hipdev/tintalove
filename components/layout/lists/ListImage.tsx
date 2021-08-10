@@ -13,12 +13,14 @@ const ListImage = ({ listId }) => {
   return (
     <>
       {!data?.userListImage ? (
-        <Image
-          src="/empty.png"
-          alt="Sin fotos en la lista"
-          width={400}
-          height={400}
-        />
+        <div className="p-8">
+          <Image
+            src="/box.png"
+            alt="Sin fotos en la lista"
+            width={400}
+            height={400}
+          />
+        </div>
       ) : (
         <img
           src={`${data.userListImage.post_image}`}

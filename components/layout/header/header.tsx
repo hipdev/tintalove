@@ -125,9 +125,10 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                   <span className="text-xl">
                     <FaRegHeart />
                   </span>
-                  <Link href="#">
-                    <a className="hidden xl:block truncate">Favoritos</a>
-                  </Link>
+
+                  <button className="hidden xl:block truncate">
+                    Favoritos
+                  </button>
                 </button>
               </div>
               {/*New elements for tablet resolution*/}
