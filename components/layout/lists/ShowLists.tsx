@@ -5,6 +5,7 @@ import { getUserLists } from 'lib/queries/lists'
 import useSWR from 'swr'
 import { VscClose } from 'react-icons/vsc'
 import { BsPlus } from 'react-icons/bs'
+import ListImage from './ListImage'
 
 const ShowLists = ({ userId }) => {
   // const [userLists] = useLists(userId)
@@ -20,7 +21,7 @@ const ShowLists = ({ userId }) => {
   if (!data) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
-    <div>
+    <div className="max-w-sm">
       <div className="flex mb-8 justify-between items-center">
         <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
         <button className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700">
@@ -28,36 +29,16 @@ const ShowLists = ({ userId }) => {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className="">
-          <div className=" bg-gray-600 rounded-lg overflow-hidden">
-            <img
-              src="https://via.placeholder.com/208x208"
-              alt=""
-              className="w-full h-full object-fill"
-            />
-          </div>
-          <p className="text-white mt-2">Tatuajes de animales</p>
-        </div>
-        <div className="">
-          <div className=" bg-gray-600 rounded-lg overflow-hidden">
-            <img
-              src="https://via.placeholder.com/208x208"
-              alt=""
-              className="w-full h-full object-fill"
-            />
-          </div>
-          <p className="text-white mt-2">Tatuajes en negro</p>
-        </div>
-        <div className="">
-          <div className=" bg-gray-600 rounded-lg overflow-hidden">
-            <img
-              src="https://via.placeholder.com/208x208"
-              alt=""
-              className="w-full h-full object-fill"
-            />
-          </div>
-          <p className="text-white mt-2">Tatuajes de animales</p>
-        </div>
+        {data?.userLists?.map((list) => {
+          return (
+            <div key={list.id}>
+              <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
+                <ListImage listId={list?.id} />
+              </div>
+              <p className="text-gray-400 mt-2">{list.list_name}</p>
+            </div>
+          )
+        })}
       </div>
       <button className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center">
         CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />

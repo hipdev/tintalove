@@ -183,3 +183,19 @@ export async function getUserListItems(key, listId) {
 
   return { userListItems, userList: docData.data() }
 }
+
+export async function getListImage(key, listId) {
+  const q = query(
+    collection(db, 'lists_items'),
+    where('list_id', '==', listId),
+    limit(1)
+  )
+
+  const querySnapshot = await getDocs(q)
+  const userListImage: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return userListImage.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { userListImage: userListImage[0] }
+}

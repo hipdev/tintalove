@@ -55,7 +55,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          <p className="text-white text-sm">
+          <p className="text-gray-400 text-sm">
             {post.displayName || 'Sin nombre'}
           </p>
         </div>
