@@ -58,10 +58,12 @@ const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
   return (
     <Layout>
       {/* {studioData} */}
-      <StudioProfile
-        studioData={studioData || null}
-        studioPictures={studioPictures || null}
-      />
+      {loadMap && (
+        <StudioProfile
+          studioData={studioData || null}
+          studioPictures={studioPictures || null}
+        />
+      )}
     </Layout>
   )
 }
