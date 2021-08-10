@@ -48,7 +48,7 @@ const PostPortrait = ({
   console.log(artistData, 'data Artist')
 
   return (
-    <div className="flex flex-col md:flex-row  xl:justify-between">
+    <div className="flex flex-col md:flex-row  xl:justify-between 2xl:justify-center">
       <div
         className={
           'w-full sm:w-3/5 md:pr-10 ' +
@@ -101,7 +101,7 @@ const PostPortrait = ({
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 ">
+      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 2xl:max-w-xl">
         <div className="flex mb-8 border-gray-700 border-b pb-5">
           <button
             className="flex gap-3 text-white focus:outline-none mr-10"
