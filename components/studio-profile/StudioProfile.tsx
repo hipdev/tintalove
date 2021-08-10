@@ -1,3 +1,4 @@
+import { GoogleMap, Marker } from '@react-google-maps/api'
 import { FaInstagram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { AiFillFacebook } from 'react-icons/ai'
 import { StudioTypes } from 'types/studio'
@@ -10,10 +11,18 @@ import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
 import ArtistsCard from './ArtistsCard'
+import { SiWaze } from 'react-icons/si'
+import Image from 'next/image'
 
 type Props = {
   studioData: StudioTypes
   studioPictures: any
+}
+
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: '4px',
 }
 
 const ProfileStudio = ({ studioData, studioPictures }: Props) => {
@@ -111,9 +120,9 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
             <p className="text-gray-400">{studioData?.bio || 'Sin bio'}</p>
           </div>
           <div className="text-white mb-5 sm:mb-0 w-full sm:w-1/3">
-            <h1 className="font-semibold mb-2 tracking-wide">Horarios</h1>
+            <h1 className="font-semibold mb-2 tracking-wide">Estilos</h1>
             <p className="text-gray-400">
-              {studioData?.times || 'Sin horarios'}
+              {studioData?.styles.join(', ') || 'Sin estilos registrados'}
             </p>
           </div>
           <div className="mr-4">
@@ -171,6 +180,97 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               Este estudio no tiene artistas vinculados
             </p>
           )}
+        </div>
+
+        <div className="relative w-full rounded-md  pb-10 mt-10">
+          <h1 className="mt-5 text-gray-300 text-xl font-semibold mb-4">
+            Ubicación de {studioData?.studio_name}
+          </h1>
+          <div className="text-left text-gray-400 mb-8 flex justify-between">
+            <div className="mr-2">
+              <p className="text-sm sm:text-md">
+                <span className="hidden sm:inline-block font-semibold mr-2">
+                  Dirección:
+                </span>
+                {studioData?.dataLocation?.formatted_address || 'Sin dirección'}
+              </p>
+              <p className="text-sm sm:text-md ">
+                <span className="hidden sm:inline-block font-semibold mr-2">
+                  Horarios:
+                </span>
+                {studioData?.times}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href={`https://www.waze.com/ul?ll=${
+                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat
+                },${
+                  studioData?._geoloc_marker?.lng || studioData?._geoloc.lng
+                }&navigate=yes&zoom=10`}
+                target="_blank"
+                rel="noreferrer"
+                style={{ backgroundColor: '#33ccff' }}
+                className=" flex px-2 sm:px-3 py-2 text-black rounded-full sm:rounded-md font-semibold items-center"
+              >
+                <span className="hidden sm:inline-block ">Abrir con Waze</span>
+                <SiWaze className=" sm:ml-2 text-3xl sm:text-2xl text-gray-700" />
+              </a>
+              <a
+                href={`https://maps.google.com/?q=${
+                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat
+                },${
+                  studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng
+                }`}
+                target="_blank"
+                rel="noreferrer"
+                className=" flex px-2 sm:px-2 py-2 text-gr-700 bg-gray-200 rounded-full sm:rounded-md font-semibold items-center justify-center"
+              >
+                <span className="hidden sm:inline-block ">Abrir con Maps</span>
+                <Image
+                  src="/maps-icon.png"
+                  alt="Google maps Icon"
+                  width={28}
+                  height={28}
+                />
+              </a>
+            </div>
+          </div>
+          <div className="h-448 sm:h-560 mb-20 bg-black ">
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={{
+                lat:
+                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat,
+                lng:
+                  studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng,
+              }}
+              zoom={18}
+              options={{
+                streetViewControl: false,
+                mapTypeControl: false,
+              }}
+            >
+              <Marker
+                position={{
+                  lat:
+                    studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat,
+                  lng:
+                    studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng,
+                }}
+                icon={{
+                  url: '/icon-black.png',
+                }}
+                label={{
+                  text: studioData?.studio_name,
+                  color: '#030308',
+                  fontSize: '1.4rem',
+                  fontWeight: '900',
+                  className: 'marker-position',
+                }}
+              />
+            </GoogleMap>
+          </div>
         </div>
       </div>
     </div>

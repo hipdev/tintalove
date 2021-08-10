@@ -1,3 +1,5 @@
+import { Loader } from '@googlemaps/js-api-loader'
+
 import StudioProfile from 'components/studio-profile/StudioProfile'
 import Layout from 'components/layout/layout'
 
@@ -11,13 +13,29 @@ import {
 } from 'lib/queries/studios'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useState } from 'react'
+
+const loader = new Loader({
+  apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
+  libraries: ['places'],
+})
 
 const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
+  const [loadMap, setLoadMap] = useState(false)
   const router: any = useRouter()
 
   if (router.isFallback) {
     return <span>Loading</span>
   }
+
+  loader
+    .load()
+    .then(() => {
+      setLoadMap(true)
+    })
+    .catch((e) => {
+      console.log('error loading Google Maps API')
+    })
 
   if (!studioId) {
     return (
