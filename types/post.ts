@@ -18,6 +18,8 @@ export type PostTypes = {
   username: string
   _geoloc: LatLng
   geohash: string
+  is_partner: boolean
+  studio_id: string
 } | null
 
 type ProfilePicture = {
