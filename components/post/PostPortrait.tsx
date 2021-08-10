@@ -48,7 +48,7 @@ const PostPortrait = ({
 
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between">
-      <div className="w-full sm:w-3/5 md:w-3/5">
+      <div className="w-full sm:w-3/5 2xl:w-2/5 md:pr-20">
         <div className="mb-5 flex justify-center xl:justify-start ">
           {/* <img
           // src="https://via.placeholder.com/1100x621"
@@ -95,7 +95,7 @@ const PostPortrait = ({
         </div>
       </div>
 
-      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 md:ml-10 ">
+      <div className="flex flex-grow flex-col self-start w-full md:w-2/5 ml-0 sm:ml-4 ">
         <div className="flex mb-8 border-gray-700 border-b pb-5">
           <button
             className="flex gap-3 text-white focus:outline-none mr-10"
