@@ -58,7 +58,7 @@ const Availability = ({
                     <div className="leading-tight hidden xl:block">
                       <p className="text-gr-200 text-xs">Disponibilidad</p>
                       <p className="text-gr-200 text-base">
-                        {!availableId ? 'Sin seleccionar' : selected.label}
+                        {!availableId ? 'Selecciona' : selected.label}
                       </p>
                     </div>
                     <span className="text-green-500 text-2xl pl-0 xl:pl-2">
