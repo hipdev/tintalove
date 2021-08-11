@@ -20,7 +20,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       ? '?loc=Colombia'
       : `?loc=${user?.searching_city?.city_id}`
   return (
-    <div>
+    <div className="group">
       <Link
         href={
           user?.searching_city
@@ -40,6 +40,11 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
                 : 'aspect-w-1 aspect-h-1 relative'
             }
           >
+            <div
+              style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 32px 0px inset' }}
+              className="absolute w-full h-full group-hover:z-10"
+            ></div>
+
             <img
               alt={`Este es un tatuaje de: ${post.displayName}`}
               className="lazyload rounded-md  object-cover"
