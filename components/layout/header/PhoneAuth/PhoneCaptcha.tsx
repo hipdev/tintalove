@@ -21,6 +21,7 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
       },
       auth
     )
+    return () => window.recaptchaVerifier.clear()
   }, [])
 
   const sendSMS = () => {
