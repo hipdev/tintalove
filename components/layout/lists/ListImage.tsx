@@ -13,7 +13,7 @@ const ListImage = ({ listId }) => {
   return (
     <>
       {!data?.userListImage ? (
-        <div className="p-8">
+        <div className="p-8 bg-gray-400">
           <Image
             src="/box.png"
             alt="Sin fotos en la lista"
