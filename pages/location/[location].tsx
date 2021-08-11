@@ -6,7 +6,7 @@ import { getCitiesPaths, getLatLngFromCityId } from 'lib/queries/general'
 import { getPostsByCity } from 'lib/queries/geo'
 
 export default function TattoosPage({ postsData }) {
-  return <Layout>{postsData && <Home posts={postsData} />}</Layout>
+  return <Layout fixed>{postsData && <Home posts={postsData} />}</Layout>
 }
 
 export async function getStaticPaths() {

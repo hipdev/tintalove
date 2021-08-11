@@ -2,5 +2,6 @@
 module.exports = {
   experimental: {
     scrollRestoration: true,
+    esmExternals: true,
   },
 }
