@@ -1,5 +1,4 @@
 import { useStateMachine } from 'little-state-machine'
-import Link from 'next/link'
 import { lists } from 'lib/actions'
 import { getUserLists } from 'lib/queries/lists'
 import useSWR from 'swr'
@@ -8,9 +7,7 @@ import { BsPlus } from 'react-icons/bs'
 import ListImage from './ListImage'
 import { useRouter } from 'next/router'
 
-const ShowLists = ({ userId }) => {
-  // const [userLists] = useLists(userId)
-
+const ShowLists = ({ userId, setShowCreate }) => {
   const router = useRouter()
 
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
@@ -55,7 +52,24 @@ const ShowLists = ({ userId }) => {
           )
         })}
       </div>
-      <button className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center">
+      {data?.userLists.length < 1 && (
+        <div>
+          <p className="text-gray-400">
+            Sin colecciones,{' '}
+            <button
+              onClick={() => setShowCreate(true)}
+              className="inline text-primary hover:text-primaryHover"
+            >
+              crea la primera.
+            </button>
+          </p>
+        </div>
+      )}
+
+      <button
+        onClick={() => setShowCreate(true)}
+        className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
+      >
         CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
       </button>
     </div>

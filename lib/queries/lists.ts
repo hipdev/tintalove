@@ -31,16 +31,7 @@ declare global {
   }
 }
 
-export async function createList(user, list_name, isFirst) {
-  if (isFirst) {
-    const usrRef = doc(collection(db, 'users'), user.uid)
-
-    await updateDoc(usrRef, {
-      has_list: true,
-      updated_at: serverTimestamp(),
-    })
-  }
-
+export async function createList(user, list_name) {
   const res = await addDoc(collection(db, 'lists'), {
     created_at: serverTimestamp(),
     user_id: user.uid,

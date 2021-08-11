@@ -7,11 +7,11 @@ import { UserState } from 'types/user'
 import { BsPlus } from 'react-icons/bs'
 
 type Props = {
-  hasList?: boolean
   user: UserState
+  setShowCreate?: any
 }
 
-const NoListForm = ({ hasList, user }: Props) => {
+const NoListForm = ({ user, setShowCreate }: Props) => {
   const [listName, setListName] = useState('')
 
   const {
@@ -24,7 +24,7 @@ const NoListForm = ({ hasList, user }: Props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (list.post?.id) {
-      toast.promise(createList(user, listName, hasList ? false : true), {
+      toast.promise(createList(user, listName), {
         loading: 'Creando lista y asignando el tattoo...',
         success: (res: { doc: string; status: boolean }) => {
           toast.promise(addPostToList(user.uid, list.post, res.doc), {
@@ -89,7 +89,10 @@ const NoListForm = ({ hasList, user }: Props) => {
         </div>
       </div>
       <div className="flex text-gr-100 space-x-2">
-        <button className="text-sm bg-gr-800 hover:bg-gr-600 p-3 rounded-md w-1/2">
+        <button
+          onClick={() => setShowCreate(false)}
+          className="text-sm bg-gr-800 hover:bg-gr-600 p-3 rounded-md w-1/2"
+        >
           CANCELAR
         </button>
         <button className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center">

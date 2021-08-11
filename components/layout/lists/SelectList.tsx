@@ -6,6 +6,7 @@ import NoListForm from './NoListForm'
 import { lists } from 'lib/actions'
 import useSWR from 'swr'
 import { VscClose } from 'react-icons/vsc'
+import ListImage from './ListImage'
 
 const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
@@ -18,6 +19,8 @@ const SelectList = ({ userId, post, user }) => {
   }: any = useStateMachine({
     lists,
   })
+
+  console.log(list, 'lista select')
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
@@ -65,7 +68,7 @@ const SelectList = ({ userId, post, user }) => {
         </div>
       </div>
 
-      {!showForm && <NoListForm user={user} hasList />}
+      {!showForm && <NoListForm user={user} />}
 
       {/*<div>
         {data.userLists.map((list) => (
@@ -89,40 +92,24 @@ const SelectList = ({ userId, post, user }) => {
         ))}
       </div> */}
 
-      <div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="">
-            <div className=" bg-gray-600 rounded-lg overflow-hidden">
-              <img
-                src="https://via.placeholder.com/208x208"
-                alt=""
-                className="w-full h-full object-fill"
-              />
+      {data?.userLists?.map((list) => {
+        return (
+          <button
+            onClick={() => {
+              savePostOnList(list.id)
+            }}
+            className="group"
+            key={list.id}
+          >
+            <div className="  rounded-lg overflow-hidden w-48 h-48">
+              <ListImage listId={list?.id} />
             </div>
-            <p className="text-white mt-2">Tatuajes de animales</p>
-          </div>
-          <div className="">
-            <div className=" bg-gray-600 rounded-lg overflow-hidden">
-              <img
-                src="https://via.placeholder.com/208x208"
-                alt=""
-                className="w-full h-full object-fill"
-              />
-            </div>
-            <p className="text-white mt-2">Tatuajes en negro</p>
-          </div>
-          <div className="">
-            <div className=" bg-gray-600 rounded-lg overflow-hidden">
-              <img
-                src="https://via.placeholder.com/208x208"
-                alt=""
-                className="w-full h-full object-fill"
-              />
-            </div>
-            <p className="text-white mt-2">Tatuajes de animales</p>
-          </div>
-        </div>
-      </div>
+            <p className="text-gray-400 mt-2 group-hover:text-gray-100">
+              {list.list_name}
+            </p>
+          </button>
+        )
+      })}
     </div>
   )
 }

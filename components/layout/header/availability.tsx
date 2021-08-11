@@ -46,15 +46,15 @@ const Availability = ({
   return (
     <>
       {user && (
-        <div className="text-left">
+        <div className="text-left bg-dark-800">
           <Listbox
             value={!availableId ? 5 : selected}
             onChange={handleAvailability}
           >
             <div className="relative">
-              <Listbox.Button className="relative w-full  px-3 text-left bg-nt-800 rounded-lg shadow-md cursor-pointer sm:text-sm focus:outline-none border-2 border-gr-700">
+              <Listbox.Button className="relative w-full  px-1 text-left bg-nt-800 rounded-lg shadow-md cursor-pointer sm:text-sm focus:outline-none border-2 border-gr-700">
                 <div>
-                  <div className="flex items-center gap-2 px-2 py-3 xl:py-1 rounded-md">
+                  <div className="flex items-center gap-2 px-2 py-1 xl:py-1 rounded-md">
                     <div className="leading-tight hidden xl:block">
                       <p className="text-gr-200 text-xs w-32">Disponibilidad</p>
                       <p className="text-gr-200 text-sm">
