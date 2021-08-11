@@ -100,7 +100,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Hola!</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          {user.email || user.displayName}
+                          {user.email || user.displayName || 'Sin nombre'}
                         </p>
                       </div>
 
