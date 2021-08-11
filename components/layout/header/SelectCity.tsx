@@ -51,7 +51,7 @@ const SelectCity = ({ user, cities }) => {
       <Listbox value={selected} onChange={changeCity}>
         {({ open }) => (
           <>
-            <div className="block mt-1 relative w-full">
+            <div className="block relative w-full">
               <Listbox.Button
                 className="bg-transparent relative w-full rounded-md text-gr-200
                 shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none   hidden md:block cu"

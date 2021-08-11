@@ -43,6 +43,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     signOut(auth)
       .then(() => {
         // actions.login(null)
+        setIsOpen(false)
       })
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
