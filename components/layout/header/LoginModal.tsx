@@ -9,7 +9,7 @@ const PhoneInput = dynamic(() => import('./PhoneAuth/PhoneInput'), {
 })
 
 const LoginModal = ({ modal, handleLogin }: any) => {
-  const [showPhone, setShowPhone] = useState(false)
+  const [showPhoneButton, setShowPhoneButton] = useState(true)
 
   return (
     <>
@@ -39,14 +39,14 @@ const LoginModal = ({ modal, handleLogin }: any) => {
         contentLabel="Post modal"
       >
         <div className="bg-gr-800  text-gray-300 px-14 py-5 pb-10 relative">
-          {!showPhone && (
+          {showPhoneButton && (
             <h2 className="text-gray-300 font-semibold text-2xl text-center mb-7">
               Ingresar en Tinta Love
             </h2>
           )}
 
           <div className=" flex flex-col justify-center">
-            {!showPhone && (
+            {showPhoneButton && (
               <>
                 <button
                   className="flex items-center justify-center border py-2 mb-3 rounded-md px-2 bg-dark-800 border-black"
@@ -57,7 +57,10 @@ const LoginModal = ({ modal, handleLogin }: any) => {
                 <div className="text-center">ó</div>
               </>
             )}
-            <PhoneInput show={{ showPhone, setShowPhone }} modal={modal} />
+            <PhoneInput
+              show={{ showPhoneButton, setShowPhoneButton }}
+              modal={modal}
+            />
           </div>
 
           <div

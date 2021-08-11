@@ -16,16 +16,16 @@ const PhoneAuth = ({ show, modal }: any) => {
     <>
       {!showCode && (
         <>
-          {!show.showPhone && (
+          {show.showPhoneButton && (
             <button
               id="sign-in-button"
-              onClick={() => show.setShowPhone(true)}
+              onClick={() => show.setShowPhoneButton(false)}
               className="flex items-center justify-center border py-2 mt-3 rounded-md px-2 bg-dark-800 border-black"
             >
               Entrar con Celular <BsPhone className="text-xl ml-3" />
             </button>
           )}
-          {show?.showPhone && (
+          {!show?.showPhoneButton && (
             <div>
               <h2 className="font-semibold text-xl text-center mb-3">
                 Indica tu número de celular
