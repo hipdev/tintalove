@@ -41,7 +41,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             }
           >
             <div
-              style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 32px 0px inset' }}
+              style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 92px 0px inset' }}
               className="absolute w-full h-full group-hover:z-10"
             ></div>
 
