@@ -45,7 +45,7 @@ const ShowLists = ({ userId }) => {
               className="group"
               key={list.id}
             >
-              <div className=" bg-gray-400 rounded-lg overflow-hidden w-48 h-48">
+              <div className="  rounded-lg overflow-hidden w-48 h-48">
                 <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">

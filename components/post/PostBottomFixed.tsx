@@ -47,7 +47,7 @@ const PostBottomFixed = ({
         </button>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between 2xl:justify-around">
         <div className="flex items-center">
           <div className="flex">
             <Link href={`/${artistData.username}`}>
@@ -64,21 +64,24 @@ const PostBottomFixed = ({
                 />
               </a>
             </Link>
-            <div className="leading-tight">
-              <div className="flex items-center">
-                <Link href={`/${artistData.username}`}>
-                  <a className="text-white font-semibold text-xl ">
-                    {artistData.displayName}
-                  </a>
-                </Link>
-                <button className="bg-gr-800 ml-4 rounded-full p-2 border border-gr-600">
-                  <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
-                </button>
+            <div className="leading-tight flex items-center">
+              <div>
+                <div className="flex items-center">
+                  <Link href={`/${artistData.username}`}>
+                    <a className="text-white font-semibold text-xl ">
+                      {artistData.displayName}
+                    </a>
+                  </Link>
+                </div>
+
+                <h2 className="text-sm text-gray-400">
+                  {artistData.city_name}, {artistData.province}
+                </h2>
               </div>
 
-              <h2 className="text-sm text-gray-400">
-                {artistData.city_name}, {artistData.province}
-              </h2>
+              <button className="bg-gr-800 ml-4 rounded-full p-2 border border-gr-600">
+                <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
+              </button>
             </div>
           </div>
         </div>
