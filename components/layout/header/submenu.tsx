@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
@@ -6,10 +7,12 @@ import parsePhoneNumber from 'libphonenumber-js'
 import { auth } from 'lib/firebase'
 import { UserState } from 'types/user'
 import { createUser } from 'lib/queries/users'
-import LoginModal from './LoginModal'
+// import LoginModal from './LoginModal'
 import { mutate } from 'swr'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
+
+const LoginModal = dynamic(() => import('./LoginModal'))
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
@@ -43,6 +46,8 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     signOut(auth)
       .then(() => {
         // actions.login(null)
+
+        //Debemos cerrar el modal porque al volver a quedar con el user vacio este se estaba mostrando
         setIsOpen(false)
       })
       .catch((error) => console.log(error, 'error cerrando sesión'))
