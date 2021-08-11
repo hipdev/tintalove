@@ -80,7 +80,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                 className="text-gr-200 space-x-2 items-center hidden md:flex mx-2 ml-2"
                 onClick={() => actions.lists({ post: null, listOpen: true })}
               >
-                <span className="text-xl">
+                <span className="text-xl ml-2">
                   <FaRegHeart />
                 </span>
 
@@ -96,7 +96,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                 <div className="flex">
                   <button>
                     <Link href="/post/new-post">
-                      <a className="text-white tracking-wide text-sm bg-gn-400 py-3 xl:py-4 hover:bg-primaryHover px-4 xl:px-7 rounded-lg flex items-center justify-center">
+                      <a className="text-white tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-lg flex items-center justify-center">
                         <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
                           <AiOutlineCamera />
                         </span>
