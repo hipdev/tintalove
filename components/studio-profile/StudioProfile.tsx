@@ -184,7 +184,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           <h1 className="mt-5 text-gray-300 text-xl font-semibold mb-4">
             Ubicación de {studioData?.studio_name}
           </h1>
-          <div className="text-left text-gray-400 mb-8 flex justify-between">
+          <div className="text-gray-400 mb-8 flex justify-between">
             <div className="mr-2">
               <p className="text-sm sm:text-md">
                 <span className="hidden sm:inline-block font-semibold mr-2">
@@ -199,7 +199,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                 {studioData?.times}
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-8 items-center">
               <a
                 href={`https://www.waze.com/ul?ll=${
                   studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat
@@ -209,10 +209,12 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                 target="_blank"
                 rel="noreferrer"
                 style={{ backgroundColor: '#33ccff' }}
-                className=" flex px-2 sm:px-3 py-2 text-black rounded-full sm:rounded-md font-semibold items-center"
+                className=" flex px-2 sm:px-3 py-2 text-black rounded-full sm:rounded-md font-semibold items-center min-w-max sm:mr-2"
               >
-                <span className="hidden sm:inline-block ">Abrir con Waze</span>
-                <SiWaze className=" sm:ml-2 text-3xl sm:text-2xl text-gray-700" />
+                <span className="hidden sm:inline-block mr-2">
+                  Abrir con Waze
+                </span>
+                <SiWaze className="w-7 h-7 text-gray-700" />
               </a>
               <a
                 href={`https://maps.google.com/?q=${
@@ -222,7 +224,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                 }`}
                 target="_blank"
                 rel="noreferrer"
-                className=" flex px-2 sm:px-2 py-2 text-gr-700 bg-gray-200 rounded-full sm:rounded-md font-semibold items-center justify-center"
+                className=" flex px-2 sm:px-2 py-2 text-gr-700 bg-gray-200 rounded-full sm:rounded-md font-semibold items-center justify-center min-w-max "
               >
                 <span className="hidden sm:inline-block ">Abrir con Maps</span>
                 <Image
