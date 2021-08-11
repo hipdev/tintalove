@@ -21,7 +21,7 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
       }
       scroll={true}
     >
-      <a>
+      <a className="group">
         <div
           className={
             'mb-5 relative ' +
@@ -32,6 +32,10 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
               : 'aspect-w-1 aspect-h-1')
           }
         >
+          <div
+            style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 92px 0px inset' }}
+            className="absolute w-full h-full group-hover:z-10"
+          />
           <Image
             loader={loaderPost}
             src={post?.image?.url}

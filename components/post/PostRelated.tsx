@@ -21,8 +21,12 @@ const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
       }
       scroll={true}
     >
-      <a>
+      <a className="group">
         <div className="mb-0 md:mb-5 relative h-60 2xl:h-72 sm:h-60 w-full">
+          <div
+            style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 92px 0px inset' }}
+            className="absolute w-full h-full group-hover:z-10"
+          />
           <Image
             loader={loaderPost}
             src={post?.image?.url}
