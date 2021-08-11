@@ -33,7 +33,7 @@ export async function createUser(user: User) {
   }
 }
 
-export async function createPhoneUser(user: User) {
+export async function createPhoneUser(user: User, name: string) {
   const docRef = doc(collection(db, 'users'), user.uid)
   const docSnap = await getDoc(docRef)
 
@@ -42,7 +42,7 @@ export async function createPhoneUser(user: User) {
   } else {
     const userRef = doc(collection(db, 'users'), user.uid)
     await setDoc(userRef, {
-      displayName: 'Sin nombre',
+      displayName: name || 'Sin nombre',
       phoneNumber: user.phoneNumber,
       created_at: serverTimestamp(),
     })

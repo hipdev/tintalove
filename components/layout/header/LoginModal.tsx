@@ -38,7 +38,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
         onRequestClose={() => modal.setIsOpen(false)}
         contentLabel="Post modal"
       >
-        <div className="bg-gr-800  text-gray-300 px-14 py-5 pb-10 relative">
+        <div className="bg-gr-800  text-gray-300 px-5 sm:px-10 py-5 pb-10 relative">
           {showPhoneButton && (
             <h2 className="text-gray-300 font-semibold text-2xl text-center mb-7">
               Ingresar en Tinta Love

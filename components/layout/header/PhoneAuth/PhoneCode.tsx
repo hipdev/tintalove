@@ -4,7 +4,7 @@ import { mutate } from 'swr'
 
 declare const window: any
 
-const PhoneCode = ({ modal }: any) => {
+const PhoneCode = ({ modal, name }: any) => {
   const [inputCode, setInputCode]: any = useState('')
   const sendCode = async () => {
     window.confirmationResult
@@ -12,7 +12,7 @@ const PhoneCode = ({ modal }: any) => {
       .then(async (result) => {
         // User signed in successfully.
         const user = result.user
-        const res = await createPhoneUser(user)
+        const res = await createPhoneUser(user, name)
         modal.setIsOpen(false)
 
         if (res) {
