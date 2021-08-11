@@ -8,13 +8,15 @@ type Props = {
   components: any
   setStudioName: any
   artist: ArtistTypes
+  setErrorRequest: any
 }
 
-export function AutocompleteStudioItem({
+export function AutocompleteStudioItemSendRequest({
   hit,
   components,
   setStudioName,
   artist,
+  setErrorRequest,
 }: Props) {
   const sendArtistRequest = async () => {
     setStudioName({ studio_id: hit.objectID, studio_name: hit.studio_name })
@@ -26,6 +28,7 @@ export function AutocompleteStudioItem({
         return 'Solicitud enviada 😉'
       },
       error: (err) => {
+        setErrorRequest(true)
         return `${err.toString()}`
       },
     })
