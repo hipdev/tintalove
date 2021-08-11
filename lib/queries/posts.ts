@@ -83,12 +83,12 @@ export async function getPostsInfo() {
   return { posts }
 }
 
-export async function getLastThreePostsByArtist(_key, artistId) {
+export async function getLastFourPostsByArtist(_key, artistId) {
   const q = query(
     collection(db, 'posts'),
     where('is_active', '==', true),
     where('artist_id', '==', artistId),
-    limit(3)
+    limit(4)
   )
 
   const querySnapshot = await getDocs(q)
