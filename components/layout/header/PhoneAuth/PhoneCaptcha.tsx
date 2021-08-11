@@ -14,7 +14,7 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
       {
         size: 'invisible',
         callback: (response) => {
-          console.log(response, 'respusta del captcha')
+          // console.log(response, 'respusta del captcha')
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           //   onSignInSubmit();
         },
@@ -32,14 +32,14 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult
 
-        console.log(confirmationResult, 'confirmacion de codigo')
+        // console.log(confirmationResult, 'confirmacion de codigo')
         code.setShowCode(true)
         setLoading(false)
       })
       .catch((error) => {
         // Error; SMS not sent
         // ...
-        console.log(error, 'error enviando sms')
+        // console.log(error, 'error enviando sms')
         setLoading(false)
       })
   }
@@ -50,10 +50,10 @@ const PhoneCaptcha = ({ code, phoneNumber }: any) => {
         onClick={sendSMS}
         className="flex items-center justify-center border py-2 mt-5 rounded-md px-2 bg-dark-800 border-black"
       >
-        Obtener código <BsPhone className="text-xl ml-3" />
+        Obtener código <BsPhone className="text-xl ml-3 mr-2" />
         {loading && (
           <svg
-            className="block animate-spin   h-5 w-5 text-white"
+            className="block animate-spin h-5 w-5 text-white"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
