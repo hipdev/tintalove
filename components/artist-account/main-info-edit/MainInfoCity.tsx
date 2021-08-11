@@ -104,6 +104,8 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
   return (
     <div className="relative" ref={ref}>
       <input
+        type="text"
+        autoComplete="chrome-off"
         value={value}
         onChange={handleInput}
         disabled={!ready}
