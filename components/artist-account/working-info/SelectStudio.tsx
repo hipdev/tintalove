@@ -3,13 +3,13 @@ import algoliasearch from 'algoliasearch/lite'
 
 import '@algolia/autocomplete-theme-classic'
 import AutocompleteStudio from './AutocompleteStudio'
-import { AutocompleteStudioItem } from './AutocompleteStudioItemSendRequest'
+import { AutocompleteStudioItemSendRequest } from './AutocompleteStudioItemSendRequest'
 
 const appId = 'JE20HAUJXG'
 const apiKey = 'db9dbba9f07212053022eec3e364876a'
 const searchClient = algoliasearch(appId, apiKey)
 
-const SelectStudio = ({ state, artist }) => {
+const SelectStudio = ({ state, artist, setErrorRequest }) => {
   return (
     <div>
       <AutocompleteStudio
@@ -38,11 +38,12 @@ const SelectStudio = ({ state, artist }) => {
               templates: {
                 item({ item, components }) {
                   return (
-                    <AutocompleteStudioItem
+                    <AutocompleteStudioItemSendRequest
                       hit={item}
                       components={components}
                       setStudioName={state.setStudioName}
                       artist={artist}
+                      setErrorRequest={setErrorRequest}
                     />
                   )
                 },

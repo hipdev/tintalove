@@ -25,6 +25,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [errorRequest, setErrorRequest] = useState(false)
   const { artist } = useArtist(uid)
   const router = useRouter()
 
@@ -174,9 +175,17 @@ const WorkingInfo = ({ uid, isArtist }) => {
                           <FiHelpCircle className="text-xl ml-3 cursor-help" />
                         </span>
                       </span>
+
+                      {errorRequest && (
+                        <p className="text-red-400 mb-2">
+                          Para enviar una solicitud debes tener todos los pasos
+                          completados, regresa aquí cuando estes listo
+                        </p>
+                      )}
                       <SelectStudio
                         state={{ studioName, setStudioName }}
                         artist={artist}
+                        setErrorRequest={setErrorRequest}
                       />
                     </label>
                     <div className="mt-3">
