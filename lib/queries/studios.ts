@@ -557,3 +557,15 @@ export async function getMultipleStudiosInfo(_key, studiosIds) {
 
   return { studios }
 }
+
+export async function getUsernameStudio(_key, id) {
+  const usernameRef = doc(db, `studios/${id}`)
+  const queryRef = await getDoc(usernameRef)
+
+  if (queryRef.exists()) {
+    console.log('existe el estudio')
+    return queryRef.data().username
+  } else {
+    throw new Error('El estudio no existe')
+  }
+}

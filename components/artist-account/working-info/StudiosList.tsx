@@ -4,6 +4,7 @@ import 'microtip/microtip.css'
 import useSWR from 'swr'
 import { IoMdCall } from 'react-icons/io'
 import { getStudiosByArtistId } from 'lib/queries/artists'
+import GetUsernameLink from 'components/common/GetUsernameLink'
 
 const StudiosList = ({ artistId }) => {
   const { data } = useSWR(
@@ -19,28 +20,35 @@ const StudiosList = ({ artistId }) => {
 
           <div className="bg-dark-800 shadow  sm:rounded-md mb-10 mt-2 ">
             <ul className="divide-y divide-gray-200">
-              {data?.studios?.map((request) => {
+              {data?.studios?.map((studio) => {
                 return (
-                  <li key={request.id} className="block hover:bg-black ">
+                  <li key={studio.id} className="block hover:bg-black ">
                     <div className="flex items-center px-4 py-3 sm:px-6">
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
-                          <img
-                            className="h-12 w-12 rounded-full"
-                            src={request.studio_picture}
-                            alt=""
-                          />
+                          <GetUsernameLink
+                            id={studio.studio_id}
+                            type="studio"
+                            target
+                          >
+                            <img
+                              className="h-12 w-12 rounded-full"
+                              src={studio.studio_picture}
+                              alt=""
+                            />
+                          </GetUsernameLink>
                         </div>
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
-                            <a
-                              href="#"
-                              rel="noreferrer"
-                              target="_blank"
-                              className="text-sm font-medium text-primary truncate"
+                            <GetUsernameLink
+                              id={studio.studio_id}
+                              type="studio"
+                              target
                             >
-                              {request.studio_name}
-                            </a>
+                              <span className="text-sm font-medium text-primary truncate">
+                                {studio.studio_name}
+                              </span>
+                            </GetUsernameLink>
 
                             <p className="mt-2 flex items-center text-sm text-gray-500">
                               <IoMdCall
@@ -48,7 +56,7 @@ const StudiosList = ({ artistId }) => {
                                 aria-hidden="true"
                               />
                               <span className="truncate">
-                                {request.studio_address}
+                                {studio.studio_address}
                               </span>
                             </p>
                           </div>
@@ -58,13 +66,13 @@ const StudiosList = ({ artistId }) => {
                                 Te aceptarón en{' '}
                                 <time
                                   dateTime={format(
-                                    request?.created_at.toMillis(),
+                                    studio?.created_at.toMillis(),
                                     'yyyy'
                                   )}
                                 >
                                   <span className="capitalize">
                                     {format(
-                                      request?.created_at.toMillis(),
+                                      studio?.created_at.toMillis(),
                                       'MMMM d, yyyy',
                                       { locale: es }
                                     )}
