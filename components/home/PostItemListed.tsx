@@ -9,6 +9,7 @@ import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
 import Script from 'next/script'
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 
 const PostItemListed = ({
   post,
@@ -145,12 +146,18 @@ const PostItemListed = ({
       </Transition.Root>
 
       {data?.listed ? (
-        <span className="cursor-pointer" onClick={() => setIsOpen(true)}>
-          <RiHeart3Fill />
+        <span
+          className="cursor-pointer text-xl hover:text-gray-500"
+          onClick={() => setIsOpen(true)}
+        >
+          <HiHeart />
         </span>
       ) : (
-        <span className="cursor-pointer" onClick={handleList}>
-          <RiHeartLine />
+        <span
+          className="cursor-pointer text-xl hover:text-primary"
+          onClick={handleList}
+        >
+          <HiOutlineHeart />
         </span>
       )}
     </>

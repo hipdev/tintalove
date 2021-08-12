@@ -23,9 +23,9 @@ const ListImage = ({ listId }) => {
         </div>
       ) : (
         <img
-          src={`${data.userListImage.post_image}`}
+          src={`${data.userListImage.post_image}/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
           alt=""
-          className="  object-cover"
+          className="w-full h-full object-cover"
         />
       )}
     </>
