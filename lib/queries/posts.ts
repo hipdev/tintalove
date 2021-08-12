@@ -72,7 +72,11 @@ export async function createArtistPost(
 }
 
 export async function getPostsInfo() {
-  const q = query(collection(db, 'posts'), where('is_active', '==', true))
+  const q = query(
+    collection(db, 'posts'),
+    where('is_active', '==', true),
+    orderBy('created_at', 'desc')
+  )
 
   const querySnapshot = await getDocs(q)
   const posts: Array<any> = []
@@ -121,6 +125,7 @@ export async function getArtistPosts(_key, artistId) {
   const q = query(
     collection(db, 'posts'),
     where('artist_id', '==', artistId),
+    orderBy('created_at', 'desc'),
     limit(15)
   )
 
