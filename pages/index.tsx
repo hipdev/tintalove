@@ -12,8 +12,14 @@ export default function IndexPage({ postData }) {
 }
 
 export const getStaticProps = async () => {
-  const { posts } = await getPostsInfo()
-  const postData = postsToJSON(posts)
+  let postsData
+  try {
+    const { posts } = await getPostsInfo()
+    postsData = posts
+  } catch (error) {
+    console.log(error)
+  }
+  const postData = postsToJSON(postsData)
 
   return {
     props: {

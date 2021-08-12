@@ -18,7 +18,7 @@ const breakpointColumnsObj = {
 }
 
 const ArtistsPosts = ({ artistId, user }: Props) => {
-  const { data } = useSWR(['get-artist-posts', artistId], getArtistPosts)
+  const { data } = useSWR(['getArtistPosts', artistId], getArtistPosts)
 
   return (
     <div>
