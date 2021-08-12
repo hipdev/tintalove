@@ -9,7 +9,7 @@ import { VscClose } from 'react-icons/vsc'
 import ListImage from './ListImage'
 import { BsPlus } from 'react-icons/bs'
 
-const SelectList = ({ userId, post, user }) => {
+const SelectList = ({ userId, post, user, setShowCreate }) => {
   const [showForm, setShowForm] = useState(false)
 
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
@@ -21,13 +21,11 @@ const SelectList = ({ userId, post, user }) => {
     lists,
   })
 
-  console.log(list, 'lista select')
-
   useEffect(() => {
     if (data?.userLists.length < 1) {
       setShowForm(true)
     }
-  }, [])
+  }, [data])
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
@@ -35,7 +33,6 @@ const SelectList = ({ userId, post, user }) => {
       toast.promise(addPostToList(userId, post, listId), {
         loading: 'Agregando tattoo...',
         success: (res) => {
-          console.log(res, 'la res')
           list.mutateListed({ listed: true }, false)
           list.mutatePost((data) => {
             return {
@@ -75,29 +72,8 @@ const SelectList = ({ userId, post, user }) => {
         </div>
       </div>
 
-      {showForm && <NoListForm user={user} />}
+      {showForm && <NoListForm user={user} setShowCreate={setShowForm} />}
 
-      {/*<div>
-        {data.userLists.map((list) => (
-          <div
-            className="flex items-center mb-5 bg-gr-800 p-4 rounded-md"
-            key={list.id}
-          >
-            <div className="w-20 h-20 bg-gray-500 rounded-lg mr-5 flex-shrink-0"></div>
-
-            <button
-              className="w-full flex flex-col focus:outline-none"
-              type="button"
-              onClick={() => savePostOnList(list.id)}
-            >
-              {list.list_name}
-              <span className="text-light-600 text-sm align-top">
-                1 publicación
-              </span>
-            </button>
-          </div>
-        ))}
-      </div> */}
       <div className="grid grid-cols-2 gap-6">
         {data?.userLists?.map((list) => {
           return (
@@ -120,7 +96,7 @@ const SelectList = ({ userId, post, user }) => {
       </div>
 
       <button
-        // onClick={() => setShowCreate(true)}
+        onClick={() => setShowForm(true)}
         className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
       >
         CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />

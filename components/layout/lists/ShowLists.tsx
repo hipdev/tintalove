@@ -9,11 +9,7 @@ import { useRouter } from 'next/router'
 
 const ShowLists = ({ userId, setShowCreate }) => {
   const router = useRouter()
-
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
-
-  console.log(data, 'data list')
-
   const { state, actions }: any = useStateMachine({
     lists,
   })

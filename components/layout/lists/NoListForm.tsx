@@ -21,55 +21,58 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
     lists,
   })
 
-  console.log(list, 'la lista en el form')
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (list.post?.id) {
-      toast.promise(createList(user, listName), {
-        loading: 'Creando lista y asignando el tattoo...',
-        success: (res: { doc: string; status: boolean }) => {
-          toast.promise(addPostToList(user.uid, list.post, res.doc), {
-            loading: 'Asignando lista...',
-            success: () => {
-              // setTriggerAuth(Math.random())
-              setListName('')
-              actions.lists({ post: null, listOpen: false })
 
-              list.mutateListed({ listed: true }, false)
-              list.mutatePost((data) => {
-                return {
-                  post: {
-                    ...data.post,
-                    counter_listed: data.post.counter_listed + 1,
-                  },
-                }
-              }, false)
+    if (listName !== '') {
+      if (list.post?.id) {
+        toast.promise(createList(user, listName), {
+          loading: 'Creando lista y asignando el tattoo...',
+          success: (res: { doc: string; status: boolean }) => {
+            toast.promise(addPostToList(user.uid, list.post, res.doc), {
+              loading: 'Asignando lista...',
+              success: () => {
+                // setTriggerAuth(Math.random())
+                setListName('')
+                actions.lists({ post: null, listOpen: false })
 
-              return 'Tattoo guardado 😉'
-            },
-            error: (err) => {
-              return `${err.toString()}`
-            },
-          })
+                list.mutateListed({ listed: true }, false)
+                list.mutatePost((data) => {
+                  return {
+                    post: {
+                      ...data.post,
+                      counter_listed: data.post.counter_listed + 1,
+                    },
+                  }
+                }, false)
 
-          return 'Lista creada...'
-        },
-        error: (err) => {
-          return `${err.toString()}`
-        },
-      })
+                return 'Tattoo guardado 😉'
+              },
+              error: (err) => {
+                return `${err.toString()}`
+              },
+            })
+
+            return 'Lista creada...'
+          },
+          error: (err) => {
+            return `${err.toString()}`
+          },
+        })
+      } else {
+        toast.promise(createList(user, listName), {
+          loading: 'Creando lista...',
+          success: () => {
+            setShowCreate(false)
+            return 'Lista creada'
+          },
+          error: (err) => {
+            return `${err.toString()}`
+          },
+        })
+      }
     } else {
-      toast.promise(createList(user, listName), {
-        loading: 'Creando lista...',
-        success: () => {
-          setShowCreate(false)
-          return 'Lista creada'
-        },
-        error: (err) => {
-          return `${err.toString()}`
-        },
-      })
+      toast('Debes asignar un valor a la lista')
     }
   }
 
@@ -79,7 +82,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
         <div className="flex items-center">
           {list?.post && (
             <img
-              className="w-12 h-12"
+              className="w-12 h-12 object-cover rounded-md"
               src={`${list?.post?.image?.url}/tr:pr-true,c-at_max,f-auto,w-50,q-90`}
             />
           )}
@@ -99,6 +102,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
       </div>
       <div className="flex text-gr-100 space-x-2">
         <button
+          type="button"
           onClick={() => setShowCreate(false)}
           className="text-sm bg-gr-800 hover:bg-gr-600 p-3 rounded-md w-1/2"
         >

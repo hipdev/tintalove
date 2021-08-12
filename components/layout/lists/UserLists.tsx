@@ -18,8 +18,6 @@ const UserLists = ({ user }) => {
     lists,
   })
 
-  console.log(list, user, 'estados')
-
   return (
     <Modal
       isOpen={list?.listOpen || false}
@@ -56,7 +54,12 @@ const UserLists = ({ user }) => {
             {!list?.post ? (
               <ShowLists userId={user?.uid} setShowCreate={setShowCreate} />
             ) : (
-              <SelectList user={user} userId={user?.uid} post={list?.post} />
+              <SelectList
+                user={user}
+                userId={user?.uid}
+                post={list?.post}
+                setShowCreate={setShowCreate}
+              />
             )}
           </>
         )}
