@@ -21,6 +21,8 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
     lists,
   })
 
+  console.log(list, 'la lista en el form')
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (list.post?.id) {
@@ -75,15 +77,13 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
     <form onSubmit={handleSubmit} className="mb-5">
       <div className="bg-gr-700 p-2 rounded-md mb-2 border border-gr-600">
         <div className="flex items-center">
-          <div className="w-12 h-12 bg-white rounded-lg mr-2 flex-shrink-0 overflow-hidden">
-            {/* w-12 y h-12 se pueden borrar junto con el bg-white es solo para que al renderizar se vea algo xD */}
-            {/* <img
-              //src={user.photoUrl} Pinte la foto pero despues me daba un error :/ porque no podía leer la propiedad 
-              alt="User photo"
-              className="object-cover w-12 h-12 "
+          {list?.post && (
+            <img
+              className="w-12 h-12"
+              src={`${list?.post?.image?.url}/tr:pr-true,c-at_max,f-auto,w-50,q-90`}
             />
-           */}
-          </div>
+          )}
+
           <div className="w-full">
             <label className="flex items-center w-full">
               <input
