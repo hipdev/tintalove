@@ -14,6 +14,7 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
+import GetUsernameLink from 'components/common/GetUsernameLink'
 
 const ArtistsRequests = ({ studio }) => {
   const { data, mutate: mutateRequest } = useSWR(
@@ -62,22 +63,29 @@ const ArtistsRequests = ({ studio }) => {
                   <div className="flex items-center px-4 py-3 sm:px-6">
                     <div className="min-w-0 flex-1 flex items-center">
                       <div className="flex-shrink-0">
-                        <img
-                          className="h-12 w-12 rounded-full"
-                          src={request.artist_picture}
-                          alt=""
-                        />
+                        <GetUsernameLink
+                          id={request.artist_id}
+                          type="artist"
+                          target
+                        >
+                          <img
+                            className="h-12 w-12 rounded-full"
+                            src={request.artist_picture}
+                            alt=""
+                          />
+                        </GetUsernameLink>
                       </div>
                       <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                          <a
-                            href="#"
-                            rel="noreferrer"
-                            target="_blank"
-                            className="text-sm font-medium text-primary truncate"
+                          <GetUsernameLink
+                            id={request.artist_id}
+                            type="artist"
+                            target
                           >
-                            {request.artist_name}
-                          </a>
+                            <span className="text-sm font-medium text-primary truncate">
+                              {request.artist_name}
+                            </span>
+                          </GetUsernameLink>
 
                           <p className="mt-2 flex items-center text-sm text-gray-500">
                             <MdMail
