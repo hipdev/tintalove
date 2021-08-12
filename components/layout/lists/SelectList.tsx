@@ -7,6 +7,7 @@ import { lists } from 'lib/actions'
 import useSWR from 'swr'
 import { VscClose } from 'react-icons/vsc'
 import ListImage from './ListImage'
+import { BsPlus } from 'react-icons/bs'
 
 const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
@@ -61,14 +62,14 @@ const SelectList = ({ userId, post, user }) => {
           <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
           <button
             className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700"
-            onClick={() => setShowForm(showForm)}
+            onClick={() => actions.lists({ postId: null, listOpen: false })}
           >
             <VscClose className="text-gr-200 hover:text-gray-100 text-2xl" />
           </button>
         </div>
       </div>
 
-      {!showForm && <NoListForm user={user} />}
+      {showForm && <NoListForm user={user} />}
 
       {/*<div>
         {data.userLists.map((list) => (
@@ -91,25 +92,33 @@ const SelectList = ({ userId, post, user }) => {
           </div>
         ))}
       </div> */}
+      <div className="grid grid-cols-2 gap-6">
+        {data?.userLists?.map((list) => {
+          return (
+            <button
+              onClick={() => {
+                savePostOnList(list.id)
+              }}
+              className="group"
+              key={list.id}
+            >
+              <div className="  rounded-lg overflow-hidden w-48 h-48">
+                <ListImage listId={list?.id} />
+              </div>
+              <p className="text-gray-400 mt-2 group-hover:text-gray-100">
+                {list.list_name}
+              </p>
+            </button>
+          )
+        })}
+      </div>
 
-      {data?.userLists?.map((list) => {
-        return (
-          <button
-            onClick={() => {
-              savePostOnList(list.id)
-            }}
-            className="group"
-            key={list.id}
-          >
-            <div className="  rounded-lg overflow-hidden w-48 h-48">
-              <ListImage listId={list?.id} />
-            </div>
-            <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-              {list.list_name}
-            </p>
-          </button>
-        )
-      })}
+      <button
+        // onClick={() => setShowCreate(true)}
+        className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
+      >
+        CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
+      </button>
     </div>
   )
 }
