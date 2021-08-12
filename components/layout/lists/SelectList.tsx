@@ -97,7 +97,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
 
       <button
         onClick={() => setShowForm(true)}
-        className="absolute right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
+        className="fixed right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
       >
         CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
       </button>
