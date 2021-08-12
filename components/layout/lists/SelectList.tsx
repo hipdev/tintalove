@@ -1,6 +1,6 @@
 import { addPostToList, getUserLists } from 'lib/queries/lists'
 import { useStateMachine } from 'little-state-machine'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import NoListForm from './NoListForm'
 import { lists } from 'lib/actions'
@@ -22,6 +22,12 @@ const SelectList = ({ userId, post, user }) => {
   })
 
   console.log(list, 'lista select')
+
+  useEffect(() => {
+    if (data?.userLists.length < 1) {
+      setShowForm(true)
+    }
+  }, [])
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
