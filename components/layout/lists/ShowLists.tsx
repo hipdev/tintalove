@@ -22,9 +22,9 @@ const ShowLists = ({ userId, setShowCreate }) => {
         <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
         <button
           onClick={() => actions.lists({ postId: null, listOpen: false })}
-          className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700"
+          className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700 group"
         >
-          <VscClose className="text-gr-200 hover:text-gray-100 text-2xl" />
+          <VscClose className="text-gr-200 group-hover:text-white text-2xl" />
         </button>
       </div>
       <div className="grid grid-cols-2 gap-6">
