@@ -9,6 +9,8 @@ const GetUsernameLink = ({ children, id, type, target }: any) => {
     type == 'studio' ? getUsernameStudio : getUsernameArtist
   )
 
+  console.log(data, 'el username')
+
   if (target) {
     return (
       <a
