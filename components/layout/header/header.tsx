@@ -22,7 +22,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   return (
     <nav
       className={
-        'h-16 md:h-auto xl:h-20 w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 z-20' +
+        'h-16 md:h-auto w-full bg-dark-800 py-4 md:py-3 px-5 sm:px-10 lg:px-20 z-20' +
         (fixed ? ' md:fixed' : ' static')
       }
     >

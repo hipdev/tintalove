@@ -58,12 +58,21 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
         },
       })
     } else {
-      toast('No existe el post')
+      toast.promise(createList(user, listName), {
+        loading: 'Creando lista...',
+        success: () => {
+          setShowCreate(false)
+          return 'Lista creada'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      })
     }
   }
 
   return (
-    <div className="mb-5">
+    <form onSubmit={handleSubmit} className="mb-5">
       <div className="bg-gr-700 p-2 rounded-md mb-2 border border-gr-600">
         <div className="flex items-center">
           <div className="w-12 h-12 bg-white rounded-lg mr-2 flex-shrink-0 overflow-hidden">
@@ -76,7 +85,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
            */}
           </div>
           <div className="w-full">
-            <form onSubmit={handleSubmit} className="flex items-center w-full">
+            <label className="flex items-center w-full">
               <input
                 type="text"
                 value={listName}
@@ -84,7 +93,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
                 className="bg-transparent px-3 placeholder-gr-300 w-full rounded-md py-2 text-gr-100"
                 placeholder="Nombre de la colección"
               />
-            </form>
+            </label>
           </div>
         </div>
       </div>
@@ -95,12 +104,15 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
         >
           CANCELAR
         </button>
-        <button className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center">
+        <button
+          type="submit"
+          className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center"
+        >
           NUEVA COLECCIÓN <BsPlus className="text-2xl ml-1" />
           {/* Me tome la libertad de quitar la palabra CREAR del botón, creo que el icono ayuda mucho a intuir que es lo que hace y además ayuda mucho al repsonsive :D */}
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 
