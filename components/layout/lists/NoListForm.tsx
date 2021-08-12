@@ -90,6 +90,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
           <div className="w-full">
             <label className="flex items-center w-full">
               <input
+                autoFocus
                 type="text"
                 value={listName}
                 onChange={(e) => setListName(e.target.value)}
