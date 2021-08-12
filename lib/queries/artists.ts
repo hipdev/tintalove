@@ -561,3 +561,14 @@ export async function getStudiosByArtistId(_key, artistId) {
 
   return { studios }
 }
+
+export async function getUsernameArtist(_key, id) {
+  const usernameRef = doc(db, `artists/${id}`)
+  const queryRef = await getDoc(usernameRef)
+
+  if (queryRef.exists()) {
+    return queryRef.data().username
+  } else {
+    throw new Error('El artista no existe')
+  }
+}
