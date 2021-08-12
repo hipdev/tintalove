@@ -1,3 +1,4 @@
+import GetUsernameLink from 'components/common/GetUsernameLink'
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
 import { deleteArtistRequest } from 'lib/queries/artists'
@@ -43,22 +44,29 @@ const WorkingRequests = ({ requests }) => {
                     <div className="flex items-center px-4 py-3 sm:px-6">
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
-                          <img
-                            className="h-12 w-12 rounded-full"
-                            src={item.studio_picture}
-                            alt=""
-                          />
+                          <GetUsernameLink
+                            id={item.studio_id}
+                            type="studio"
+                            target
+                          >
+                            <img
+                              className="h-12 w-12 rounded-full"
+                              src={item.studio_picture}
+                              alt=""
+                            />
+                          </GetUsernameLink>
                         </div>
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
-                            <a
-                              href="#"
-                              rel="noreferrer"
-                              target="_blank"
-                              className="text-sm font-medium text-primary truncate"
+                            <GetUsernameLink
+                              id={item.studio_id}
+                              type="studio"
+                              target
                             >
-                              {item.studio_name}
-                            </a>
+                              <span className="text-sm font-medium text-primary truncate">
+                                {item.studio_name}
+                              </span>
+                            </GetUsernameLink>
 
                             <p className="mt-2 flex items-center text-sm text-gray-500">
                               <GoLocation
