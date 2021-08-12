@@ -11,8 +11,8 @@ import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
+const loaderPost = ({ src, quality, width }: any) => {
+  return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
 }
 
 const PostPortrait = ({
@@ -46,6 +46,7 @@ const PostPortrait = ({
   }, [imageRef, router])
 
   console.log(artistData, 'data Artist')
+  console.log(postData, 'data del post')
 
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between 2xl:justify-center">
@@ -129,9 +130,9 @@ const PostPortrait = ({
               ) : (
                 <>
                   Realizado en el estudio privado de{' '}
-                  <Link href={`/${postData.username}`}>
+                  <Link href={`/${artistData.username}`}>
                     <a className="text-gn-500 font-semibold capitalize">
-                      {postData.username}
+                      {artistData.username}
                     </a>
                   </Link>
                 </>
