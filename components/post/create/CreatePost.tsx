@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import Select from 'react-select'
 import CreatePostPicture from './CreatePostPicture'
-import { IoMdTabletLandscape, IoMdTabletPortrait } from 'react-icons/io'
 import useArtist from 'hooks/use-artist'
-import { FaRegSquare, FaTabletAlt } from 'react-icons/fa'
-import { BsArrowRight } from 'react-icons/bs'
-import { BsArrowUp, BsTablet, BsTabletLandscape } from 'react-icons/bs'
+import { BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
 import SelectStudioToPost from './SelectStudio'
 
@@ -19,10 +16,6 @@ const CreatePost = ({ user }) => {
   const { artist } = useArtist(user.uid)
 
   const options = artist?.styles.map((style) => {
-    return { value: style, label: style }
-  })
-
-  const optionsStudios = artist?.styles.map((style) => {
     return { value: style, label: style }
   })
 
