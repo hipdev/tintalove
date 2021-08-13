@@ -1,8 +1,11 @@
-import { signInWithPopup } from '@firebase/auth'
+import { signInWithPopup, GoogleAuthProvider } from '@firebase/auth'
 import { auth } from 'lib/firebase'
-import { provider } from 'components/layout/header/Submenu'
 import { createUser } from 'lib/queries/users'
 import useUserId from 'hooks/use-user-id'
+
+const provider = new GoogleAuthProvider().setCustomParameters({
+  prompt: 'select_account',
+})
 
 export default function IsAuth({ children }) {
   const { userId } = useUserId()
