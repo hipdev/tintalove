@@ -12,7 +12,7 @@ const NavFooter = () => {
 
   return (
     <nav
-      className="flex bg-dark-600 fixed bottom-0 w-full justify-evenly text-gray-200  sm:hidden"
+      className="flex bg-dark-800 fixed bottom-0 w-full justify-evenly text-gray-400  sm:hidden"
       style={{ boxShadow: '0px -1px 4px #040404' }}
     >
       <Link href="/">

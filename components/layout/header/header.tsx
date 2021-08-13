@@ -56,9 +56,12 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             </div>
 
             {/* Menu desktop */}
-            <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
-              <SubmenuLeft user={user} />
-            </div>
+            {(!user?.has_studio || !user?.artist_active) && (
+              <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
+                <SubmenuLeft user={user} />
+              </div>
+            )}
+
             <div className="text-gr-200 hidden md:flex px-10 lg:px-5 xl:px-10 space-x-2 items-center">
               <span className="text-2xl flex justify-center">
                 <AiOutlineSearch />
