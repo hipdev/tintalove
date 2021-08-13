@@ -17,12 +17,16 @@ const PostArtistFavorite = ({
   user: UserState
 }) => {
   const { data: favoriteId, mutate } = useSWR(
-    ['isArtistFavorite', artistData.artist_id, user.uid],
+    ['isArtistFavorite', artistData.artist_id, user?.uid],
     isArtistFavorite
   )
 
   const handleFavoriteArtist = async () => {
-    toast.promise(addArtistToFavorites(artistData.artist_id, user.uid), {
+    if (!user?.uid) {
+      toast.error('Debes entrar para agregar favoritos')
+      return
+    }
+    toast.promise(addArtistToFavorites(artistData.artist_id, user?.uid), {
       loading: 'Añadiendo...',
       success: () => {
         mutate()
