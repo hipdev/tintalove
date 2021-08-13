@@ -1,5 +1,5 @@
 import ArtistMap from 'components/artist/ArtistMap'
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 import { Loader } from '@googlemaps/js-api-loader'
 
 import { postToJSON } from 'lib/firebase'
