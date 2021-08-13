@@ -3,7 +3,7 @@ import Head from 'next/head'
 const HeadContainer = () => {
   return (
     <Head>
-      <title>Tinta Love - Amamos el tatuaje</title>
+      <title>Tinta Love - Amamos los tatuajes</title>
 
       <link
         rel="apple-touch-icon"
