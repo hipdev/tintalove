@@ -1,6 +1,6 @@
 import { signInWithPopup } from '@firebase/auth'
 import { auth } from 'lib/firebase'
-import { provider } from './layout/header/Submenu'
+import { provider } from 'components/layout/header/Submenu'
 import { createUser } from 'lib/queries/users'
 import useUserId from 'hooks/use-user-id'
 
