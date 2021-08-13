@@ -1,7 +1,7 @@
 import { getArtistAvailability } from 'lib/queries/artists'
 import useSWR from 'swr'
 import { UserState } from 'types/user'
-import Availability from './availability'
+import Availability from './Availability'
 
 const WrapperAvailability = ({ user }: { user: UserState }) => {
   const { data } = useSWR(

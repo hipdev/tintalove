@@ -1,4 +1,4 @@
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 import { useRouter } from 'next/router'
 import UserList from 'components/list/UserList'
 import useUserId from 'hooks/use-user-id'

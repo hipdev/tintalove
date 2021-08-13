@@ -1,14 +1,14 @@
-import SideMenuArtistSteps from 'components/layout-steps/SideMenuArtistSteps'
+import SideMenuArtistSteps from '../../components/layout-steps/SideMenuArtistSteps'
 import Image from 'next/image'
 import Link from 'next/link'
 import StepNav from './StepNav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
-import HeadContainer from 'components/layout/head'
+import HeadContainer from '../layout/HeadContainer'
 import { UserState } from 'types/user'
-import SideMenuArtist from 'components/layout-steps/SideMenuArtist'
+import SideMenuArtist from '../../components/layout-steps/SideMenuArtist'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
-import WrapperAvailability from 'components/layout/header/WrapperAvailability'
+import WrapperAvailability from '../layout/Header/WrapperAvailability'
 import { Toaster } from 'react-hot-toast'
 
 type Props = {

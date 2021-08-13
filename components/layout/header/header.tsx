@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import SubMenuHeader from './submenu'
+import SubMenuHeader from './Submenu'
 import { UserState } from 'types/user'
 import { FiPlus } from 'react-icons/fi'
 import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'

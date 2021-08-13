@@ -23,7 +23,6 @@ export async function getPostsByCity(latLng) {
   const bounds = geohashQueryBounds(latLng, radiusInM)
   const promises = []
   for (const b of bounds) {
-    console.log(b, 'que es b')
     const q = query(
       collection(db, 'posts'),
       orderBy('geohash'),
