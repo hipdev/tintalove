@@ -53,7 +53,7 @@ const SelectCity = ({ user, cities }) => {
           <>
             <div className="block relative w-full">
               <Listbox.Button
-                className="bg-transparent relative w-full rounded-md text-gr-200
+                className="bg-transparent relative w-full rounded-sm text-gr-200
                 shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none   hidden md:block cu"
               >
                 <div className="flex">
@@ -79,14 +79,16 @@ const SelectCity = ({ user, cities }) => {
               >
                 <Listbox.Options
                   static
-                  className="absolute z-30 mt-1 w-60 bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                  className="nice_scroll absolute z-30 mt-1 w-60 bg-dark-800 border border-gray-600 shadow-lg max-h-60 rounded-sm text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                 >
                   {cities.map((city) => (
                     <Listbox.Option
                       key={city.geohash}
                       className={({ active }) =>
-                        (active ? 'text-white bg-primary' : 'text-gray-900') +
-                        ' cursor-default select-none relative py-2 pl-3 pr-9'
+                        (active
+                          ? 'text-gray-400 bg-gray-900'
+                          : 'text-gray-300') +
+                        ' cursor-pointer select-none relative py-2 pl-3 pr-9'
                       }
                       value={city}
                     >
@@ -103,7 +105,7 @@ const SelectCity = ({ user, cities }) => {
                             </span>
                             <span
                               className={
-                                (active ? 'text-white' : 'text-gray-500') +
+                                (active ? 'text-primary' : 'text-gray-500') +
                                 ' ml-4 relative bottom-[1px] truncate text-xs capitalize'
                               }
                             >
@@ -114,7 +116,7 @@ const SelectCity = ({ user, cities }) => {
                           {selected ? (
                             <span
                               className={
-                                (active ? 'text-white' : 'text-primary') +
+                                (active ? 'text-gray-400' : 'text-primary') +
                                 ' absolute inset-y-0 right-0 flex items-center pr-4'
                               }
                             >
