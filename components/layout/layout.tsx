@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import useSWR from 'swr'
 import Footer from './Footer'
 import HeadContainer from './HeadContainer'
-import Header from './header/Header'
+import Header from './Header/Header'
 import UserLists from './Lists/UserLists'
 import NavFooter from './NavFooter'
 
