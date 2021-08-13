@@ -30,10 +30,6 @@ const PostComments = ({
     setShowInput(false)
   })
 
-  const handleClickBtn = () => {
-    setShowInput(!showInput)
-  }
-
   const commentBoxRef = useRef(null)
 
   const removeComment = (commentId) => {
@@ -48,8 +44,6 @@ const PostComments = ({
   useEffect(() => {
     setWSize(windowSize.width)
   }, [windowSize])
-
-  console.log(windowSize, 'ancho de la ventana')
 
   const sendComment = (e) => {
     e.preventDefault()
