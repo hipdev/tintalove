@@ -3,12 +3,12 @@ import Image from 'next/image'
 import { FaWhatsapp } from 'react-icons/fa'
 import { IoIosArrowUp } from 'react-icons/io'
 import { ArtistTypes } from 'types/artist'
-import { AiOutlineStar } from 'react-icons/ai'
 import { UserState } from 'types/user'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import PostCallOptions from './PostCallOptions'
-import { BsHeart } from 'react-icons/bs'
+import { BsHeart, BsHeartFill } from 'react-icons/bs'
+import PostArtistFavorite from './PostArtistFavorite'
 
 const loaderImage = ({ src, quality }: any) => {
   return `${src}/tr:pr-true,w-48,h-48,q-${quality || 75}`
@@ -30,6 +30,7 @@ const PostBottomFixed = ({
   const goTop = () => {
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
   return (
     <div className="fixed bottom-0 z-20 w-full bg-gr-700 left-0 text-gray-300 py-4 border-t border-gray-700 px-5  sm:w-full sm:px-10 2xl:px-16">
       <div
@@ -79,9 +80,7 @@ const PostBottomFixed = ({
                 </h2>
               </div>
 
-              <button className="bg-gr-800 ml-4 rounded-full p-2 border border-gr-600">
-                <BsHeart className="text-2xl hover:text-primary text-gn-400 animate-pulse relative top-0.5" />
-              </button>
+              <PostArtistFavorite user={user} artistData={artistData} />
             </div>
           </div>
         </div>

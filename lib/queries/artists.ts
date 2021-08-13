@@ -572,3 +572,52 @@ export async function getUsernameArtist(_key, id) {
     throw new Error('El artista no existe')
   }
 }
+
+export async function addArtistToFavorites(artist_id, user_id) {
+  const q = query(
+    collection(db, 'fav_artists'),
+    where('artist_id', '==', artist_id),
+    where('user_id', '==', user_id)
+  )
+
+  const querySnapshot = await getDocs(q)
+
+  if (querySnapshot.empty) {
+    await addDoc(collection(db, 'fav_artists'), {
+      created_at: serverTimestamp(),
+      artist_id,
+      user_id,
+    })
+
+    return true
+  } else {
+    throw new Error('Ya tienes este artista como favorito')
+  }
+}
+
+export async function deleteFavoriteArtist(favId) {
+  const favArtistRef = doc(collection(db, 'fav_artists'), favId)
+
+  await deleteDoc(favArtistRef)
+}
+
+export async function isArtistFavorite(_key, artist_id, user_id) {
+  const q = query(
+    collection(db, 'fav_artists'),
+    where('artist_id', '==', artist_id),
+    where('user_id', '==', user_id)
+  )
+
+  const querySnapshot = await getDocs(q)
+
+  if (querySnapshot.empty) {
+    return false
+  } else {
+    let artistFavId
+    querySnapshot.forEach((doc) => {
+      artistFavId = doc.id
+    })
+
+    return artistFavId
+  }
+}
