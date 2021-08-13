@@ -1,20 +1,18 @@
 import { BsPhone } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import PhoneCaptcha from './PhoneCaptcha'
 import { phone } from 'phone'
 
 import 'react-phone-input-2/lib/style.css'
 import PhoneCode from './PhoneCode'
-import toast from 'react-hot-toast'
 
 const PhoneAuth = ({ show, modal }: any) => {
-  const [name, setName] = useState('')
+  // const [name, setName] = useState('')
   const [phoneReady, setPhoneReady] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const [phoneNumber, setPhoneNumber]: any = useState()
 
-  console.log(name.length, 'el nombre')
   return (
     <>
       {!showCode && (
@@ -39,7 +37,7 @@ const PhoneAuth = ({ show, modal }: any) => {
                   &quot;123456 is your verification code for Tinta Love&quot;
                 </span>
               </p>
-              <label className="mt-5 block">
+              {/* <label className="mt-5 block">
                 <span className="text-center block uppercase text-sm text-gray-400 font-semibold">
                   Tu nombre{' '}
                 </span>
@@ -48,12 +46,12 @@ const PhoneAuth = ({ show, modal }: any) => {
                   onChange={(e) => setName(e.target.value)}
                   value={name}
                 />
-              </label>
+              </label> */}
 
               <label className="block justify-center mt-4">
-                <span className="text-center block uppercase text-sm text-gray-400 font-semibold">
+                {/* <span className="text-center block uppercase text-sm text-gray-400 font-semibold">
                   Tu celular
-                </span>
+                </span> */}
                 <PhoneInput
                   country={'co'}
                   onlyCountries={[
@@ -106,7 +104,7 @@ const PhoneAuth = ({ show, modal }: any) => {
             </div>
           )}
 
-          {phoneReady && name.length > 4 && (
+          {phoneReady && (
             <PhoneCaptcha
               phoneNumber={phoneNumber}
               code={{ showCode, setShowCode }}
@@ -119,7 +117,6 @@ const PhoneAuth = ({ show, modal }: any) => {
           phoneNumber={phoneNumber}
           code={{ showCode, setShowCode }}
           modal={modal}
-          name={name}
         />
       )}
     </>
