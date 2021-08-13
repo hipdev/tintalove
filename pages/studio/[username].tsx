@@ -1,7 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader'
 
 import StudioProfile from 'components/studio-profile/StudioProfile'
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 
 import { postsToJSON, postToJSON } from 'lib/firebase'
 

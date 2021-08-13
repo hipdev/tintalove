@@ -1,4 +1,4 @@
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 import Loading from 'components/loading/loading'
 import CreatePost from 'components/post/create/CreatePost'
 import useUserId from 'hooks/use-user-id'
