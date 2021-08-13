@@ -62,7 +62,9 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
     <div>
       <div>
         <div className="w-full h-24 flex items-center justify-between mb-2">
-          <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
+          <h1 className="text-gr-100 text-2xl font-semibold">
+            Seleccionar colección
+          </h1>
           <button
             className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700 group"
             onClick={() => actions.lists({ postId: null, listOpen: false })}
