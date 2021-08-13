@@ -4,7 +4,7 @@ import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
 import { useState } from 'react'
 
-const PhoneInput = dynamic(() => import('./PhoneAuth/PhoneInput'), {
+const PhoneInput = dynamic(() => import('../PhoneAuth/PhoneInput'), {
   ssr: false,
 })
 
