@@ -10,6 +10,7 @@ import { createUser } from 'lib/queries/users'
 import { mutate } from 'swr'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
+import Link from 'next/link'
 
 const LoginModal = dynamic(() => import('./LoginModal'))
 
@@ -84,6 +85,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                           ? `${user.photoUrl}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
                           : '/unuser.png'
                       }
+                      alt="user image"
                     />
                     <VscChevronDown className="text-2xl ml-3 " />
                   </Menu.Button>
@@ -131,16 +133,17 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                         {user?.has_studio && (
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/studio-account/general"
-                                className={`${
-                                  active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700'
-                                } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                              >
-                                Administrar estudio
-                              </a>
+                              <Link href="/studio-account/general">
+                                <a
+                                  className={`${
+                                    active
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700'
+                                  } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                                >
+                                  Administrar estudio
+                                </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         )}
