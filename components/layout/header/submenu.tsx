@@ -11,7 +11,7 @@ import { mutate } from 'swr'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 
-const LoginModal = dynamic(() => import('./LoginModal'))
+const LoginModal = dynamic(() => import('../LoginModal'))
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
