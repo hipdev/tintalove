@@ -1,4 +1,4 @@
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 import IsAuth from 'components/isAuth'
 import useUser from 'hooks/use-user'
 import AdminUsers from 'admin-components/users/users'

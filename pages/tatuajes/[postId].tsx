@@ -1,6 +1,6 @@
 import Modal from 'react-modal'
 import Script from 'next/script'
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/Layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import debounce from 'lodash.debounce'
 import {
