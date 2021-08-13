@@ -9,9 +9,12 @@ export const capitalizeAllWords = (s: string) => {
 }
 
 export function url_domain(data) {
-  var a = document.createElement('a')
-  a.href = data
-  return a.hostname
+  if (data) {
+    var a = document.createElement('a')
+    a.href = data
+    return a.hostname
+  }
+  return false
 }
 
 export function checkUrl(url, website) {

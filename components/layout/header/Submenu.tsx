@@ -11,6 +11,7 @@ import { mutate } from 'swr'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
+import { url_domain } from 'lib/utils'
 
 const LoginModal = dynamic(() => import('./LoginModal'))
 
@@ -49,6 +50,10 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
 
+  const userImage = url_domain(user?.photoUrl || null)
+
+  console.log(userImage, 'imagen google')
+
   return (
     <>
       {!user && (
@@ -81,8 +86,10 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                     <img
                       className="w-12 h-12 rounded-full"
                       src={
-                        user.photoUrl
-                          ? `${user.photoUrl}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
+                        userImage == 'ik.imagekit.io'
+                          ? `${user?.photoUrl}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
+                          : userImage == 'lh3.googleusercontent.com'
+                          ? user?.photoUrl
                           : '/unuser.png'
                       }
                       alt="user image"
