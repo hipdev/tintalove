@@ -52,8 +52,6 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
 
   const userImage = url_domain(user?.photoUrl || null)
 
-  console.log(userImage, 'imagen google')
-
   return (
     <>
       {!user && (
