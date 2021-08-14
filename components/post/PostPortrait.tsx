@@ -10,6 +10,7 @@ import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import PostGetStudioLink from './PostGetStudioLink'
 
 const loaderPost = ({ src, quality, width }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
@@ -121,12 +122,11 @@ const PostPortrait = ({
             </p>
             <p className="text-sm text-gray-400">
               {postData.is_partner ? (
-                <>
-                  Realizado en:{' '}
-                  <Link href="#">
-                    <a className="text-gn-500">Tinta Studio Tattoo</a>
-                  </Link>
-                </>
+                postData.studio_id && (
+                  <>
+                    Realizado en: <PostGetStudioLink id={postData?.studio_id} />
+                  </>
+                )
               ) : (
                 <>
                   Realizado en el estudio privado de{' '}
