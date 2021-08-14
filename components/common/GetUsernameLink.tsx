@@ -3,7 +3,14 @@ import { getUsernameStudio } from 'lib/queries/studios'
 import Link from 'next/link'
 import useSWR from 'swr'
 
-const GetUsernameLink = ({ children, id, type, target }: any) => {
+type Props = {
+  children: any
+  id: string
+  type: 'studio' | 'artist'
+  target: boolean
+}
+
+const GetUsernameLink = ({ children, id, type, target }: Props) => {
   const { data } = useSWR(
     [type == 'studio' ? 'getUsernameStudio' : 'getUsernameArtist', id],
     type == 'studio' ? getUsernameStudio : getUsernameArtist
