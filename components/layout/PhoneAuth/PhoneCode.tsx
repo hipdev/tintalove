@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createPhoneUser } from 'lib/queries/users'
 import { mutate } from 'swr'
 import { AiOutlineUnlock } from 'react-icons/ai'
+import ReactCodeInput from 'react-verification-code-input'
 
 declare const window: any
 
@@ -37,15 +38,20 @@ const PhoneCode = ({ modal, name }: any) => {
     <div className="text-center flex items-center flex-col">
       <h2 className="text-2xl font-semibold mb-5">Indica el código</h2>
       <p className="text-gray-400">Escribe los 6 dígitos del SMS</p>
-      <input
-        type="number"
-        value={inputCode}
-        className="mt-4 py-2 text-center text-xl rounded-sm w-full bg-gr-900 border"
+      <ReactCodeInput
+        onComplete={(e) => {
+          console.log(e, 'el código')
+          setInputCode(e)
+        }}
         onChange={(e) => {
-          setInputCode(e.target.value)
-          if (e.target.value.length > 5) {
+          if (e.length < 6) {
+            setInputCode(e)
           }
         }}
+        fieldWidth={35}
+        fieldHeight={40}
+        autoFocus
+        className="code_input mt-3"
       />
 
       {inputCode.length == 6 && (
