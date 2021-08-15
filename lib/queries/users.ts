@@ -86,3 +86,16 @@ export async function updateUserSearchCity(uid, data) {
     throw new Error('No estas registrado como usuario')
   }
 }
+
+export async function updateUserName(uid, displayName) {
+  const userRef = doc(collection(db, 'users'), uid)
+  const docSnap: DocumentSnapshot<UserState> = await getDoc(userRef)
+
+  if (docSnap.exists()) {
+    await updateDoc(userRef, { displayName })
+    return true
+  } else {
+    throw new Error('Este usuario no existe')
+    return false
+  }
+}

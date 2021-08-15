@@ -56,7 +56,9 @@ export function postToJSON(data) {
 export function postsToJSON(arrayData) {
   let data = []
 
-  data = arrayData.map((doc) => postToJSON(doc))
+  if (arrayData) {
+    data = arrayData.map((doc) => postToJSON(doc))
+  }
 
   return data
 }
