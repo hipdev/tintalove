@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 import { BsPhone } from 'react-icons/bs'
 import { UserState } from 'types/user'
 
-const UserProfile = ({ user }: { user: UserState }) => {
+const UserImageProfile = ({ user }: { user: UserState }) => {
   const [name, setName] = useState(
     user?.displayName == 'Sin nombre' ? '' : user?.displayName
   )
@@ -115,4 +115,4 @@ const UserProfile = ({ user }: { user: UserState }) => {
   )
 }
 
-export default UserProfile
+export default UserImageProfile
