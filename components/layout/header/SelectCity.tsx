@@ -58,7 +58,7 @@ const SelectCity = ({ user, cities }) => {
               >
                 <div className="flex">
                   <TiLocationOutline className="text-2xl text-gr-200 mr-4" />
-                  <span className=" xl:block ">
+                  <span className="hidden xl:block ">
                     {selected?.city_name || 'Todo Colombia'}
                   </span>
                   <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-1 pointer-events-none">
