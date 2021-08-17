@@ -57,11 +57,11 @@ const SelectCity = ({ user, cities }) => {
                 shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none  block  md:block "
               >
                 <div className="flex">
-                  <TiLocationOutline className="text-2xl text-gr-200 mr-4" />
+                  <TiLocationOutline className="text-2xl text-gr-200 mr-1 sm:mr-4" />
                   <span className=" xl:block ">
                     {selected?.city_name || 'Todo Colombia'}
                   </span>
-                  <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-1 pointer-events-none">
+                  <span className="absolute inset-y-0 -right-5 sm:right-0 flex items-center pl-5 lg:pr-1 pointer-events-none">
                     <RiArrowDownSLine
                       className="h-5 w-5 text-gr-200"
                       aria-hidden="true"
@@ -79,7 +79,7 @@ const SelectCity = ({ user, cities }) => {
               >
                 <Listbox.Options
                   static
-                  className="nice_scroll absolute z-30 mt-1 w-60 bg-dark-800 border border-gray-600 shadow-lg max-h-60 rounded-sm text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                  className="nice_scroll right-0 absolute z-30 mt-1 w-60 bg-dark-800 border border-gray-600 shadow-lg max-h-60 rounded-sm text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                 >
                   {cities.map((city) => (
                     <Listbox.Option
