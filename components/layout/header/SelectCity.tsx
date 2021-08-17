@@ -54,11 +54,11 @@ const SelectCity = ({ user, cities }) => {
             <div className="block relative w-full">
               <Listbox.Button
                 className="bg-transparent relative w-full rounded-sm text-gr-200
-                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none   hidden md:block cu"
+                shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none  block  md:block "
               >
                 <div className="flex">
                   <TiLocationOutline className="text-2xl text-gr-200 mr-4" />
-                  <span className="hidden xl:block ">
+                  <span className=" xl:block ">
                     {selected?.city_name || 'Todo Colombia'}
                   </span>
                   <span className="absolute inset-y-0 right-0 flex items-center pl-5 lg:pr-1 pointer-events-none">

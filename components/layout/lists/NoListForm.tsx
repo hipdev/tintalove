@@ -113,7 +113,7 @@ const NoListForm = ({ user, setShowCreate }: Props) => {
           type="submit"
           className="text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md w-full flex justify-center items-center"
         >
-          NUEVA COLECCIÓN <BsPlus className="text-2xl ml-1" />
+          NUEVA LISTA <BsPlus className="text-2xl ml-1" />
           {/* Me tome la libertad de quitar la palabra CREAR del botón, creo que el icono ayuda mucho a intuir que es lo que hace y además ayuda mucho al repsonsive :D */}
         </button>
       </div>

@@ -34,7 +34,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             <Link href="/">
               <a>
                 {/* <img className="w-52" src="/short-logo.png" /> */}
-                <div className="w-40 relative h-9 mt-2">
+                <div className="w-32 sm:w-40 relative h-9 mt-2">
                   <Image
                     // layout="fill"
                     width={180}
@@ -46,15 +46,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                 </div>
               </a>
             </Link>
-            {/*New elements for tablet resolution*/}
-            <div className="flex items-center">
-              <span className="relative top-0 text-white text-2xl block md:hidden px-6">
-                <AiOutlineSearch />
-              </span>
-              <span className="text-white text-3xl block md:hidden">
-                <HiOutlineMenuAlt2 />
-              </span>
-            </div>
+
 
             {/* Menu desktop */}
             {(!user?.has_studio || !user?.artist_active) && (
@@ -71,10 +63,16 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                 <a className="hidden lg:block">Buscar</a>
               </Link>
             </div>
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="flex md:flex items-center space-x-2">
               <WrapperSelectCity user={user} />
             </div>
 
+            {/*New elements for tablet resolution*/}
+            <div className="flex items-center">
+              <span className="text-white text-3xl block md:hidden">
+                <HiOutlineMenuAlt2 />
+              </span>
+            </div>
             {user && (
               <button
                 className="text-gr-200 space-x-2 items-center hidden md:flex mx-2 ml-2"
