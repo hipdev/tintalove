@@ -63,7 +63,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
       <div>
         <div className="w-full h-24 flex items-center justify-between mb-2">
           <h1 className="text-gr-100 text-2xl font-semibold">
-            Seleccionar colección
+            Seleccionar lista
           </h1>
           <button
             className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700 group"
@@ -101,7 +101,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
         onClick={() => setShowForm(true)}
         className="fixed right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
       >
-        CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
+        CREAR LISTA <BsPlus className="text-2xl ml-1" />
       </button>
     </div>
   )

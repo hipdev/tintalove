@@ -19,7 +19,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
   return (
     <div className="max-w-sm">
       <div className="flex mb-8 justify-between items-center">
-        <h1 className="text-gr-100 text-2xl font-semibold">Colecciones</h1>
+        <h1 className="text-gr-100 text-2xl font-semibold">Favoritos</h1>
         <button
           onClick={() => actions.lists({ postId: null, listOpen: false })}
           className="bg-gr-800 hover:bg-gn-400 rounded-full p-3 items-center justify-center border border-gr-700 group"
@@ -66,7 +66,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
         onClick={() => setShowCreate(true)}
         className="fixed right-9 bottom-10 text-gr-100 text-sm bg-gn-400 hover:bg-primaryHover p-2 sm:p-3 rounded-md flex justify-center items-center"
       >
-        CREAR COLECCIÓN <BsPlus className="text-2xl ml-1" />
+        CREAR LISTA <BsPlus className="text-2xl ml-1" />
       </button>
     </div>
   )
