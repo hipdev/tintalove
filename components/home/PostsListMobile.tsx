@@ -1,10 +1,14 @@
 import Loading from 'components/loading/loading'
+import { getPostsByCity } from 'lib/queries/geo'
 import { getPostsInfoMobile } from 'lib/queries/posts'
 import useSWR from 'swr'
 import PostItem from './PostItem'
 
-const PostsListMobile = ({ user }) => {
-  const { data } = useSWR(['getPostsInfo'], getPostsInfoMobile)
+const PostsListMobile = ({ user, latLng }) => {
+  const { data } = useSWR(
+    latLng ? ['getPostsByCity', latLng] : ['getPostsInfoMobile'],
+    latLng ? getPostsByCity : getPostsInfoMobile
+  )
 
   if (!data) return <Loading />
 

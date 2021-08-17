@@ -5,10 +5,10 @@ import Home from 'components/home/home'
 import { getCitiesPaths, getLatLngFromCityId } from 'lib/queries/general'
 import { getPostsByCity } from 'lib/queries/geo'
 
-export default function TattoosPage() {
+export default function TattoosPage({ latLng }) {
   return (
     <Layout fixed>
-      <Home />
+      <Home latLng={latLng} />
     </Layout>
   )
 }
@@ -30,20 +30,16 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }) => {
-  let postsData = null
+  let latnLng = null
 
-  if (params.location == 'Colombia') {
-    const { posts } = await getPostsInfo('_')
-    postsData = postsToJSON(posts)
-  } else {
+  if (params.location != 'Colombia') {
     const { latLng } = await getLatLngFromCityId(params.location)
-    const { posts } = await getPostsByCity(latLng)
-    postsData = postsToJSON(posts)
+    latnLng = latLng
   }
 
   return {
     props: {
-      postsData,
+      latLng: latnLng,
     },
     revalidate: 20,
   }
