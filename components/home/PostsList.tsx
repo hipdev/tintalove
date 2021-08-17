@@ -6,11 +6,9 @@ import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
 import PostItem from './PostItem'
 
-const PostListHome = ({ posts }) => {
+const PostListHome = ({ posts, size }) => {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
-
-  const size = useWindowSize()
 
   const breakpointColumnsObj = {
     default: 6,
