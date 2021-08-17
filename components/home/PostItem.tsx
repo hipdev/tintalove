@@ -20,7 +20,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       ? '?loc=Colombia'
       : `?loc=${user?.searching_city?.city_id}`
   return (
-    <div className="group">
+    <div>
       <Link
         href={
           user?.searching_city
@@ -30,7 +30,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         scroll={false}
         // as={`/tatuajes/${post.id}/${user?.searching_city?.city_name}`}
       >
-        <a>
+        <a className="group">
           <div
             className={
               post.picture_size == 'portrait'
