@@ -71,11 +71,28 @@ export async function createArtistPost(
     .catch((error) => console.log(error))
 }
 
-export async function getPostsInfo() {
+export async function getPostsInfo(_key) {
   const q = query(
     collection(db, 'posts'),
     where('is_active', '==', true),
     orderBy('created_at', 'desc')
+  )
+
+  const querySnapshot = await getDocs(q)
+  const posts: Array<any> = []
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    return posts.push({ ...doc.data(), id: doc.id })
+  })
+
+  return { posts }
+}
+
+export async function getPostsInfoMobile(_key) {
+  const q = query(
+    collection(db, 'posts'),
+    where('is_active', '==', true),
+    orderBy('created_at', 'desc'),
+    limit(4)
   )
 
   const querySnapshot = await getDocs(q)

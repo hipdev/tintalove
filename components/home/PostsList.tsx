@@ -1,11 +1,11 @@
 import PostsListDesktop from './PostsListDesktop'
 import PostsListMobile from './PostsListMobile'
 
-const PostListHome = ({ posts, size, user }) => {
+const PostListHome = ({ size, user }) => {
   if (size.width <= 500) {
-    return <PostsListMobile posts={posts} user={user} />
+    return <PostsListMobile user={user} />
   } else {
-    return <PostsListDesktop posts={posts} user={user} />
+    return <PostsListDesktop user={user} />
   }
 }
 

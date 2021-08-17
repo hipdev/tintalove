@@ -1,12 +1,16 @@
 import Layout from 'components/layout/Layout'
-import { postsToJSON, postToJSON } from 'lib/firebase'
+import { postsToJSON } from 'lib/firebase'
 import { getPostsInfo } from 'lib/queries/posts'
 import Home from 'components/home/home'
 import { getCitiesPaths, getLatLngFromCityId } from 'lib/queries/general'
 import { getPostsByCity } from 'lib/queries/geo'
 
-export default function TattoosPage({ postsData }) {
-  return <Layout fixed>{postsData && <Home posts={postsData} />}</Layout>
+export default function TattoosPage() {
+  return (
+    <Layout fixed>
+      <Home />
+    </Layout>
+  )
 }
 
 export async function getStaticPaths() {
@@ -29,7 +33,7 @@ export const getStaticProps = async ({ params }) => {
   let postsData = null
 
   if (params.location == 'Colombia') {
-    const { posts } = await getPostsInfo()
+    const { posts } = await getPostsInfo('_')
     postsData = postsToJSON(posts)
   } else {
     const { latLng } = await getLatLngFromCityId(params.location)
