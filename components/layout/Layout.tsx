@@ -44,7 +44,7 @@ const Layout = ({ children, fixed }: Props) => {
       <Footer />
       <UserLists user={data?.user || null} />
 
-      <NavFooter />
+      <NavFooter  user={data?.user || null} />
     </>
   )
 }
