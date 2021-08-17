@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiOutlineUnorderedList } from 'react-icons/ai'
 import { lists } from 'lib/actions'
 import { BiHomeSmile, BiSearch } from 'react-icons/bi'
 
-const NavFooter = () => {
+const NavFooter = ({ user }) => {
   const { _, actions }: any = useStateMachine({
     lists,
   })
@@ -21,19 +21,20 @@ const NavFooter = () => {
         </a>
       </Link>
       <Link href="/">
-      <a className="p-3 flex flex-col items-center">
+        <a className="p-3 flex flex-col items-center">
           <BiSearch className="text-xl" />
           <span className="text-xs">BUSCAR</span>
         </a>
       </Link>
-      <button
-        className=" p-3 focus:outline-none flex flex-col items-center" 
-        onClick={() => actions.lists({ post: null, listOpen: true })}
-      >
-        <AiOutlineHeart className="text-xl" />
-        <span className="text-xs">FAVORITOS</span>
-
-      </button>
+      {user && (
+        <button
+          className=" p-3 focus:outline-none flex flex-col items-center"
+          onClick={() => actions.lists({ post: null, listOpen: true })}
+        >
+          <AiOutlineHeart className="text-xl" />
+          <span className="text-xs">FAVORITOS</span>
+        </button>
+      )}
     </nav>
   )
 }
