@@ -12,7 +12,7 @@ import firebaseApp from 'lib/firebase'
 
 const db: any = getFirestore(firebaseApp)
 
-export async function getPostsByCity(latLng) {
+export async function getPostsByCity(_key, latLng) {
   // Find cities within 50km of London
   const center = [51.5074, 0.1278]
   const radiusInM = 50 * 1000
@@ -23,7 +23,7 @@ export async function getPostsByCity(latLng) {
   const bounds = geohashQueryBounds(latLng, radiusInM)
   const promises = []
   for (const b of bounds) {
-    console.log(b, 'que es b')
+    // console.log(b, 'que es b')
     const q = query(
       collection(db, 'posts'),
       orderBy('geohash'),
