@@ -6,7 +6,6 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { useRouter } from 'next/router'
 import { createArtistPost } from 'lib/queries/posts'
-import { BsArrowRight } from 'react-icons/bs'
 
 type Props = {
   picture: any
