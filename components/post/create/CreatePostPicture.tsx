@@ -31,7 +31,7 @@ const CreatePostPicture = ({
 
     new Compressor(files[0], {
       quality: 0.9,
-      maxWidth: 1600,
+      maxWidth: 1980,
       mimeType: 'image/jpeg',
       success(result) {
         const reader = new FileReader()
