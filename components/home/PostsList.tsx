@@ -24,72 +24,81 @@ const PostListHome = ({ posts }) => {
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24">
-      {size.width <= 500 ? (
-        posts.length > 0 ? (
-          posts.map((post) => (
-            <PostItem
-              key={Math.random()}
-              post={post}
-              user={data?.user || null}
-            />
-          ))
+      {size &&
+        (size.width <= 500 ? (
+          posts.length > 0 ? (
+            posts.map((post) => (
+              <PostItem
+                key={Math.random()}
+                post={post}
+                user={data?.user || null}
+              />
+            ))
+          ) : (
+            <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
+          )
         ) : (
-          <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
-        )
-      ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          {/* <div className="grid grid-cols-6 gap-6"> */}
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <PostItem
-                key={Math.random()}
-                post={post}
-                user={data?.user || null}
-              />
-            ))
-          ) : (
-            <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
-          )}
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <PostItem
-                key={Math.random()}
-                post={post}
-                user={data?.user || null}
-              />
-            ))
-          ) : (
-            <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
-          )}
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <PostItem
-                key={Math.random()}
-                post={post}
-                user={data?.user || null}
-              />
-            ))
-          ) : (
-            <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
-          )}
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {/* <div className="grid grid-cols-6 gap-6"> */}
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostItem
+                  key={Math.random()}
+                  post={post}
+                  user={data?.user || null}
+                />
+              ))
+            ) : (
+              <p className="text-white bold text-2xl mb-10">
+                Sin publicaciones
+              </p>
+            )}
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostItem
+                  key={Math.random()}
+                  post={post}
+                  user={data?.user || null}
+                />
+              ))
+            ) : (
+              <p className="text-white bold text-2xl mb-10">
+                Sin publicaciones
+              </p>
+            )}
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostItem
+                  key={Math.random()}
+                  post={post}
+                  user={data?.user || null}
+                />
+              ))
+            ) : (
+              <p className="text-white bold text-2xl mb-10">
+                Sin publicaciones
+              </p>
+            )}
 
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <PostItem
-                key={Math.random()}
-                post={post}
-                user={data?.user || null}
-              />
-            ))
-          ) : (
-            <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
-          )}
-        </Masonry>
-      )}
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostItem
+                  key={Math.random()}
+                  post={post}
+                  user={data?.user || null}
+                />
+              ))
+            ) : (
+              <p className="text-white bold text-2xl mb-10">
+                Sin publicaciones
+              </p>
+            )}
+          </Masonry>
+        ))}
     </div>
   )
 }
