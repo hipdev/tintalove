@@ -13,7 +13,7 @@ const PostsListMobile = ({ user, latLng }) => {
   if (!data) return <Loading />
 
   return (
-    <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24">
+    <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24 pb-14">
       {data.posts.length > 0 ? (
         data.posts.map((post) => (
           <PostItem key={Math.random()} post={post} user={user} />
