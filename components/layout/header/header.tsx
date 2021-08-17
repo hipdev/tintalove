@@ -41,6 +41,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                     height={35}
                     src="/short-logo.png"
                     alt="Logo Tinta Love"
+                    loading="eager"
                   />
                 </div>
               </a>
