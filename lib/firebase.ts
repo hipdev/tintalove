@@ -43,6 +43,7 @@ export default firebaseApp
  * Converts a firestore document to JSON
  * @param  {DocumentSnapshot} doc
  */
+
 export function postToJSON(data) {
   return {
     ...data,
