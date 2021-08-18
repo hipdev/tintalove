@@ -42,14 +42,14 @@ export default function TattoosPage({
 
   return (
     <>
-      <Script
+      {/* <Script
         strategy="lazyOnload"
         src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"
       />
       <Script
         strategy="lazyOnload"
         src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"
-      />
+      /> */}
       {postData && artistData && (
         <>
           <div>
