@@ -53,6 +53,7 @@ export async function addPostToList(uid, post, listId) {
 
     const listRef = doc(collection(db, 'lists'), listId)
     const listItemRef = doc(collection(db, 'lists_items'))
+    const postRef = doc(collection(db, 'posts'), post.id)
 
     batch.set(listItemRef, {
       created_at: serverTimestamp(),
@@ -71,22 +72,26 @@ export async function addPostToList(uid, post, listId) {
       total_items: increment(1),
     })
 
+    batch.update(postRef, {
+      counter_listed: increment(1), // Increment the normal way
+    })
+
     batch.commit()
 
-    if (window.firebase) {
-      if (!window.firebase.apps.length) {
-        window.firebase.initializeApp(firebaseConfig)
-      } else {
-        window.firebase.app() // if already initialized, use that one
-      }
-    }
+    // if (window.firebase) {
+    //   if (!window.firebase.apps.length) {
+    //     window.firebase.initializeApp(firebaseConfig)
+    //   } else {
+    //     window.firebase.app() // if already initialized, use that one
+    //   }
+    // }
 
-    const counter = new Counter(
-      window.firebase.firestore().doc(`posts/${post.id}`),
-      'counter_listed'
-    )
+    // const counter = new Counter(
+    //   window.firebase.firestore().doc(`posts/${post.id}`),
+    //   'counter_listed'
+    // )
 
-    counter.incrementBy(1)
+    // counter.incrementBy(1)
 
     return { doc: listItemRef.id, status: true }
   } catch (error) {
@@ -133,7 +138,7 @@ export async function removePostFromList(postId, userId) {
     const batch = writeBatch(db)
     batch.update(listRef, { total_items: increment(-1) })
     batch.delete(listItemRef)
-    batch.update(postRef, { counter_listed: increment(-1) })
+    batch.update(postRef, { counter_listed: increment(-1) }) // Increment the normal way
 
     const res = await batch.commit()
 
