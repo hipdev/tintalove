@@ -5,9 +5,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import PostItem from './PostItem'
 
 const PostsListAllMobile = ({ user, latLng }) => {
-  const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } = latLng
-    ? useAllPostsMobile()
-    : useAllPostsMobile()
+  const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } =
+    useAllPostsMobile()
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24 pb-14">
