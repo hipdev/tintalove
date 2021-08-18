@@ -17,7 +17,7 @@ import {
   increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
-import { Counter } from './counter'
+// import { Counter } from './counter'
 
 const db = getFirestore(firebaseApp)
 
