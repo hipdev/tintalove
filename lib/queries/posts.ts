@@ -16,9 +16,11 @@ import {
   where,
   documentId,
   startAfter,
+  updateDoc,
+  increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
-import { Counter } from './counter'
+// import { Counter } from './counter'
 import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
@@ -245,6 +247,7 @@ export async function getPostDataById(key, postId) {
 
 export async function addComment(comment, postId, userData) {
   const postsRef = collection(db, `posts/${postId}/comments`)
+  const postRef = doc(db, `posts/${postId}`)
 
   // Initialize Firebase 8.
 
@@ -256,21 +259,24 @@ export async function addComment(comment, postId, userData) {
       user_picture: userData.photoUrl,
       user_id: userData.uid,
     })
-      .then((docRef) => {
-        if (window.firebase) {
-          if (!window.firebase.apps.length) {
-            window.firebase.initializeApp(firebaseConfig)
-          } else {
-            window.firebase.app() // if already initialized, use that one
-          }
-        }
+      .then(async (docRef) => {
+        await updateDoc(postRef, {
+          counter_comments: increment(1),
+        })
+        // if (window.firebase) {
+        //   if (!window.firebase.apps.length) {
+        //     window.firebase.initializeApp(firebaseConfig)
+        //   } else {
+        //     window.firebase.app() // if already initialized, use that one
+        //   }
+        // }
 
-        const counter = new Counter(
-          window.firebase.firestore().doc(`posts/${postId}`),
-          'counter_comments'
-        )
+        // const counter = new Counter(
+        //   window.firebase.firestore().doc(`posts/${postId}`),
+        //   'counter_comments'
+        // )
 
-        counter.incrementBy(1)
+        // counter.incrementBy(1)
 
         return { commentId: docRef.id }
       })
@@ -308,17 +314,22 @@ export async function getPostComments(postId) {
 
 export async function deletePostComment(commentId, postId) {
   await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
-  if (window.firebase) {
-    if (!window.firebase.apps.length) {
-      window.firebase.initializeApp(firebaseConfig)
-    } else {
-      window.firebase.app() // if already initialized, use that one
-    }
-  }
-  const counter = new Counter(
-    window.firebase.firestore().doc(`posts/${postId}`),
-    'counter_comments'
-  )
 
-  counter.incrementBy(-1)
+  await updateDoc(doc(db, `posts/${postId}`), {
+    counter_comments: increment(-1),
+  })
+
+  // if (window.firebase) {
+  //   if (!window.firebase.apps.length) {
+  //     window.firebase.initializeApp(firebaseConfig)
+  //   } else {
+  //     window.firebase.app() // if already initialized, use that one
+  //   }
+  // }
+  // const counter = new Counter(
+  //   window.firebase.firestore().doc(`posts/${postId}`),
+  //   'counter_comments'
+  // )
+
+  // counter.incrementBy(-1)
 }
