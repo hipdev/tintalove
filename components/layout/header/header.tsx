@@ -50,7 +50,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             {/* Menu desktop */}
             {(!user?.has_studio || !user?.artist_active) && (
               <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
-                {/* <SubmenuLeft user={user} /> */}
+                <SubmenuLeft user={user} />
               </div>
             )}
 
@@ -104,9 +104,9 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                 </div>
               </>
             )}
-            {/* <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
+            <div className="gap-3 ml-2 hidden md:flex items-center flex-shrink-0">
               <SubMenuHeader user={user || null} />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
