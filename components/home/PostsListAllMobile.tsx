@@ -4,9 +4,10 @@ import Image from 'next/image'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import PostItem from './PostItem'
 
-const PostsListMobile = ({ user, latLng }) => {
-  const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } =
-    useAllPostsMobile()
+const PostsListAllMobile = ({ user, latLng }) => {
+  const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } = latLng
+    ? useAllPostsMobile()
+    : useAllPostsMobile()
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24 pb-14">
@@ -39,4 +40,4 @@ const PostsListMobile = ({ user, latLng }) => {
   )
 }
 
-export default PostsListMobile
+export default PostsListAllMobile
