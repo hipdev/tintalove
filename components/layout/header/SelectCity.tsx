@@ -56,7 +56,7 @@ const SelectCity = ({ user, cities }) => {
                 className="bg-transparent relative w-full rounded-sm text-gr-200
                 shadow-sm pl-3 pr-2 lg:pr-10 py-2 text-left cursor-pointer focus:outline-none  block  md:block "
               >
-                <div className="flex w-20 ">
+                <div className="flex w-20 md:w-full ">
                   <TiLocationOutline className="text-2xl text-gr-200 mr-1 sm:mr-4" />
                   <span className=" xl:block truncate">
                     {selected?.city_name || 'Todo Colombia'}
