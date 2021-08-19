@@ -1,16 +1,49 @@
-/* This example requires Tailwind CSS v2.0+ */
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
+import { auth } from 'lib/firebase'
+
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { IoMdClose } from 'react-icons/io'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import Image from 'next/image'
 import { AiOutlineInstagram } from 'react-icons/ai'
+import { provider } from './Submenu'
+import { createUser } from 'lib/queries/users'
+import { mutate } from 'swr'
 // import { UserState } from 'types/user'
 
 const MenuMobile = ({ user }: any) => {
   const [open, setOpen] = useState(false)
 
   console.log(user, 'usuario')
+
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const user = result.user
+        const res = await createUser(user)
+
+        if (res) {
+          mutate(user.uid)
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        console.log(errorCode)
+      })
+  }
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // actions.login(null)
+        //Debemos cerrar el modal porque al volver a quedar con el user vacio este se estaba mostrando
+        // setIsOpen(false)
+      })
+      .catch((error) => console.log(error, 'error cerrando sesión'))
+  }
 
   return (
     <>
@@ -93,7 +126,11 @@ const MenuMobile = ({ user }: any) => {
                       </div>
                     </div>
                     <div className="flex-shrink-0 px-4 py-4 flex justify-between items-center bg-gr-900">
-                      <button className="bg-primary text-gray-300 px-7 py-3 font-semibold uppercase rounded-sm hover:bg-primaryHover">
+                      <button
+                        type="button"
+                        onClick={handleLogin}
+                        className="bg-primary text-gray-300 px-7 py-3 font-semibold uppercase rounded-sm hover:bg-primaryHover"
+                      >
                         Ingresar
                       </button>
                       <div>
