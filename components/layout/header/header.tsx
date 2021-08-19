@@ -39,7 +39,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                   <Image
                     // layout="fill"
                     width={135}
-                    height={28}
+                    height={25}
                     src="/short-logo.png"
                     alt="Logo Tinta Love"
                     loading="eager"
