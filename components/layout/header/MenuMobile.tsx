@@ -1,45 +1,17 @@
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
 import { useContext } from 'react'
-
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { IoMdClose } from 'react-icons/io'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import Image from 'next/image'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import { provider } from './Submenu'
-import { createUser } from 'lib/queries/users'
-import { mutate } from 'swr'
 import { LoginContext } from 'pages/_app'
-import LoginModal from './LoginModal'
-// import { UserState } from 'types/user'
 
 const MenuMobile = ({ user }: any) => {
   const [openMobile, setOpenMobile] = useState(false)
-  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
-
-  console.log(user, 'usuario')
-
-  const handleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const user = result.user
-        const res = await createUser(user)
-        // console.log('abriendo sesión')
-
-        if (res) {
-          mutate(user.uid)
-          setIsOpen(false)
-        }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        console.log(errorCode)
-      })
-  }
+  const { isOpen, openModal } = useContext(LoginContext)
 
   const handleLogout = () => {
     signOut(auth)
@@ -51,11 +23,10 @@ const MenuMobile = ({ user }: any) => {
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
 
+  console.log(isOpen, 'showIsOpen')
+
   return (
     <>
-      {isOpen && (
-        <LoginModal modal={{ isOpen, setIsOpen }} handleLogin={handleLogin} />
-      )}
       <div className="flex items-center">
         <button
           onClick={() => setOpenMobile(true)}

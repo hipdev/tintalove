@@ -13,7 +13,7 @@ import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
 import { url_domain } from 'lib/utils'
 
-const LoginModal = dynamic(() => import('./LoginModal'))
+// const LoginModal = dynamic(() => import('./LoginModal'))
 
 const provider = new GoogleAuthProvider().setCustomParameters({
   prompt: 'select_account',
@@ -56,12 +56,12 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     <>
       {!user && (
         <>
-          {isOpen && (
+          {/* {isOpen && (
             <LoginModal
               modal={{ isOpen, setIsOpen }}
               handleLogin={handleLogin}
             />
-          )}
+          )} */}
 
           <button
             title="Acceder con Gmail"

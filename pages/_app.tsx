@@ -7,7 +7,7 @@ import useLoginModal from 'hooks/useLoginModal'
 const LoginContext = createContext(null)
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [isOpen, setIsOpen, openModal] = useLoginModal()
+  const { isOpen, setIsOpen, openModal } = useLoginModal()
 
   createStore({})
 

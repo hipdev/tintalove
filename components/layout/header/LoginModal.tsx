@@ -2,19 +2,44 @@ import dynamic from 'next/dynamic'
 import Modal from 'react-modal'
 import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { signInWithPopup } from 'firebase/auth'
+import { auth } from 'lib/firebase'
+import { provider } from './Submenu'
+import { createUser } from 'lib/queries/users'
+import { mutate } from 'swr'
+import { LoginContext } from 'pages/_app'
 
 const PhoneInput = dynamic(() => import('../PhoneAuth/PhoneInput'), {
   ssr: false,
 })
 
-const LoginModal = ({ modal, handleLogin }: any) => {
+const LoginModal = () => {
   const [showPhoneButton, setShowPhoneButton] = useState(true)
+  const { isOpen, setIsOpen } = useContext(LoginContext)
+
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const user = result.user
+        const res = await createUser(user)
+
+        if (res) {
+          mutate(user.uid)
+        }
+        setIsOpen(false)
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        console.log(errorCode)
+      })
+  }
 
   return (
     <>
       <Modal
-        isOpen={modal.isOpen}
+        isOpen={isOpen}
         style={{
           overlay: {
             backgroundColor: 'rgb(11 14 25 / 80%)',
@@ -35,7 +60,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
             overflow: 'initial',
           },
         }}
-        onRequestClose={() => modal.setIsOpen(false)}
+        onRequestClose={() => setIsOpen(false)}
         contentLabel="Post modal"
       >
         <div className="bg-gr-800  text-gray-300 px-5 sm:px-10 py-5 pb-10 relative">
@@ -59,17 +84,17 @@ const LoginModal = ({ modal, handleLogin }: any) => {
             )}
             <PhoneInput
               show={{ showPhoneButton, setShowPhoneButton }}
-              modal={modal}
+              modal={{ isOpen, setIsOpen }}
             />
           </div>
 
           <div
             className="absolute -top-3 right-2  sm:-right-2 "
-            onClick={() => modal.setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
             <CgCloseO className="text-white text-3xl cursor-pointer" />
           </div>
-          <p className="absolute -bottom-16 text-sm text-gray-400 text-center right-2">
+          {/* <p className="absolute -bottom-16 text-sm text-gray-400 text-center right-2">
             Al ingresar aceptas los{' '}
             <a className="text-gray-200" href="#">
               Términos y condiciones{' '}
@@ -78,7 +103,7 @@ const LoginModal = ({ modal, handleLogin }: any) => {
             <a href="#" className="text-gray-200">
               Política de privacidad.
             </a>
-          </p>
+          </p> */}
         </div>
       </Modal>
     </>

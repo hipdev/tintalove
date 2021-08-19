@@ -7,7 +7,7 @@ const useLoginModal = () => {
     setIsOpen(true)
   }
 
-  return [isOpen, setIsOpen, openModal]
+  return { isOpen, setIsOpen, openModal }
 }
 
 export default useLoginModal
