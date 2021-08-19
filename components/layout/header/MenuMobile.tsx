@@ -73,7 +73,22 @@ const MenuMobile = ({ user }: any) => {
                       </div>
                       <div className="mt-6 relative flex-1 px-4 sm:px-6">
                         {/* Replace with your content */}
-                        <div></div>
+                        {!user && (
+                          <div className="text-gray-400">
+                            <h2 className="font-semibold text-gray-300 text-xl mb-5">
+                              Modo Beta
+                            </h2>
+                            <p>
+                              Queremos agradecer tu interés en nuestra
+                              iniciativa, por el momento estamos haciendo
+                              pruebas, acércate a nuestro stand en Plaza Mayor,
+                              también puedes ingresar y ver lo que estamos
+                              haciendo, somos gratis.
+                            </p>
+                            <p className="mt-3">Gracias por tu apoyo</p>
+                            <p>Saludos, equipo Tinta Love.</p>
+                          </div>
+                        )}
                         {/* /End replace */}
                       </div>
                     </div>
