@@ -7,7 +7,12 @@ import { IoMdClose } from 'react-icons/io'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import Image from 'next/image'
 import { AiOutlineInstagram } from 'react-icons/ai'
+import { ImUser } from 'react-icons/im'
 import { LoginContext } from 'pages/_app'
+import { FaPencilAlt } from 'react-icons/fa'
+import { BiBuildingHouse } from 'react-icons/bi'
+import { RiBuilding2Line, RiBuilding4Line } from 'react-icons/ri'
+import Link from 'next/link'
 
 const MenuMobile = ({ user }: any) => {
   const [openMobile, setOpenMobile] = useState(false)
@@ -106,8 +111,30 @@ const MenuMobile = ({ user }: any) => {
                         {user && (
                           <div className="text-gray-400">
                             <h2 className="font-semibold text-gray-300 text-xl mb-5">
-                              Gracias!
+                              {user?.displayName !== 'Sin nombre'
+                                ? `Hola ${user.displayName}`
+                                : null}
                             </h2>
+                            <p>
+                              Ahora puedes crear listas de favoritos, comentar
+                              las publicaciones y registrarte como artista o
+                              como estudio.
+                            </p>
+                            <nav className="mt-10 flex flex-col text-2xl divide-y divide-gray-600 text-gray-200 font-light">
+                              <a className="py-3 flex justify-between items-center">
+                                Mi perfil <ImUser />
+                              </a>
+                              <Link href="/artist/main-info">
+                                <a className="py-3 flex justify-between items-center">
+                                  Soy un artista <FaPencilAlt />
+                                </a>
+                              </Link>
+                              <Link href="/studio-account/general">
+                                <a className="py-3 flex justify-between items-center">
+                                  Registrar estudio <RiBuilding4Line />
+                                </a>
+                              </Link>
+                            </nav>
                           </div>
                         )}
                         {/* /End replace */}
