@@ -1,6 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
 import { auth } from 'lib/firebase'
+import { useContext } from 'react'
 
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
@@ -11,10 +12,13 @@ import { AiOutlineInstagram } from 'react-icons/ai'
 import { provider } from './Submenu'
 import { createUser } from 'lib/queries/users'
 import { mutate } from 'swr'
+import { LoginContext } from 'pages/_app'
+import LoginModal from './LoginModal'
 // import { UserState } from 'types/user'
 
 const MenuMobile = ({ user }: any) => {
-  const [open, setOpen] = useState(false)
+  const [openMobile, setOpenMobile] = useState(false)
+  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
   console.log(user, 'usuario')
 
@@ -23,9 +27,11 @@ const MenuMobile = ({ user }: any) => {
       .then(async (result) => {
         const user = result.user
         const res = await createUser(user)
+        // console.log('abriendo sesión')
 
         if (res) {
           mutate(user.uid)
+          setIsOpen(false)
         }
       })
       .catch((error) => {
@@ -47,19 +53,23 @@ const MenuMobile = ({ user }: any) => {
 
   return (
     <>
+      {isOpen && (
+        <LoginModal modal={{ isOpen, setIsOpen }} handleLogin={handleLogin} />
+      )}
       <div className="flex items-center">
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenMobile(true)}
           className="text-white text-3xl block md:hidden"
         >
           <HiOutlineMenuAlt2 />
         </button>
       </div>
-      <Transition.Root show={open} as={Fragment}>
+      <Transition.Root show={openMobile} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 overflow-hidden"
-          onClose={setOpen}
+          onClose={() => null} // Así evito que se cierre siempre que le den afuera
+          // static
         >
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="absolute inset-0" />
@@ -93,7 +103,7 @@ const MenuMobile = ({ user }: any) => {
                             <button
                               type="button"
                               className="rounded-md text-gray-300 hover:text-gray-500 "
-                              onClick={() => setOpen(false)}
+                              onClick={() => setOpenMobile(false)}
                             >
                               <span className="sr-only">Close panel</span>
                               <IoMdClose
@@ -122,17 +132,35 @@ const MenuMobile = ({ user }: any) => {
                             <p>Saludos, equipo Tinta Love.</p>
                           </div>
                         )}
+                        {user && (
+                          <div className="text-gray-400">
+                            <h2 className="font-semibold text-gray-300 text-xl mb-5">
+                              Gracias!
+                            </h2>
+                          </div>
+                        )}
                         {/* /End replace */}
                       </div>
                     </div>
                     <div className="flex-shrink-0 px-4 py-4 flex justify-between items-center bg-gr-900">
-                      <button
-                        type="button"
-                        onClick={handleLogin}
-                        className="bg-primary text-gray-300 px-7 py-3 font-semibold uppercase rounded-sm hover:bg-primaryHover"
-                      >
-                        Ingresar
-                      </button>
+                      {user && (
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="text-gray-300 px-7 py-3 font-semibold uppercase rounded-sm hover:bg-primaryHover"
+                        >
+                          Salir
+                        </button>
+                      )}
+                      {!user && (
+                        <button
+                          type="button"
+                          onClick={openModal}
+                          className="bg-primary text-gray-300 px-7 py-3 font-semibold uppercase rounded-sm hover:bg-primaryHover"
+                        >
+                          Ingresar
+                        </button>
+                      )}
                       <div>
                         <a
                           className="text-white text-4xl "
