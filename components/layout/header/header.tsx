@@ -69,7 +69,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
 
             {/*New elements for tablet resolution*/}
 
-            <MenuMobile />
+            <MenuMobile user={user} />
 
             {user && (
               <button
