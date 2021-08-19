@@ -11,6 +11,7 @@ import WrapperAvailability from './WrapperAvailability'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
+import MenuMobile from './MenuMobile'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   const {
@@ -34,11 +35,11 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             <Link href="/">
               <a>
                 {/* <img className="w-52" src="/short-logo.png" /> */}
-                <div className="w-32 sm:w-40 relative h-9 mt-2">
+                <div className=" relative h-9 mt-2">
                   <Image
                     // layout="fill"
-                    width={180}
-                    height={35}
+                    width={135}
+                    height={28}
                     src="/short-logo.png"
                     alt="Logo Tinta Love"
                     loading="eager"
@@ -67,11 +68,8 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             </div>
 
             {/*New elements for tablet resolution*/}
-            <div className="flex items-center">
-              <span className="text-white text-3xl block md:hidden">
-                <HiOutlineMenuAlt2 />
-              </span>
-            </div>
+
+            <MenuMobile />
             {user && (
               <button
                 className="text-gr-200 space-x-2 items-center hidden md:flex mx-2 ml-2"
