@@ -27,7 +27,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
           <VscClose className="text-gr-200 group-hover:text-white text-2xl" />
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6">
         {data?.userLists?.map((list) => {
           return (
             <button
@@ -38,7 +38,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
               className="group"
               key={list.id}
             >
-              <div className="  rounded-lg overflow-hidden w-48 h-48">
+              <div className="  rounded-lg overflow-hidden w-full h-28 sm:h-36 ">
                 <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
