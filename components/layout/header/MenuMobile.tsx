@@ -34,7 +34,11 @@ const MenuMobile = ({ user }: any) => {
     <>
       <div className="flex items-center">
         <button
-          onClick={() => setOpenMobile(true)}
+          type="button"
+          onClick={() => {
+            console.log('aa')
+            setOpenMobile(true)
+          }}
           className="text-white text-3xl block md:hidden"
         >
           <HiOutlineMenuAlt2 />
@@ -43,7 +47,7 @@ const MenuMobile = ({ user }: any) => {
       <Transition.Root show={openMobile} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 overflow-hidden"
+          className="fixed inset-0 overflow-hidden z-40"
           onClose={() => null} // Así evito que se cierre siempre que le den afuera
           // static
         >
