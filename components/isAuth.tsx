@@ -3,6 +3,7 @@ import { auth } from 'lib/firebase'
 import { provider } from './layout/header/Submenu'
 import { createUser } from 'lib/queries/users'
 import useUserId from 'hooks/use-user-id'
+import Loading from './loading/loading'
 
 export default function IsAuth({ children }) {
   const { userId } = useUserId()
@@ -25,17 +26,7 @@ export default function IsAuth({ children }) {
   } else {
     return (
       <div className="h-screen flex items-center justify-center bg-dark-800">
-        <div className="text-white flex flex-col  items-center">
-          <p className="mb-5 text-4xl font-semibold ">
-            Verificando permisos...
-          </p>
-          <button
-            onClick={handleLogin}
-            className="btn-primary w-auto text-white px-5 py-3 mx-auto sm:mx-0 rounded-lg focus:outline-none"
-          >
-            Acceder
-          </button>
-        </div>
+        <Loading />
       </div>
     )
   }
