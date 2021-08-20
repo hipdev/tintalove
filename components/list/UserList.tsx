@@ -1,3 +1,4 @@
+import Loading from 'components/loading/loading'
 import { getUserListItems } from 'lib/queries/lists'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
@@ -11,11 +12,7 @@ const UserList = ({ listId, user }) => {
   // console.log(data, 'la data')
 
   if (!data?.userList) {
-    return (
-      <div className="h-screen flex justify-center pt-20">
-        <p className="text-gray-300 text-3xl">Ups, esta lista no existe</p>
-      </div>
-    )
+    return <Loading />
   }
 
   const breakpointColumnsObj = {
