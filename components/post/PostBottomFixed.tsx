@@ -49,7 +49,17 @@ const PostBottomFixed = ({
       </div>
 
       <div className="flex justify-between 2xl:justify-around">
-        <div className="flex items-center">
+        <div className="flex items-center sm:hidden">
+          <Link href={`/${artistData.username}`}>
+            <a className="text-white font-semibold text-sm ">
+              {artistData.displayName} <br />
+              <span className="text-gray-400 font-light">
+                {artistData.username}
+              </span>
+            </a>
+          </Link>
+        </div>
+        <div className=" items-center  hidden sm:flex">
           <div className="flex">
             <Link href={`/${artistData.username}`}>
               <a className="text-gn-500 ml-2 w-12 mr-3">
@@ -65,7 +75,7 @@ const PostBottomFixed = ({
                 />
               </a>
             </Link>
-            <div className="leading-tight flex items-center">
+            <div className="leading-tight hidden sm:flex items-center ">
               <div>
                 <div className="flex items-center">
                   <Link href={`/${artistData.username}`}>
@@ -86,7 +96,7 @@ const PostBottomFixed = ({
         </div>
 
         <div className="flex items-center">
-          <div className="text-right mr-5">
+          <div className="text-right mr-5 hidden sm:block">
             <h3 className="text-gray-400 w-48">CITAS DISPONIBLES EN</h3>
             <span className="font-semibold">{artistData.available_label}</span>
           </div>
