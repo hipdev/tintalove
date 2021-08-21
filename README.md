@@ -6,6 +6,9 @@
 
 #### Listado de items por hacer
 
+20 de Agosto de 2021, conseguimos encuestar a 55 tatuadores, tenemos mas de 60 tarjetas de estudios, estamos creando una
+base de datos de funcionalidades, esta semana renuncié a mi trabajo y voy por todo en los siguientes meses, vamos a ver :D
+
 La meta es tener 500 tatuadores por ciudad principal y estar en menos de 2 años en Colombia,
 Brasil, Ecuador, Perú y México.
 
