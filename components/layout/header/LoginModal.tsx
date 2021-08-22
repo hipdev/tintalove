@@ -5,7 +5,6 @@ import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import { supabase } from 'lib/supabase-client'
 import toast from 'react-hot-toast'
-import { updateUserName } from 'lib/supabase-client'
 
 const LoginModal = () => {
   const { isOpen, setIsOpen } = useContext(LoginContext)
@@ -25,6 +24,7 @@ const LoginModal = () => {
     })
 
     console.log(user, session, error, 'de supabase magik link')
+    toast('Enviamos un link de acceso a tu correo', { duration: 5000 })
   }
 
   return (
