@@ -3,6 +3,7 @@ import '../styles/global.css' // <- applied everywhere in the NextJS application
 import { createStore, StateMachineProvider } from 'little-state-machine'
 import { createContext } from 'react'
 import useLoginModal from 'hooks/useLoginModal'
+import { UserContextProvider } from 'hooks/useUser'
 
 const LoginContext = createContext(null)
 
@@ -12,11 +13,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   createStore({})
 
   return (
-    <LoginContext.Provider value={{ isOpen, setIsOpen, openModal }}>
-      <StateMachineProvider>
-        <Component {...pageProps} />
-      </StateMachineProvider>
-    </LoginContext.Provider>
+    <UserContextProvider>
+      <LoginContext.Provider value={{ isOpen, setIsOpen, openModal }}>
+        <StateMachineProvider>
+          <Component {...pageProps} />
+        </StateMachineProvider>
+      </LoginContext.Provider>
+    </UserContextProvider>
   )
 }
 

@@ -12,6 +12,7 @@ export const UserContextProvider = (props) => {
 
   useEffect(() => {
     const session = supabase.auth.session()
+    console.log(session, 'la session')
     setSession(session)
     setUser(session?.user ?? null)
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -55,6 +56,7 @@ export const UserContextProvider = (props) => {
     signIn: (options) => supabase.auth.signIn(options),
     signUp: (options) => supabase.auth.signUp(options),
     signOut: () => {
+      console.log('cerrando sesión')
       setUserDetails(null)
       setSubscription(null)
       return supabase.auth.signOut()
