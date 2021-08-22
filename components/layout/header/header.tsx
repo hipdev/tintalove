@@ -12,8 +12,15 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
+import useUser from 'hooks/use-user'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
+  const { user: userSup, signIn }: any = useUser()
+
+  console.log(userSup, 'user de supabase')
+
+  // const user = true
+
   const {
     state: { list },
     actions,

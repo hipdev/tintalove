@@ -5,6 +5,8 @@ import { CgCloseO } from 'react-icons/cg'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import { supabase } from 'lib/supabase-client'
+import toast from 'react-hot-toast'
+import { updateUserName } from 'lib/supabase-client'
 
 const PhoneInput = dynamic(() => import('../PhoneAuth/PhoneInput'), {
   ssr: false,
@@ -14,10 +16,24 @@ const LoginModal = () => {
   const [showPhoneButton, setShowPhoneButton] = useState(true)
   const { isOpen, setIsOpen } = useContext(LoginContext)
 
-  const handleLogin = async () => {
-    const { user, session, error } = await supabase.auth.signIn({
-      provider: 'google',
-    })
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const { user, session, error } = await supabase.auth.signIn(
+      {
+        provider: 'google',
+      },
+      { redirectTo: '/user' }
+    )
+
+    // if (error) {
+    //   toast.error(error.message)
+    // } else {
+    //   if (user) {
+    //     await updateUserName(user, name)
+    //   } else {
+    //     toast.error(error.message)
+    //   }
+    // }
 
     console.log(user, session, error, 'de supabase')
   }

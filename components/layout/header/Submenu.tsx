@@ -12,6 +12,7 @@ import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
 import { url_domain } from 'lib/utils'
+import { useUser } from 'hooks/useUser'
 
 // const LoginModal = dynamic(() => import('./LoginModal'))
 
@@ -21,6 +22,7 @@ const provider = new GoogleAuthProvider().setCustomParameters({
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+  const { signOut } = useUser()
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
@@ -40,14 +42,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
   }
 
   const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        // actions.login(null)
-
-        //Debemos cerrar el modal porque al volver a quedar con el user vacio este se estaba mostrando
-        setIsOpen(false)
-      })
-      .catch((error) => console.log(error, 'error cerrando sesión'))
+    signOut()
   }
 
   const userImage = url_domain(user?.photoUrl || null)
