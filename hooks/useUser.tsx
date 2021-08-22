@@ -4,20 +4,14 @@ import { useEffect, useState, createContext, useContext } from 'react'
 export const UserContext = createContext(null)
 
 export const UserContextProvider = (props) => {
-  const [userLoaded, setUserLoaded] = useState(false)
-  const [session, setSession] = useState(null)
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState()
-  const [userDetails, setUserDetails] = useState(null)
 
   useEffect(() => {
     const session = supabase.auth.session()
-    console.log(session, 'la session')
-    setSession(session)
     setUser(session?.user ?? null)
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setSession(session)
         setUser(session?.user ?? null)
       }
     )
@@ -52,6 +46,8 @@ export const UserContextProvider = (props) => {
           created_at: new Date(),
           id: user.id,
         })
+        console.log(data, 'user data inserted')
+        setUserData(data[0] || null)
       } else {
         setUserData(getUserDetails.data)
       }
@@ -73,16 +69,11 @@ export const UserContextProvider = (props) => {
   }, [user])
 
   const value = {
-    session,
     user: userData,
-    userDetails,
-    userLoaded,
-
     signIn: (options) => supabase.auth.signIn(options),
     signUp: (options) => supabase.auth.signUp(options),
     signOut: () => {
       console.log('cerrando sesión')
-      setUserDetails(null)
       setUserData(null)
       return supabase.auth.signOut()
     },
