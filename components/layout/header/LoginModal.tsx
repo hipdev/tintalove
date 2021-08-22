@@ -3,12 +3,8 @@ import Modal from 'react-modal'
 import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
 import { useContext, useState } from 'react'
-import { signInWithPopup } from 'firebase/auth'
-import { auth } from 'lib/firebase'
-import { provider } from './Submenu'
-import { createUser } from 'lib/queries/users'
-import { mutate } from 'swr'
 import { LoginContext } from 'pages/_app'
+import { supabase } from 'lib/supabase-client'
 
 const PhoneInput = dynamic(() => import('../PhoneAuth/PhoneInput'), {
   ssr: false,
@@ -18,22 +14,12 @@ const LoginModal = () => {
   const [showPhoneButton, setShowPhoneButton] = useState(true)
   const { isOpen, setIsOpen } = useContext(LoginContext)
 
-  const handleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const user = result.user
-        const res = await createUser(user)
+  const handleLogin = async () => {
+    const { user, session, error } = await supabase.auth.signIn({
+      provider: 'google',
+    })
 
-        if (res) {
-          mutate(user.uid)
-        }
-        setIsOpen(false)
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        console.log(errorCode)
-      })
+    console.log(user, session, error, 'de supabase')
   }
 
   return (
