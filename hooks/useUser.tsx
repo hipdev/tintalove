@@ -7,8 +7,8 @@ export const UserContextProvider = (props) => {
   const [userLoaded, setUserLoaded] = useState(false)
   const [session, setSession] = useState(null)
   const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState()
   const [userDetails, setUserDetails] = useState(null)
-  const [subscription, setSubscription] = useState(null)
 
   useEffect(() => {
     const session = supabase.auth.session()
@@ -27,38 +27,63 @@ export const UserContextProvider = (props) => {
     }
   }, [])
 
-  const getUserDetails = () => supabase.from('users').select('*').single()
-  const getSubscription = () =>
-    supabase
-      .from('subscriptions')
-      .select('*, prices(*, products(*))')
-      .in('status', ['trialing', 'active'])
-      .single()
+  // const getUserDetails = () => supabase.from('users').select('*').single()
+  // const getSubscription = () =>
+  //   supabase
+  //     .from('subscriptions')
+  //     .select('*, prices(*, products(*))')
+  //     .in('status', ['trialing', 'active'])
+  //     .single()
 
   useEffect(() => {
+    const setUserFetch = async (user) => {
+      const getUserDetails = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+
+      if (!getUserDetails.data) {
+        console.log(user, 'el usuario a insertar')
+        const { data, error } = await supabase.from('users').insert({
+          full_name: user.user_metadata.full_name,
+          email: user.email,
+          photo_url: user.user_metadata.avatar_url,
+          created_at: new Date(),
+          id: user.id,
+        })
+      } else {
+        setUserData(getUserDetails.data)
+      }
+
+      console.log(getUserDetails, 'detalles del usuario')
+    }
+
     if (user) {
-      Promise.allSettled([getUserDetails(), getSubscription()]).then(
-        (results: any) => {
-          setUserDetails(results[0].value.data)
-          setSubscription(results[1].value.data)
-          setUserLoaded(true)
-        }
-      )
+      // Promise.allSettled([getUserDetails(), getSubscription()]).then(
+      //   (results: any) => {
+      //     setUserDetails(results[0].value.data)
+      //     setSubscription(results[1].value.data)
+      //     setUserLoaded(true)
+      //   }
+      // )
+      console.log(user, 'existe un usuario')
+      setUserFetch(user)
     }
   }, [user])
 
   const value = {
     session,
-    user,
+    user: userData,
     userDetails,
     userLoaded,
-    subscription,
+
     signIn: (options) => supabase.auth.signIn(options),
     signUp: (options) => supabase.auth.signUp(options),
     signOut: () => {
       console.log('cerrando sesión')
       setUserDetails(null)
-      setSubscription(null)
+      setUserData(null)
       return supabase.auth.signOut()
     },
   }

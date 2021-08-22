@@ -2,22 +2,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SubMenuHeader from './Submenu'
 import { UserState } from 'types/user'
-import { FiPlus } from 'react-icons/fi'
 import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
 import WrapperSelectCity from './WrapperSelectCity'
 import WrapperAvailability from './WrapperAvailability'
-import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
-import useUser from 'hooks/use-user'
+import { useUser } from 'hooks/useUser'
 
-const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
-  const { user: userSup, signIn }: any = useUser()
+const Header = ({ fixed }: { user: UserState; fixed: boolean }) => {
+  const { user, signIn }: any = useUser()
 
-  console.log(userSup, 'user de supabase')
+  console.log(user, 'user de supabase')
 
   // const user = true
 
