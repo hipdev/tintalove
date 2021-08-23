@@ -1,51 +1,21 @@
-import dynamic from 'next/dynamic'
 import { VscChevronDown } from 'react-icons/vsc'
 import { Menu, Transition } from '@headlessui/react'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { signOut } from 'firebase/auth'
-import { auth } from 'lib/firebase'
 import { UserState } from 'types/user'
-import { createUser } from 'lib/queries/users'
-// import LoginModal from './LoginModal'
-import { mutate } from 'swr'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
 import { url_domain } from 'lib/utils'
 import { useUser } from 'hooks/useUser'
 
-// const LoginModal = dynamic(() => import('./LoginModal'))
-
-const provider = new GoogleAuthProvider().setCustomParameters({
-  prompt: 'select_account',
-})
-
 const SubMenuHeader = ({ user }: { user: UserState }) => {
-  const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+  const { openModal } = useContext(LoginContext)
   const { signOut } = useUser()
-
-  const handleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const user = result.user
-        const res = await createUser(user)
-
-        if (res) {
-          mutate(user.uid)
-        }
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        console.log(errorCode)
-      })
-  }
 
   const handleLogout = () => {
     signOut()
   }
 
-  const userImage = url_domain(user?.photoUrl || null)
+  const userImage = url_domain(user?.photo_url || null)
 
   return (
     <>
@@ -80,9 +50,9 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                       className="w-12 h-12 rounded-full"
                       src={
                         userImage == 'ik.imagekit.io'
-                          ? `${user?.photoUrl}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
+                          ? `${user?.photo_url}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
                           : userImage == 'lh3.googleusercontent.com'
-                          ? user?.photoUrl
+                          ? user?.photo_url
                           : '/unuser.png'
                       }
                       alt="user image"
@@ -204,7 +174,5 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
     </>
   )
 }
-
-export { provider }
 
 export default SubMenuHeader
