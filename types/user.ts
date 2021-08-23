@@ -11,7 +11,8 @@ export type UserState =
       has_studio: boolean
       is_admin: boolean
       is_artist: boolean
-      photoUrl: string
+      photoUrl: string // remove after migration
+      photo_url: string
       uid: string
       studio_id: string
       searching_city: City
