@@ -52,10 +52,12 @@ export const UserContextProvider = (props) => {
         setUserData(getUserDetails.data)
       }
 
-      console.log(getUserDetails, 'detalles del usuario')
+      // console.log(getUserDetails, 'detalles del usuario')
     }
 
     if (user) {
+      // Aquí entramos solo si existe un user de Supabase, es decir, sí esta logueado el usuario
+
       // Promise.allSettled([getUserDetails(), getSubscription()]).then(
       //   (results: any) => {
       //     setUserDetails(results[0].value.data)
@@ -63,7 +65,7 @@ export const UserContextProvider = (props) => {
       //     setUserLoaded(true)
       //   }
       // )
-      console.log(user, 'existe un usuario')
+      // console.log(user, 'existe un usuario')
       setUserFetch(user)
     }
   }, [user])

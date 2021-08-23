@@ -12,11 +12,7 @@ import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
 import { useUser } from 'hooks/useUser'
 
-const Header = ({ fixed }: { user: UserState; fixed: boolean }) => {
-  const { user, signIn }: any = useUser()
-
-  console.log(user, 'user de supabase')
-
+const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
 
   const {

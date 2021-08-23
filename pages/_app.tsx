@@ -5,7 +5,11 @@ import { createContext } from 'react'
 import useLoginModal from 'hooks/useLoginModal'
 import { UserContextProvider } from 'hooks/useUser'
 
-const LoginContext = createContext(null)
+const LoginContext = createContext({
+  isOpen: null,
+  setIsOpen: null,
+  openModal: null,
+})
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { isOpen, setIsOpen, openModal } = useLoginModal()
