@@ -1,11 +1,10 @@
 import Modal from 'react-modal'
-import { AiOutlineGoogle, AiOutlineTwitter } from 'react-icons/ai'
+import { AiOutlineGoogle } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import { supabase } from 'lib/supabase-client'
 import toast from 'react-hot-toast'
-import { FiTwitter } from 'react-icons/fi'
 
 const LoginModal = () => {
   const { isOpen, setIsOpen } = useContext(LoginContext)

@@ -6,7 +6,7 @@ import useSWR from 'swr'
 import PostItem from './PostItem'
 
 const PostsListDesktop = ({ user, latLng }) => {
-  console.log(latLng, 'latitud y longitud')
+  // console.log(latLng, 'latitud y longitud')
   const { data } = useSWR(
     latLng ? ['getPostsByCity', latLng] : ['getPostsInfo'],
     latLng ? getPostsByCity : getPostsInfo

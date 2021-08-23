@@ -10,8 +10,7 @@ import { AiOutlineInstagram } from 'react-icons/ai'
 import { ImUser } from 'react-icons/im'
 import { LoginContext } from 'pages/_app'
 import { FaPencilAlt } from 'react-icons/fa'
-import { BiBuildingHouse } from 'react-icons/bi'
-import { RiBuilding2Line, RiBuilding4Line } from 'react-icons/ri'
+import { RiBuilding4Line } from 'react-icons/ri'
 import Link from 'next/link'
 
 const MenuMobile = ({ user }: any) => {
@@ -28,7 +27,7 @@ const MenuMobile = ({ user }: any) => {
       .catch((error) => console.log(error, 'error cerrando sesión'))
   }
 
-  console.log(isOpen, 'showIsOpen')
+  // console.log(isOpen, 'showIsOpen')
 
   return (
     <>
