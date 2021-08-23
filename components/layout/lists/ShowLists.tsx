@@ -46,7 +46,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
                 <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-                {list.list_name}
+                {list.name}
               </p>
             </button>
           )
