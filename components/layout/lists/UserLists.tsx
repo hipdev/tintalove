@@ -11,7 +11,7 @@ Modal.setAppElement('#__next')
 const UserLists = ({ user }) => {
   const [showCreate, setShowCreate] = useState(false)
 
-  console.log(user, 'user de Supabase ')
+  console.log(user, 'user de Supabase')
   const {
     state: { list },
     actions,
@@ -53,7 +53,7 @@ const UserLists = ({ user }) => {
         {!showCreate && (
           <>
             {!list?.post ? (
-              <ShowLists userId={user?.uid} setShowCreate={setShowCreate} />
+              <ShowLists userId={user?.id} setShowCreate={setShowCreate} />
             ) : (
               <SelectList
                 user={user}
