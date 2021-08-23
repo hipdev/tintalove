@@ -1,19 +1,20 @@
 import Modal from 'react-modal'
-import { AiOutlineGoogle } from 'react-icons/ai'
+import { AiOutlineGoogle, AiOutlineTwitter } from 'react-icons/ai'
 import { CgCloseO } from 'react-icons/cg'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import { supabase } from 'lib/supabase-client'
 import toast from 'react-hot-toast'
+import { FiTwitter } from 'react-icons/fi'
 
 const LoginModal = () => {
   const { isOpen, setIsOpen } = useContext(LoginContext)
 
   const [email, setEmail] = useState('')
 
-  const handleLogin = async () => {
+  const handleLoginProvider = async (provider) => {
     const { user, session, error } = await supabase.auth.signIn({
-      provider: 'google',
+      provider,
     })
   }
 
@@ -63,10 +64,19 @@ const LoginModal = () => {
             <button
               type="button"
               className="flex items-center justify-center border py-2 mb-3 rounded-md px-2 bg-dark-800 border-black"
-              onClick={handleLogin}
+              onClick={() => handleLoginProvider('google')}
             >
               Entrar con Gmail <AiOutlineGoogle className="text-xl ml-3" />
             </button>
+
+            {/* Me falta tener las politicas de privacidad para hacer el login con twitter  */}
+            {/* <button
+              type="button"
+              className="flex items-center justify-center border py-2 mb-3 rounded-md px-2 bg-dark-800 border-black"
+              onClick={() => handleLoginProvider('twitter')}
+            >
+              Entrar con Twitter <FiTwitter className="text-xl ml-3" />
+            </button> */}
             <div className="text-center">ó</div>
             <form className="flex flex-col" onSubmit={handleMagicLink}>
               <input
