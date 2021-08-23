@@ -17,6 +17,7 @@ import {
   increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { supabase } from 'lib/supabase-client'
 // import { Counter } from './counter'
 
 const db = getFirestore(firebaseApp)
@@ -110,16 +111,13 @@ export async function isPostListed(postId, userId) {
   return { listed: !querySnapshotEmpty }
 }
 
-export async function getUserLists(key, userId) {
-  const q = query(collection(db, 'lists'), where('user_id', '==', userId))
+export async function getUserLists(key, user_id) {
+  let { data: lists, error } = await supabase
+    .from('lists')
+    .select('*')
+    .eq('user_id', user_id)
 
-  const querySnapshot = await getDocs(q)
-  const userLists: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return userLists.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { userLists }
+  return { lists }
 }
 
 export async function removePostFromList(postId, userId) {

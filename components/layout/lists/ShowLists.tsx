@@ -9,7 +9,11 @@ import { useRouter } from 'next/router'
 
 const ShowLists = ({ userId, setShowCreate }) => {
   const router = useRouter()
+
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
+
+  console.log(data, 'las listas supabase')
+
   const { state, actions }: any = useStateMachine({
     lists,
   })
@@ -28,7 +32,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-6">
-        {data?.userLists?.map((list) => {
+        {data?.lists?.map((list) => {
           return (
             <button
               onClick={() => {
@@ -48,7 +52,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
           )
         })}
       </div>
-      {data?.userLists.length < 1 && (
+      {data?.lists.length < 1 && (
         <div>
           <p className="text-gray-400">
             Sin colecciones,{' '}
