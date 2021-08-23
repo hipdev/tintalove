@@ -4,7 +4,8 @@ export type UserState =
   | {
       artist_active: boolean
       studio_active: boolean
-      displayName: string
+      displayName: string // remove after migration
+      full_name: string
       phoneNumber: string
       email: string
       username: string
