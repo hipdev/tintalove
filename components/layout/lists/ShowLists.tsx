@@ -52,7 +52,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
           )
         })}
       </div>
-      {data?.lists.length < 1 && (
+      {data?.lists?.length < 1 && (
         <div>
           <p className="text-gray-400">
             Sin colecciones,{' '}

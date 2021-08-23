@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
+import toast from 'react-hot-toast'
 // import { Counter } from './counter'
 
 const db = getFirestore(firebaseApp)
@@ -32,20 +33,20 @@ declare global {
   }
 }
 
-export async function createList(user, list_name) {
-  const res = await addDoc(collection(db, 'lists'), {
-    created_at: serverTimestamp(),
-    user_id: user.uid,
-    user_name: user.displayName,
-    is_artist: user.is_artist || false,
-    list_name,
-  })
-    .then((doc) => {
-      return { doc: doc.id, status: true }
-    })
-    .catch((error) => console.log(error))
+export async function createList(user, name) {
+  const { data, error } = await supabase
+    .from('lists')
+    .insert([{ user_id: user.id, name }])
+    .select('*')
 
-  return res
+  if (error) {
+    console.log(error)
+    toast.error(error.message)
+  }
+
+  console.log(data, 'data inserted')
+
+  return data
 }
 
 export async function addPostToList(uid, post, listId) {
@@ -116,6 +117,11 @@ export async function getUserLists(key, user_id) {
     .from('lists')
     .select('*')
     .eq('user_id', user_id)
+
+  if (error) {
+    console.log(error)
+    toast.error(error.message)
+  }
 
   return { lists }
 }
