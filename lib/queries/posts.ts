@@ -20,6 +20,7 @@ import {
   increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { supabase } from 'lib/supabase-client'
 // import { Counter } from './counter'
 import { PostTypes } from 'types/post'
 
@@ -75,17 +76,7 @@ export async function createArtistPost(
 }
 
 export async function getPostsInfo(_key) {
-  const q = query(
-    collection(db, 'posts'),
-    where('is_active', '==', true),
-    orderBy('created_at', 'desc')
-  )
-
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
+  let { data: posts } = await supabase.from('posts').select('*')
 
   return { posts }
 }
