@@ -1,16 +1,13 @@
 import { useWindowSize } from 'hooks/useWindowSize'
-import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
 import PostsList from './PostsList'
-import useUserId from 'hooks/use-user-id'
+import { useUser } from 'hooks/useUser'
 
 const Home = ({ latLng }: { latLng?: any }) => {
-  const { userId } = useUserId()
+  const { user }: any = useUser()
   const size = useWindowSize()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   return size?.width ? (
-    <PostsList size={size} user={data?.user} latLng={latLng} />
+    <PostsList size={size} user={user} latLng={latLng} />
   ) : null
 }
 
