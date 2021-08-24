@@ -4,7 +4,7 @@ import { UserState } from 'types/user'
 import SelectCity from './SelectCity'
 
 const WrapperSelectCity = ({ user }: { user: UserState }) => {
-  const { data } = useSWR(['get-cities', 'Colombia'], getCities)
+  const { data } = useSWR(['getCities', 'Colombia'], getCities)
 
   if (!data) return <span>...</span>
 

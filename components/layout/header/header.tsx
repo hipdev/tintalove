@@ -10,7 +10,6 @@ import WrapperAvailability from './WrapperAvailability'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
-import { useUser } from 'hooks/useUser'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
