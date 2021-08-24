@@ -12,8 +12,6 @@ const ShowLists = ({ userId, setShowCreate }) => {
 
   const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
 
-  console.log(data, 'las listas supabase')
-
   const { state, actions }: any = useStateMachine({
     lists,
   })

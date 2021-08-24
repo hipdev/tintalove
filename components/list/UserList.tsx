@@ -7,11 +7,13 @@ import ListNotPublic from './NotPublic'
 
 const UserList = ({ listId, user }) => {
   // const { userList, userListItems, setUserListItems }: any = useUserList(listId)
-  const { data, mutate } = useSWR(['get-lists', listId], getUserListItems)
+  const { data, mutate }: any = useSWR(['get-lists', listId], getUserListItems)
 
   // console.log(data, 'la data')
 
-  if (!data?.userList) {
+  console.log(data, 'la data')
+
+  if (!data?.listItems) {
     return <Loading />
   }
 
@@ -23,14 +25,14 @@ const UserList = ({ listId, user }) => {
     500: 1,
   }
 
-  if (data?.userList.user_id != user?.uid) {
+  if (data?.userList.user_id != user?.id) {
     return <ListNotPublic />
   }
 
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {data?.userList.list_name}{' '}
+        {data?.userList.name}
         <span className="ml-3 font-medium">
           ({data?.userList.total_items || 0}){' '}
         </span>
@@ -40,8 +42,8 @@ const UserList = ({ listId, user }) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {data?.userListItems.length > 0 ? (
-          data?.userListItems.map((post) => (
+        {data?.listItems.length > 0 ? (
+          data?.listItems.map((post) => (
             <ListPost
               key={post.id}
               post={post}
