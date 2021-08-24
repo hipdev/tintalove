@@ -12,7 +12,10 @@ import { BsPlus } from 'react-icons/bs'
 const SelectList = ({ userId, post, user, setShowCreate }) => {
   const [showForm, setShowForm] = useState(false)
 
-  const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
+  const { data } = useSWR(
+    userId ? ['getUserLists', userId] : null,
+    getUserLists
+  )
 
   const {
     state: { list },
