@@ -182,19 +182,24 @@ export async function getListsIds() {
   return lists
 }
 
-export async function getUserListItems(key, listId) {
-  const q = query(collection(db, 'lists_items'), where('list_id', '==', listId))
-  const listRef = doc(collection(db, 'lists'), listId)
+export async function getUserListItems(key, list_id) {
+  let { data: listItems, error } = await supabase
+    .from('lists_items')
+    .select('*')
+    .eq('list_id', list_id)
 
-  const docData = await getDoc(listRef)
+  let { data: userList } = await supabase
+    .from('lists')
+    .select('*')
+    .eq('id', list_id)
+    .single() // con single no se devuelve un array con un único valor sino que devuelve un objeto
 
-  const querySnapshot = await getDocs(q)
-  const userListItems: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return userListItems.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    console.log(error)
+    toast.error(error.message)
+  }
 
-  return { userListItems, userList: docData.data() }
+  return { listItems, userList }
 }
 
 export async function getListImage(key, listId) {
