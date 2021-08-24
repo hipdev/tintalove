@@ -10,6 +10,7 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/WrapperAvailability'
 import { Toaster } from 'react-hot-toast'
+import SubMenuHeader from 'components/layout/header/Submenu'
 
 type Props = {
   uid?: string
@@ -85,21 +86,27 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
               </Link>
             </div>
           </div>
-          <div className="flex w-full justify-end">
+          <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
             {user?.artist_active && (
-              <div className="mr-7 items-center hidden md:flex">
+              <>
                 <WrapperAvailability user={user} />
-                <Link href="/post/new-post">
-                  <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
-                    <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                      <AiOutlineCamera />
-                    </span>
-                    <span className="hidden xl:block">PUBLICAR</span>
-                  </a>
-                </Link>
-              </div>
+                <div className="flex">
+                  <button>
+                    <Link href="/post/new-post">
+                      <a className="text-white tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-lg flex items-center justify-center">
+                        <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                          <AiOutlineCamera />
+                        </span>
+                        <span className="hidden xl:block">PUBLICAR</span>
+                      </a>
+                    </Link>
+                  </button>
+                </div>
+              </>
             )}
-            <StepNav />
+            <div className="gap-3 ml-2 hidden sm:flex items-center flex-shrink-0">
+              <SubMenuHeader user={user || null} />
+            </div>
           </div>
         </header>
         <main className="mb-10">{children}</main>

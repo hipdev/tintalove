@@ -2,11 +2,9 @@ import MainInfo from 'components/artist-account/MainInfo'
 import MainInfoEdit from 'components/artist-account/main-info-edit/MainInfoEdit'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
-import useSWR from 'swr'
 import { useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
+import { useUser } from 'hooks/useUser'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
@@ -14,8 +12,7 @@ const loader = new Loader({
 })
 
 export default function MainInfoPage() {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
 
   const [loadMap, setLoadMap] = useState(false)
 
@@ -28,21 +25,18 @@ export default function MainInfoPage() {
       console.log('error loading Google Maps API')
     })
 
-  if (!data && !data?.user) {
+  if (!user) {
     return <IsAuth>Cargando data...</IsAuth>
   }
   return (
     <>
-      <LayoutStepsArtist uid={userId} user={data.user}>
+      <LayoutStepsArtist uid={user.id} user={user}>
         {loadMap && (
           <>
-            {data.user.is_artist ? (
-              <MainInfoEdit uid={data.user.uid || null} />
+            {user.is_artist ? (
+              <MainInfoEdit uid={user.id || null} />
             ) : (
-              <MainInfo
-                uid={data.user.uid || null}
-                email={data.user.email || null}
-              />
+              <MainInfo uid={user.id || null} email={user.email || null} />
             )}
           </>
         )}
