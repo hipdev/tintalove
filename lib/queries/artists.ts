@@ -16,15 +16,19 @@ import {
   deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { supabase } from 'lib/supabase-client'
 import { ArtistTypes } from 'types/artist'
 
 const db = getFirestore(firebaseApp)
 
 export async function userNameAvailable(username) {
-  const usernameRef = doc(db, `usernames/${username}`)
-  const queryRef = await getDoc(usernameRef)
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('username')
+    .eq('username', username)
+    .single()
 
-  if (queryRef.exists()) {
+  if (artist) {
     return false
   } else {
     return true

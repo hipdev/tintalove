@@ -1,7 +1,6 @@
 import SideMenuArtistSteps from 'components/layout-steps/SideMenuArtistSteps'
 import Image from 'next/image'
 import Link from 'next/link'
-import StepNav from './StepNav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'

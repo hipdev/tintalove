@@ -1,7 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
@@ -15,7 +14,7 @@ import { createArtist, userNameAvailable } from 'lib/queries/artists'
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfo = ({ uid, email }) => {
-  const { register, setValue, getValues, handleSubmit, watch } = useForm({
+  const { register, setValue, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: {
       show: false,
@@ -29,17 +28,13 @@ const MainInfo = ({ uid, email }) => {
     },
   })
 
-  const cityRef = useRef(null)
-
   const [loading, setLoading] = useState(false)
-  const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
   const [validUserName, setValidUserName] = useState(false)
 
-  const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
@@ -106,10 +101,7 @@ const MainInfo = ({ uid, email }) => {
       }
 
       setValue('username', username)
-
-      setShow(true)
     }
-    if (name == '') setShow(false)
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
