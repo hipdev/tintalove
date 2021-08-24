@@ -25,7 +25,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
   })
 
   useEffect(() => {
-    if (data?.userLists.length < 1) {
+    if (data?.lists.length < 1) {
       setShowForm(true)
     }
   }, [data])
@@ -80,7 +80,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
       {showForm && <NoListForm user={user} setShowCreate={setShowForm} />}
 
       <div className="grid grid-cols-2 gap-6">
-        {data?.userLists?.map((list) => {
+        {data?.lists?.map((list) => {
           return (
             <button
               onClick={() => {
@@ -90,7 +90,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
               key={list.id}
             >
               <div className="  rounded-lg overflow-hidden w-48 h-48">
-                <ListImage listId={list?.id} />
+                <ListImage postId={list?.post_id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
                 {list.list_name}
