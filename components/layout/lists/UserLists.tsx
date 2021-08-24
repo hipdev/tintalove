@@ -58,7 +58,7 @@ const UserLists = ({ user }) => {
               <SelectList
                 user={user}
                 userId={user?.id}
-                post={list?.post}
+                post={list?.post || 1}
                 setShowCreate={setShowCreate}
               />
             )}

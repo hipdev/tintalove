@@ -4,7 +4,7 @@ import { UserState } from 'types/user'
 import Availability from './availability'
 
 const WrapperAvailability = ({ user }: { user: UserState }) => {
-  const { data } = useSWR(
+  const { data }: any = useSWR(
     user.uid ? ['get-availability', user.uid] : null,
     getArtistAvailability
   )
