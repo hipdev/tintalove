@@ -44,7 +44,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
               key={list.id}
             >
               <div className="  rounded-lg overflow-hidden w-full h-28 sm:h-36 ">
-                <ListImage listId={list?.id} />
+                <ListImage postId={list?.post_id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
                 {list.name}

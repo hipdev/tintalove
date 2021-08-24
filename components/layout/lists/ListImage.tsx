@@ -1,18 +1,15 @@
-import { useStateMachine } from 'little-state-machine'
-import Link from 'next/link'
-import { lists } from 'lib/actions'
-import { getListImage, getUserLists } from 'lib/queries/lists'
+import { getListImage } from 'lib/queries/lists'
 import useSWR from 'swr'
 import Image from 'next/image'
 
-const ListImage = ({ listId }) => {
-  const { data } = useSWR(['getListImage', listId], getListImage)
+const ListImage = ({ postId }) => {
+  const { data }: any = useSWR(['getListImage', postId], getListImage)
 
-  console.log(data, 'data list image')
+  // console.log(data, 'data list image')
 
   return (
     <>
-      {!data?.userListImage ? (
+      {!data?.post ? (
         <div className="p-8 bg-gray-400">
           <Image
             src="/box.png"
@@ -23,7 +20,7 @@ const ListImage = ({ listId }) => {
         </div>
       ) : (
         <img
-          src={`${data.userListImage.post_image}/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
+          src={`${data.post.post_image}/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
           alt=""
           className="w-full h-full object-cover"
         />
