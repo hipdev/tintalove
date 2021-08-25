@@ -26,9 +26,9 @@ export async function userNameAvailable(username) {
     .from('artists')
     .select('username')
     .eq('username', username)
-    .single()
 
-  if (artist) {
+  if (artist[0]) {
+    // check if exists a record
     return false
   } else {
     return true

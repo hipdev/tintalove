@@ -147,27 +147,29 @@ const MainInfo = ({ uid, email }) => {
       ...placeInfo,
     }
 
-    toast
-      .promise(createArtist(uid, formData, true), {
-        loading: 'Guardando...',
-        success: (data) => {
-          setLoading(false)
-          // setTriggerAuth(Math.random()) // reload global user state data
-          // router.push('/artist/new/working-info')
+    console.log(formData, 'data a enviar')
 
-          return 'Artista creado 😉'
-        },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
-      .then((res) => {
-        if (res) {
-          router.push('/artist/working-info')
-          // setTriggerAuth(Math.random())
-        }
-      })
+    // toast
+    //   .promise(createArtist(uid, formData, true), {
+    //     loading: 'Guardando...',
+    //     success: (data) => {
+    //       setLoading(false)
+    //       // setTriggerAuth(Math.random()) // reload global user state data
+    //       // router.push('/artist/new/working-info')
+
+    //       return 'Artista creado 😉'
+    //     },
+    //     error: (err) => {
+    //       setLoading(false)
+    //       return `${err.toString()}`
+    //     },
+    //   })
+    //   .then((res) => {
+    //     if (res) {
+    //       router.push('/artist/working-info')
+    //       // setTriggerAuth(Math.random())
+    //     }
+    //   })
   }
 
   return (
