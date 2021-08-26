@@ -46,18 +46,14 @@ export async function getArtistIdByUsername(username) {
   }
 }
 
-export async function getArtistInfo(
-  _key,
-  uid
-): Promise<{ artist: ArtistTypes }> {
-  const docRef = doc(collection(db, 'artists'), uid)
-  const docSnap = await getDoc(docRef)
+export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('*')
+    .eq('user_id', uid)
+    .single()
 
-  if (docSnap.exists()) {
-    return { artist: { ...docSnap.data(), artist_id: docSnap.id } }
-  } else {
-    return { artist: null }
-  }
+  return artist ? artist : null
 }
 
 export async function getUserNamesByArtists() {
