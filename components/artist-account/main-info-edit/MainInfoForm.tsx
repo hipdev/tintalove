@@ -16,10 +16,13 @@ import {
   updateArtistUsername,
   userNameAvailable,
 } from 'lib/queries/artists'
+import { mutate } from 'swr'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
+  console.log(artist, 'el artista')
+
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -42,11 +45,13 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
-    formatted_address: artist.formatted_address || '',
-    province: artist.province || '',
-    _geoloc: artist._geoloc || '',
-    country: artist.country || '',
-    city_name: artist.city_name || '',
+    formatted_address: artist.places.formatted_address || '',
+    province: artist.places.province || '',
+    country: artist.places.country || '',
+    city_name: artist.places.city_name || '',
+    city_place_id: artist.place_id || '',
+    city_lat: artist.places.city_lat || '',
+    city_lng: artist.places.city_lng || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -156,21 +161,26 @@ const MainInfoForm = ({ uid, artist }) => {
       email: data.email,
     }
 
-    if (placeInfo) formData = { ...placeInfo, ...formData } // Aqui meto PlaceInfo cuando cambian la ciudad
-
-    toast.promise(updateArtistMainInfo(uid, formData), {
-      loading: 'Actualizando artista...',
-      success: (data) => {
-        setLoading(false)
-        // setTriggerAuth(Math.random()) // reload global user state data
-        router.push('/artist/working-info')
-        return 'Artista actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    toast.promise(
+      updateArtistMainInfo(
+        uid,
+        formData,
+        artist.place_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
+      ),
+      {
+        loading: 'Actualizando artista...',
+        success: () => {
+          setLoading(false)
+          mutate(['getArtistFullInfo', uid])
+          router.push('/artist/working-info')
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      }
+    )
 
     // setLoading(false)
   }
@@ -206,7 +216,7 @@ const MainInfoForm = ({ uid, artist }) => {
               </div>
 
               <MainInfoCity
-                defaultValue={artist.formatted_address || ''}
+                defaultValue={artist.places.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
             </label>
@@ -327,7 +337,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
         {artist.name != watchMultiple.name ||
         artist.email != watchMultiple.email ||
-        artist.formatted_address != placeInfo?.formatted_address ||
+        artist.places.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button

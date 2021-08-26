@@ -56,6 +56,15 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
   return artist ? artist : null
 }
 
+export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select(`*, places ( * ) `) // Debe existir una clave foránea o no funcionará esto
+    .single()
+
+  return artist ? artist : null
+}
+
 export async function getArtistWizard(_key, uid) {
   let { data: artistWizard } = await supabase
     .from('artists_wizard')
@@ -140,56 +149,54 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
   }
 }
 
-export async function updateArtistMainInfo(uid, data) {
-  const cityId = slugify(data.city_name + '-' + data.province, '_')
+export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('name')
+    .eq('user_id', uid)
 
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const cityRef = doc(collection(db, 'cities'), cityId)
-
-  const userRef = doc(collection(db, 'users'), uid)
-
-  const citySnap = await getDoc(cityRef)
-  const docSnap = await getDoc(artistRef)
-
-  if (!citySnap.exists()) {
-    await setDoc(cityRef, {
-      geohash: data.geohash,
-      country: 'Colombia',
-      created_by: uid,
-      formatted_address: data.formatted_address,
-      province: data.province,
-      _geoloc: data._geoloc,
-      city_name: data.city_name,
-    })
-  }
-
-  if (docSnap.exists()) {
-    const batch = writeBatch(db)
-
-    batch.set(
-      artistRef,
-      {
-        updated_at: serverTimestamp(),
-        ...data,
-      },
-      { merge: true }
-    )
-
-    batch.set(
-      userRef,
-      {
-        displayName: data.displayName.trim(),
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
-
-    return true
-  } else {
+  if (!artist[0]) {
     throw new Error('No estas registrado como artista')
   }
+
+  //Validación de la ciudad
+  let place_id = null // Para luego añadirlo al artista
+
+  if (placeInfo) {
+    // Sólo hacemos esto si el usuario cambia la ciudad
+    let { data: city } = await supabase
+      .from('places')
+      .select('city_name, city_place_id')
+      .eq('city_place_id', placeInfo.city_place_id)
+
+    if (city[0]) {
+      place_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('places').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
+      })
+
+      place_id = newCity[0].city_place_id
+    }
+  } else {
+    place_id = artist[0].place_id
+  }
+
+  //Actualizamos el usuario
+  await supabase
+    .from('artists')
+    .update(
+      {
+        ...dataArtist,
+        place_id,
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
+
+  return true
 }
 
 export async function updateArtistWorkingInfo(uid, data, wizard) {

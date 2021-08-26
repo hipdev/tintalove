@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
 import { useUser } from 'hooks/useUser'
 import useSWR from 'swr'
-import { getArtistInfo } from 'lib/queries/artists'
+import { getArtistFullInfo } from 'lib/queries/artists'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
@@ -19,8 +19,8 @@ export default function MainInfoPage() {
   const [loadMap, setLoadMap] = useState(false)
 
   const { data: artist } = useSWR(
-    user?.id ? ['getArtistInfo', user.id] : null,
-    getArtistInfo
+    user?.id ? ['getArtistFullInfo', user.id] : null,
+    getArtistFullInfo
   )
 
   loader
