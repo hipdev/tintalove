@@ -24,8 +24,6 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
 
-  console.log(artistWizard, 'steps')
-
   const steps = [
     artistWizard?.step_one,
     artistWizard?.step_two,
