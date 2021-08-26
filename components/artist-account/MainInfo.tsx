@@ -33,7 +33,7 @@ const MainInfo = ({ uid, email }) => {
   const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
-  const [validUserName, setValidUserName] = useState(false)
+  const [validUserName, setValidUserName] = useState(null)
 
   const [customNick, setCustomNick] = useState(false)
 
