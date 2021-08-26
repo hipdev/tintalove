@@ -15,7 +15,7 @@ const db = getFirestore(firebaseApp)
 
 export async function getCities(key, country) {
   let { data: cities } = await supabase
-    .from('cities')
+    .from('places')
     .select('*')
     .eq('country', country)
 
