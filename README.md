@@ -35,3 +35,8 @@ jAzRNZF7TXz3UoE0m7mOC6ibNcxSrB8hwwyZm2tLK6HIBE8vWe
 
 twitter bearer token:
 AAAAAAAAAAAAAAAAAAAAAGTpSwEAAAAAfToggU%2BnpuRAhz3fyblH2Yx5XCs%3D1iuIdMXgbrjDNxYzLRMPTEHyMrw3k0cRZYCUOIQSrIgvPC6T21
+
+DigitalOcean droplet to test Postgresql
+
+Check connection:
+pg_isready -h 137.184.33.128 -p 5432
