@@ -8,7 +8,7 @@ const WrapperSelectCity = ({ user }: { user: UserState }) => {
 
   if (!data) return <span>...</span>
 
-  return data && <SelectCity user={user} cities={data.cities} />
+  return data && <SelectCity user={user} cities={data?.cities || []} />
 }
 
 export default WrapperSelectCity
