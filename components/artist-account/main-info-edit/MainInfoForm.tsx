@@ -26,7 +26,7 @@ const MainInfoForm = ({ uid, artist }) => {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      displayName: artist.displayName || '',
+      name: artist.name || '',
       email: artist.email || '',
       username: artist.username || '',
       bio: artist.bio,
@@ -43,7 +43,6 @@ const MainInfoForm = ({ uid, artist }) => {
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: artist.formatted_address || '',
-    geohash: artist.geohash || '',
     province: artist.province || '',
     _geoloc: artist._geoloc || '',
     country: artist.country || '',
@@ -52,8 +51,6 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
-
-  const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
 
@@ -85,7 +82,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('displayName', name)
+        setValue('name', name)
       }
     }, 3000),
     []
@@ -94,15 +91,14 @@ const MainInfoForm = ({ uid, artist }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
-
-    setValue('displayName', capitalName)
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
-
     updateName(formattedName)
-
-    setValue('displayName', capitalizeAllWords(name))
+    setValue('name', capitalizeAllWords(name))
   }
 
   const handleUserName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,8 +115,6 @@ const MainInfoForm = ({ uid, artist }) => {
       setAvailableUserName(false)
     }
     setValue('username', nick)
-
-    setCustomNick(true)
   }
 
   const saveUsername = async () => {
@@ -143,17 +137,13 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const onSubmit = async (data) => {
     setLoading(true)
-    if (data.displayName == '' || data.bio == '') {
+    if (data.name == '' || data.bio == '') {
       setLoading(false)
       toast('Debes ingresar el nombre y la bio 😓')
       return
     }
 
-    if (
-      !placeInfo &&
-      data.displayName == artist.displayName &&
-      data.bio == artist.bio
-    ) {
+    if (!placeInfo && data.name == artist.name && data.bio == artist.bio) {
       cityRef.current.focus()
       setLoading(false)
       toast('😓 Debes indicar al menos una ciudad, nombre o biografía')
@@ -162,7 +152,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
     let formData = {
       bio: data.bio,
-      displayName: data.displayName,
+      name: data.name,
       email: data.email,
     }
 
@@ -193,7 +183,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Nombre artístico</span>
               <input
-                {...register('displayName')}
+                {...register('name')}
                 autoComplete="off"
                 placeholder="..."
                 className="input-primary w-full"
@@ -335,7 +325,7 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
         </div>
 
-        {artist.displayName != watchMultiple.displayName ||
+        {artist.name != watchMultiple.name ||
         artist.email != watchMultiple.email ||
         artist.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
