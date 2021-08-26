@@ -13,20 +13,6 @@ export function listenArtistById(uid, setArtist) {
   return unsub
 }
 
-export function listenArtistWizardById(uid, setArtistWizard) {
-  const unsub = onSnapshot(
-    doc(db, 'artists_wizard', uid),
-    (doc) => {
-      setArtistWizard({ ...doc.data(), uid })
-    },
-    (error) => {
-      console.log(error, 'error')
-    }
-  )
-
-  return unsub
-}
-
 export function listenStudioWizardById(studioId, setStudioWizard) {
   const unsub = onSnapshot(
     doc(collection(db, 'studios_wizard'), studioId),

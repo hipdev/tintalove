@@ -1,7 +1,4 @@
-import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
-
 import { activateArtist, getArtistWizard } from 'lib/queries/artists'
-
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
