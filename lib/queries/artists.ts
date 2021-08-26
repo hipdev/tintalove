@@ -79,106 +79,58 @@ export async function getArtistsInfo() {
   return { artists }
 }
 
-export async function createArtist(uid, data, placeInfo, wizard) {
-  const cityId = slugify(data.city_name + '-' + data.province, '_')
-
-  const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
-  const usernameRef = doc(collection(db, 'usernames'), data.username)
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
-
-  const userRef = doc(collection(db, 'users'), uid)
-
-  const citySnap = await getDoc(cityRef)
-  const usernameSnap = await getDoc(usernameRef)
-  const docSnap = await getDoc(artistRef)
-
+export async function createArtist(uid, dataArtist, placeInfo, wizard) {
   let { data: artist } = await supabase
     .from('artists')
     .select('name')
     .eq('user_id', uid)
 
   if (artist[0]) {
-    console.log(artist)
-    throw new Error('El nombre de usuario ya existe')
+    throw new Error('Este usuario ya esta registrado como artista')
   }
 
   let { data: username } = await supabase
     .from('artists')
     .select('username')
-    .eq('username', data.username)
+    .eq('username', dataArtist.username)
 
   if (username[0]) {
     throw new Error('El nombre de usuario ya existe')
   } else {
+    let place_id = null // Para luego añadirlo al artista
+
     let { data: city } = await supabase
       .from('places')
-      .select('city_name')
+      .select('city_name, city_place_id')
       .eq('city_place_id', placeInfo.city_place_id)
 
-    if (!city[0]) {
-      console.log('la ciudad no existe, a crearla')
-
-      const { data, error } = await supabase.from('places').insert({
+    if (city[0]) {
+      place_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('places').insert({
         ...placeInfo,
         coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
       })
 
-      console.log(data, 'ciudad creada, la data')
-    } else {
-      console.log(city[0], 'ciudad encontrada')
+      place_id = newCity[0].city_place_id
     }
 
-    return true
-  }
-
-  if (usernameSnap.exists()) {
-    throw new Error('El nombre de usuario ya existe')
-  }
-  if (!citySnap.exists()) {
-    await setDoc(cityRef, {
-      geohash: data.geohash,
-      country: 'Colombia',
-      created_by: uid,
-      formatted_address: data.formatted_address,
-      province: data.province,
-      city_name: data.city_name,
-      _geoloc: data._geoloc,
+    // Si todo esta bien hasta acá, creamos el artista:
+    const { data: newArtist } = await supabase.from('artists').insert({
+      ...dataArtist,
+      place_id,
+      user_id: uid,
     })
-  }
-
-  if (docSnap.exists()) {
-    throw new Error('Ya estas registrado como artista')
-  } else {
-    const batch = writeBatch(db)
-
-    batch.set(usernameRef, {
-      uid,
-    })
-
-    batch.set(artistRef, {
-      created_at: serverTimestamp(),
-      ...data,
-    })
-
-    batch.set(
-      userRef,
-      {
-        displayName: data.displayName.trim(),
-        is_artist: true,
-        username: data.username,
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
 
     if (wizard) {
-      setDoc(artistWizardRef, { step_one: true }, { merge: true })
+      await supabase.from('artists_wizard').insert({
+        id: uid,
+        step_one: true,
+      })
     }
 
-    return true
+    return newArtist
   }
 }
 
