@@ -79,7 +79,7 @@ export async function getArtistsInfo() {
   return { artists }
 }
 
-export async function createArtist(uid, data, wizard) {
+export async function createArtist(uid, data, placeInfo, wizard) {
   const cityId = slugify(data.city_name + '-' + data.province, '_')
 
   const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
@@ -92,6 +92,45 @@ export async function createArtist(uid, data, wizard) {
   const citySnap = await getDoc(cityRef)
   const usernameSnap = await getDoc(usernameRef)
   const docSnap = await getDoc(artistRef)
+
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('name')
+    .eq('user_id', uid)
+
+  if (artist[0]) {
+    console.log(artist)
+    throw new Error('El nombre de usuario ya existe')
+  }
+
+  let { data: username } = await supabase
+    .from('artists')
+    .select('username')
+    .eq('username', data.username)
+
+  if (username[0]) {
+    throw new Error('El nombre de usuario ya existe')
+  } else {
+    let { data: city } = await supabase
+      .from('places')
+      .select('city_name')
+      .eq('city_place_id', placeInfo.city_place_id)
+
+    if (!city[0]) {
+      console.log('la ciudad no existe, a crearla')
+
+      const { data, error } = await supabase.from('places').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
+      })
+
+      console.log(data, 'ciudad creada, la data')
+    } else {
+      console.log(city[0], 'ciudad encontrada')
+    }
+
+    return true
+  }
 
   if (usernameSnap.exists()) {
     throw new Error('El nombre de usuario ya existe')

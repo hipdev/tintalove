@@ -123,7 +123,7 @@ const MainInfo = ({ uid, email }) => {
   }
 
   const onSubmit = async (data) => {
-    setLoading(true)
+    // setLoading(true)
     if (!placeInfo) {
       setLoading(false)
       toast('😓 Debes indicar una ciudad')
@@ -136,40 +136,38 @@ const MainInfo = ({ uid, email }) => {
       return
     }
 
-    const formData = {
-      displayName: data.displayName
+    const artistData = {
+      name: data.displayName
         .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
         .replace(/\s\s+/g, ' ')
         .trim(),
       bio: data.bio.replace(/\s\s+/g, ' ').trim(),
       username: data.username,
       email: data.email,
-      ...placeInfo,
     }
 
-    console.log(formData, 'data a enviar')
+    console.log(artistData, placeInfo, 'data a enviar')
 
-    // toast
-    //   .promise(createArtist(uid, formData, true), {
-    //     loading: 'Guardando...',
-    //     success: (data) => {
-    //       setLoading(false)
-    //       // setTriggerAuth(Math.random()) // reload global user state data
-    //       // router.push('/artist/new/working-info')
+    toast.promise(createArtist(uid, artistData, placeInfo, true), {
+      loading: 'Guardando...',
+      success: (data) => {
+        setLoading(false)
+        // setTriggerAuth(Math.random()) // reload global user state data
+        // router.push('/artist/new/working-info')
 
-    //       return 'Artista creado 😉'
-    //     },
-    //     error: (err) => {
-    //       setLoading(false)
-    //       return `${err.toString()}`
-    //     },
-    //   })
-    //   .then((res) => {
-    //     if (res) {
-    //       router.push('/artist/working-info')
-    //       // setTriggerAuth(Math.random())
-    //     }
-    //   })
+        return 'Artista creado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
+    // .then((res) => {
+    //   if (res) {
+    //     router.push('/artist/working-info')
+    //     // setTriggerAuth(Math.random())
+    //   }
+    // })
   }
 
   return (
