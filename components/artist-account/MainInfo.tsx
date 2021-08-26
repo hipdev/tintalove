@@ -77,7 +77,7 @@ const MainInfo = ({ uid, email }) => {
     const name: string = e.target.value
 
     const capitalName = capitalizeAllWords(name).replace(
-      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g,
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
       ''
     )
 
