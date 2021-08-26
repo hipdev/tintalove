@@ -1,19 +1,23 @@
 import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
 
-import { activateArtist } from 'lib/queries/artists'
+import { activateArtist, getArtistWizard } from 'lib/queries/artists'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
+import useSWR from 'swr'
 
 type Props = {
   uid?: string
 }
 
 const SideMenuArtistSteps = ({ uid }: Props) => {
-  const { artistWizard } = useArtistWizardRealtime(uid)
+  const { data: artistWizard } = useSWR(
+    uid ? ['getArtistWizard', uid] : null,
+    getArtistWizard
+  )
 
   const [loading, setLoading] = useState(false)
 
