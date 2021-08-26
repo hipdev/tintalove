@@ -21,7 +21,7 @@ const MainInfo = ({ uid, email }) => {
       customNick: false,
       availableUsername: false,
       validUserName: false,
-      displayName: '',
+      name: '',
       email: email || '',
       username: '',
       bio: '',
@@ -67,7 +67,7 @@ const MainInfo = ({ uid, email }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('displayName', name)
+        setValue('name', name)
       }
     }, 3000),
     []
@@ -81,7 +81,7 @@ const MainInfo = ({ uid, email }) => {
       ''
     )
 
-    setValue('displayName', capitalName)
+    setValue('name', capitalName)
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
 
@@ -140,7 +140,7 @@ const MainInfo = ({ uid, email }) => {
     }
 
     const artistData = {
-      name: data.displayName
+      name: data.name
         .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
         .replace(/\s\s+/g, ' ')
         .trim(),
@@ -190,7 +190,7 @@ const MainInfo = ({ uid, email }) => {
               <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                 <span className="mb-3 block">Nombre artístico</span>
                 <input
-                  {...register('displayName')}
+                  {...register('name')}
                   autoComplete="off"
                   placeholder="..."
                   className="input-primary w-full"
