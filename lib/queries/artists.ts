@@ -56,6 +56,16 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
   return artist ? artist : null
 }
 
+export async function getArtistWizard(_key, uid) {
+  let { data: artistWizard } = await supabase
+    .from('artists_wizard')
+    .select('*')
+    .eq('id', uid)
+    .single()
+
+  return artistWizard ? artistWizard : null
+}
+
 export async function getUserNamesByArtists() {
   const querySnapshot = await getDocs(collection(db, 'usernames'))
   const usernames: any = []
