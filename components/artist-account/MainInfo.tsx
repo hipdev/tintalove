@@ -76,7 +76,10 @@ const MainInfo = ({ uid, email }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g,
+      ''
+    )
 
     setValue('displayName', capitalName)
 
@@ -152,6 +155,7 @@ const MainInfo = ({ uid, email }) => {
       loading: 'Guardando...',
       success: (data) => {
         setLoading(false)
+        console.log(data, 'la data')
         // setTriggerAuth(Math.random()) // reload global user state data
         // router.push('/artist/new/working-info')
 
@@ -191,6 +195,7 @@ const MainInfo = ({ uid, email }) => {
                   placeholder="..."
                   className="input-primary w-full"
                   onChange={handleName}
+                  maxLength={23}
                   required
                 />
               </label>
