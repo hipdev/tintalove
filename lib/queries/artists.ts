@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   getFirestore,
-  setDoc,
   serverTimestamp,
   updateDoc,
   writeBatch,
@@ -184,7 +183,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
     place_id = artist[0].place_id
   }
 
-  //Actualizamos el usuario
+  //Actualizamos el artista
   await supabase
     .from('artists')
     .update(
@@ -195,6 +194,17 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
       { returning: 'minimal' } // Así nos ahorramos un select
     )
     .eq('user_id', uid)
+
+  //Actualizamos el usuario
+  await supabase
+    .from('users')
+    .update(
+      {
+        full_name: dataArtist.name,
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', uid)
 
   return true
 }
