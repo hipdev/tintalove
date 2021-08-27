@@ -217,31 +217,34 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
   return true
 }
 
-export async function updateArtistWorkingInfo(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
-
-  const styles = data.styles.map((style) => style.value)
+export async function updateArtistWorkingInfo(uid, dataArtist) {
+  const styles = dataArtist.styles.map((style) => style.value)
 
   const dataForm = {
-    times: data.times,
-    work_as: data.work_as,
+    times: dataArtist.times,
+    work_as: dataArtist.work_as,
     styles,
-    updated_at: serverTimestamp(),
+    updated_at: new Date(), // new Date().getTime() es igual, tiempo en milis
   }
 
-  const docSnap = await getDoc(artistRef)
+  const { data, error } = await supabase
+    .from('artists')
+    .update(
+      dataForm,
 
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_two: true })
-    }
+  console.log(data, error, 'que tal')
 
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  // await supabase.from('artists_wizard').insert({
+  //   id: uid,
+  //   step_one: true,
+  // })
+
+  if (error) {
+    throw new Error(`Error creando el artista: ${error.message}`)
   }
 }
 
