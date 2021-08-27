@@ -10,10 +10,15 @@ import MainInfoAvailable from './main-info-edit/MainInfoAvailable'
 import 'microtip/microtip.css'
 import MainInfoCity from './main-info-edit/MainInfoCity'
 import { createArtist, userNameAvailable } from 'lib/queries/artists'
+import { useUser } from 'hooks/useUser'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfo = ({ uid, email }) => {
+  const { user, setUser }: any = useUser()
+
+  console.log(user, 'el usuario')
+
   const { register, setValue, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -81,11 +86,10 @@ const MainInfo = ({ uid, email }) => {
       ''
     )
 
-    setValue('name', capitalName)
-
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
 
     updateName(formattedName)
+    // setValue('name', capitalName)
 
     if (name != '' && !customNick) {
       setAvailableUserName(false)
@@ -140,38 +144,37 @@ const MainInfo = ({ uid, email }) => {
     }
 
     const artistData = {
-      name: data.name
-        .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
-        .replace(/\s\s+/g, ' ')
-        .trim(),
-      bio: data.bio.replace(/\s\s+/g, ' ').trim(),
+      name: data.name,
+      bio: data.bio.trim(),
       username: data.username,
       email: data.email,
     }
 
     console.log(artistData, placeInfo, 'data a enviar')
 
-    toast.promise(createArtist(uid, artistData, placeInfo, true), {
-      loading: 'Guardando...',
-      success: (data) => {
-        setLoading(false)
-        console.log(data, 'la data')
-        // setTriggerAuth(Math.random()) // reload global user state data
-        // router.push('/artist/new/working-info')
+    toast
+      .promise(createArtist(uid, artistData, placeInfo, true), {
+        loading: 'Guardando...',
+        success: (data) => {
+          setLoading(false)
+          console.log(data, 'la data')
+          setUser({ ...user, full_name: artistData.name })
+          // setTriggerAuth(Math.random()) // reload global user state data
+          // router.push('/artist/new/working-info')
 
-        return 'Artista creado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
-    // .then((res) => {
-    //   if (res) {
-    //     router.push('/artist/working-info')
-    //     // setTriggerAuth(Math.random())
-    //   }
-    // })
+          return 'Artista creado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+      .then((res) => {
+        if (res) {
+          router.push('/artist/working-info')
+          // setTriggerAuth(Math.random())
+        }
+      })
   }
 
   return (

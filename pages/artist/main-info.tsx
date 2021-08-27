@@ -23,6 +23,8 @@ export default function MainInfoPage() {
     getArtistFullInfo
   )
 
+  console.log(artist, 'data artist')
+
   loader
     .load()
     .then(() => {
