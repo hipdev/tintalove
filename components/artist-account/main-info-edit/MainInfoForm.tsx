@@ -17,11 +17,14 @@ import {
   userNameAvailable,
 } from 'lib/queries/artists'
 import { mutate } from 'swr'
+import { useUser } from 'hooks/useUser'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
-  console.log(artist, 'el artista')
+  const { user, setUser }: any = useUser()
+
+  console.log(user, 'el usuario')
 
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
@@ -172,6 +175,7 @@ const MainInfoForm = ({ uid, artist }) => {
         success: () => {
           setLoading(false)
           mutate(['getArtistFullInfo', uid])
+          setUser({ ...user, full_name: formData.name }) // update user global object
           router.push('/artist/working-info')
           return 'Artista actualizado 😉'
         },
