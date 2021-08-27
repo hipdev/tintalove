@@ -50,18 +50,16 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
     .from('artists')
     .select('*')
     .eq('user_id', uid)
-    .single()
 
-  return artist ? artist : null
+  return artist ? artist[0] : null
 }
 
 export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
     .select(`*, places ( * ) `) // Debe existir una clave foránea o no funcionará esto
-    .single()
 
-  return artist ? artist : null
+  return artist ? artist[0] : null
 }
 
 export async function getArtistWizard(_key, uid) {
@@ -69,9 +67,8 @@ export async function getArtistWizard(_key, uid) {
     .from('artists_wizard')
     .select('*')
     .eq('id', uid)
-    .single()
 
-  return artistWizard ? artistWizard : null
+  return artistWizard ? artistWizard[0] : null
 }
 
 export async function getUserNamesByArtists() {
@@ -136,6 +133,17 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
       place_id,
       user_id: uid,
     })
+
+    //Actualizamos el nombre del usuario
+    await supabase
+      .from('users')
+      .update(
+        {
+          full_name: dataArtist.name,
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('id', uid)
 
     if (wizard) {
       await supabase.from('artists_wizard').insert({
