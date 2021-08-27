@@ -5,7 +5,6 @@ import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import useArtist from 'hooks/use-artist'
 import { getArtistRequests, updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
@@ -20,13 +19,13 @@ const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const WorkingInfo = ({ uid, isArtist }) => {
+const WorkingInfo = ({ uid, artist, isArtist }) => {
   const [studioName, setStudioName] = useState()
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [errorRequest, setErrorRequest] = useState(false)
-  const { artist } = useArtist(uid)
+
   const router = useRouter()
 
   const { data } = useSWR(
@@ -78,7 +77,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistWorkingInfo(uid, data, true), {
+    toast.promise(updateArtistWorkingInfo(uid, data), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)

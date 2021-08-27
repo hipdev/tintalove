@@ -40,7 +40,11 @@ export default function WorkingInfopage() {
   return (
     <LayoutStepsArtist uid={user?.id} user={user}>
       {loadMap && (
-        <WorkingInfo uid={user?.id || null} isArtist={artist || false} />
+        <WorkingInfo
+          uid={user?.id || null}
+          artist={artist}
+          isArtist={artist || false}
+        />
       )}
     </LayoutStepsArtist>
   )
