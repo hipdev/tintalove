@@ -72,7 +72,7 @@ const MainInfo = ({ uid, email }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('name', name)
+        setValue('name', name.trim())
       }
     }, 3000),
     []
@@ -86,10 +86,10 @@ const MainInfo = ({ uid, email }) => {
       ''
     )
 
-    const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
+    const formattedName = capitalName.replace(/\s\s+/g, ' ')
 
     updateName(formattedName)
-    // setValue('name', capitalName)
+    setValue('name', formattedName)
 
     if (name != '' && !customNick) {
       setAvailableUserName(false)

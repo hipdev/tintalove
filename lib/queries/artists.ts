@@ -57,7 +57,8 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
 export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
-    .select(`*, places ( * ) `) // Debe existir una clave foránea o no funcionará esto
+    .select(`*, places ( * ) `)
+    .eq('user_id', uid) // Debe existir una clave foránea o no funcionará esto
 
   return artist ? artist[0] : null
 }
@@ -394,50 +395,16 @@ export async function activateArtist(uid) {
 }
 
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
-  const usernameRefOld = doc(collection(db, 'usernames'), oldUsername)
-  const usernameRefNew = doc(collection(db, 'usernames'), newUsername)
-  const artistRef = doc(collection(db, 'artists'), uid)
+  const { data, error } = await supabase
+    .from('artists')
+    .update({ username: newUsername })
+    .eq('user_id', uid)
 
-  const userRef = doc(collection(db, 'users'), uid)
+  console.log(data, error, 'que es data')
 
-  const usernameSnap = await getDoc(usernameRefNew)
-  const userSnap = await getDoc(userRef)
-
-  if (usernameSnap.exists()) {
-    throw new Error('El nombre de usuario ya existe')
+  if (error) {
+    throw new Error('Ese usuario ya existe')
   }
-
-  if (!userSnap.exists()) {
-    throw new Error('Este usuario no existe')
-  }
-
-  const batch = writeBatch(db)
-
-  batch.delete(usernameRefOld)
-
-  batch.set(usernameRefNew, {
-    uid,
-  })
-
-  batch.set(
-    artistRef,
-    {
-      updated_at: serverTimestamp(),
-      username: newUsername,
-    },
-    { merge: true }
-  )
-
-  batch.set(
-    userRef,
-    {
-      username: newUsername,
-      updated_at: serverTimestamp(),
-    },
-    { merge: true }
-  )
-
-  await batch.commit()
 
   return true
 }
