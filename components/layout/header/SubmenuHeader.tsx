@@ -6,10 +6,17 @@ import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
 import { url_domain } from 'lib/utils'
 import { useUser } from 'hooks/useUser'
+import { getArtistInfo } from 'lib/queries/artists'
+import useSWR from 'swr'
 
 const SubMenuHeader = ({ user }: { user: UserState }) => {
   const { openModal } = useContext(LoginContext)
   const { signOut } = useUser()
+
+  const { data: artist } = useSWR(
+    user?.id ? ['getArtistInfo', user.id] : null,
+    getArtistInfo
+  )
 
   const handleLogout = () => {
     signOut()
@@ -85,9 +92,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                           {({ active }) => (
                             <a
                               href={
-                                user?.artist_active
-                                  ? '/artist/main-info'
-                                  : '/user/profile'
+                                artist ? '/artist/main-info' : '/user/profile'
                               }
                               className={`${
                                 active
