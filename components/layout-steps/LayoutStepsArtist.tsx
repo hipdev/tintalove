@@ -9,7 +9,7 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
 import WrapperAvailability from 'components/layout/header/WrapperAvailability'
 import { Toaster } from 'react-hot-toast'
-import SubMenuHeader from 'components/layout/header/Submenu'
+import SubMenuHeader from 'components/layout/header/SubmenuHeader'
 import useSWR from 'swr'
 import { getArtistInfo } from 'lib/queries/artists'
 

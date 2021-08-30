@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import SubMenuHeader from './Submenu'
+import SubMenuHeader from './SubmenuHeader'
 import { UserState } from 'types/user'
 import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
