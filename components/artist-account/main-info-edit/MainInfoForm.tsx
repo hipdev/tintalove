@@ -24,7 +24,7 @@ const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 const MainInfoForm = ({ uid, artist }) => {
   const { user, setUser }: any = useUser()
 
-  console.log(user, 'el usuario')
+  console.log(artist, 'el usuario')
 
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
@@ -48,13 +48,13 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
-    formatted_address: artist.places.formatted_address || '',
-    province: artist.places.province || '',
-    country: artist.places.country || '',
-    city_name: artist.places.city_name || '',
-    city_place_id: artist.place_id || '',
-    city_lat: artist.places.city_lat || '',
-    city_lng: artist.places.city_lng || '',
+    formatted_address: artist?.cities?.formatted_address || '',
+    province: artist?.cities?.province || '',
+    country: artist?.cities?.country || '',
+    city_name: artist?.cities?.city_name || '',
+    city_place_id: artist?.place_id || '',
+    city_lat: artist?.cities?.city_lat || '',
+    city_lng: artist?.cities?.city_lng || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -220,7 +220,7 @@ const MainInfoForm = ({ uid, artist }) => {
               </div>
 
               <MainInfoCity
-                defaultValue={artist.places.formatted_address || ''}
+                defaultValue={artist?.cities?.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
             </label>
@@ -341,7 +341,7 @@ const MainInfoForm = ({ uid, artist }) => {
 
         {artist.name != watchMultiple.name ||
         artist.email != watchMultiple.email ||
-        artist.places.formatted_address != placeInfo?.formatted_address ||
+        artist.cities.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button

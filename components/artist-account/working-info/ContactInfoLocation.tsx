@@ -74,8 +74,6 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
 
     setLocation({ lat, lng })
 
-    const geohash = geohashForLocation([lat, lng])
-
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
 
@@ -84,7 +82,6 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
       formatted_address: results[0].formatted_address,
       city_name,
       _geoloc: { lat, lng },
-      geohash,
     }
 
     toast.promise(updateArtistLocation(artistId, dataLocation), {
@@ -140,7 +137,13 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
         value={value}
         onChange={handleInput}
         disabled={!ready}
-        placeholder={placeholder ? placeholder : '' ? '' : 'Busca tu ciudad'}
+        placeholder={
+          placeholder
+            ? placeholder
+            : ''
+            ? ''
+            : 'Buscar ubicación, puedes agregar una dirección exacta'
+        }
         className="input-primary w-full"
         spellCheck="false"
         required

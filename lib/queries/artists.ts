@@ -57,7 +57,7 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
 export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
-    .select(`*, places ( * ) `)
+    .select(`*, cities ( * ) `)
     .eq('user_id', uid) // Debe existir una clave foránea o no funcionará esto
 
   return artist ? artist[0] : null
@@ -112,7 +112,7 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
     let place_id = null // Para luego añadirlo al artista
 
     let { data: city } = await supabase
-      .from('places')
+      .from('cities')
       .select('city_name, city_place_id')
       .eq('city_place_id', placeInfo.city_place_id)
 
@@ -120,7 +120,7 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
       place_id = city[0].city_place_id
     } else {
       // La ciudad no existe, entonces la creamos
-      const { data: newCity } = await supabase.from('places').insert({
+      const { data: newCity } = await supabase.from('cities').insert({
         ...placeInfo,
         coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
       })
@@ -173,7 +173,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
   if (placeInfo) {
     // Sólo hacemos esto si el usuario cambia la ciudad
     let { data: city } = await supabase
-      .from('places')
+      .from('cities')
       .select('city_name, city_place_id')
       .eq('city_place_id', placeInfo.city_place_id)
 
@@ -181,7 +181,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
       place_id = city[0].city_place_id
     } else {
       // La ciudad no existe, entonces la creamos
-      const { data: newCity } = await supabase.from('places').insert({
+      const { data: newCity } = await supabase.from('cities').insert({
         ...placeInfo,
         coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
       })
