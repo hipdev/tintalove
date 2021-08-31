@@ -13,8 +13,8 @@ import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { ArtistTypes } from 'types/artist'
 import { checkUrl } from 'lib/utils'
 
-const ContactInfo = ({ uid, artist }) => {
-  const [phone, setPhone]: any = useState({})
+const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
+  const [mobile, setPhone]: any = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -26,7 +26,6 @@ const ContactInfo = ({ uid, artist }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -75,22 +74,23 @@ const ContactInfo = ({ uid, artist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    const dataForm = { ...data, phone }
+    const dataForm = { ...data, mobile }
 
-    if (phone?.value) {
-      toast.promise(updateArtistContactInfo(uid, dataForm, true), {
-        loading: 'Actualizando...',
-        success: () => {
-          setLoading(false)
-          setSuccess(true)
+    if (mobile?.value && mobile.value.length > 9) {
+      console.log(dataForm, 'form to send')
+      // toast.promise(updateArtistContactInfo(uid, dataForm, true), {
+      //   loading: 'Actualizando...',
+      //   success: () => {
+      //     setLoading(false)
+      //     setSuccess(true)
 
-          return 'Artista actualizado 😉'
-        },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
+      //     return 'Artista actualizado 😉'
+      //   },
+      //   error: (err) => {
+      //     setLoading(false)
+      //     return `${err.toString()}`
+      //   },
+      // })
     } else {
       toast.error('Debes agregar el teléfono')
     }
@@ -140,7 +140,7 @@ const ContactInfo = ({ uid, artist }) => {
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
-              <span className="mb-3 block">NÚMERO</span>
+              <span className="mb-3 block">CELULAR</span>
 
               <PhoneInput
                 country={'co'}
@@ -180,7 +180,7 @@ const ContactInfo = ({ uid, artist }) => {
                     country_code: country.countryCode.toUpperCase(),
                   })
                 }}
-                value={phone.value}
+                value={mobile.value}
               />
             </label>
           </div>
