@@ -329,13 +329,11 @@ export async function updateArtistContactInfo(uid, dataForm, artist) {
   if (error) {
     throw new Error(`Error actualizando el artista: ${error.message}`)
   }
+
+  return true
 }
 
-export async function updateArtistMainProfilePicture(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const userRef = doc(collection(db, 'users'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
-
+export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
   // Dont delete pictures from Imagekit anymore
   // const options = {
   //   method: 'DELETE',
@@ -349,25 +347,25 @@ export async function updateArtistMainProfilePicture(uid, data, wizard) {
   //   await fetch('/api/profile/delete-image', options)
   // }
 
-  const dataForm = {
-    profile_picture: data,
+  const { data, error } = await supabase.from('artists').insert({
+    ...dataPhoto,
     updated_at: new Date(),
+  })
+
+  if (!artist.main_photo_id) {
+    await supabase
+      .from('artists_wizard')
+      .update({
+        step_four: true,
+      })
+      .eq('id', uid)
   }
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
-    await updateDoc(userRef, { photoUrl: data.url })
-
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_four: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
   }
+
+  return true
 }
 
 export async function addArtistPicture(uid, data) {
