@@ -1,14 +1,12 @@
 import Compressor from 'compressorjs'
-import useArtistRealtime from 'hooks/realtime/use-artist'
 import { useState } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 
 import PhotoCrop from './PhotoCrop'
 
-const PhotosAddMain = ({ uid, isArtist }) => {
+const PhotosAddMain = ({ uid, artist }) => {
   const [picture, setPicture] = useState(null)
-  const { artist } = useArtistRealtime(uid)
 
   const handlePicture = (e: any) => {
     e.preventDefault()
