@@ -71,7 +71,7 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
+      const timer = setTimeout(() => router.push('/artist/photos-info'), 1000)
       return () => clearTimeout(timer)
     }
   }, [success, router])

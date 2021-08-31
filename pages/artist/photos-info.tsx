@@ -7,7 +7,7 @@ import useUserId from 'hooks/use-user-id'
 import { getUserInfo } from 'lib/queries/users'
 import useSWR from 'swr'
 
-export default function PictureInfoPage() {
+export default function PhotosInfoPage() {
   const { userId } = useUserId()
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
