@@ -55,7 +55,12 @@ const PhotosAddMain = ({ uid, artist }) => {
 
       {picture && (
         <div className="flex">
-          <PhotoCrop picture={picture} setPicture={setPicture} uid={uid} />
+          <PhotoCrop
+            picture={picture}
+            setPicture={setPicture}
+            uid={uid}
+            artist={artist}
+          />
         </div>
       )}
 

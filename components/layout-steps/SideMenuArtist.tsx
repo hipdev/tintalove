@@ -61,8 +61,8 @@ const SideMenuArtist = ({ uid, username }: Props) => {
           </a>
         </Link>
 
-        <Link href="/artist/pictures-info">
-          <a className={path == 'pictures-info' ? 'text-white' : ''}>
+        <Link href="/artist/photos-info">
+          <a className={path == 'photos-info' ? 'text-white' : ''}>
             <div className="pb-10 flex items-center justify-between">
               Fotos de perfil
               <HiCamera className="text-xl" />
