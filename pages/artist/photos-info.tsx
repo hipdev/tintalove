@@ -1,23 +1,26 @@
 import PhotosInfo from 'components/artist-account/photos/PhotosInfo'
-
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
-import useUser from 'hooks/use-user'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
+import { useUser } from 'hooks/useUser'
+import { getArtistFullInfo } from 'lib/queries/artists'
+
 import useSWR from 'swr'
 
 export default function PhotosInfoPage() {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
 
-  if (!data && !data?.user) {
+  const { data: artist } = useSWR(
+    user?.id ? ['getArtistFullInfo', user.id] : null,
+    getArtistFullInfo
+  )
+
+  if (!user && !artist) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
   return (
-    <LayoutStepsArtist uid={userId} user={data.user}>
-      <PhotosInfo uid={data.user.uid || null} isArtist={data.user.is_artist} />
+    <LayoutStepsArtist uid={user.id} user={user}>
+      <PhotosInfo uid={user.id || null} artist={artist} />
     </LayoutStepsArtist>
   )
 }
