@@ -290,24 +290,19 @@ export async function updateArtistLocation(artistId, dataLocation) {
 }
 
 export async function updateArtistLocationMarker(artistId, dataMarker) {
-  const artistRef = doc(collection(db, 'artists'), artistId)
-
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      dataMarker,
-      _geoloc_marker: {
-        lat: dataMarker.marker_location[0],
-        lng: dataMarker.marker_location[1],
+  //Actualizamos el artista
+  await supabase
+    .from('artists')
+    .update(
+      {
+        dataMarker,
+        updated_at: new Date(),
       },
-      updated_at: new Date(),
-    })
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', artistId)
 
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function updateArtistContactInfo(uid, data, wizard) {
