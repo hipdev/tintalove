@@ -1,4 +1,4 @@
-import PicturesInfo from 'components/artist-account/photos/pictures-info'
+import PhotosInfo from 'components/artist-account/photos/PhotosInfo'
 
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
@@ -17,10 +17,7 @@ export default function PhotosInfoPage() {
 
   return (
     <LayoutStepsArtist uid={userId} user={data.user}>
-      <PicturesInfo
-        uid={data.user.uid || null}
-        isArtist={data.user.is_artist}
-      />
+      <PhotosInfo uid={data.user.uid || null} isArtist={data.user.is_artist} />
     </LayoutStepsArtist>
   )
 }

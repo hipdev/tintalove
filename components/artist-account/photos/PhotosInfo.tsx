@@ -1,7 +1,7 @@
 import useArtistRealtime from 'hooks/realtime/use-artist'
-import PictureAddMain from './picture-add-main'
+import PhotosAddMain from './PhotosAddMain'
 
-import PictureReady from './picture-ready'
+import PhotoReady from './PhotoReady'
 
 const PicturesInfo = ({ uid, isArtist }) => {
   const { artist } = useArtistRealtime(uid)
@@ -15,9 +15,9 @@ const PicturesInfo = ({ uid, isArtist }) => {
       </div>
 
       {artist?.profile_picture ? (
-        <PictureReady artist={artist} />
+        <PhotoReady artist={artist} />
       ) : (
-        <PictureAddMain uid={uid} isArtist={isArtist} />
+        <PhotosAddMain uid={uid} isArtist={isArtist} />
       )}
     </div>
   )

@@ -7,7 +7,7 @@ const myLoader = ({ src, width, quality }) => {
   return `${src}/tr:pr-true,w-${width},q-${quality || 75}`
 }
 
-const MorePicturesList = ({ artist, pictures, mutatePictures }) => {
+const MorePhotosList = ({ artist, pictures, mutatePictures }) => {
   const handleDelete = (fileId, pictureId) => {
     toast.promise(deletePictureFromArtist(fileId, pictureId), {
       loading: 'Eliminando...',
@@ -54,4 +54,4 @@ const MorePicturesList = ({ artist, pictures, mutatePictures }) => {
   )
 }
 
-export default MorePicturesList
+export default MorePhotosList

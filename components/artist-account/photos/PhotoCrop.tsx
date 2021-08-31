@@ -16,7 +16,7 @@ type Props = {
   setPicture?: any
 }
 
-const PictureCrop = ({
+const PhotoCrop = ({
   picture,
   uid,
   update,
@@ -168,4 +168,4 @@ const PictureCrop = ({
   )
 }
 
-export default PictureCrop
+export default PhotoCrop
