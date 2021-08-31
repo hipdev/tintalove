@@ -1,4 +1,3 @@
-var slugify = require('slugify')
 import {
   collection,
   addDoc,
@@ -7,7 +6,6 @@ import {
   getFirestore,
   serverTimestamp,
   updateDoc,
-  writeBatch,
   getDocs,
   QueryDocumentSnapshot,
   query,
@@ -239,13 +237,15 @@ export async function updateArtistWorkingInfo(uid, dataArtist) {
 
   console.log(data, error, 'que tal')
 
-  // await supabase.from('artists_wizard').insert({
-  //   id: uid,
-  //   step_one: true,
-  // })
+  await supabase
+    .from('artists_wizard')
+    .update({
+      step_two: true,
+    })
+    .eq('id', uid)
 
   if (error) {
-    throw new Error(`Error creando el artista: ${error.message}`)
+    throw new Error(`Error actualizando el artista: ${error.message}`)
   }
 }
 
@@ -301,7 +301,7 @@ export async function updateArtistLocationMarker(artistId, dataMarker) {
         lat: dataMarker.marker_location[0],
         lng: dataMarker.marker_location[1],
       },
-      updated_at: serverTimestamp(),
+      updated_at: new Date(),
     })
 
     return true
@@ -322,7 +322,7 @@ export async function updateArtistContactInfo(uid, data, wizard) {
     phone: data.phone.value,
     country_code: data.phone.country_code || 'CO',
     twitter: data.twitter || null,
-    updated_at: serverTimestamp(),
+    updated_at: new Date(),
   }
 
   const docSnap = await getDoc(artistRef)
@@ -360,7 +360,7 @@ export async function updateArtistMainProfilePicture(uid, data, wizard) {
 
   const dataForm = {
     profile_picture: data,
-    updated_at: serverTimestamp(),
+    updated_at: new Date(),
   }
 
   const docSnap = await getDoc(artistRef)
