@@ -122,7 +122,7 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
       // La ciudad no existe, entonces la creamos
       const { data: newCity } = await supabase.from('cities').insert({
         ...placeInfo,
-        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`, // es tipo point, se guardará asi --> (lat,lng)
       })
 
       place_id = newCity[0].city_place_id
@@ -252,20 +252,41 @@ export async function updateArtistWorkingInfo(uid, dataArtist) {
 // Location and map marker
 
 export async function updateArtistLocation(artistId, dataLocation) {
-  const artistRef = doc(collection(db, 'artists'), artistId)
+  //Validación de la ciudad
+  let own_studio_place_id = null // Para luego añadirlo al artista
 
-  const docSnap = await getDoc(artistRef)
+  // Sólo hacemos esto si el usuario cambia la ciudad
+  let { data: address } = await supabase
+    .from('artists_places')
+    .select('place_id')
+    .eq('place_id', dataLocation.place_id)
 
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      dataLocation,
-      updated_at: serverTimestamp(),
-    })
+  console.log(address, 'dirección')
 
-    return true
+  if (address[0]) {
+    own_studio_place_id = address[0].place_id
   } else {
-    throw new Error('No estas registrado como artista')
+    // La ciudad no existe, entonces la creamos
+    const { data: newAddress } = await supabase
+      .from('artists_places')
+      .insert(dataLocation)
+
+    own_studio_place_id = newAddress[0].place_id
   }
+
+  //Actualizamos el artista
+  await supabase
+    .from('artists')
+    .update(
+      {
+        own_studio_place_id,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', artistId)
+
+  return true
 }
 
 export async function updateArtistLocationMarker(artistId, dataMarker) {

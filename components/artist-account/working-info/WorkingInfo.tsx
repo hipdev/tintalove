@@ -229,7 +229,7 @@ const WorkingInfo = ({ uid, artist, isArtist }) => {
                   htmlFor=""
                   className="block text-white text-sm  mb-2 tracking-wide"
                 >
-                  <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
+                  <span className="mb-2 block">UBICACIÓN DE TU ESTUDIO</span>
 
                   {isArtist && (
                     <ArtistContactInfoLocation

@@ -1,10 +1,10 @@
 import usePlacesAutocomplete, {
+  getDetails,
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
 import { useEffect, useState } from 'react'
-import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
 
 import {
@@ -68,20 +68,18 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
     setPlaceholder(placeData.description)
 
     // Get latitude and longitude via utility functions
-    const results = await getGeocode({ address: placeData.description })
+    const results: any = await getGeocode({ address: placeData.description })
 
     const { lat, lng }: any = await getLatLng(results[0])
 
     setLocation({ lat, lng })
 
-    const fullAddress = results[0].formatted_address.split(',')
-    const city_name = fullAddress[0]
-
     const dataLocation = {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
-      city_name,
-      _geoloc: { lat, lng },
+      coords: `${lat}, ${lng}`, // type point()
+      lat,
+      lng,
     }
 
     toast.promise(updateArtistLocation(artistId, dataLocation), {
@@ -94,23 +92,23 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
       },
     })
 
-    const marker_location = [lat, lng]
-    const marker_hash = geohashForLocation(marker_location)
+    // const marker_location = [lat, lng]
+    // const marker_hash = geohashForLocation(marker_location)
 
-    const dataMarker = {
-      marker_location,
-      marker_hash,
-    }
+    // const dataMarker = {
+    //   marker_location,
+    //   marker_hash,
+    // }
 
-    toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
-      loading: 'Actualizando...',
-      success: () => {
-        return 'Marker actualizado 📍'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
+    // toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
+    //   loading: 'Actualizando...',
+    //   success: () => {
+    //     return 'Marker actualizado 📍'
+    //   },
+    //   error: (err) => {
+    //     return `${err.toString()}`
+    //   },
+    // })
   }
 
   const renderSuggestions = () =>
