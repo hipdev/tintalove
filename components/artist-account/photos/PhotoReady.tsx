@@ -42,7 +42,7 @@ const PhotoReady = ({ artist }) => {
         <h2 className="mb-3 text-xl">Foto principal</h2>
         <img
           className="rounded-md"
-          src={`${artist.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
+          src={`${artist.artists_main_photos.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
         />
 
         <label className="text-white tracking-wide flex items-center cursor-pointer mt-3">
@@ -64,9 +64,9 @@ const PhotoReady = ({ artist }) => {
           <PhotoCrop
             artist={artist}
             update
-            actualPictureId={artist.profile_picture.fileId}
+            actualPictureId={artist.artists_main_photos.url} // No se usa porque no estoy eliminando fotos de imagekit
             picture={picture}
-            uid={artist.uid}
+            uid={artist.user_id}
             setPicture={setPicture}
           />
         </div>

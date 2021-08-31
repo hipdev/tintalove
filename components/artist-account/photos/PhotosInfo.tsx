@@ -11,7 +11,7 @@ const PicturesInfo = ({ uid, artist }) => {
         </h1>
       </div>
 
-      {artist?.profile_picture ? (
+      {artist?.main_photo_id ? (
         <PhotoReady artist={artist} />
       ) : (
         <PhotosAddMain uid={uid} artist={artist} />

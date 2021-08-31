@@ -126,7 +126,7 @@ const PhotoCrop = ({
                 success: () => {
                   setLoading(false)
                   setPicture(null)
-                  mutate(uid)
+                  mutate(['getArtistFullInfo', uid])
 
                   return 'Foto actualizada 😉'
                 },
