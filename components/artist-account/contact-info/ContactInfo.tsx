@@ -43,6 +43,8 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
   const watchTwitter = watch('twitter')
   const watchTelegram = watch('telegram_user')
 
+  console.log(artist, 'artist info')
+
   useEffect(() => {
     if (artist) {
       let styles = []
@@ -55,7 +57,10 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
 
       setValue('contact_way', artist.contact_way || null)
       setPhone(
-        { value: artist.phone, country_code: artist.country_code } || null
+        {
+          value: artist?.mobile?.value,
+          country_code: artist?.mobile?.country_code,
+        } || null
       )
       setValue('instagram', artist.instagram || null)
       setValue('facebook', artist.facebook || null)
@@ -78,19 +83,19 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
 
     if (mobile?.value && mobile.value.length > 9) {
       console.log(dataForm, 'form to send')
-      // toast.promise(updateArtistContactInfo(uid, dataForm, true), {
-      //   loading: 'Actualizando...',
-      //   success: () => {
-      //     setLoading(false)
-      //     setSuccess(true)
+      toast.promise(updateArtistContactInfo(uid, dataForm, artist), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
+          setSuccess(true)
 
-      //     return 'Artista actualizado 😉'
-      //   },
-      //   error: (err) => {
-      //     setLoading(false)
-      //     return `${err.toString()}`
-      //   },
-      // })
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
     } else {
       toast.error('Debes agregar el teléfono')
     }
