@@ -1,10 +1,10 @@
 import Compressor from 'compressorjs'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
-import MorePicturesArtist from './more-pictures'
-import PictureCrop from './picture-crop'
+import MorePhotos from './MorePhotos'
+import PhotoCrop from './PhotoCrop'
 
-const PictureReady = ({ artist }) => {
+const PhotoReady = ({ artist }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -57,11 +57,11 @@ const PictureReady = ({ artist }) => {
         </label>
       </div>
 
-      {!picture && <MorePicturesArtist artist={artist} />}
+      {!picture && <MorePhotos artist={artist} />}
 
       {picture && (
         <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
-          <PictureCrop
+          <PhotoCrop
             update
             actualPictureId={artist.profile_picture.fileId}
             picture={picture}
@@ -74,4 +74,4 @@ const PictureReady = ({ artist }) => {
   )
 }
 
-export default PictureReady
+export default PhotoReady

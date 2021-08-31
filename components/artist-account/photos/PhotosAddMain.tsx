@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { HiOutlineCamera } from 'react-icons/hi'
 
-import PictureCrop from './picture-crop'
+import PhotoCrop from './PhotoCrop'
 
-const PictureAddMain = ({ uid, isArtist }) => {
+const PhotosAddMain = ({ uid, isArtist }) => {
   const [picture, setPicture] = useState(null)
   const { artist } = useArtistRealtime(uid)
 
@@ -57,7 +57,7 @@ const PictureAddMain = ({ uid, isArtist }) => {
 
       {picture && (
         <div className="flex">
-          <PictureCrop picture={picture} setPicture={setPicture} uid={uid} />
+          <PhotoCrop picture={picture} setPicture={setPicture} uid={uid} />
         </div>
       )}
 
@@ -88,4 +88,4 @@ const PictureAddMain = ({ uid, isArtist }) => {
   )
 }
 
-export default PictureAddMain
+export default PhotosAddMain

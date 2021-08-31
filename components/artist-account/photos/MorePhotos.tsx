@@ -5,9 +5,9 @@ import { addArtistPicture, getArtistPictures } from 'lib/queries/artists'
 import toast from 'react-hot-toast'
 import { HiOutlineCamera } from 'react-icons/hi'
 import useSWR from 'swr'
-import MorePicturesList from './more-pictures-list'
+import MorePhotosList from './MorePhotosList'
 
-const MorePicturesArtist = ({ artist }) => {
+const MorePhotos = ({ artist }) => {
   const { data, mutate: mutateToken }: any = useSWR(
     '/api/imagekit/auth',
     fetcher,
@@ -114,7 +114,7 @@ const MorePicturesArtist = ({ artist }) => {
       </label>
 
       {dataPictures?.pictures?.length > 0 && (
-        <MorePicturesList
+        <MorePhotosList
           artist={artist}
           pictures={dataPictures?.pictures}
           mutatePictures={mutatePictures}
@@ -124,4 +124,4 @@ const MorePicturesArtist = ({ artist }) => {
   )
 }
 
-export default MorePicturesArtist
+export default MorePhotos
