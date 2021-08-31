@@ -33,18 +33,19 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
   })
 
   useEffect(() => {
-    if (artistInfo?.dataLocation) {
-      setPlaceholder(artistInfo?.dataLocation.formatted_address)
+    if (artistInfo?.artists_places) {
+      setPlaceholder(artistInfo?.artists_places.formatted_address)
       setLocation(
         {
-          lat: artistInfo?.dataMarker?.marker_location[0],
-          lng: artistInfo?.dataMarker?.marker_location[1],
-        } || {
-          lat: artistInfo?.dataLocation?.coordinates.lat,
-          lng: artistInfo?.dataLocation?.coordinates.lng,
+          lat: artistInfo?.artists_places.lat,
+          lng: artistInfo?.artists_places.lng,
         }
+        // || {
+        //   lat: artistInfo?.dataLocation?.coordinates.lat,
+        //   lng: artistInfo?.dataLocation?.coordinates.lng,
+        // }
       )
-      setValue(artistInfo.dataLocation.formatted_address)
+      setValue(artistInfo?.artists_places?.formatted_address)
     }
   }, [artistInfo])
 
