@@ -93,11 +93,9 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
     })
 
     // const marker_location = [lat, lng]
-    // const marker_hash = geohashForLocation(marker_location)
 
     // const dataMarker = {
     //   marker_location,
-    //   marker_hash,
     // }
 
     // toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
