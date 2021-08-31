@@ -55,7 +55,7 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
 export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
-    .select(`*, cities ( * ), artists_places ( * ) `)
+    .select(`*, cities ( * ), artists_places ( * ), artists_main_photos(url) `)
     .eq('user_id', uid) // Debe existir una clave foránea o no funcionará esto
 
   return artist ? artist[0] : null
@@ -334,25 +334,27 @@ export async function updateArtistContactInfo(uid, dataForm, artist) {
 }
 
 export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
-  // Dont delete pictures from Imagekit anymore
-  // const options = {
-  //   method: 'DELETE',
-  //   body: JSON.stringify({ data: { imageId } }),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // }
-
-  // if (update) {
-  //   await fetch('/api/profile/delete-image', options)
-  // }
-
-  const { data, error } = await supabase.from('artists').insert({
+  const { data, error } = await supabase.from('artists_main_photos').insert({
     ...dataPhoto,
     updated_at: new Date(),
   })
 
-  if (!artist.main_photo_id) {
+  console.log(data, 'la foto')
+
+  if (data) {
+    await supabase
+      .from('artists')
+      .update(
+        {
+          main_photo_id: data[0].id,
+          updated_at: new Date(),
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('user_id', uid)
+  }
+
+  if (!artist.main_photo_id && data) {
     await supabase
       .from('artists_wizard')
       .update({

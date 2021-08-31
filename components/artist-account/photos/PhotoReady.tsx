@@ -62,6 +62,7 @@ const PhotoReady = ({ artist }) => {
       {picture && (
         <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
           <PhotoCrop
+            artist={artist}
             update
             actualPictureId={artist.profile_picture.fileId}
             picture={picture}
