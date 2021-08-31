@@ -1,4 +1,3 @@
-import useArtist from 'hooks/use-artist'
 import { updateArtistContactInfo } from 'lib/queries/artists'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -14,11 +13,11 @@ import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { ArtistTypes } from 'types/artist'
 import { checkUrl } from 'lib/utils'
 
-const ContactInfo = ({ uid, isArtist }) => {
+const ContactInfo = ({ uid, artist }) => {
   const [phone, setPhone]: any = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { artist }: { artist: ArtistTypes } = useArtist(uid)
+
   const router = useRouter()
 
   const {
@@ -345,10 +344,10 @@ const ContactInfo = ({ uid, isArtist }) => {
         </div>
 
         <div className="flex justify-between">
-          {!isArtist && (
+          {!artist && (
             <p>Primero debes guardar el Paso 1, Información Personal.</p>
           )}
-          {isArtist ? (
+          {artist ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"

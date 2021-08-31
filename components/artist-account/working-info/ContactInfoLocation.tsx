@@ -35,16 +35,14 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
   useEffect(() => {
     if (artistInfo?.artists_places) {
       setPlaceholder(artistInfo?.artists_places.formatted_address)
-      setLocation(
-        {
-          lat: artistInfo?.artists_places.lat,
-          lng: artistInfo?.artists_places.lng,
-        }
-        // || {
-        //   lat: artistInfo?.dataLocation?.coordinates.lat,
-        //   lng: artistInfo?.dataLocation?.coordinates.lng,
-        // }
-      )
+      setLocation({
+        lat: artistInfo.own_studio_marker
+          ? artistInfo.own_studio_marker[0]
+          : artistInfo?.artists_places.lat,
+        lng: artistInfo.own_studio_marker
+          ? artistInfo.own_studio_marker[1]
+          : artistInfo?.artists_places.lng,
+      })
       setValue(artistInfo?.artists_places?.formatted_address)
     }
   }, [artistInfo])
@@ -93,21 +91,17 @@ const ArtistContactInfoLocation = ({ setLocation, artistId, artistInfo }) => {
       },
     })
 
-    // const marker_location = [lat, lng]
+    const own_studio_marker = [lat, lng]
 
-    // const dataMarker = {
-    //   marker_location,
-    // }
-
-    // toast.promise(updateArtistLocationMarker(artistId, dataMarker), {
-    //   loading: 'Actualizando...',
-    //   success: () => {
-    //     return 'Marker actualizado 📍'
-    //   },
-    //   error: (err) => {
-    //     return `${err.toString()}`
-    //   },
-    // })
+    toast.promise(updateArtistLocationMarker(artistId, own_studio_marker), {
+      loading: 'Actualizando...',
+      success: () => {
+        return 'Marker actualizado 📍'
+      },
+      error: (err) => {
+        return `${err.toString()}`
+      },
+    })
   }
 
   const renderSuggestions = () =>
