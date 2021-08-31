@@ -1,9 +1,9 @@
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { geohashForLocation } from 'geofire-common'
 import { updateArtistLocationMarker } from 'lib/queries/artists'
 import toast from 'react-hot-toast'
+import { mutate } from 'swr'
 
-const ArtistContactInfoMapStudio = ({ cityLocation, studioId }) => {
+const ArtistContactInfoMapStudio = ({ cityLocation, artistId }) => {
   const containerStyle = {
     width: '100%',
     height: '500px',
@@ -11,17 +11,12 @@ const ArtistContactInfoMapStudio = ({ cityLocation, studioId }) => {
   }
 
   const handleNewLocation = async (data) => {
-    const marker_location = [data.latLng.lat(), data.latLng.lng()]
-    const marker_hash = geohashForLocation(marker_location)
+    const own_studio_marker = [data.latLng.lat(), data.latLng.lng()]
 
-    const dataMarker = {
-      marker_location,
-      marker_hash,
-    }
-
-    toast.promise(updateArtistLocationMarker(studioId, dataMarker), {
+    toast.promise(updateArtistLocationMarker(artistId, own_studio_marker), {
       loading: 'Actualizando...',
       success: () => {
+        mutate(['getArtistFullInfo', artistId])
         return 'Marker actualizado 😎'
       },
       error: (err) => {

@@ -289,13 +289,13 @@ export async function updateArtistLocation(artistId, dataLocation) {
   return true
 }
 
-export async function updateArtistLocationMarker(artistId, dataMarker) {
+export async function updateArtistLocationMarker(artistId, own_studio_marker) {
   //Actualizamos el artista
   await supabase
     .from('artists')
     .update(
       {
-        dataMarker,
+        own_studio_marker,
         updated_at: new Date(),
       },
       { returning: 'minimal' } // Así nos ahorramos un select

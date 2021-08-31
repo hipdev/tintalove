@@ -19,7 +19,7 @@ const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const WorkingInfo = ({ uid, artist, isArtist }) => {
+const WorkingInfo = ({ uid, artist }) => {
   const [studioName, setStudioName] = useState()
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -233,14 +233,14 @@ const WorkingInfo = ({ uid, artist, isArtist }) => {
                 >
                   <span className="mb-2 block">UBICACIÓN DE TU ESTUDIO</span>
 
-                  {isArtist && (
+                  {artist && (
                     <ArtistContactInfoLocation
                       artistId={uid}
                       artistInfo={artist || null}
                       setLocation={setLocation}
                     />
                   )}
-                  {!isArtist && <p>Debes terminar el primer paso</p>}
+                  {!artist && <p>Debes terminar el primer paso</p>}
                 </label>
               </div>
             )}
@@ -248,7 +248,7 @@ const WorkingInfo = ({ uid, artist, isArtist }) => {
 
           {location && watchWorkAs == 'freelance' && (
             <ArtistContactInfoMapStudio
-              studioId={uid}
+              artistId={uid}
               cityLocation={location}
             />
           )}
@@ -269,12 +269,12 @@ const WorkingInfo = ({ uid, artist, isArtist }) => {
         </div>
 
         <div className="flex justify-between">
-          {!isArtist && (
+          {!artist && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
             </p>
           )}
-          {isArtist ? (
+          {artist ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"

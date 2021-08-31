@@ -4,8 +4,6 @@ import { Loader } from '@googlemaps/js-api-loader'
 import WorkingInfo from 'components/artist-account/working-info/WorkingInfo'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
 import { useUser } from 'hooks/useUser'
 import { getArtistFullInfo } from 'lib/queries/artists'
 
@@ -39,13 +37,7 @@ export default function WorkingInfopage() {
 
   return (
     <LayoutStepsArtist uid={user?.id} user={user}>
-      {loadMap && (
-        <WorkingInfo
-          uid={user?.id || null}
-          artist={artist}
-          isArtist={artist || false}
-        />
-      )}
+      {loadMap && <WorkingInfo uid={user?.id || null} artist={artist} />}
     </LayoutStepsArtist>
   )
 }
