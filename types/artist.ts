@@ -9,7 +9,8 @@ export type ArtistTypes = {
   country?: string
   country_code?: string
   province?: string
-  phone?: string
+  phone?: string // remove after migration
+  mobile?: MobileInfo
   contact_way?: string
   created_at?: Timestamp
   updated_at?: Timestamp
@@ -46,6 +47,10 @@ type ProfilePicture = {
 type AlgoliaGeolocation = {
   lat: number
   lng: number
+}
+type MobileInfo = {
+  value: string
+  country_code: string
 }
 
 type DataLocation = {

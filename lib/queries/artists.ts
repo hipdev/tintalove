@@ -305,33 +305,29 @@ export async function updateArtistLocationMarker(artistId, own_studio_marker) {
   return true
 }
 
-export async function updateArtistContactInfo(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
+export async function updateArtistContactInfo(uid, dataForm, artist) {
+  const { error } = await supabase
+    .from('artists')
+    .update(
+      {
+        ...dataForm,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-  const dataForm = {
-    contact_way: data.contact_way,
-    facebook: data.facebook || null,
-    instagram: data.instagram || null,
-    telegram_user: data.telegram_user || null,
-    phone: data.phone.value,
-    country_code: data.phone.country_code || 'CO',
-    twitter: data.twitter || null,
-    updated_at: new Date(),
+  if (!artist?.contact_way) {
+    await supabase
+      .from('artists_wizard')
+      .update({
+        step_three: true,
+      })
+      .eq('id', uid)
   }
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
-
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_three: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
   }
 }
 
