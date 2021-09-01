@@ -7,6 +7,7 @@ import { updateAvailability } from 'lib/queries/artists'
 import { mutate } from 'swr'
 import { IoMdCheckmarkCircle } from 'react-icons/io'
 import { RiCheckboxCircleFill } from 'react-icons/ri'
+import { ArtistTypes } from 'types/artist'
 
 const agenda = [
   { id: 1, label: 'En una semana' },
@@ -17,25 +18,27 @@ const agenda = [
 
 const Availability = ({
   user,
-  availableId,
+  availability_id,
+  artist,
 }: {
   user: UserState
-  availableId: number
+  availability_id: number
+  artist: ArtistTypes
 }) => {
   const [selected, setSelected] = useState(
-    availableId ? agenda[availableId - 1] : agenda[1]
+    artist?.availability_id ? agenda[artist?.availability_id - 1] : agenda[1]
   )
 
   const handleAvailability = (selected) => {
-    toast.promise(updateAvailability(user.uid, selected), {
+    toast.promise(updateAvailability(user.id, selected), {
       loading: 'Actualizando...',
       success: () => {
         setSelected(agenda[selected.id - 1])
-        mutate(['get-availability', user.uid])
+        mutate(['getArtistInfo', user.id])
 
-        availableId = selected.id
+        availability_id = selected.id
 
-        return 'Gracias por actualizar tu disponibilidad 😉'
+        return 'Actualizada 😉'
       },
       error: (err) => {
         return `${err.toString()}`
@@ -43,14 +46,14 @@ const Availability = ({
     })
   }
 
-  console.log(user, 'el user en availability')
+  console.log(agenda[artist?.availability_id - 1], 'el user en availability')
 
   return (
     <>
       {user && (
         <div className="text-left bg-dark-800">
           <Listbox
-            value={!availableId ? 5 : selected}
+            value={!artist?.availability_id ? 5 : selected}
             onChange={handleAvailability}
           >
             <div className="relative">
@@ -60,7 +63,9 @@ const Availability = ({
                     <div className="leading-tight hidden xl:block">
                       <p className="text-gr-200 text-xs w-32">Disponibilidad</p>
                       <p className="text-gr-200 text-sm">
-                        {!availableId ? 'Selecciona' : selected.label}
+                        {!artist?.availability_id
+                          ? 'Sin seleccionar'
+                          : selected.label}
                       </p>
                     </div>
                     <span className="text-green-500 text-2xl pl-0 xl:pl-2">

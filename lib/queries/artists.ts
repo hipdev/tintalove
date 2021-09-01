@@ -415,36 +415,15 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
 }
 
 export async function updateAvailability(uid, selected) {
-  const artistRef = doc(collection(db, 'artists'), uid)
+  console.log(selected, 'selected')
+  const { error } = await supabase
+    .from('artists')
+    .update({ availability_id: selected.id })
+    .eq('user_id', uid)
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      available_id: selected.id,
-      available_label: selected.label,
-      available_updated: serverTimestamp(),
-    })
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
   }
-}
-
-export async function getArtistAvailability(key, uid) {
-  // const artistRef = doc(collection(db, 'artists'), uid)
-
-  // const docSnap = await getDoc(artistRef)
-
-  // if (docSnap.exists()) {
-  //   return {
-  //     available_id: docSnap.data().available_id,
-  //     available_label: docSnap.data().available_label,
-  //   }
-  // } else {
-  //   throw new Error('No estas registrado como artista')
-  // }
 
   return true
 }
