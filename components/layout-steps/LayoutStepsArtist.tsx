@@ -96,7 +96,11 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
             {user?.artist_active && (
               <>
-                <Availability user={user} availableId={artist?.available_id} />
+                <Availability
+                  user={user}
+                  availability_id={artist?.availability_id}
+                  artist={artist}
+                />
                 <div className="flex">
                   <button>
                     <Link href="/post/new-post">

@@ -4,6 +4,7 @@ export type ArtistTypes = {
   artist_active?: boolean // remove after migration
   is_active?: boolean // remove after migration
   artist_id?: string
+  availability_id: number
   bio?: string
   geohash?: string
   city_name?: string

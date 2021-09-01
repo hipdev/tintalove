@@ -6,7 +6,6 @@ import { AiOutlineCamera, AiOutlineSearch } from 'react-icons/ai'
 import { useStateMachine } from 'little-state-machine'
 import { lists } from 'lib/actions'
 import WrapperSelectCity from './WrapperSelectCity'
-import WrapperAvailability from './WrapperAvailability'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
@@ -18,7 +17,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
 
   const { data: artist } = useSWR(
-    user?.id ? ['getArtistFullInfo', user.id] : null,
+    user?.id ? ['getArtistInfo', user.id] : null,
     getArtistInfo
   )
 
@@ -28,6 +27,8 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   }: any = useStateMachine({
     lists,
   })
+
+  console.log(artist, 'artist en header')
 
   return (
     <nav
@@ -96,7 +97,11 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
             {artist?.is_active && (
               <>
-                <Availability user={user} availableId={artist?.available_id} />
+                <Availability
+                  user={user}
+                  availability_id={artist?.availability_id}
+                  artist={artist}
+                />
                 <div className="flex">
                   <button>
                     <Link href="/post/new-post">
