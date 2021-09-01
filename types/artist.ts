@@ -1,7 +1,8 @@
 import { Timestamp } from 'firebase/firestore/lite'
 
 export type ArtistTypes = {
-  artist_active?: boolean
+  artist_active?: boolean // remove after migration
+  is_active?: boolean // remove after migration
   artist_id?: string
   bio?: string
   geohash?: string

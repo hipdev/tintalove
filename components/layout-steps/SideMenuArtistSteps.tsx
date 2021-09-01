@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type Props = {
   uid?: string
@@ -57,20 +57,25 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
     setLoading(true)
 
     if (countReadySteps == 4) {
-      toast.promise(activateArtist(uid), {
-        loading: 'Guardando...',
-        success: (data) => {
-          setLoading(false)
-          // setTriggerAuth(Math.random()) // reload global user state data
-          // router.push('/artist/new/working-info')
+      toast.promise(
+        activateArtist(uid),
+        {
+          loading: 'Activando...',
+          success: (data) => {
+            setLoading(false)
+            // setTriggerAuth(Math.random()) // reload global user state data
+            // router.push('/artist/new/working-info')
+            mutate(['getArtistInfo', uid])
 
-          return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+            return 'Artista activado, tienes nuevas funcionalidades disponibles 🥳'
+          },
+          error: (err) => {
+            setLoading(false)
+            return `${err.toString()}`
+          },
         },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
+        { duration: 10000 }
+      )
     } else {
       toast.error('Necesitas completar todos los pasos')
       setLoading(false)
