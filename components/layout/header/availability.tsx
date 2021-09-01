@@ -43,6 +43,8 @@ const Availability = ({
     })
   }
 
+  console.log(user, 'el user en availability')
+
   return (
     <>
       {user && (

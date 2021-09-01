@@ -83,7 +83,7 @@ const SelectCity = ({ user, cities }) => {
                 >
                   {cities.map((city) => (
                     <Listbox.Option
-                      key={city.geohash}
+                      key={city.id}
                       className={({ active }) =>
                         (active
                           ? 'text-gray-400 bg-gray-900'
