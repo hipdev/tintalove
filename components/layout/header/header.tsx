@@ -10,9 +10,16 @@ import WrapperAvailability from './WrapperAvailability'
 import { FaRegHeart } from 'react-icons/fa'
 import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
+import { getArtistInfo } from 'lib/queries/artists'
+import useSWR from 'swr'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
+
+  const { data: artist } = useSWR(
+    user?.id ? ['getArtistFullInfo', user.id] : null,
+    getArtistInfo
+  )
 
   const {
     state: { list },
@@ -49,7 +56,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
             </Link>
 
             {/* Menu desktop */}
-            {user && (!user?.has_studio || !user?.artist_active) && (
+            {user && (!user?.has_studio || !artist?.is_active) && (
               <div className="text-gr-200 hidden md:flex pl-10 xl:pl-14 space-x-2 items-center">
                 <SubmenuLeft user={user} />
               </div>
@@ -86,7 +93,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
           </div>
 
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
-            {user?.artist_active && (
+            {artist?.is_active && (
               <>
                 <WrapperAvailability user={user} />
                 <div className="flex">
