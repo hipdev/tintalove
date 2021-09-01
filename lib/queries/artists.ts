@@ -449,28 +449,21 @@ export async function getArtistAvailability(key, uid) {
 }
 
 export async function getArtistPictures(key, artistId) {
-  const q = query(
-    collection(db, 'artists_pics'),
-    where('artist_id', '==', artistId)
-  )
-
-  const querySnapshot = await getDocs(q)
-  const pictures: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return pictures.push({ ...doc.data(), id: doc.id })
-  })
+  let { data: pictures, error } = await supabase
+    .from('artists_photos')
+    .select('*')
+    .eq('user_id', artistId)
 
   return { pictures }
 }
 
-export async function deletePictureFromArtist(imageId, pictureId) {
+export async function deletePictureFromArtist(file_id, photoId) {
   try {
-    const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
-    await deleteDoc(artistPictureRef)
+    await supabase.from('artists_photos').delete().eq('id', photoId)
 
     const options = {
       method: 'DELETE',
-      body: JSON.stringify({ imageId }),
+      body: JSON.stringify({ imageId: file_id }),
       headers: {
         'Content-Type': 'application/json',
       },

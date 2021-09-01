@@ -22,12 +22,14 @@ const MorePhotosList = ({ artist, pictures, mutatePictures }) => {
     })
   }
 
+  console.log(pictures, 'fotos')
+
   return (
     <div className="grid grid-cols-3 gap-5">
       {pictures.map((pic) => (
         <div
           className="relative h-40 group overflow-hidden rounded-md border-none"
-          key={pic.fileId}
+          key={pic.file_id}
         >
           <Image
             key={pic.fileId}
@@ -43,7 +45,7 @@ const MorePhotosList = ({ artist, pictures, mutatePictures }) => {
 
           <button
             className="group-hover:absolute right-1 bottom-2 z-10"
-            onClick={() => handleDelete(pic.fileId, pic.id)}
+            onClick={() => handleDelete(pic.file_id, pic.id)}
           >
             <AiOutlineDelete className="text-2xl text-primary " />
           </button>
