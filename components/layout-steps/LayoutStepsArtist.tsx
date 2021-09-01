@@ -57,12 +57,12 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {artist && artist?.artist_active && (
+        {artist && artist?.is_active && (
           <SideMenuArtist username={user?.username || null} />
         )}
 
         {!user ||
-          (user && !artist?.artist_active && <SideMenuArtistSteps uid={uid} />)}
+          (user && !artist?.is_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
       <div className="w-full pl-7 sm:pl-7 2xl:pl-20 bg-dark-500">
         <header className="block sm:flex justify-between pt-6 pr-1 sm:pr-10 w-full ">

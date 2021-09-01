@@ -380,22 +380,23 @@ export async function addArtistPicture(user_id, data) {
   if (error) {
     throw new Error(`Error creando la foto: ${error.message}`)
   }
+
+  return true
 }
 
 export async function activateArtist(uid) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const usersRef = doc(collection(db, 'users'), uid)
+  await supabase
+    .from('artists')
+    .update(
+      {
+        is_active: true,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, { artist_active: true })
-    await updateDoc(usersRef, { artist_active: true })
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
