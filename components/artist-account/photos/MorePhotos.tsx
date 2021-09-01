@@ -18,7 +18,7 @@ const MorePhotos = ({ artist }) => {
   )
 
   const { data: dataPictures, mutate: mutatePictures }: any = useSWR(
-    ['getArtistPictures', artist?.uid],
+    ['getArtistPictures', artist?.user_id],
     getArtistPictures
   )
 
