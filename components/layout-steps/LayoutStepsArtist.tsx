@@ -7,11 +7,11 @@ import { UserState } from 'types/user'
 import SideMenuArtist from 'components/layout-steps/SideMenuArtist'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
-import WrapperAvailability from 'components/layout/header/WrapperAvailability'
 import { Toaster } from 'react-hot-toast'
 import SubMenuHeader from 'components/layout/header/SubmenuHeader'
 import useSWR from 'swr'
 import { getArtistInfo } from 'lib/queries/artists'
+import Availability from 'components/layout/header/availability'
 
 type Props = {
   uid?: string
@@ -96,7 +96,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
             {user?.artist_active && (
               <>
-                <WrapperAvailability user={user} />
+                <Availability user={user} availableId={artist?.available_id} />
                 <div className="flex">
                   <button>
                     <Link href="/post/new-post">
