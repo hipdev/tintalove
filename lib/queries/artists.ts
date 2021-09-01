@@ -370,23 +370,15 @@ export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
   return true
 }
 
-export async function addArtistPicture(uid, data) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-
-  const dataForm = {
+export async function addArtistPicture(user_id, data) {
+  console.log(data, 'la data a ingresar')
+  const { error } = await supabase.from('artists_photos').insert({
     ...data,
-    artist_id: uid,
-    created_at: serverTimestamp(),
-  }
+    user_id,
+  })
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await addDoc(collection(db, 'artists_pics'), dataForm)
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error creando la foto: ${error.message}`)
   }
 }
 
