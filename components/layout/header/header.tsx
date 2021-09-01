@@ -12,6 +12,7 @@ import SubmenuLeft from './SubmenuLeft'
 import MenuMobile from './MenuMobile'
 import { getArtistInfo } from 'lib/queries/artists'
 import useSWR from 'swr'
+import Availability from './availability'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
@@ -95,7 +96,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
             {artist?.is_active && (
               <>
-                <WrapperAvailability user={user} />
+                <Availability user={user} availableId={artist?.available_id} />
                 <div className="flex">
                   <button>
                     <Link href="/post/new-post">
