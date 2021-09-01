@@ -29,11 +29,11 @@ const WorkingInfo = ({ uid, artist }) => {
   const router = useRouter()
 
   const { data } = useSWR(
-    ['getArtistRequests', artist?.artist_id],
+    ['getArtistRequests', artist?.user_id],
     getArtistRequests
   )
 
-  console.log(artist, 'el artista')
+  console.log(artist, data, 'el artista')
 
   const {
     register,

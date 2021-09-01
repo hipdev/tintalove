@@ -5,7 +5,6 @@ import {
   getDoc,
   getFirestore,
   serverTimestamp,
-  updateDoc,
   getDocs,
   QueryDocumentSnapshot,
   query,
@@ -497,18 +496,18 @@ export async function sendArtistWorkRequest(studio, artist) {
 }
 
 export async function getArtistRequests(_key, artistId) {
-  const q = query(
-    collection(db, 'artists_requests'),
-    where('artist_id', '==', artistId)
-  )
+  if (artistId) {
+    const { data: requests, error } = await supabase
+      .from('artists_requests')
+      .select('*')
+      .eq('artist_id', artistId)
 
-  const querySnapshot = await getDocs(q)
-  const requests: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return requests.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) {
+      throw new Error(`Error con las solicitudes: ${error.message}`)
+    }
 
-  return { requests }
+    return { requests }
+  }
 }
 
 export async function deleteArtistRequest(requestId) {
