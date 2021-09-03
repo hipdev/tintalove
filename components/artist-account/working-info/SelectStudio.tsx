@@ -44,7 +44,7 @@ const SelectStudio = ({ state, artist, setErrorRequest }) => {
   const {
     isOpen,
     getToggleButtonProps,
-
+    getLabelProps,
     getMenuProps,
     getInputProps,
     getComboboxProps,
@@ -53,51 +53,59 @@ const SelectStudio = ({ state, artist, setErrorRequest }) => {
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({ inputValue }) => {
+      console.log(inputValue, 'valor cambiado')
       setInputItems(
         items.filter((item) =>
           item.toLowerCase().startsWith(inputValue.toLowerCase())
         )
       )
     },
+    onSelectedItemChange: (item) => {
+      console.log(item, 'item seleccionado')
+    },
   })
 
   return (
     <div className="relative">
-      <div className="flex" {...getComboboxProps()}>
-        <input
-          className="input-primary w-full capitalize"
-          {...getInputProps()}
-          placeholder="Buscar estudio"
-        />
-        <button
-          className="ml-4 text-xl"
-          type="button"
-          {...getToggleButtonProps()}
-          aria-label="toggle menu"
-        >
-          &#8595;
-        </button>
+      <div {...getComboboxProps()}>
+        <label className="flex" {...getLabelProps()}>
+          <input
+            className="input-primary w-full capitalize"
+            {...getInputProps()}
+            placeholder="Buscar estudio"
+          />
+          <button
+            className="ml-4 text-xl"
+            type="button"
+            {...getToggleButtonProps()}
+            aria-label="toggle menu"
+          >
+            &#8595;
+          </button>
+        </label>
       </div>
-      {isOpen && (
-        <ul
-          {...getMenuProps()}
-          style={menuStyles}
-          className="bg-dark-800 px-2 max-h-44 absolute w-full nice_scroll z-40 pt-2 pb-4"
-        >
-          {inputItems.map((item, index) => (
-            <li
-              className="px-2 py-2 cursor-pointer "
-              style={
-                highlightedIndex === index ? { backgroundColor: '#000' } : {}
-              }
-              key={`${item}${index}`}
-              {...getItemProps({ item, index })}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      )}
+
+      <ul
+        {...getMenuProps()}
+        style={menuStyles}
+        className=" max-h-44 absolute w-full nice_scroll z-40"
+      >
+        {isOpen &&
+          inputItems.map((item, index) => {
+            return (
+              <li
+                className="px-2 py-2 cursor-pointer bg-dark-800  "
+                style={
+                  highlightedIndex === index ? { backgroundColor: '#000' } : {}
+                }
+                key={`${item}${index}`}
+                {...getItemProps({ item, index })}
+              >
+                {item}
+              </li>
+            )
+          })}
+      </ul>
     </div>
   )
 }
