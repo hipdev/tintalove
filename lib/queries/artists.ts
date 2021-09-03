@@ -88,30 +88,17 @@ export async function getArtistsInfo() {
   return { artists }
 }
 
-export async function getArtistsFilter(_key, input) {
-  if (input) {
-    const { data, error } = await supabase
-      .from('artists')
-      .select('name, user_id, username')
-      .textSearch('name', input)
+export async function getArtistsFilter(_key) {
+  const { data, error } = await supabase
+    .from('artists')
+    .select('name, user_id, username')
+    .limit(5)
 
-    if (error) {
-      throw new Error(`Error en filtro: ${error.message}`)
-    }
-
-    return data
-  } else {
-    const { data, error } = await supabase
-      .from('artists')
-      .select('name, user_id, username')
-      .limit(5)
-
-    if (error) {
-      throw new Error(`Error en filtro: ${error.message}`)
-    }
-
-    return data
+  if (error) {
+    throw new Error(`Error en filtro: ${error.message}`)
   }
+
+  return data
 }
 
 export async function createArtist(uid, dataArtist, placeInfo, wizard) {
