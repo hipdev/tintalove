@@ -1,6 +1,5 @@
 import debounce from 'lodash.debounce'
 import { useCombobox } from 'downshift'
-import { getArtistsFilter } from 'lib/queries/artists'
 import { supabase } from 'lib/supabase-client'
 import { useCallback, useState } from 'react'
 import useSWR from 'swr'
