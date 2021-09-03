@@ -1,5 +1,9 @@
+import debounce from 'lodash.debounce'
 import { useCombobox } from 'downshift'
-import { useState } from 'react'
+import { getArtistsFilter } from 'lib/queries/artists'
+import { supabase } from 'lib/supabase-client'
+import { useCallback, useState } from 'react'
+import useSWR from 'swr'
 // import { AutocompleteStudioItemSendRequest } from './AutocompleteStudioItemSendRequest'
 
 const menuStyles = {
@@ -7,40 +11,8 @@ const menuStyles = {
   listStyle: 'none',
 }
 
-const items = [
-  'Neptunium',
-  'Plutonium',
-  'Julián',
-  'Julián David',
-  'Julián Álvarez',
-  'Americium',
-  'Curium',
-  'Berkelium',
-  'Californium',
-  'Einsteinium',
-  'Fermium',
-  'Mendelevium',
-  'Nobelium',
-  'Lawrencium',
-  'Rutherfordium',
-  'Dubnium',
-  'Seaborgium',
-  'Bohrium',
-  'Hassium',
-  'Meitnerium',
-  'Darmstadtium',
-  'Roentgenium',
-  'Copernicium',
-  'Nihonium',
-  'Flerovium',
-  'Moscovium',
-  'Livermorium',
-  'Tennessine',
-  'Oganesson',
-]
-
-const SelectStudio = ({ state, artist, setErrorRequest }) => {
-  const [inputItems, setInputItems] = useState(items)
+const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
+  const [inputItems, setInputItems] = useState(studios)
   const {
     isOpen,
     getToggleButtonProps,
@@ -52,14 +24,23 @@ const SelectStudio = ({ state, artist, setErrorRequest }) => {
     getItemProps,
   } = useCombobox({
     items: inputItems,
-    onInputValueChange: ({ inputValue }) => {
-      console.log(inputValue, 'valor cambiado')
-      setInputItems(
-        items.filter((item) =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase())
-        )
-      )
-    },
+    onInputValueChange: useCallback(
+      debounce(async ({ inputValue }) => {
+        if (inputValue != '') {
+          const { data } = await supabase
+            .from('artists')
+            .select('name, user_id, username')
+            .ilike('name', `%${inputValue}%`)
+            .limit(5)
+
+          console.log(data, 'la estamos melos, ahora por los estudios')
+
+          setInputItems(data)
+        }
+      }, 1000),
+      []
+    ),
+
     onSelectedItemChange: (item) => {
       console.log(item, 'item seleccionado')
     },
@@ -94,14 +75,17 @@ const SelectStudio = ({ state, artist, setErrorRequest }) => {
           inputItems.map((item, index) => {
             return (
               <li
-                className="px-2 py-2 cursor-pointer bg-dark-800  "
+                className="px-2 py-2 cursor-pointer bg-dark-800  text-base"
                 style={
                   highlightedIndex === index ? { backgroundColor: '#000' } : {}
                 }
-                key={`${item}${index}`}
+                key={`${item.user_id}${index}`}
                 {...getItemProps({ item, index })}
               >
-                {item}
+                {item.name}{' '}
+                <span className="text-sm text-gray-400 ml-4">
+                  {item.username}
+                </span>
               </li>
             )
           })}
