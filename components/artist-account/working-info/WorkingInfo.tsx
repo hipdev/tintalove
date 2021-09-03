@@ -14,6 +14,7 @@ import SelectStudio from './SelectStudio'
 import WorkingRequests from './WorkingRequests'
 import useSWR from 'swr'
 import StudiosList from './StudiosList'
+import WrapperSelectStudio from './WrapperSelectStudio'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
@@ -183,7 +184,8 @@ const WorkingInfo = ({ uid, artist }) => {
                           completados, regresa aquí cuando estes listo
                         </p>
                       )}
-                      <SelectStudio
+
+                      <WrapperSelectStudio
                         state={{ studioName, setStudioName }}
                         artist={artist}
                         setErrorRequest={setErrorRequest}
