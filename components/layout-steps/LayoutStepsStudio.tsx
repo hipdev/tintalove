@@ -8,10 +8,12 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import SideMenuStudioSteps from 'components/layout-steps/SideMenuStudioSteps'
 import SideMenuStudio from 'components/layout-steps/SideMenuStudio'
 import { VscMenu } from 'react-icons/vsc'
-import WrapperAvailability from 'components/layout/header/WrapperAvailability'
+
 import useSWR from 'swr'
-import { getStudioInfo } from 'lib/queries/studios'
+import { getStudioId, getStudioInfo } from 'lib/queries/studios'
 import { Toaster } from 'react-hot-toast'
+import Availability from 'components/layout/header/availability'
+import { getArtistInfo } from 'lib/queries/artists'
 
 type Props = {
   uid?: string
@@ -21,7 +23,14 @@ type Props = {
 
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
-  const { data } = useSWR(['getStudioInfo', user?.studio_id], getStudioInfo)
+  const { data: StudioId } = useSWR(['getStudioId', uid], getStudioId)
+
+  const { data } = useSWR(['getStudioInfo', StudioId], getStudioInfo)
+
+  const { data: artist } = useSWR(
+    uid ? ['getArtistInfo', uid] : null,
+    getArtistInfo
+  )
 
   console.log(data, 'studio data')
 
@@ -98,7 +107,11 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
           <div className="flex">
             {user?.artist_active && (
               <div className="mr-7 items-center hidden md:flex">
-                <WrapperAvailability user={user} />
+                <Availability
+                  user={user}
+                  availability_id={artist?.availability_id}
+                  artist={artist}
+                />
                 <Link href="/post/new-post">
                   <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
                     <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
