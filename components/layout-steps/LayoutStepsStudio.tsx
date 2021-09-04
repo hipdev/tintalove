@@ -23,16 +23,16 @@ type Props = {
 
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
-  const { data: StudioId } = useSWR(['getStudioId', uid], getStudioId)
+  const { data: studioId } = useSWR(['getStudioId', uid], getStudioId)
 
-  const { data } = useSWR(['getStudioInfo', StudioId], getStudioInfo)
+  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo)
 
   const { data: artist } = useSWR(
     uid ? ['getArtistInfo', uid] : null,
     getArtistInfo
   )
 
-  console.log(data, 'studio data')
+  console.log(data, studioId, 'studio data')
 
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
