@@ -17,6 +17,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
+import { supabase } from 'lib/supabase-client'
 import { StudioTypes } from 'types/studio'
 
 const db = getFirestore(firebaseApp)
@@ -150,6 +151,19 @@ export async function updateStudioUsername(studioId, oldUsername, newUsername) {
   await batch.commit()
 
   return true
+}
+
+export async function getStudioId(_key, user_id) {
+  const { data, error } = await supabase
+    .from('studios_admin')
+    .select('id')
+    .eq('user_id', user_id)
+
+  if (error) {
+    throw new Error(`Error obteniendo id: ${error.message}`)
+  }
+
+  return data[0].id
 }
 
 export async function getStudioInfo(_key, studioId) {
