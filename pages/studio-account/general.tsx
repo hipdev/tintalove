@@ -4,9 +4,9 @@ import GeneralInfo from 'components/studio-account/GeneralInfo'
 import GeneralInfoEdit from 'components/studio-account/general-info-edit/GeneralInfoEdit'
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
-import useUserId from 'hooks/use-user-id'
+import { useUser } from 'hooks/useUser'
 import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
+import { getStudioId } from 'lib/queries/studios'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
@@ -14,8 +14,15 @@ const loader = new Loader({
 })
 
 export default function MainInfoPage() {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
+
+  const { data: studioId } = useSWR(
+    user?.id ? ['getStudioId', user.id] : null,
+    getStudioId
+  )
+
+  console.log(user, studioId, 'el user')
+
   const [loadMap, setLoadMap] = useState(false)
 
   loader
@@ -27,21 +34,21 @@ export default function MainInfoPage() {
       console.log('error loading Google Maps API')
     })
 
-  if (!data && !data?.user) {
+  if (!user) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
   return (
-    <LayoutStepsStudio uid={userId} user={data.user}>
+    <LayoutStepsStudio uid={user.id} user={user}>
       {loadMap && (
         <>
-          {data.user.has_studio ? (
+          {studioId ? (
             <GeneralInfoEdit
-              studioId={data.user.studio_id || null}
-              uid={data.user.uid || null}
+              studioId={studioId || null}
+              uid={user.id || null}
             />
           ) : (
-            <GeneralInfo uid={data.user.uid || null} />
+            <GeneralInfo uid={user.id || null} />
           )}
         </>
       )}

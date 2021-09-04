@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 
 import { capitalizeAllWords } from 'lib/utils'
@@ -38,8 +38,6 @@ const GeneralInfo = ({ uid }) => {
   })
 
   const watchUsername = watch('username')
-
-  const cityRef = useRef(null)
 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -200,7 +198,8 @@ const GeneralInfo = ({ uid }) => {
         </h1>
         <p className="text-white mb-5 sm:mb-6 lg:mb-8">
           Gracias por ser parte de la familia Tinta Love, cuando llenes todos
-          los pasos aparecerá un botón mágico para activar tu perfil
+          los pasos aparecerá un botón mágico para activar el perfil del
+          estudio.
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-6 gap-6 tooltipBox">
