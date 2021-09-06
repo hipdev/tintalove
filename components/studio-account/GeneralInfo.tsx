@@ -1,9 +1,7 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-
 import React, { useCallback, useEffect, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -41,7 +39,6 @@ const GeneralInfo = ({ uid }) => {
 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
@@ -219,28 +216,6 @@ const GeneralInfo = ({ uid }) => {
             <div className="col-span-6 md:col-span-3">
               <label className="block text-white text-sm  mb-2 tracking-wide">
                 <span className="mb-3 block">CIUDAD</span>
-
-                {/* <GooglePlacesAutocomplete
-                  apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                  debounce={500}
-                  apiOptions={{ region: 'CO', language: 'es' }}
-                  autocompletionRequest={{
-                    componentRestrictions: { country: ['CO'] },
-                    types: ['(cities)'],
-                  }}
-                  selectProps={{
-                    value: city,
-                    onChange: handleCity,
-                    placeholder: 'Escribe tu ciudad...',
-                    noOptionsMessage: () => 'Sin opciones',
-                    // defaultMenuIsOpen: true,
-                    // menuIsOpen: true,
-                    classNamePrefix: 'create_artist',
-                    // autoFocus: true,
-                    ref: cityRef,
-                  }}
-                /> */}
-
                 <GeneralInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
               </label>
             </div>
