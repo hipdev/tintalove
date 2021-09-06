@@ -23,10 +23,13 @@ import { StudioTypes } from 'types/studio'
 const db = getFirestore(firebaseApp)
 
 export async function userNameAvailableStudio(username) {
-  const usernameRef = doc(db, `usernames_studios/${username}`)
-  const queryRef = await getDoc(usernameRef)
+  let { data: artist } = await supabase
+    .from('studios')
+    .select('username')
+    .eq('username', username)
 
-  if (queryRef.exists()) {
+  if (artist[0]) {
+    // check if exists a record
     return false
   } else {
     return true
