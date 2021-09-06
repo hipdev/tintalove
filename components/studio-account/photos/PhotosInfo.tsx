@@ -1,11 +1,11 @@
 import { getStudioInfo } from 'lib/queries/studios'
 import useSWR from 'swr'
 import { StudioTypes } from 'types/studio'
-import PictureAddMain from './picture-add-main'
+import PhotoAddMain from './PhotoAddMain'
 
-import PictureReady from './picture-ready'
+import PhotoReady from './PhotoReady'
 
-const PicturesInfo = ({ studioId, hasStudio }) => {
+const PhotosInfo = ({ studioId, hasStudio }) => {
   const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo) // esta es la que necesito que vuelva a validar
 
   return (
@@ -17,12 +17,12 @@ const PicturesInfo = ({ studioId, hasStudio }) => {
       </div>
 
       {data?.studio?.profile_picture ? (
-        <PictureReady studio={data?.studio} />
+        <PhotoReady studio={data?.studio} />
       ) : (
-        <PictureAddMain studioId={studioId} hasStudio={hasStudio} />
+        <PhotoAddMain studioId={studioId} hasStudio={hasStudio} />
       )}
     </div>
   )
 }
 
-export default PicturesInfo
+export default PhotosInfo

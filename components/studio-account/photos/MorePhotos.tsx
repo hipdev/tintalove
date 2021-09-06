@@ -4,10 +4,10 @@ import { getStudioPictures } from 'lib/queries/studios'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
 import useSWR from 'swr'
-import MorePicturesCrop from './more-pictures-crop'
-import MorePicturesList from './more-pictures-list'
+import MorePhotosCrop from './MorePhotosCrop'
+import MorePicturesList from './MorePhotosList'
 
-const MorePicturesStudio = ({ studio }) => {
+const MorePhotos = ({ studio }) => {
   const [picture, setPicture] = useState(null)
 
   const { data, mutate: mutateToken }: any = useSWR(
@@ -120,7 +120,7 @@ const MorePicturesStudio = ({ studio }) => {
 
       {picture && (
         <div className="flex">
-          <MorePicturesCrop
+          <MorePhotosCrop
             picture={picture}
             setPicture={setPicture}
             studioId={studio?.id}
@@ -141,4 +141,4 @@ const MorePicturesStudio = ({ studio }) => {
   )
 }
 
-export default MorePicturesStudio
+export default MorePhotos
