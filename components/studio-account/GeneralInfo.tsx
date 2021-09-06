@@ -17,7 +17,6 @@ const GeneralInfo = ({ uid }) => {
   const {
     register,
     setValue,
-    getValues,
     handleSubmit,
     watch,
     formState: { errors },
@@ -45,7 +44,6 @@ const GeneralInfo = ({ uid }) => {
   const [availableUserName, setAvailableUserName] = useState(false)
   const [validUserName, setValidUserName] = useState(false)
 
-  const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
@@ -122,10 +120,7 @@ const GeneralInfo = ({ uid }) => {
       }
 
       setValue('username', username)
-
-      setShow(true)
     }
-    if (name == '') setShow(false)
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
