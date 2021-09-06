@@ -48,8 +48,6 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
 
-  const [customNick, setCustomNick] = useState(false)
-
   const router = useRouter()
 
   const handleCounter = useCallback(
@@ -99,7 +97,10 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     setValue('studio_name', capitalName)
 
@@ -124,8 +125,6 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       setAvailableUserName(false)
     }
     setValue('username', nick)
-
-    setCustomNick(true)
   }
 
   const saveUsername = async () => {

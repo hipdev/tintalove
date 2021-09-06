@@ -95,7 +95,10 @@ const GeneralInfo = ({ uid }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     setValue('studio_name', capitalName)
 
