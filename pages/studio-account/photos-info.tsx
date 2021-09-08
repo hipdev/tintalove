@@ -1,9 +1,6 @@
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import IsAuth from 'components/isAuth'
-
-import useUserId from 'hooks/use-user-id'
 import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
 import PhotosInfo from 'components/studio-account/photos/PhotosInfo'
 import { useUser } from 'hooks/useUser'
 import { getArtistInfo } from 'lib/queries/artists'
