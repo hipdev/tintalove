@@ -1,13 +1,11 @@
 import useSWR from 'swr'
 import { useState } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
-
 import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import ContactInfoStudio from 'components/studio-account/contact-info/ContactInfo'
-
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
+import { getArtistInfo } from 'lib/queries/artists'
+import { useUser } from 'hooks/useUser'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
@@ -15,8 +13,12 @@ const loader = new Loader({
 })
 
 export default function ContactInfoPageStudio() {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
+
+  const { data: artist } = useSWR(
+    user?.id ? ['getArtistFullInfo', user.id] : null,
+    getArtistInfo
+  )
   const [loadMap, setLoadMap] = useState(false)
 
   loader
@@ -28,18 +30,13 @@ export default function ContactInfoPageStudio() {
       console.log('error loading Google Maps API')
     })
 
-  if (!data && !data?.user) {
+  if (!user && !artist) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
   return (
-    <LayoutStepsStudio uid={userId} user={data.user}>
-      {loadMap && (
-        <ContactInfoStudio
-          hasStudio={data.user.has_studio}
-          studioId={data.user.studio_id}
-        />
-      )}
+    <LayoutStepsStudio uid={user.id} user={user}>
+      {loadMap && <ContactInfoStudio hasStudio={user} studioId={user.id} />}
     </LayoutStepsStudio>
   )
 }
