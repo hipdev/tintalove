@@ -119,7 +119,7 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
   if (username[0]) {
     throw new Error('El nombre de usuario ya existe')
   } else {
-    let place_id = null // Para luego añadirlo al artista
+    let city_id = null // Para luego añadirlo al artista
 
     let { data: city } = await supabase
       .from('cities')
@@ -127,7 +127,7 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
       .eq('city_place_id', placeInfo.city_place_id)
 
     if (city[0]) {
-      place_id = city[0].city_place_id
+      city_id = city[0].city_place_id
     } else {
       // La ciudad no existe, entonces la creamos
       const { data: newCity } = await supabase.from('cities').insert({
@@ -135,13 +135,13 @@ export async function createArtist(uid, dataArtist, placeInfo, wizard) {
         coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`, // es tipo point, se guardará asi --> (lat,lng)
       })
 
-      place_id = newCity[0].city_place_id
+      city_id = newCity[0].city_place_id
     }
 
     // Si todo esta bien hasta acá, creamos el artista:
     const { data: newArtist } = await supabase.from('artists').insert({
       ...dataArtist,
-      place_id,
+      city_id,
       user_id: uid,
     })
 
@@ -178,7 +178,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
   }
 
   //Validación de la ciudad
-  let place_id = null // Para luego añadirlo al artista
+  let city_id = null // Para luego añadirlo al artista
 
   if (placeInfo) {
     // Sólo hacemos esto si el usuario cambia la ciudad
@@ -188,7 +188,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
       .eq('city_place_id', placeInfo.city_place_id)
 
     if (city[0]) {
-      place_id = city[0].city_place_id
+      city_id = city[0].city_place_id
     } else {
       // La ciudad no existe, entonces la creamos
       const { data: newCity } = await supabase.from('cities').insert({
@@ -196,10 +196,10 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
         coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
       })
 
-      place_id = newCity[0].city_place_id
+      city_id = newCity[0].city_place_id
     }
   } else {
-    place_id = artist[0].place_id
+    city_id = artist[0].place_id
   }
 
   //Actualizamos el artista
@@ -208,7 +208,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
     .update(
       {
         ...dataArtist,
-        place_id,
+        city_id,
       },
       { returning: 'minimal' } // Así nos ahorramos un select
     )

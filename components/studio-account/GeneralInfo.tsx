@@ -159,17 +159,18 @@ const GeneralInfo = ({ uid }) => {
     }
 
     const formData = {
-      studio_name: data.studio_name
+      name: data.studio_name
         .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
         .replace(/\s\s+/g, ' ')
         .trim(),
       bio: data.bio.replace(/\s\s+/g, ' ').trim(),
       username: data.username,
       email: data.email,
-      ...placeInfo,
     }
 
-    toast.promise(createStudio(uid, formData, true), {
+    console.log(formData, placeInfo, uid, 'datos a enviar')
+
+    toast.promise(createStudio(uid, formData, placeInfo, true), {
       loading: 'Creando estudio...',
       success: (data) => {
         setLoading(false)
