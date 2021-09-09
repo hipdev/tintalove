@@ -38,47 +38,63 @@ export async function userNameAvailableStudio(username) {
 
 // Studio queries
 
-export async function createStudio(uid, data, wizard) {
-  const usernameRef = doc(collection(db, 'usernames_studios'), data.username)
-  const userRef = doc(collection(db, 'users'), uid)
+export async function createStudio(uid, dataStudio, placeInfo, wizard) {
+  let { data: username } = await supabase
+    .from('studios')
+    .select('username')
+    .eq('username', dataStudio.username)
 
-  const usernameSnap = await getDoc(usernameRef)
-
-  if (usernameSnap.exists()) {
-    throw new Error('El nombre de usuario para el estudio ya existe')
+  if (username[0]) {
+    throw new Error('El nombre de usuario ya existe')
   } else {
-    await addDoc(collection(db, 'studios'), {
-      created_at: serverTimestamp(),
-      ...data,
-      admins: [uid],
-    }).then(async (docRef) => {
-      const studioWizardRef = doc(collection(db, 'studios_wizard'), docRef.id)
+    let city_id = null // Para luego añadirlo al artista
 
-      const batch = writeBatch(db)
+    let { data: city } = await supabase
+      .from('cities')
+      .select('city_name, city_place_id')
+      .eq('city_place_id', placeInfo.city_place_id)
 
-      batch.set(usernameRef, {
-        studio_id: docRef.id,
+    if (city[0]) {
+      city_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('cities').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`, // es tipo point, se guardará asi --> (lat,lng)
       })
 
-      batch.set(
-        userRef,
-        {
-          studio_name: data.studio_name.trim(),
-          has_studio: true,
-          studio_id: docRef.id,
-          updated_at: serverTimestamp(),
-        },
-        { merge: true }
-      )
+      // asignamos el nuevo Id de ciudad
+      city_id = newCity[0].city_place_id
+    }
 
-      if (wizard) {
-        batch.set(studioWizardRef, { step_one: true }, { merge: true })
-      }
-
-      await batch.commit()
-
-      return true
+    // Si todo esta bien hasta acá, creamos el estudio:
+    const { data: newStudio, error } = await supabase.from('studios').insert({
+      ...dataStudio,
+      city_id,
+      admins: [uid],
     })
+
+    if (!error) {
+      const { data: studioAdmin } = await supabase
+        .from('studios_admin')
+        .insert({
+          studio_id: newStudio[0].id,
+          user_id: uid,
+        })
+
+      console.log(studioAdmin, 'studio admin')
+    } else {
+      throw new Error(`Error creando el estudio: ${error.message}`)
+    }
+
+    if (wizard) {
+      await supabase.from('studios_wizard').insert({
+        id: newStudio[0].id,
+        step_one: true,
+      })
+    }
+
+    return true
   }
 }
 

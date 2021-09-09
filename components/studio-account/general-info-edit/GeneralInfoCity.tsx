@@ -3,9 +3,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
-
 import { useState } from 'react'
-import { geohashForLocation } from 'geofire-common'
 
 const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
   const [placeholder, setPlaceholder] = useState('')
@@ -49,18 +47,17 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
 
     const { lat, lng }: any = await getLatLng(results[0])
 
-    const geohash = geohashForLocation([lat, lng])
-
     const fullAddress = results[0].formatted_address.split(',')
     const city_name = fullAddress[0]
     const province = fullAddress[1].trim() || ''
     const country = (fullAddress[2] && fullAddress[2].trim()) || 'Colombia'
 
     setPlaceInfo({
-      place_id: results[0].place_id,
+      city_place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
       city_name,
-      geohash,
+      city_lat: lat,
+      city_lng: lng,
       province,
       country,
     })
