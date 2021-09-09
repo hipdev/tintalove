@@ -72,6 +72,7 @@ export async function createStudio(uid, dataStudio, placeInfo, wizard) {
       ...dataStudio,
       city_id,
       admins: [uid],
+      formatted_address: placeInfo.formatted_address,
     })
 
     if (!error) {
@@ -172,17 +173,19 @@ export async function updateStudioUsername(studioId, oldUsername, newUsername) {
   return true
 }
 
-export async function getStudioId(_key, user_id) {
+export async function getStudioData(_key, user_id) {
   const { data, error } = await supabase
     .from('studios_admin')
-    .select('id')
+    .select(
+      `studio_id, studios (bio,city_id, email, name, username, formatted_address)`
+    )
     .eq('user_id', user_id)
 
   if (error) {
     throw new Error(`Error obteniendo id: ${error.message}`)
   }
 
-  return data[0].id
+  return data[0]
 }
 
 export async function getStudioInfo(_key, studioId) {
