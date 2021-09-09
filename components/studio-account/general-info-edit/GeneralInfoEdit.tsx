@@ -1,9 +1,6 @@
-import useStudio from 'hooks/use-studio'
 import GeneralInfoform from './GeneralInfoForm'
 
-const MainInfoEdit = ({ studioId, uid }) => {
-  const { studio } = useStudio(studioId)
-
+const MainInfoEdit = ({ studioId, uid, studio }) => {
   return (
     <div className="w-full lg:w-4/5 mt-10 pr-7 sm:pr-14">
       <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
@@ -14,7 +11,7 @@ const MainInfoEdit = ({ studioId, uid }) => {
         en Tinta Love.
       </p>
 
-      {studio?.studio_name && (
+      {studio?.name && (
         <GeneralInfoform studioId={studioId} studio={studio} uid={uid} />
       )}
     </div>

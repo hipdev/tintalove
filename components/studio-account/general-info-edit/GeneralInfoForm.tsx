@@ -25,7 +25,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      studio_name: studio.studio_name || '',
+      studio_name: studio.name || '',
       username: studio.username || '',
       bio: studio.bio,
       email: studio.email || '',

@@ -6,7 +6,7 @@ import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import { useUser } from 'hooks/useUser'
 import useSWR from 'swr'
-import { getStudioId } from 'lib/queries/studios'
+import { getStudioData } from 'lib/queries/studios'
 
 const loader = new Loader({
   apiKey: 'AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY', // api key de google maps
@@ -16,12 +16,12 @@ const loader = new Loader({
 export default function MainInfoPage() {
   const { user }: any = useUser()
 
-  const { data: studioId } = useSWR(
-    user?.id ? ['getStudioId', user.id] : null,
-    getStudioId
+  const { data: dataStudio } = useSWR(
+    user?.id ? ['getStudioData', user.id] : null,
+    getStudioData
   )
 
-  console.log(user, studioId, 'el user')
+  console.log(dataStudio, 'el user')
 
   const [loadMap, setLoadMap] = useState(false)
 
@@ -42,10 +42,11 @@ export default function MainInfoPage() {
     <LayoutStepsStudio uid={user.id} user={user}>
       {loadMap && (
         <>
-          {studioId ? (
+          {dataStudio ? (
             <GeneralInfoEdit
-              studioId={studioId || null}
+              studioId={dataStudio.studio_id || null}
               uid={user.id || null}
+              studio={dataStudio.studios}
             />
           ) : (
             <GeneralInfo uid={user.id || null} />
