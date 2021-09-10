@@ -176,40 +176,15 @@ export async function updateStudioGeneralInfo(
   return true
 }
 
-export async function updateStudioUsername(studioId, oldUsername, newUsername) {
-  const usernameRefOld = doc(collection(db, 'usernames_studios'), oldUsername)
-  const usernameRefNew = doc(collection(db, 'usernames_studios'), newUsername)
-  const studioRef = doc(collection(db, 'studios'), studioId)
+export async function updateStudioUsername(studioId, newUsername) {
+  const { error } = await supabase
+    .from('studios')
+    .update({ username: newUsername })
+    .eq('id', studioId)
 
-  const usernameSnap = await getDoc(usernameRefNew)
-  const studioSnap = await getDoc(studioRef)
-
-  if (usernameSnap.exists()) {
-    throw new Error('El nombre de usuario ya existe')
+  if (error) {
+    throw new Error('Ese usuario ya existe')
   }
-
-  if (!studioSnap.exists()) {
-    throw new Error('Este estudio no existe')
-  }
-
-  const batch = writeBatch(db)
-
-  batch.delete(usernameRefOld)
-
-  batch.set(usernameRefNew, {
-    studio_id: studioId,
-  })
-
-  batch.set(
-    studioRef,
-    {
-      updated_at: serverTimestamp(),
-      username: newUsername,
-    },
-    { merge: true }
-  )
-
-  await batch.commit()
 
   return true
 }

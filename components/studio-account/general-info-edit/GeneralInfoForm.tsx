@@ -132,7 +132,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
     setLoading(true)
 
     const newUsername = getValues('username')
-    toast.promise(updateStudioUsername(studioId, studioUsername, newUsername), {
+    toast.promise(updateStudioUsername(studioId, newUsername), {
       loading: 'Actualizando usuario...',
       success: (data) => {
         setLoading(false)

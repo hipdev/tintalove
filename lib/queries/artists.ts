@@ -413,12 +413,10 @@ export async function activateArtist(uid) {
 }
 
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('artists')
     .update({ username: newUsername })
     .eq('user_id', uid)
-
-  console.log(data, error, 'que es data')
 
   if (error) {
     throw new Error('Ese usuario ya existe')
