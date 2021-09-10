@@ -199,7 +199,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
       city_id = newCity[0].city_place_id
     }
   } else {
-    city_id = artist[0].place_id
+    city_id = artist[0].city_id
   }
 
   //Actualizamos el artista
@@ -209,6 +209,7 @@ export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
       {
         ...dataArtist,
         city_id,
+        updated_at: new Date(),
       },
       { returning: 'minimal' } // Así nos ahorramos un select
     )

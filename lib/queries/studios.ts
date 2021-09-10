@@ -107,40 +107,73 @@ export async function createStudio(uid, dataStudio, placeInfo, wizard) {
   }
 }
 
-export async function updateStudioGeneralInfo(studioId, uid, data) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
+export async function updateStudioGeneralInfo(
+  studioId,
+  uid,
+  dataStudio,
+  placeInfo
+) {
+  let { data } = await supabase
+    .from('studios_admin')
+    .select('user_id')
+    .eq('user_id', uid)
+    .eq('studio_id', studioId)
 
-  const userRef = doc(collection(db, 'users'), uid)
+  console.log(data, 'verificando')
 
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    const batch = writeBatch(db)
-
-    batch.set(
-      studioRef,
-      {
-        updated_at: serverTimestamp(),
-        ...data,
-      },
-      { merge: true }
-    )
-
-    batch.set(
-      userRef,
-      {
-        studio_name: data.studio_name.trim(),
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
-
-    return true
-  } else {
-    throw new Error('No estas registrado como estudio')
+  if (!data[0]) {
+    throw new Error('No tienes permiso para eso')
   }
+
+  let { data: studio }: any = await supabase
+    .from('studios')
+    .select('name, city_id, formatted_address')
+    .eq('id', studioId)
+
+  if (!studio[0]) {
+    throw new Error('El estudio no esta registrado')
+  }
+
+  //Validación de la ciudad
+  let city_id = null // Para luego añadirlo al artista
+
+  if (placeInfo) {
+    // Sólo hacemos esto si el usuario cambia la ciudad
+    let { data: city } = await supabase
+      .from('cities')
+      .select('city_name, city_place_id')
+      .eq('city_place_id', placeInfo.city_place_id)
+
+    if (city[0]) {
+      city_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('cities').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
+      })
+
+      city_id = newCity[0].city_place_id
+    }
+  } else {
+    city_id = studio[0].city_id
+  }
+
+  //Actualizamos el estudio
+  await supabase
+    .from('studios')
+    .update(
+      {
+        ...dataStudio,
+        city_id,
+        formatted_address:
+          placeInfo?.formatted_address || studio.formatted_address,
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', studioId)
+
+  return true
 }
 
 export async function updateStudioUsername(studioId, oldUsername, newUsername) {
