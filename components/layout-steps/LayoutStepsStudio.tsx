@@ -10,7 +10,7 @@ import SideMenuStudio from 'components/layout-steps/SideMenuStudio'
 import { VscMenu } from 'react-icons/vsc'
 
 import useSWR from 'swr'
-import { getStudioId, getStudioInfo } from 'lib/queries/studios'
+import { getStudioData } from 'lib/queries/studios'
 import { Toaster } from 'react-hot-toast'
 import Availability from 'components/layout/header/availability'
 import { getArtistInfo } from 'lib/queries/artists'
@@ -23,16 +23,18 @@ type Props = {
 
 const LayoutStepsStudio = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
-  const { data: studioId } = useSWR(['getStudioId', uid], getStudioId)
 
-  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo)
+  const { data: dataStudio } = useSWR(
+    user?.id ? ['getStudioData', uid] : null,
+    getStudioData
+  )
 
   const { data: artist } = useSWR(
     uid ? ['getArtistInfo', uid] : null,
     getArtistInfo
   )
 
-  console.log(data, studioId, 'studio data')
+  console.log(dataStudio, 'studio')
 
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap h-auto lg:min-h-screen">
@@ -68,10 +70,10 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
             </a>
           </Link>
         </div>
-        {data?.studio?.is_active ? (
-          <SideMenuStudio username={data?.studio?.username || null} />
+        {dataStudio?.studios?.is_active ? (
+          <SideMenuStudio username={dataStudio?.studios?.username || null} />
         ) : (
-          <SideMenuStudioSteps studioId={user.studio_id} />
+          <SideMenuStudioSteps studioId={dataStudio?.studio_id} />
         )}
       </div>
 
