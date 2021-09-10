@@ -49,12 +49,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: artist?.cities?.formatted_address || '',
-    province: artist?.cities?.province || '',
-    country: artist?.cities?.country || '',
-    city_name: artist?.cities?.city_name || '',
-    city_place_id: artist?.place_id || '',
-    city_lat: artist?.cities?.city_lat || '',
-    city_lng: artist?.cities?.city_lng || '',
+    city_place_id: artist?.city_id || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -168,7 +163,7 @@ const MainInfoForm = ({ uid, artist }) => {
       updateArtistMainInfo(
         uid,
         formData,
-        artist.place_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
+        artist.city_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
       ),
       {
         loading: 'Actualizando artista...',

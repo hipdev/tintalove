@@ -43,6 +43,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const [counter, setCounter] = useState(studio.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: studio.formatted_address || '',
+    city_place_id: studio?.city_id || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
@@ -166,29 +167,34 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
     let formData = {
       bio: data.bio,
-      studio_name: data.studio_name,
+      name: data.studio_name,
       email: data.email,
     }
-    if (placeInfo) formData = { ...placeInfo, ...formData }
 
     console.log(formData, 'datos a enviar')
 
-    // toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
-    //   loading: 'Actualizando...',
-    //   success: (data) => {
-    //     setLoading(false)
-    //     setSuccess(true)
-    //     // setTriggerAuth(Math.random()) // reload global user state data
+    toast.promise(
+      updateStudioGeneralInfo(
+        studioId,
+        uid,
+        formData,
+        studio.city_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
+      ),
+      {
+        loading: 'Actualizando...',
+        success: (data) => {
+          setLoading(false)
+          // setSuccess(true)
+          // setTriggerAuth(Math.random()) // reload global user state data
 
-    //     return 'Estudio actualizado 😉'
-    //   },
-    //   error: (err) => {
-    //     setLoading(false)
-    //     return `${err.toString()}`
-    //   },
-    // })
-
-    // setLoading(false)
+          return 'Estudio actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      }
+    )
   }
 
   return (
@@ -339,7 +345,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
           </div>
         </div>
 
-        {studio.studio_name != watchMultiple.studio_name ||
+        {studio.name != watchMultiple.studio_name ||
         studio.email != watchMultiple.email ||
         studio.formatted_address != placeInfo?.formatted_address ||
         studio.bio != watchMultiple.bio ? (
