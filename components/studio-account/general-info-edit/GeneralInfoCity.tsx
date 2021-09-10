@@ -86,6 +86,7 @@ const MainInfoCity = ({ defaultValue, setPlaceInfo }) => {
       <input
         value={value}
         onChange={handleInput}
+        autoComplete="chrome-off"
         disabled={!ready}
         placeholder={
           placeholder

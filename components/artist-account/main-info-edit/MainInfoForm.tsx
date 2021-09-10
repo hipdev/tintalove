@@ -330,7 +330,7 @@ const MainInfoForm = ({ uid, artist }) => {
               <input
                 type="email"
                 {...register('email')}
-                autoComplete="off"
+                autoComplete="chrome-off"
                 placeholder="Tu correo electrónico"
                 className="input-primary w-full"
                 required
