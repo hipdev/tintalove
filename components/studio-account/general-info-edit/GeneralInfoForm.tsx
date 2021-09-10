@@ -171,20 +171,22 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
     }
     if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
-      loading: 'Actualizando...',
-      success: (data) => {
-        setLoading(false)
-        setSuccess(true)
-        // setTriggerAuth(Math.random()) // reload global user state data
+    console.log(formData, 'datos a enviar')
 
-        return 'Estudio actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    // toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
+    //   loading: 'Actualizando...',
+    //   success: (data) => {
+    //     setLoading(false)
+    //     setSuccess(true)
+    //     // setTriggerAuth(Math.random()) // reload global user state data
+
+    //     return 'Estudio actualizado 😉'
+    //   },
+    //   error: (err) => {
+    //     setLoading(false)
+    //     return `${err.toString()}`
+    //   },
+    // })
 
     // setLoading(false)
   }
@@ -328,7 +330,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
               <input
                 type="email"
                 {...register('email')}
-                autoComplete="off"
+                autoComplete="chrome-off"
                 placeholder="Tu correo electrónico"
                 className="input-primary w-full"
                 required
