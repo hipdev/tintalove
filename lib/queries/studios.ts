@@ -37,6 +37,14 @@ export async function userNameAvailableStudio(username) {
 }
 
 // Studio queries
+export async function getStudioWizard(_key, studio_id) {
+  let { data } = await supabase
+    .from('studios_wizard')
+    .select('*')
+    .eq('id', studio_id)
+
+  return data ? data[0] : null
+}
 
 export async function createStudio(uid, dataStudio, placeInfo, wizard) {
   let { data: username } = await supabase

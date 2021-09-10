@@ -1,11 +1,10 @@
-import useStudioWizardRealtime from 'hooks/realtime/use-studio-wizard'
-import { activateStudio } from 'lib/queries/studios'
+import { activateStudio, getStudioWizard } from 'lib/queries/studios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
-import { mutate } from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type Props = {
   uid?: string
@@ -13,7 +12,12 @@ type Props = {
 }
 
 const SideMenuStudioSteps = ({ studioId }: Props) => {
-  const { studioWizard } = useStudioWizardRealtime(studioId)
+  const { data: studioWizard } = useSWR(
+    studioId ? ['getStudioWizard', studioId] : null,
+    getStudioWizard
+  )
+
+  console.log(studioWizard, 'data wizard')
 
   const [loading, setLoading] = useState(false)
 
