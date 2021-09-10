@@ -184,8 +184,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
         loading: 'Actualizando...',
         success: (data) => {
           setLoading(false)
-          // setSuccess(true)
-          // setTriggerAuth(Math.random()) // reload global user state data
+          setSuccess(true)
 
           return 'Estudio actualizado 😉'
         },
