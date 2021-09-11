@@ -241,10 +241,7 @@ export async function getStudioIdByUsername(username) {
   }
 }
 
-export async function updateStudioArtists(studioId, data, wizard) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
-  const studiosWizardRef = doc(collection(db, 'studios_wizard'), studioId)
-
+export async function updateStudioArtists(studioId, data, studioData) {
   const styles = data.styles.map((style) => style.value)
 
   const dataForm = {
@@ -253,19 +250,26 @@ export async function updateStudioArtists(studioId, data, wizard) {
     updated_at: serverTimestamp(),
   }
 
-  const docSnap = await getDoc(studioRef)
+  const { error } = await supabase
+    .from('studios')
+    .update({
+      ...dataForm,
+      updated_at: new Date(),
+    })
+    .eq('id', studioId)
 
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, dataForm)
-
-    if (wizard) {
-      updateDoc(studiosWizardRef, { step_two: true })
-    }
-
-    return true
+  if (!studioData?.times && !error) {
+    await supabase
+      .from('studios_wizard')
+      .update({
+        step_two: true,
+      })
+      .eq('id', studioId)
   } else {
-    throw new Error('No estas registrado como artista')
+    throw new Error('Error actualizando el estudio')
   }
+
+  return true
 }
 
 export async function updateStudioContactInfo(studioId, data, wizard) {

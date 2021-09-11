@@ -1,4 +1,3 @@
-import useStudio from 'hooks/use-studio'
 import { updateStudioContactInfo } from 'lib/queries/studios'
 import { checkUrl } from 'lib/utils'
 import Link from 'next/link'
@@ -14,13 +13,12 @@ import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './ContactInfoLocation'
 import ContactInfoMapStudio from './ContactInfoMap'
 
-const ContactInfoStudio = ({ studioId, hasStudio }) => {
+const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
   const [phone, setPhone]: any = useState({})
   const [location, setLocation] = useState(null)
-  const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { studio } = useStudio(studioId)
+
   const router = useRouter()
 
   const {
