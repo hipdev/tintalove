@@ -193,7 +193,7 @@ export async function getStudioData(_key, user_id) {
   const { data, error } = await supabase
     .from('studios_admin')
     .select(
-      `studio_id, studios (bio,city_id, email, name, username, formatted_address, times, styles)`
+      `studio_id, studios (id, bio,city_id, email, name, username, formatted_address, times, styles)`
     )
     .eq('user_id', user_id)
 
@@ -462,18 +462,20 @@ export async function activateStudio(studioId) {
 // Peticiones
 
 export async function getRequestsByStudio(_key, studioId) {
-  const q = query(
-    collection(db, 'artists_requests'),
-    where('studio_id', '==', studioId)
-  )
+  if (studioId) {
+    const { data: requests, error } = await supabase
+      .from('artists_requests')
+      .select('*')
+      .eq('studio_id', studioId)
 
-  const querySnapshot = await getDocs(q)
-  const requests: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return requests.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) {
+      throw new Error('Error obteniendo las requests')
+    }
 
-  return { requests }
+    return { requests }
+  }
+
+  return null
 }
 
 export async function cancelArtistRequest(requestId) {
@@ -547,18 +549,19 @@ export async function acceptArtistRequest(request) {
 // Artistas por estudio
 
 export async function getArtistsByStudio(_key, studioId) {
-  const q = query(
-    collection(db, 'studios_artists'),
-    where('studio_id', '==', studioId)
-  )
+  if (studioId) {
+    const { data: artists, error } = await supabase
+      .from('studios_artists')
+      .select('*')
+      .eq('studio_id', studioId)
 
-  const querySnapshot = await getDocs(q)
-  const artists: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return artists.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) {
+      throw new Error('Error obteniendo las requests')
+    }
+    return { artists }
+  }
 
-  return { artists }
+  return null
 }
 
 export async function deleteArtistFromStudio(studioArtist) {
