@@ -2,18 +2,18 @@ import IsAuth from 'components/isAuth'
 import LayoutStepsStudio from 'components/layout-steps/LayoutStepsStudio'
 import StudioArtists from 'components/studio-account/artists/StudioArtists'
 import { useUser } from 'hooks/useUser'
-import { getArtistInfo } from 'lib/queries/artists'
+import { getStudioData } from 'lib/queries/studios'
 import useSWR from 'swr'
 
 export default function ArtistsPage({ studioId }) {
   const { user }: any = useUser()
 
-  const { data: artist } = useSWR(
-    user?.id ? ['getArtistFullInfo', user.id] : null,
-    getArtistInfo
+  const { data: dataStudio } = useSWR(
+    user?.id ? ['getStudioData', user.id] : null,
+    getStudioData
   )
 
-  if (!user && !artist) {
+  if (!user && !dataStudio) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
@@ -21,8 +21,8 @@ export default function ArtistsPage({ studioId }) {
     <LayoutStepsStudio uid={user.id} user={user}>
       <StudioArtists
         uid={user.id || null}
-        hasStudio={user}
-        studioId={user.id} // falta agregar id del estudio aqui
+        hasStudio={dataStudio?.studios}
+        studioId={dataStudio?.studio_id} // falta agregar id del estudio aqui
       />
     </LayoutStepsStudio>
   )
