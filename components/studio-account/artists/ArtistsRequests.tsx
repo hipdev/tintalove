@@ -1,8 +1,6 @@
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
-import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai'
-import { MdCancel, MdCheckCircle, MdMail } from 'react-icons/md'
-import { GiCancel } from 'react-icons/gi'
+import { MdCancel, MdMail } from 'react-icons/md'
 import 'microtip/microtip.css'
 import {
   acceptArtistRequest,
