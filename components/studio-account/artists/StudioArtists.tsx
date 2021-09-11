@@ -65,19 +65,19 @@ const StudioArtists = ({ uid, studioId, studioData }) => {
 
     console.log(data, studioId, 'ok', studioData)
 
-    // toast.promise(updateStudioArtists(studioId, data, true), {
-    //   loading: 'Actualizando...',
-    //   success: () => {
-    //     setLoading(false)
-    //     setSuccess(true)
+    toast.promise(updateStudioArtists(studioId, data, studioData), {
+      loading: 'Actualizando...',
+      success: () => {
+        setLoading(false)
+        setSuccess(true)
 
-    //     return 'Estudio actualizado 😉'
-    //   },
-    //   error: (err) => {
-    //     setLoading(false)
-    //     return `${err.toString()}`
-    //   },
-    // })
+        return 'Estudio actualizado 😉'
+      },
+      error: (err) => {
+        setLoading(false)
+        return `${err.toString()}`
+      },
+    })
 
     setLoading(false)
   }
@@ -128,7 +128,7 @@ const StudioArtists = ({ uid, studioId, studioData }) => {
                 placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm"
                 className="w-full input-primary resize-none"
               ></textarea>
-              {errors.times && <p>Esta campo es requerido</p>}
+              {errors.times && <p>Debes ingresar los horarios</p>}
             </label>
           </div>
         </div>
