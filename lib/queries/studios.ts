@@ -272,34 +272,32 @@ export async function updateStudioArtists(studioId, data, studioData) {
   return true
 }
 
-export async function updateStudioContactInfo(studioId, data, wizard) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
-  const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+export async function updateStudioContactInfo(studioId, dataForm, studioData) {
+  const { error } = await supabase
+    .from('studios')
+    .update(
+      {
+        ...dataForm,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', studioId)
 
-  const dataForm = {
-    contact_way: data.contact_way,
-    facebook: data.facebook || null,
-    instagram: data.instagram || null,
-    telegram_user: data.telegram_user || null,
-    phone: data.phone.value,
-    country_code: data.phone.country_code || 'CO',
-    twitter: data.twitter || null,
-    updated_at: serverTimestamp(),
+  if (!studioData?.contact_way) {
+    await supabase
+      .from('studios_wizard')
+      .update({
+        step_three: true,
+      })
+      .eq('id', studioId)
   }
 
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, dataForm)
-
-    if (wizard) {
-      updateDoc(studioWizardRef, { step_three: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como estudio')
+  if (error) {
+    throw new Error(`Error actualizando el estudio: ${error.message}`)
   }
+
+  return true
 }
 
 export async function updateStudioLocation(studioId, dataLocation) {
