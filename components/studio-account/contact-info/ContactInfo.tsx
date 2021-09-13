@@ -56,8 +56,10 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
       setValue('twitter', studioData.twitter)
       setValue('telegram_user', studioData.telegram_user)
       setPhone(
-        { value: studioData.phone, country_code: studioData.country_code } ||
-          null
+        {
+          value: studioData?.mobile?.value,
+          country_code: studioData?.mobile?.country_code,
+        } || null
       )
     }
   }, [studioData])
