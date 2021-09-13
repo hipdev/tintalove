@@ -14,7 +14,7 @@ import ContactInfoLocation from './ContactInfoLocation'
 import ContactInfoMapStudio from './ContactInfoMap'
 
 const ContactInfoStudio = ({ studioId, studioData }) => {
-  const [phone, setPhone]: any = useState({})
+  const [mobile, setPhone]: any = useState({})
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -67,7 +67,7 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(
-        () => router.push('/studio-account/pictures-info'),
+        () => router.push('/studio-account/photos-info'),
         1000
       )
       return () => clearTimeout(timer)
@@ -83,24 +83,25 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    const dataForm = { ...data, phone }
+    const dataForm = { ...data, mobile }
 
-    console.log(dataForm, 'la data')
+    if (mobile?.value && mobile.value.length > 9) {
+      toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
+          setSuccess(true)
 
-    toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
-      loading: 'Actualizando...',
-      success: () => {
-        setLoading(false)
-        setSuccess(true)
-
-        return 'Estudio actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
-
+          return 'Estudio actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast.error('Debes agregar un celular')
+    }
     setLoading(false)
   }
 
@@ -172,20 +173,12 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
                 }}
                 placeholder="Selecciona primero el país"
                 onChange={(value, country: any, e, formattedValue) => {
-                  console.log(
-                    value,
-                    country,
-                    e,
-                    formattedValue,
-                    'los valores del input'
-                  )
-
                   setPhone({
                     value: '+' + value,
                     country_code: country.countryCode.toUpperCase(),
                   })
                 }}
-                value={phone.value}
+                value={mobile.value}
               />
             </label>
           </div>

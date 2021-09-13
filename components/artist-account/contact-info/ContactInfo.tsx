@@ -43,8 +43,6 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
   const watchTwitter = watch('twitter')
   const watchTelegram = watch('telegram_user')
 
-  console.log(artist, 'artist info')
-
   useEffect(() => {
     if (artist) {
       let styles = []
@@ -82,7 +80,6 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
     const dataForm = { ...data, mobile }
 
     if (mobile?.value && mobile.value.length > 9) {
-      console.log(dataForm, 'form to send')
       toast.promise(updateArtistContactInfo(uid, dataForm, artist), {
         loading: 'Actualizando...',
         success: () => {
@@ -97,7 +94,7 @@ const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
         },
       })
     } else {
-      toast.error('Debes agregar el teléfono')
+      toast.error('Debes agregar un celular')
     }
 
     setLoading(false)
