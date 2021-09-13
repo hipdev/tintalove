@@ -13,7 +13,7 @@ import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './ContactInfoLocation'
 import ContactInfoMapStudio from './ContactInfoMap'
 
-const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
+const ContactInfoStudio = ({ studioId, studioData }) => {
   const [phone, setPhone]: any = useState({})
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -41,25 +41,26 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
   const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
 
   useEffect(() => {
-    if (studio) {
+    if (studioData) {
       let styles = []
-      if (studio.styles) {
-        styles = studio.styles.map((style) => ({
+      if (studioData.styles) {
+        styles = studioData.styles.map((style) => ({
           label: style,
           value: style,
         }))
       }
 
-      setValue('contact_way', studio.contact_way)
-      setValue('instagram', studio.instagram)
-      setValue('facebook', studio.facebook)
-      setValue('twitter', studio.twitter)
-      setValue('telegram_user', studio.telegram_user)
+      setValue('contact_way', studioData.contact_way)
+      setValue('instagram', studioData.instagram)
+      setValue('facebook', studioData.facebook)
+      setValue('twitter', studioData.twitter)
+      setValue('telegram_user', studioData.telegram_user)
       setPhone(
-        { value: studio.phone, country_code: studio.country_code } || null
+        { value: studioData.phone, country_code: studioData.country_code } ||
+          null
       )
     }
-  }, [studio])
+  }, [studioData])
 
   useEffect(() => {
     if (success) {
@@ -203,10 +204,10 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
                     },
                   })}
                 />
-                {(watchInstagram || studio?.instagram) && (
+                {(watchInstagram || studioData?.instagram) && (
                   <a
                     href={checkUrl(
-                      watchInstagram || studio?.instagram,
+                      watchInstagram || studioData?.instagram,
                       'https://instagram.com'
                     )}
                     target="_blank"
@@ -241,10 +242,10 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
                     },
                   })}
                 />
-                {(watchFacebook || studio?.facebook) && (
+                {(watchFacebook || studioData?.facebook) && (
                   <a
                     href={checkUrl(
-                      watchFacebook || studio?.facebook,
+                      watchFacebook || studioData?.facebook,
                       'https://facebook.com'
                     )}
                     target="_blank"
@@ -278,10 +279,10 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
                   })}
                 />
 
-                {(watchTwitter || studio?.twitter) && (
+                {(watchTwitter || studioData?.twitter) && (
                   <a
                     href={checkUrl(
-                      watchTwitter || studio?.twitter,
+                      watchTwitter || studioData?.twitter,
                       'https://twitter.com'
                     )}
                     target="_blank"
@@ -299,7 +300,7 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
             </label>
           </div>
 
-          {(watchContactWay == 'telegram' || studio?.telegram_user) && (
+          {(watchContactWay == 'telegram' || studioData?.telegram_user) && (
             <div className="col-span-6 lg:col-span-4 xl:col-span-3">
               <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
                 <div className="flex">
@@ -325,10 +326,10 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
                     })}
                   />
 
-                  {(watchTelegram || studio?.telegram_user) && (
+                  {(watchTelegram || studioData?.telegram_user) && (
                     <a
                       href={checkUrl(
-                        watchTelegram || studio?.telegram_user,
+                        watchTelegram || studioData?.telegram_user,
                         'https://t.me'
                       )}
                       target="_blank"
@@ -357,7 +358,7 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
               {studioId && (
                 <ContactInfoLocation
                   studioId={studioId}
-                  studioInfo={studio || null}
+                  studioInfo={studioData || null}
                   setLocation={setLocation}
                 />
               )}
@@ -371,12 +372,12 @@ const ContactInfoStudio = ({ studioId, hasStudio, studio }) => {
         )}
 
         <div className="flex justify-between mt-8">
-          {!hasStudio && (
+          {!studioData && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
             </p>
           )}
-          {hasStudio ? (
+          {studioData ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5 mb-10"
