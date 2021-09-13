@@ -193,7 +193,9 @@ export async function getStudioData(_key, user_id) {
   const { data, error } = await supabase
     .from('studios_admin')
     .select(
-      `studio_id, studios (id, bio,city_id, email, name, username, formatted_address, times, styles)`
+      `studio_id, studios (id, bio,city_id, email, name, username,
+        formatted_address, times, styles, telegram_user, facebook, twitter, 
+        contact_way, mobile, instagram)`
     )
     .eq('user_id', user_id)
 
