@@ -654,3 +654,18 @@ export async function getUsernameStudio(_key, id) {
     throw new Error('El estudio no existe')
   }
 }
+
+/* Studios filters */
+
+export async function getStudiosFilter(_key) {
+  const { data, error } = await supabase
+    .from('studios')
+    .select('name, username, id')
+    .limit(5)
+
+  if (error) {
+    throw new Error(`Error en filtro: ${error.message}`)
+  }
+
+  return data
+}

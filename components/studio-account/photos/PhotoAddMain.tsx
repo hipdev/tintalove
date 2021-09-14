@@ -6,7 +6,7 @@ import { HiOutlineCamera } from 'react-icons/hi'
 
 import PhotoCrop from './PhotoCrop'
 
-const PhotoAddMain = ({ studioId, hasStudio }) => {
+const PhotoAddMain = ({ studioId }) => {
   const [picture, setPicture] = useState(null)
   const { artist } = useArtistRealtime(studioId)
 

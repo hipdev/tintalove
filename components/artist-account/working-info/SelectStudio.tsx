@@ -27,8 +27,8 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
       debounce(async ({ inputValue }) => {
         if (inputValue != '') {
           const { data } = await supabase
-            .from('artists')
-            .select('name, user_id, username')
+            .from('studios')
+            .select('name, id, username')
             .ilike('name', `%${inputValue}%`)
             .limit(5)
 
@@ -78,7 +78,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
                 style={
                   highlightedIndex === index ? { backgroundColor: '#000' } : {}
                 }
-                key={`${item.user_id}${index}`}
+                key={`${item.id}${index}`}
                 {...getItemProps({ item, index })}
               >
                 {item.name}{' '}
