@@ -303,24 +303,40 @@ export async function updateStudioContactInfo(studioId, dataForm, studioData) {
 }
 
 export async function updateStudioLocation(studioId, dataLocation) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
+  //Validación de la ciudad
+  let main_address_id = null // Para luego añadirlo al estudio
 
-  const docSnap = await getDoc(studioRef)
+  // Sólo hacemos esto si el usuario cambia la ciudad
+  let { data: address } = await supabase
+    .from('studios_places')
+    .select('place_id')
+    .eq('place_id', dataLocation.place_id)
 
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, {
-      dataLocation,
-      updated_at: serverTimestamp(),
-      _geoloc: {
-        lat: dataLocation.coordinates.lat,
-        lng: dataLocation.coordinates.lng,
-      },
-    })
-
-    return true
+  if (address[0]) {
+    main_address_id = address[0].place_id
   } else {
-    throw new Error('No estas registrado como estudio')
+    // La ciudad no existe, entonces la creamos
+    console.log(dataLocation, 'location')
+    const { data: newAddress } = await supabase
+      .from('studios_places')
+      .insert([dataLocation])
+
+    main_address_id = newAddress[0].place_id
   }
+
+  //Actualizamos el estudio
+  await supabase
+    .from('studios')
+    .update(
+      {
+        main_address_id,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', studioId)
+
+  return true
 }
 
 export async function updateStudioLocationMarker(studioId, dataMarker) {
