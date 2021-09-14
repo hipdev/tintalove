@@ -202,7 +202,7 @@ export async function getStudioData(_key, user_id) {
       .select(
         `id, bio,city_id, email, name, username,
           formatted_address, times, styles, telegram_user, facebook, twitter, 
-          contact_way, mobile, instagram, studios_places( * )`
+          contact_way, mobile, instagram, main_address_marker, studios_places( * )`
       )
       .eq('id', studioId[0].studio_id)
 
