@@ -21,8 +21,8 @@ export default function ArtistsPage({ studioId }) {
     <LayoutStepsStudio uid={user.id} user={user}>
       <StudioArtists
         uid={user.id || null}
-        studioData={dataStudio?.studios}
-        studioId={dataStudio?.studio_id} // falta agregar id del estudio aqui
+        studioData={dataStudio}
+        studioId={dataStudio?.id} // falta agregar id del estudio aqui
       />
     </LayoutStepsStudio>
   )

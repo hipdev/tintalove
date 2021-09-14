@@ -44,9 +44,9 @@ export default function MainInfoPage() {
         <>
           {dataStudio ? (
             <GeneralInfoEdit
-              studioId={dataStudio.studio_id || null}
+              studioId={dataStudio?.id || null}
               uid={user.id || null}
-              studio={dataStudio.studios}
+              studio={dataStudio}
             />
           ) : (
             <GeneralInfo uid={user.id || null} />
