@@ -274,15 +274,14 @@ export async function updateArtistLocation(artistId, dataLocation) {
     .select('place_id')
     .eq('place_id', dataLocation.place_id)
 
-  console.log(address, 'dirección')
-
   if (address[0]) {
     own_studio_place_id = address[0].place_id
   } else {
     // La ciudad no existe, entonces la creamos
+
     const { data: newAddress } = await supabase
       .from('artists_places')
-      .insert(dataLocation)
+      .insert([dataLocation])
 
     own_studio_place_id = newAddress[0].place_id
   }
