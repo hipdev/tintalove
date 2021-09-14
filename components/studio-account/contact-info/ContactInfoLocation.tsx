@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { updateStudioLocation } from 'lib/queries/studios'
 
 const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
+  console.log(studioInfo, 'datica')
   const [placeholder, setPlaceholder] = useState('')
 
   const {
@@ -27,17 +28,17 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   })
 
   useEffect(() => {
-    if (studioInfo?.dataLocation) {
-      setPlaceholder(studioInfo?.dataLocation.formatted_address)
+    if (studioInfo?.studios_places) {
+      setPlaceholder(studioInfo?.studios_places?.formatted_address)
       setLocation({
-        lat: studioInfo.own_studio_marker
-          ? studioInfo.own_studio_marker[0]
-          : studioInfo?.artists_places.lat,
-        lng: studioInfo.own_studio_marker
-          ? studioInfo.own_studio_marker[1]
-          : studioInfo?.artists_places.lng,
+        lat: studioInfo.main_address_marker
+          ? studioInfo.main_address_marker[0]
+          : studioInfo?.studios_places.lat,
+        lng: studioInfo.main_address_marker
+          ? studioInfo.main_address_marker[1]
+          : studioInfo?.studios_places.lng,
       })
-      setValue(studioInfo.dataLocation.formatted_address)
+      setValue(studioInfo.studios_places.formatted_address)
     }
   }, [studioInfo])
 

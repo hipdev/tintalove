@@ -38,10 +38,7 @@ export default function ContactInfoPageStudio() {
   return (
     <LayoutStepsStudio uid={user.id} user={user}>
       {loadMap && (
-        <ContactInfoStudio
-          studioData={dataStudio?.studios}
-          studioId={dataStudio?.studio_id}
-        />
+        <ContactInfoStudio studioData={dataStudio} studioId={dataStudio?.id} />
       )}
     </LayoutStepsStudio>
   )

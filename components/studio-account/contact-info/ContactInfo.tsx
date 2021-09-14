@@ -38,7 +38,7 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
     },
   })
 
-  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
+  console.log(studioData, 'studioData')
 
   useEffect(() => {
     if (studioData) {
