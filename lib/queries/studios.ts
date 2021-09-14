@@ -190,20 +190,32 @@ export async function updateStudioUsername(studioId, newUsername) {
 }
 
 export async function getStudioData(_key, user_id) {
-  const { data, error } = await supabase
+  const { data: studioId, error } = await supabase
     .from('studios_admin')
-    .select(
-      `studio_id, studios (id, bio,city_id, email, name, username,
-        formatted_address, times, styles, telegram_user, facebook, twitter, 
-        contact_way, mobile, instagram)`
-    )
+    .select(`studio_id`)
     .eq('user_id', user_id)
 
-  if (error) {
-    throw new Error(`Error obteniendo id: ${error.message}`)
-  }
+  if (studioId) {
+    console.log(studioId, 'data studio')
+    const { data, error: studioError } = await supabase
+      .from('studios')
+      .select(
+        `id, bio,city_id, email, name, username,
+          formatted_address, times, styles, telegram_user, facebook, twitter, 
+          contact_way, mobile, instagram, studios_places( * )`
+      )
+      .eq('id', studioId[0].studio_id)
 
-  return data[0]
+    if (error) {
+      throw new Error(`Error obteniendo id: ${error.message}`)
+    }
+    if (studioError) {
+      throw new Error(`Error obteniendo estudio: ${error.message}`)
+    }
+
+    return data[0]
+  }
+  return null
 }
 
 export async function getStudioInfo(_key, studioId) {
