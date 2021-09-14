@@ -52,7 +52,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
                 width={252}
                 height={49}
                 src="/short-logo.png"
-                alt="Picture of the author"
+                alt="Tinta Love logo"
               />
             </a>
           </Link>
@@ -94,7 +94,7 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
             </div>
           </div>
           <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
-            {user?.artist_active && (
+            {user && artist?.is_active && (
               <>
                 <Availability
                   user={user}
