@@ -339,25 +339,23 @@ export async function updateStudioLocation(studioId, dataLocation) {
   return true
 }
 
-export async function updateStudioLocationMarker(studioId, dataMarker) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
-
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, {
-      dataMarker,
-      _geoloc_marker: {
-        lat: dataMarker.marker_location[0],
-        lng: dataMarker.marker_location[1],
+export async function updateStudioLocationMarker(
+  studioId,
+  main_address_marker
+) {
+  //Actualizamos el marcador de la dirección principal
+  await supabase
+    .from('studios')
+    .update(
+      {
+        main_address_marker,
+        updated_at: new Date(),
       },
-      updated_at: serverTimestamp(),
-    })
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', studioId)
 
-    return true
-  } else {
-    throw new Error('No estas registrado como estudio')
-  }
+  return true
 }
 
 export async function getUsernamesByStudios() {
