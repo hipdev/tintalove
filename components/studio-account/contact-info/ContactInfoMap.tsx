@@ -1,5 +1,4 @@
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { geohashForLocation } from 'geofire-common'
 import { updateStudioLocationMarker } from 'lib/queries/studios'
 import toast from 'react-hot-toast'
 
@@ -11,13 +10,7 @@ const ContactInfoMapStudio = ({ cityLocation, studioId }) => {
   }
 
   const handleNewLocation = async (data) => {
-    const marker_location = [data.latLng.lat(), data.latLng.lng()]
-    const marker_hash = geohashForLocation(marker_location)
-
-    const dataMarker = {
-      marker_location,
-      marker_hash,
-    }
+    const dataMarker = [data.latLng.lat(), data.latLng.lng()]
 
     toast.promise(updateStudioLocationMarker(studioId, dataMarker), {
       loading: 'Actualizando...',
