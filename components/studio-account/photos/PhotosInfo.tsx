@@ -5,7 +5,7 @@ import PhotoAddMain from './PhotoAddMain'
 
 import PhotoReady from './PhotoReady'
 
-const PhotosInfo = ({ studioId, hasStudio }) => {
+const PhotosInfo = ({ studioId, studioData }) => {
   const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo) // esta es la que necesito que vuelva a validar
 
   return (
@@ -19,7 +19,7 @@ const PhotosInfo = ({ studioId, hasStudio }) => {
       {data?.studio?.profile_picture ? (
         <PhotoReady studio={data?.studio} />
       ) : (
-        <PhotoAddMain studioId={studioId} hasStudio={hasStudio} />
+        <PhotoAddMain studioId={studioId} />
       )}
     </div>
   )

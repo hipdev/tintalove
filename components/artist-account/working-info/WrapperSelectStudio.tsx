@@ -1,14 +1,16 @@
-import { getArtistsFilter } from 'lib/queries/artists'
+import { getStudiosFilter } from 'lib/queries/studios'
 import useSWR from 'swr'
 import SelectStudio from './SelectStudio'
 
 const WrapperSelectStudio = ({ state, artist, setErrorRequest }) => {
-  const { data: studios } = useSWR(['getArtistsFilter'], getArtistsFilter)
+  const { data: studios } = useSWR(['getStudiosFilter'], getStudiosFilter)
+
+  console.log(studios, 'los estudios')
 
   if (!studios) return <span>...</span>
 
   return (
-    studios.length > 1 && (
+    studios.length > 0 && (
       <SelectStudio
         studios={studios}
         state={state}

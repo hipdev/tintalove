@@ -3,23 +3,23 @@ import IsAuth from 'components/isAuth'
 import useSWR from 'swr'
 import PhotosInfo from 'components/studio-account/photos/PhotosInfo'
 import { useUser } from 'hooks/useUser'
-import { getArtistInfo } from 'lib/queries/artists'
+import { getStudioData } from 'lib/queries/studios'
 
 export default function PictureInfoPage() {
   const { user }: any = useUser()
 
-  const { data: artist } = useSWR(
-    user?.id ? ['getArtistFullInfo', user.id] : null,
-    getArtistInfo
+  const { data: dataStudio } = useSWR(
+    user?.id ? ['getStudioData', user.id] : null,
+    getStudioData
   )
 
-  if (!user && !artist) {
+  if (!user && !dataStudio) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
   return (
     <LayoutStepsStudio uid={user.id} user={user}>
-      <PhotosInfo hasStudio={user} studioId={user.id} />
+      <PhotosInfo studioData={dataStudio} studioId={dataStudio.id} />
     </LayoutStepsStudio>
   )
 }
