@@ -5,7 +5,7 @@ import { StudioTypes } from 'types/studio'
 import MorePhotos from './MorePhotos'
 import PhotoCrop from './PhotoCrop'
 
-const PhotoReady = ({ studio }: { studio: StudioTypes }) => {
+const PhotoReady = ({ studio, uid }) => {
   const [picture, setPicture] = useState(null)
 
   const handlePicture = (e: any) => {
@@ -43,7 +43,7 @@ const PhotoReady = ({ studio }: { studio: StudioTypes }) => {
         <h2 className="mb-3 text-xl">Foto principal</h2>
         <img
           className="rounded-md"
-          src={`${studio.profile_picture.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
+          src={`${studio.studios_main_photos.url}/tr:pr-true,c-at_max,f-auto,w-360,q-100`}
         />
 
         <label className="text-white tracking-wide flex items-center cursor-pointer mt-3">
@@ -64,10 +64,12 @@ const PhotoReady = ({ studio }: { studio: StudioTypes }) => {
         <div className="w-full sm:w-3/5 pl-0 sm:pl-10">
           <PhotoCrop
             update
-            actualPictureId={studio.profile_picture.fileId}
+            actualPictureId={studio.studios_main_photos.url} // no se usa, no se eliminan fotos por ahora principales
             picture={picture}
             studioId={studio.id}
             setPicture={setPicture}
+            studioData={studio}
+            uid={uid}
           />
         </div>
       )}

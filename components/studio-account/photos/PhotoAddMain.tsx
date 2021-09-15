@@ -64,6 +64,7 @@ const PhotoAddMain = ({ studioId, uid, studioData }) => {
             studioId={studioId}
             studioData={studioData}
             uid={uid}
+            actualPictureId={null} // no se usa por ahora no se eliminarn fotos principales de imageKit
           />
         </div>
       )}

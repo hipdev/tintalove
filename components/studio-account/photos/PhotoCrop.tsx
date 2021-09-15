@@ -16,6 +16,7 @@ type Props = {
   setPicture?: any
   uid: string
   studioData: StudioTypes
+  actualPictureId: any
 }
 
 const PhotoCrop = ({
@@ -25,6 +26,7 @@ const PhotoCrop = ({
   setPicture,
   uid,
   studioData,
+  actualPictureId,
 }: Props) => {
   const [loading, setLoading] = useState(false)
 
