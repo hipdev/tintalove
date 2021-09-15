@@ -19,7 +19,11 @@ export default function PictureInfoPage() {
 
   return (
     <LayoutStepsStudio uid={user.id} user={user}>
-      <PhotosInfo studioData={dataStudio} studioId={dataStudio?.id} />
+      <PhotosInfo
+        studioData={dataStudio}
+        studioId={dataStudio?.id}
+        uid={user.id}
+      />
     </LayoutStepsStudio>
   )
 }

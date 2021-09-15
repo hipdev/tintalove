@@ -380,41 +380,46 @@ export async function getUsernamesByStudios() {
   return usernames
 }
 
-export async function updateStudioMainProfilePicture(studioId, data, wizard) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
-  const studioWizardRef = doc(collection(db, 'studios_wizard'), studioId)
+export async function updateStudioMainProfilePicture(
+  studio_id,
+  dataPhoto,
+  studio
+) {
+  const { data, error } = await supabase.from('studios_main_photos').insert({
+    ...dataPhoto,
+    studio_id,
+    updated_at: new Date(),
+  })
 
-  // Dont delete pictures from Imagekit anymore
-  // const options = {
-  //   method: 'DELETE',
-  //   body: JSON.stringify({ data: { imageId } }),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // }
+  console.log(data, 'la foto')
 
-  // if (update) {
-  //   await fetch('/api/profile/delete-image', options)
-  // }
-
-  const dataForm = {
-    profile_picture: data,
-    updated_at: serverTimestamp(),
+  if (data) {
+    await supabase
+      .from('studios')
+      .update(
+        {
+          main_photo_id: data[0].id,
+          updated_at: new Date(),
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('id', studio_id)
   }
 
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, dataForm)
-
-    if (wizard) {
-      updateDoc(studioWizardRef, { step_four: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (!studio.main_photo_id && data) {
+    await supabase
+      .from('studios_wizard')
+      .update({
+        step_four: true,
+      })
+      .eq('id', studio_id)
   }
+
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
+  }
+
+  return true
 }
 
 export async function getStudioPictures(key, studioId) {

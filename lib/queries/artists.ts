@@ -348,6 +348,7 @@ export async function updateArtistContactInfo(uid, dataForm, artist) {
 export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
   const { data, error } = await supabase.from('artists_main_photos').insert({
     ...dataPhoto,
+    user_id: uid,
     updated_at: new Date(),
   })
 

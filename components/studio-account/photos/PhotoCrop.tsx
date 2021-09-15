@@ -6,22 +6,25 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { AiOutlineClose } from 'react-icons/ai'
 import { updateStudioMainProfilePicture } from 'lib/queries/studios'
+import { StudioTypes } from 'types/studio'
 
 type Props = {
   picture: any
   clearPicture?: any
   studioId: string
   update?: boolean
-  actualPictureId?: string
   setPicture?: any
+  uid: string
+  studioData: StudioTypes
 }
 
 const PhotoCrop = ({
   picture,
   studioId,
   update,
-  actualPictureId,
   setPicture,
+  uid,
+  studioData,
 }: Props) => {
   const [loading, setLoading] = useState(false)
 
@@ -108,22 +111,22 @@ const PhotoCrop = ({
         .then((response) => response.json())
         .then(async (fileImagekit) => {
           const content = {
-            filePath: fileImagekit.filePath,
+            file_path: fileImagekit.filePath,
             size: fileImagekit.size,
-            fileId: fileImagekit.fileId,
+            file_id: fileImagekit.fileId,
             url: fileImagekit.url,
             name: fileImagekit.name,
-            thumbnailUrl: fileImagekit.url,
+            thumbnail: fileImagekit.thumbnailUrl,
           }
           try {
             toast.promise(
-              updateStudioMainProfilePicture(studioId, content, true),
+              updateStudioMainProfilePicture(studioId, content, studioData),
               {
                 loading: 'Actualizando...',
                 success: () => {
                   setLoading(false)
                   setPicture(null)
-                  mutate(['getStudioInfo', studioId]) // esta mal, esta pidiendo solo el studioId, no hay nada como key que seaa así
+                  mutate(['getStudioData', uid]) // esta mal, esta pidiendo solo el studioId, no hay nada como key que seaa así
 
                   return 'Foto actualizada 😉'
                 },
@@ -162,10 +165,41 @@ const PhotoCrop = ({
 
       <button
         onClick={getCropData}
-        className="block btn-primary py-3 px-5 mt-4"
+        className="flex btn-primary py-3 px-5 mt-4"
         disabled={loading}
       >
-        {update ? 'Actualizar' : 'Guardar'}
+        <span>
+          {update
+            ? loading
+              ? 'Actualizando'
+              : 'Actualizar'
+            : loading
+            ? 'Guardando'
+            : 'Guardar'}
+        </span>
+
+        {loading && (
+          <svg
+            className="block animate-spin ml-2  h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        )}
       </button>
     </div>
   )
