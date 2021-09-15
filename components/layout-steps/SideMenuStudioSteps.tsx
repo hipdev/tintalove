@@ -17,8 +17,6 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
     getStudioWizard
   )
 
-  console.log(studioWizard, 'data wizard')
-
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()

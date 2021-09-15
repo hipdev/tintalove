@@ -196,13 +196,12 @@ export async function getStudioData(_key, user_id) {
     .eq('user_id', user_id)
 
   if (studioId) {
-    console.log(studioId, 'data studio')
     const { data, error: studioError } = await supabase
       .from('studios')
       .select(
-        `id, bio,city_id, email, name, username,
+        `id, bio, city_id, main_photo_id, email, name, username,
           formatted_address, times, styles, telegram_user, facebook, twitter, 
-          contact_way, mobile, instagram, main_address_marker, studios_places( * )`
+          contact_way, mobile, instagram, main_address_marker, studios_places( * ), studios_main_photos: main_photo_id( * )` // Así tabla:campo se hacen multiples queries
       )
       .eq('id', studioId[0].studio_id)
 
