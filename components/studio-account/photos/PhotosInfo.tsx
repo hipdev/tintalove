@@ -1,13 +1,7 @@
-import { getStudioInfo } from 'lib/queries/studios'
-import useSWR from 'swr'
-import { StudioTypes } from 'types/studio'
 import PhotoAddMain from './PhotoAddMain'
-
 import PhotoReady from './PhotoReady'
 
-const PhotosInfo = ({ studioId, studioData }) => {
-  const { data } = useSWR(['getStudioInfo', studioId], getStudioInfo) // esta es la que necesito que vuelva a validar
-
+const PhotosInfo = ({ studioId, studioData, uid }) => {
   return (
     <div className="w-full pr-5 2xl:w-4/5  mt-10 text-gray-200">
       <div className="flex justify-between">
@@ -16,10 +10,10 @@ const PhotosInfo = ({ studioId, studioData }) => {
         </h1>
       </div>
 
-      {data?.studio?.profile_picture ? (
-        <PhotoReady studio={data?.studio} />
+      {studioData?.main_photo_id ? (
+        <PhotoReady studio={studioData} />
       ) : (
-        <PhotoAddMain studioId={studioId} />
+        <PhotoAddMain studioId={studioId} uid={uid} studioData={studioData} />
       )}
     </div>
   )
