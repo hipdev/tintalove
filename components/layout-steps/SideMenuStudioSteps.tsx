@@ -11,7 +11,7 @@ type Props = {
   studioId?: string
 }
 
-const SideMenuStudioSteps = ({ studioId }: Props) => {
+const SideMenuStudioSteps = ({ studioId, uid }: Props) => {
   const { data: studioWizard } = useSWR(
     studioId ? ['getStudioWizard', studioId] : null,
     getStudioWizard
@@ -66,8 +66,8 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
           // router.push('/artist/new/working-info')
 
           setTimeout(() => {
-            mutate(['getStudioInfo', studioId])
-          }, 2000)
+            mutate(['getStudioIsActive', uid])
+          }, 1500)
 
           return 'Estudio activado, ahora puedes invitar artistas 🥳'
         },

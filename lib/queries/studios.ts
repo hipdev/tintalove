@@ -225,7 +225,7 @@ export async function getStudioIsActive(_key, user_id) {
     const { data, error: studioError } = await supabase
       .from('studios')
       .select(
-        `is_active, id` // Así tabla:campo se hacen multiples queries
+        `is_active, id, username` // Así tabla:campo se hacen multiples queries
       )
       .eq('id', studioId[0].studio_id)
 
@@ -491,17 +491,18 @@ export async function deletePictureFromStudio(file_id, photoId) {
 }
 
 export async function activateStudio(studioId) {
-  const studioRef = doc(collection(db, 'studios'), studioId)
+  await supabase
+    .from('studios')
+    .update(
+      {
+        is_active: true,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', studioId)
 
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(studioRef, { is_active: true })
-
-    return true
-  } else {
-    throw new Error('Estudio no registrado')
-  }
+  return true
 }
 
 // Peticiones
