@@ -14,6 +14,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
   const [inputItems, setInputItems] = useState(studios)
   const {
     isOpen,
+    openMenu,
     getToggleButtonProps,
     getLabelProps,
     getMenuProps,
@@ -23,12 +24,14 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
     getItemProps,
   } = useCombobox({
     items: inputItems,
+    itemToString: (item: any) => (item ? item.name : ''),
     onInputValueChange: useCallback(
-      debounce(async ({ inputValue }) => {
-        if (inputValue != '') {
+      debounce(async ({ inputValue, selectedItem }) => {
+        console.log(inputValue, selectedItem, 'values')
+        if (inputValue != '' && inputValue != selectedItem.name) {
           const { data } = await supabase
             .from('studios')
-            .select('name, id, username')
+            .select('name, id, username, formatted_address')
             .ilike('name', `%${inputValue}%`)
             .limit(5)
 
@@ -52,6 +55,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
           <input
             className="input-primary w-full capitalize"
             {...getInputProps()}
+            // onFocus={openMenu} // Si quiero tener abierto una lista en focus
             placeholder="Buscar estudio"
           />
           <button
@@ -83,7 +87,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
               >
                 {item.name}{' '}
                 <span className="text-sm text-gray-400 ml-4">
-                  {item.username}
+                  {item.formatted_address}
                 </span>
               </li>
             )
