@@ -16,16 +16,12 @@ const loader = new Loader({
 export default function MainInfoPage() {
   const { user }: any = useUser()
 
-  console.log(user, 'el usuario')
-
   const [loadMap, setLoadMap] = useState(false)
 
   const { data: artist } = useSWR(
     user?.id ? ['getArtistFullInfo', user.id] : null,
     getArtistFullInfo
   )
-
-  console.log(artist, 'data artist')
 
   loader
     .load()
