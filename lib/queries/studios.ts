@@ -448,14 +448,13 @@ export async function addStudioPicture(studio_id, data) {
   return true
 }
 
-export async function deletePictureFromStudio(imageId, pictureId) {
+export async function deletePictureFromStudio(file_id, photoId) {
   try {
-    const artistPictureRef = doc(collection(db, 'studios_pics'), pictureId)
-    await deleteDoc(artistPictureRef)
+    await supabase.from('studios_photos').delete().eq('id', photoId)
 
     const options = {
       method: 'DELETE',
-      body: JSON.stringify({ imageId }),
+      body: JSON.stringify({ imageId: file_id }),
       headers: {
         'Content-Type': 'application/json',
       },
