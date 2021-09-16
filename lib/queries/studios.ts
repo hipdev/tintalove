@@ -6,13 +6,11 @@ import {
   serverTimestamp,
   updateDoc,
   writeBatch,
-  addDoc,
   getDocs,
   QueryDocumentSnapshot,
   DocumentData,
   query,
   where,
-  deleteDoc,
   arrayUnion,
   arrayRemove,
 } from 'firebase/firestore/lite'
