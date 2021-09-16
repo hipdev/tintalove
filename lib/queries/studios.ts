@@ -437,23 +437,17 @@ export async function getStudioPictures(key, studioId) {
 }
 
 export async function addStudioPicture(studio_id, data) {
-  const studioRef = doc(collection(db, 'studios'), studio_id)
-
-  const dataForm = {
+  console.log(data, 'la data a ingresar')
+  const { error } = await supabase.from('studios_photos').insert({
     ...data,
     studio_id,
-    created_at: serverTimestamp(),
+  })
+
+  if (error) {
+    throw new Error(`Error creando la foto: ${error.message}`)
   }
 
-  const docSnap = await getDoc(studioRef)
-
-  if (docSnap.exists()) {
-    await addDoc(collection(db, 'studios_pics'), dataForm)
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function deletePictureFromStudio(imageId, pictureId) {
