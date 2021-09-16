@@ -89,7 +89,7 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
                   <FaRegHeart />
                 </span>
 
-                <span className="hidden xl:block truncate">Favoritos</span>
+                <span className="hidden 2xl:block truncate">Favoritos</span>
               </button>
             )}
           </div>
