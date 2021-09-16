@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
 
 const myLoader = ({ src, width, quality }) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,q-${quality || 75}`
+  return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
 }
 
 const MorePicturesList = ({ studio, pictures, mutatePictures }) => {
@@ -27,10 +27,7 @@ const MorePicturesList = ({ studio, pictures, mutatePictures }) => {
   return (
     <div className="grid grid-cols-2 gap-3 mb-10">
       {pictures.map((pic) => (
-        <div
-          className="relative group overflow-hidden rounded-md"
-          key={pic.fileId}
-        >
+        <div className="relative group overflow-hidden rounded-md" key={pic.id}>
           <div className="relative w-full aspect-w-5 aspect-h-3    border-none z-30">
             <Image
               key={pic.fileId}
