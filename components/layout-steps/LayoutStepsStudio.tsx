@@ -69,9 +69,9 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
           </Link>
         </div>
         {studio?.is_active ? (
-          <SideMenuStudio username={studio || null} />
+          <SideMenuStudio username={studio.username || null} />
         ) : (
-          <SideMenuStudioSteps studioId={studio?.id} />
+          <SideMenuStudioSteps studioId={studio?.id} uid={uid} />
         )}
       </div>
 
