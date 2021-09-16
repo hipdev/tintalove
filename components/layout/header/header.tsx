@@ -12,6 +12,7 @@ import MenuMobile from './MenuMobile'
 import { getArtistInfo } from 'lib/queries/artists'
 import useSWR from 'swr'
 import Availability from './availability'
+import { getStudioIsActive } from 'lib/queries/studios'
 
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
@@ -21,14 +22,14 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
     getArtistInfo
   )
 
-  const {
-    state: { list },
-    actions,
-  }: any = useStateMachine({
+  const { data: studio } = useSWR(
+    user?.id ? ['getStudioIsActive', user.id] : null,
+    getStudioIsActive
+  )
+
+  const { actions }: any = useStateMachine({
     lists,
   })
-
-  console.log(artist, 'artist en header')
 
   return (
     <nav
@@ -117,7 +118,11 @@ const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
               </>
             )}
             <div className="gap-3 ml-2 hidden sm:flex items-center flex-shrink-0">
-              <SubMenuHeader user={user || null} />
+              <SubMenuHeader
+                user={user || null}
+                artist={artist}
+                studio={studio}
+              />
             </div>
           </div>
         </div>
