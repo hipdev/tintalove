@@ -113,12 +113,12 @@ const MorePhotosCrop = ({
         .then((response) => response.json())
         .then(async (fileImagekit) => {
           const content = {
-            filePath: fileImagekit.filePath,
+            file_path: fileImagekit.filePath,
             size: fileImagekit.size,
-            fileId: fileImagekit.fileId,
+            file_id: fileImagekit.fileId,
             url: fileImagekit.url,
             name: fileImagekit.name,
-            thumbnailUrl: fileImagekit.url,
+            thumbnail: fileImagekit.thumbnailUrl,
           }
           try {
             toast.promise(addStudioPicture(studioId, content), {

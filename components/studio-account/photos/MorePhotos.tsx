@@ -46,53 +46,6 @@ const MorePhotos = ({ studio }) => {
           setPicture(reader.result as any)
         }
         reader.readAsDataURL(result)
-
-        // reader.onload = async () => {
-        //   let dataFile: any = new FormData()
-
-        //   dataFile.append('fileName', studio?.id || 'cropped')
-        //   dataFile.append('file', reader.result)
-        //   dataFile.append('publicKey', 'public_EUtZgctR8vm6PmW9JTeqTLQI4AM=')
-        //   dataFile.append('signature', data.signature)
-        //   dataFile.append('expire', data.expire)
-        //   dataFile.append('token', data.token)
-        //   dataFile.append('folder', 'studios')
-
-        //   const options = {
-        //     method: 'POST',
-        //     body: dataFile,
-        //   }
-
-        //   await fetch('https://upload.imagekit.io/api/v1/files/upload', options)
-        //     .then((response) => response.json())
-        //     .then(async (fileImagekit) => {
-        //       const content = {
-        //         filePath: fileImagekit.filePath,
-        //         size: fileImagekit.size,
-        //         fileId: fileImagekit.fileId,
-        //         url: fileImagekit.url,
-        //         name: fileImagekit.name,
-        //         thumbnailUrl: fileImagekit.url,
-        //       }
-        //       try {
-        //         toast.promise(addStudioPicture(studio?.id, content), {
-        //           loading: 'Subiendo...',
-        //           success: () => {
-        //             mutatePictures()
-        //             mutateToken()
-
-        //             return 'Foto añadida 😉'
-        //           },
-        //           error: (err) => {
-        //             return `${err.toString()}`
-        //           },
-        //         })
-        //       } catch (error) {
-        //         console.error(error)
-        //       }
-        //     })
-        // }
-        // reader.readAsDataURL(result)
       },
       error(err) {
         console.log(err.message)
