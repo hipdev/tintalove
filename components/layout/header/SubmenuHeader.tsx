@@ -15,8 +15,8 @@ const SubMenuHeader = ({
   studio,
 }: {
   user: UserState
-  artist: ArtistTypes
-  studio: StudioTypes
+  artist?: ArtistTypes
+  studio?: StudioTypes
 }) => {
   const { openModal } = useContext(LoginContext)
   const { signOut } = useUser()
