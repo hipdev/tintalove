@@ -680,7 +680,7 @@ export async function getUsernameStudio(_key, id) {
 export async function getStudiosFilter(_key) {
   const { data, error } = await supabase
     .from('studios')
-    .select('name, username, id')
+    .select('name, username, id, formatted_address')
     .limit(5)
 
   if (error) {
