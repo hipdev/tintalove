@@ -384,7 +384,6 @@ export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
 }
 
 export async function addArtistPicture(user_id, data) {
-  console.log(data, 'la data a ingresar')
   const { error } = await supabase.from('artists_photos').insert({
     ...data,
     user_id,
