@@ -12,6 +12,7 @@ import SubMenuHeader from 'components/layout/header/SubmenuHeader'
 import useSWR from 'swr'
 import { getArtistInfo } from 'lib/queries/artists'
 import Availability from 'components/layout/header/availability'
+import { getStudioIsActive } from 'lib/queries/studios'
 
 type Props = {
   uid?: string
@@ -25,6 +26,11 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   const { data: artist } = useSWR(
     uid ? ['getArtistInfo', uid] : null,
     getArtistInfo
+  )
+
+  const { data: studio } = useSWR(
+    user?.id ? ['getStudioIsActive', uid] : null,
+    getStudioIsActive
   )
 
   return (
@@ -116,7 +122,11 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
               </>
             )}
             <div className="gap-3 ml-2 hidden sm:flex items-center flex-shrink-0">
-              <SubMenuHeader user={user || null} />
+              <SubMenuHeader
+                user={user || null}
+                artist={artist}
+                studio={studio}
+              />
             </div>
           </div>
         </header>
