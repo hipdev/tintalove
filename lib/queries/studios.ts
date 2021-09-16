@@ -215,6 +215,32 @@ export async function getStudioData(_key, user_id) {
   return null
 }
 
+export async function getStudioIsActive(_key, user_id) {
+  const { data: studioId, error } = await supabase
+    .from('studios_admin')
+    .select(`studio_id`)
+    .eq('user_id', user_id)
+
+  if (studioId) {
+    const { data, error: studioError } = await supabase
+      .from('studios')
+      .select(
+        `is_active, id` // Así tabla:campo se hacen multiples queries
+      )
+      .eq('id', studioId[0].studio_id)
+
+    if (error) {
+      throw new Error(`Error obteniendo id: ${error.message}`)
+    }
+    if (studioError) {
+      throw new Error(`Error obteniendo estudio: ${error.message}`)
+    }
+
+    return data[0]
+  }
+  return null
+}
+
 export async function getStudioInfo(_key, studioId) {
   const docRef = doc(collection(db, 'studios'), studioId)
   const docSnap = await getDoc(docRef)

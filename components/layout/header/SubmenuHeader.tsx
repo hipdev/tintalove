@@ -6,17 +6,20 @@ import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
 import { url_domain } from 'lib/utils'
 import { useUser } from 'hooks/useUser'
-import { getArtistInfo } from 'lib/queries/artists'
-import useSWR from 'swr'
+import { ArtistTypes } from 'types/artist'
+import { StudioTypes } from 'types/studio'
 
-const SubMenuHeader = ({ user }: { user: UserState }) => {
+const SubMenuHeader = ({
+  user,
+  artist,
+  studio,
+}: {
+  user: UserState
+  artist: ArtistTypes
+  studio: StudioTypes
+}) => {
   const { openModal } = useContext(LoginContext)
   const { signOut } = useUser()
-
-  const { data: artist } = useSWR(
-    user?.id ? ['getArtistInfo', user.id] : null,
-    getArtistInfo
-  )
 
   const handleLogout = () => {
     signOut()
@@ -105,7 +108,7 @@ const SubMenuHeader = ({ user }: { user: UserState }) => {
                           )}
                         </Menu.Item>
 
-                        {user?.has_studio && (
+                        {studio && (
                           <Menu.Item>
                             {({ active }) => (
                               <Link href="/studio-account/general">
