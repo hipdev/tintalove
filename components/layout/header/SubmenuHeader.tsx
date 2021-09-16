@@ -91,55 +91,29 @@ const SubMenuHeader = ({
                       </div>
 
                       <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href={
-                                artist ? '/artist/main-info' : '/user/profile'
-                              }
-                              className={`${
-                                active
-                                  ? 'bg-gray-100 text-gray-900'
-                                  : 'text-gray-700'
-                              } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                            >
-                              Mi cuenta
-                            </a>
-                          )}
-                        </Menu.Item>
+                        <Link
+                          href={artist ? '/artist/main-info' : '/user/profile'}
+                        >
+                          <a className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100">
+                            Mi cuenta
+                          </a>
+                        </Link>
 
                         {studio && (
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link href="/studio-account/general">
-                                <a
-                                  className={`${
-                                    active
-                                      ? 'bg-gray-100 text-gray-900'
-                                      : 'text-gray-700'
-                                  } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                                >
-                                  Administrar estudio
-                                </a>
-                              </Link>
-                            )}
-                          </Menu.Item>
+                          <Link href="/studio-account/general">
+                            <a className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100">
+                              Administrar estudio
+                            </a>
+                          </Link>
                         )}
 
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#support"
-                              className={`${
-                                active
-                                  ? 'bg-gray-100 text-gray-900'
-                                  : 'text-gray-700'
-                              } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                            >
-                              Ayuda
-                            </a>
-                          )}
-                        </Menu.Item>
+                        <a
+                          href="#support"
+                          className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        >
+                          Ayuda
+                        </a>
+
                         {/* <Menu.Item
                           as="span"
                           disabled
@@ -150,20 +124,12 @@ const SubMenuHeader = ({
                       </div>
 
                       <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              onClick={handleLogout}
-                              className={`${
-                                active
-                                  ? 'bg-gray-100 text-gray-900'
-                                  : 'text-gray-700'
-                              } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                            >
-                              Salir
-                            </button>
-                          )}
-                        </Menu.Item>
+                        <button
+                          onClick={handleLogout}
+                          className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-100"
+                        >
+                          Salir
+                        </button>
                       </div>
                     </Menu.Items>
                   </Transition>
