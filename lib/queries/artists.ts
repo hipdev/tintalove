@@ -444,6 +444,10 @@ export async function getArtistPictures(key, artistId) {
     .select('*')
     .eq('user_id', artistId)
 
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
+
   return { pictures }
 }
 

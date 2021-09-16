@@ -422,16 +422,14 @@ export async function updateStudioMainProfilePicture(
 }
 
 export async function getStudioPictures(key, studioId) {
-  const q = query(
-    collection(db, 'studios_pics'),
-    where('studio_id', '==', studioId)
-  )
+  let { data: pictures, error } = await supabase
+    .from('studios_photos')
+    .select('*')
+    .eq('studio_id', studioId)
 
-  const querySnapshot = await getDocs(q)
-  const pictures: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return pictures.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
   return { pictures }
 }
