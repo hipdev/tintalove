@@ -472,41 +472,36 @@ export async function deletePictureFromArtist(file_id, photoId) {
 // Solicitudes de trabajo de artistas hacia estudios
 
 export async function sendArtistWorkRequest(studio, artist) {
-  const q = query(
-    collection(db, 'artists_requests'),
-    where('artist_id', '==', artist.artist_id),
-    where('studio_id', '==', studio.objectID)
-  )
+  const { data: request, error } = await supabase
+    .from('artists_requests')
+    .select(`studio_id`)
+    .eq('studio_id', studio.id)
+    .eq('user_id', artist.user_id)
 
-  const querySnapshot = await getDocs(q)
+  if (error) {
+    throw new Error(`Error obteniendo request: ${error.message}`)
+  }
 
-  if (querySnapshot.empty) {
-    try {
-      await addDoc(collection(db, 'artists_requests'), {
-        created_at: serverTimestamp(),
-        studio_id: studio.objectID, // id from Algolia
-        artist_id: artist.artist_id,
-        studio_name: studio.studio_name,
-        studio_address:
-          studio.dataLocation.formatted_address || studio.formatted_address,
-        studio_picture: studio.profile_picture.url || null,
-        artist_picture: artist.profile_picture.url || null,
-        studio_email: studio.email || null,
-        artist_name: artist.displayName,
-        artist_email: artist.email || null,
-        artist_phone: artist.phone || null,
-        approval: 'PENDING',
-      })
-    } catch (error) {
-      console.log(error, 'el error')
-      throw new Error(
-        'Necesitas terminar todos los pasos primero, regresa aquí luego'
-      )
+  if (request[0]) {
+    throw {
+      name: 'exists',
+      message: `Ya enviaste una a ${studio.name}`,
+    }
+  } else {
+    const { error } = await supabase.from('artists_requests').insert(
+      {
+        studio_id: studio.id,
+        user_id: artist.user_id,
+        status: 'PENDING',
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+
+    if (error) {
+      throw new Error(`Error: ${error.message}`)
     }
 
     return true
-  } else {
-    throw new Error(`Ya enviaste una a ${studio.studio_name}`)
   }
 }
 
@@ -514,14 +509,14 @@ export async function getArtistRequests(_key, artistId) {
   if (artistId) {
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*')
-      .eq('artist_id', artistId)
+      .select('*, studios(*)')
+      .eq('user_id', artistId)
 
     if (error) {
       throw new Error(`Error con las solicitudes: ${error.message}`)
     }
 
-    return { requests }
+    return requests
   }
 }
 

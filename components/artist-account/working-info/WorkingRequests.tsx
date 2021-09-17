@@ -1,4 +1,5 @@
 import GetUsernameLink from 'components/common/GetUsernameLink'
+import { parseISO } from 'date-fns'
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
 import { deleteArtistRequest } from 'lib/queries/artists'
@@ -84,15 +85,17 @@ const WorkingRequests = ({ requests }) => {
                                 Aplicaste en{' '}
                                 <time
                                   dateTime={format(
-                                    item?.created_at.toMillis(),
+                                    parseISO(item?.created_at),
                                     'yyyy'
                                   )}
                                 >
                                   <span className="capitalize">
                                     {format(
-                                      item?.created_at.toMillis(),
+                                      parseISO(item?.created_at),
                                       'MMMM d, yyyy',
-                                      { locale: es }
+                                      {
+                                        locale: es,
+                                      }
                                     )}
                                   </span>
                                 </time>
@@ -123,7 +126,7 @@ const WorkingRequests = ({ requests }) => {
                                     El estudio te ha eliminado en{' '}
                                     <span>
                                       {format(
-                                        item?.fired_at.toMillis(),
+                                        parseISO(item?.created_at),
                                         'MMMM d, yyyy',
                                         { locale: es }
                                       )}
