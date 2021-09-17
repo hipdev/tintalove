@@ -13,14 +13,15 @@ import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import GetUsernameLink from 'components/common/GetUsernameLink'
+import { parseISO } from 'date-fns'
 
 const ArtistsRequests = ({ studio }) => {
-  const { data, mutate: mutateRequest } = useSWR(
+  const { data: requests, mutate: mutateRequest } = useSWR(
     ['getRequestsByStudio', studio?.id],
     getRequestsByStudio
   )
 
-  console.log(data, 'requests')
+  console.log(requests, 'requests')
 
   const handleDeleteRequest = (requestId) => {
     toast.promise(cancelArtistRequest(requestId), {
@@ -54,124 +55,125 @@ const ArtistsRequests = ({ studio }) => {
 
       <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
         <ul className="divide-y divide-gray-200">
-          {data?.requests?.map((request) => {
-            if (request.approval == 'PENDING') {
-              return (
-                <li key={request.id} className="block hover:bg-gray-900">
-                  <div className="flex items-center px-4 py-3 sm:px-6">
-                    <div className="min-w-0 flex-1 flex items-center">
-                      <div className="flex-shrink-0">
-                        <GetUsernameLink
-                          id={request.artist_id}
-                          type="artist"
-                          target
-                        >
-                          <img
-                            className="h-12 w-12 rounded-full"
-                            src={request.artist_picture}
-                            alt=""
-                          />
-                        </GetUsernameLink>
-                      </div>
-                      <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                        <div>
-                          <GetUsernameLink
-                            id={request.artist_id}
-                            type="artist"
-                            target
+          {requests?.length > 0 &&
+            requests?.map((request) => {
+              if (request.status == 'PENDING') {
+                return (
+                  <li key={request.id} className="block hover:bg-gray-900">
+                    <div className="flex items-center px-4 py-3 sm:px-6">
+                      <div className="min-w-0 flex-1 flex items-center">
+                        <div className="flex-shrink-0">
+                          <a
+                            href={`/${request?.users?.artists[0]?.username}`}
+                            target="_blank"
+                            rel="noreferrer"
                           >
-                            <span className="text-sm font-medium text-primary truncate">
-                              {request.artist_name}
-                            </span>
-                          </GetUsernameLink>
-
-                          <p className="mt-2 flex items-center text-sm text-gray-500">
-                            <MdMail
-                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                              aria-hidden="true"
+                            <img
+                              className="h-12 w-12 rounded-full"
+                              src={`${request?.users?.artists[0].artists_main_photos?.url}/tr:w-100,q-40`}
+                              alt=""
                             />
-                            <span className="truncate">
-                              {parsePhoneNumber(
-                                request.artist_phone
-                              ).formatInternational()}
-                            </span>
-                          </p>
+                          </a>
                         </div>
-                        <div className="hidden md:block">
+                        <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
-                            <p className="text-sm text-gray-400">
-                              Aplicó en{' '}
-                              <time
-                                dateTime={format(
-                                  request?.created_at.toMillis(),
-                                  'yyyy'
-                                )}
-                              >
-                                <span className="capitalize">
-                                  {format(
-                                    request?.created_at.toMillis(),
-                                    'MMMM d, yyyy',
-                                    { locale: es }
-                                  )}
-                                </span>
-                              </time>
-                            </p>
+                            <a
+                              href={`/${request?.users?.artists[0]?.username}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <span className="text-sm font-medium text-primary truncate">
+                                {request?.users?.artists[0]?.name}
+                              </span>
+                            </a>
+
                             <p className="mt-2 flex items-center text-sm text-gray-500">
-                              <FiHelpCircle
-                                className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary"
+                              <MdMail
+                                className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                 aria-hidden="true"
                               />
-                              <span>Esperando respuesta</span>
+                              <span className="truncate">
+                                {parsePhoneNumber(
+                                  request?.users?.artists[0]?.mobile.value
+                                ).formatInternational()}
+                              </span>
                             </p>
+                          </div>
+                          <div className="hidden md:block">
+                            <div>
+                              <p className="text-sm text-gray-400">
+                                Aplicó en{' '}
+                                <time
+                                  dateTime={format(
+                                    parseISO(request?.created_at),
+                                    'yyyy'
+                                  )}
+                                >
+                                  <span className="capitalize">
+                                    {format(
+                                      parseISO(request?.created_at),
+                                      'MMMM d, yyyy',
+                                      { locale: es }
+                                    )}
+                                  </span>
+                                </time>
+                              </p>
+                              <p className="mt-2 flex items-center text-sm text-gray-500">
+                                <FiHelpCircle
+                                  className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary"
+                                  aria-hidden="true"
+                                />
+                                <span>Esperando respuesta</span>
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex">
-                      <div onClick={() => handleDeleteRequest(request.id)}>
-                        <div>
+                      <div className="flex">
+                        <div onClick={() => handleDeleteRequest(request.id)}>
+                          <div>
+                            <span
+                              aria-label="Eliminar "
+                              data-microtip-position="top"
+                              role="tooltip"
+                            >
+                              <MdCancel
+                                className="h-6 w-6 text-red-400 cursor-pointer"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          </div>
+                        </div>
+
+                        <div
+                          className="ml-7"
+                          onClick={() => handleAcceptRequest(request)}
+                        >
                           <span
-                            aria-label="Eliminar "
+                            aria-label="Aceptar "
                             data-microtip-position="top"
                             role="tooltip"
                           >
-                            <MdCancel
-                              className="h-6 w-6 text-red-400 cursor-pointer"
+                            <BsPersonCheck
+                              className="h-6 w-6 text-primary cursor-pointer"
                               aria-hidden="true"
                             />
                           </span>
                         </div>
                       </div>
-
-                      <div
-                        className="ml-7"
-                        onClick={() => handleAcceptRequest(request)}
-                      >
-                        <span
-                          aria-label="Aceptar "
-                          data-microtip-position="top"
-                          role="tooltip"
-                        >
-                          <BsPersonCheck
-                            className="h-6 w-6 text-primary cursor-pointer"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </div>
                     </div>
-                  </div>
-                </li>
-              )
-            } else {
-              return (
-                <p key="no-request" className="text-gray-300 p-4">
-                  Sin solicitudes actualmente.
-                </p>
-              )
-            }
-          })}
+                  </li>
+                )
+              } else {
+                return (
+                  <p key="no-request" className="text-gray-300 p-4">
+                    Sin solicitudes actualmente.
+                  </p>
+                )
+              }
+            })}
 
-          {data?.requests?.length < 1 && (
+          {requests?.length < 0 && (
             <p className="text-gray-300 p-4">
               Aquí aparecerán los artistas que solicitarón unirse a tu estudio.
             </p>

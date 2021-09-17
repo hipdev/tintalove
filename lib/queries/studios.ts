@@ -511,14 +511,14 @@ export async function getRequestsByStudio(_key, studioId) {
   if (studioId) {
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*')
+      .select('*, users(artists(*,artists_main_photos(url)))')
       .eq('studio_id', studioId)
 
     if (error) {
       throw new Error('Error obteniendo las requests')
     }
 
-    return { requests }
+    return requests
   }
 
   return null
