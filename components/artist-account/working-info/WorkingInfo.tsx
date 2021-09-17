@@ -29,12 +29,12 @@ const WorkingInfo = ({ uid, artist }) => {
 
   const router = useRouter()
 
-  const { data } = useSWR(
+  const { data: requests } = useSWR(
     ['getArtistRequests', artist?.user_id],
     getArtistRequests
   )
 
-  console.log(artist, data, 'el artista')
+  console.log(requests, 'requests')
 
   const {
     register,
@@ -164,7 +164,7 @@ const WorkingInfo = ({ uid, artist }) => {
 
             {watchWorkAs == 'partner' && (
               <div className="mt-7">
-                {data?.requests.length < 2 ? (
+                {requests.length < 2 ? (
                   <>
                     <label className="text-sm mb-3 tracking-wide">
                       <span className="mb-3 flex">
@@ -222,8 +222,8 @@ const WorkingInfo = ({ uid, artist }) => {
                   </div>
                 )}
 
-                {/* <WorkingRequests requests={data?.requests || null} />
-                <StudiosList artistId={uid || null} /> */}
+                <WorkingRequests requests={requests || null} />
+                {/* <StudiosList artistId={uid || null} />  */}
               </div>
             )}
 

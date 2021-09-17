@@ -2,7 +2,9 @@ import debounce from 'lodash.debounce'
 import { useCombobox } from 'downshift'
 import { supabase } from 'lib/supabase-client'
 import { useCallback, useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
+import { sendArtistWorkRequest } from 'lib/queries/artists'
+import toast from 'react-hot-toast'
 // import { AutocompleteStudioItemSendRequest } from './AutocompleteStudioItemSendRequest'
 
 const menuStyles = {
@@ -14,7 +16,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
   const [inputItems, setInputItems] = useState(studios)
   const {
     isOpen,
-    openMenu,
+    // openMenu,
     getToggleButtonProps,
     getLabelProps,
     getMenuProps,
@@ -28,7 +30,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
     onInputValueChange: useCallback(
       debounce(async ({ inputValue, selectedItem }) => {
         console.log(inputValue, selectedItem, 'values')
-        if (inputValue != '' && inputValue != selectedItem.name) {
+        if (inputValue != '' && inputValue != selectedItem?.name) {
           const { data } = await supabase
             .from('studios')
             .select('name, id, username, formatted_address')
@@ -43,8 +45,23 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
       []
     ),
 
-    onSelectedItemChange: (item) => {
-      console.log(item, 'item seleccionado')
+    onSelectedItemChange: ({ selectedItem }) => {
+      console.log(selectedItem, artist, 'item seleccionado')
+
+      toast.promise(sendArtistWorkRequest(selectedItem, artist), {
+        loading: 'Enviando...',
+        success: () => {
+          mutate(['getArtistRequests', artist.artist_id])
+          return 'Solicitud enviada 😉'
+        },
+        error: (err) => {
+          console.log(err, 'el error')
+          if (err.name != 'exists') {
+            setErrorRequest(true)
+          }
+          return `${err?.message ? err.message : err.toString()}`
+        },
+      })
     },
   })
 
