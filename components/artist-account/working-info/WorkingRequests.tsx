@@ -1,4 +1,3 @@
-import GetUsernameLink from 'components/common/GetUsernameLink'
 import { parseISO } from 'date-fns'
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
@@ -26,7 +25,7 @@ const WorkingRequests = ({ requests }) => {
   const showTitle =
     requests &&
     requests.some(
-      (item) => item.approval == 'PENDING' || item.approval == 'CANCELED'
+      (item) => item.status == 'PENDING' || item.status == 'CANCELED'
     )
 
   return (
@@ -39,35 +38,35 @@ const WorkingRequests = ({ requests }) => {
         <ul className="divide-y divide-gray-200">
           {requests &&
             requests.map((item) => {
-              if (item.approval != 'APPROVED') {
+              if (item.status != 'APPROVED') {
                 return (
                   <li key={item.id} className="block hover:bg-black">
                     <div className="flex items-center px-4 py-3 sm:px-6">
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
-                          <GetUsernameLink
-                            id={item.studio_id}
-                            type="studio"
-                            target
+                          <a
+                            href={`/studio/${item?.studios?.username}`}
+                            target="_blank"
+                            rel="noreferrer"
                           >
                             <img
                               className="h-12 w-12 rounded-full"
-                              src={item.studio_picture}
+                              src={`${item?.studios.studios_main_photos?.url}/tr:w-100,q-20`}
                               alt=""
                             />
-                          </GetUsernameLink>
+                          </a>
                         </div>
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
-                            <GetUsernameLink
-                              id={item.studio_id}
-                              type="studio"
-                              target
+                            <a
+                              href={`/studio/${item?.studios?.username}`}
+                              target="_blank"
+                              rel="noreferrer"
                             >
                               <span className="text-sm font-medium text-primary truncate">
-                                {item.studio_name}
+                                {item.studios.name}
                               </span>
-                            </GetUsernameLink>
+                            </a>
 
                             <p className="mt-2 flex items-center text-sm text-gray-500">
                               <GoLocation
@@ -75,7 +74,7 @@ const WorkingRequests = ({ requests }) => {
                                 aria-hidden="true"
                               />
                               <span className="truncate">
-                                {item.studio_address}
+                                {item.studios.formatted_address}
                               </span>
                             </p>
                           </div>
@@ -101,7 +100,7 @@ const WorkingRequests = ({ requests }) => {
                                 </time>
                               </p>
                               <p className="mt-2 flex items-center text-sm text-gray-500">
-                                {item.approval == 'PENDING' ? (
+                                {item.status == 'PENDING' ? (
                                   <>
                                     <FiHelpCircle
                                       className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary"
