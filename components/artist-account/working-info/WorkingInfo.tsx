@@ -222,7 +222,7 @@ const WorkingInfo = ({ uid, artist }) => {
                   </div>
                 )}
 
-                <WorkingRequests requests={requests || null} />
+                <WorkingRequests requests={requests || null} uid={uid} />
                 {/* <StudiosList artistId={uid || null} />  */}
               </div>
             )}
