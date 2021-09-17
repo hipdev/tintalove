@@ -8,12 +8,12 @@ import { FiHelpCircle } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
 import { mutate } from 'swr'
 
-const WorkingRequests = ({ requests }) => {
+const WorkingRequests = ({ requests, uid }) => {
   const handleDeleteRequest = (request) => {
     toast.promise(deleteArtistRequest(request.id), {
       loading: 'Eliminando...',
       success: () => {
-        mutate(['getArtistRequests', request.artist_id])
+        mutate(['getArtistRequests', uid])
         return 'Solicitud eliminada'
       },
       error: (err) => {

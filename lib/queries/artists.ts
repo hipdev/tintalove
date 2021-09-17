@@ -521,13 +521,12 @@ export async function getArtistRequests(_key, artistId) {
 }
 
 export async function deleteArtistRequest(requestId) {
-  try {
-    const artistRequest = doc(collection(db, 'artists_requests'), requestId)
-    await deleteDoc(artistRequest)
-
-    return true
-  } catch (error) {
-    throw new Error('Error eliminando la solicitud')
+  const { error } = await supabase
+    .from('artists_requests')
+    .delete()
+    .eq('id', requestId)
+  if (error) {
+    throw new Error(`Error eliminando: ${error.message}`)
   }
 }
 
