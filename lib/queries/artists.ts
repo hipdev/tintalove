@@ -509,7 +509,7 @@ export async function getArtistRequests(_key, artistId) {
   if (artistId) {
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*, studios(*)')
+      .select('*, studios(*, studios_main_photos(url)), users(artists(*))')
       .eq('user_id', artistId)
 
     if (error) {
