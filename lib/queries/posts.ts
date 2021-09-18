@@ -66,9 +66,11 @@ export async function createArtistPost(
 }
 
 export async function getPostsInfo(_key) {
-  let { data: posts } = await supabase.from('posts').select('*')
+  let { data: posts } = await supabase
+    .from('posts')
+    .select('*, artists:artist_id(name, username)')
 
-  return { posts }
+  return posts
 }
 
 export async function getPostsInfoMobile(_key) {

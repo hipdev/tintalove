@@ -16,7 +16,8 @@ export type ArtistTypes = {
   contact_way?: string
   created_at?: Timestamp
   updated_at?: Timestamp
-  displayName?: string
+  displayName?: string // remove after migration
+  name?: string // remove after migration
   formatted_address?: string
   place_id?: string
   username?: string
