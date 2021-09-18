@@ -51,7 +51,7 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
       toast.promise(sendArtistWorkRequest(selectedItem, artist), {
         loading: 'Enviando...',
         success: () => {
-          mutate(['getArtistRequests', artist.user_id])
+          mutate(['getArtistRequests', artist.id])
           return 'Solicitud enviada 😉'
         },
         error: (err) => {
