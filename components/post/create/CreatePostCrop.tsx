@@ -58,12 +58,12 @@ const CreatePostCrop = ({
     imgRef.current = img
   }, [])
 
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => router.push('/' + artist.username), 1000)
-      return () => clearTimeout(timer)
-    }
-  }, [success])
+  // useEffect(() => {
+  //   if (success) {
+  //     const timer = setTimeout(() => router.push('/' + artist.username), 1000)
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [success])
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,
@@ -116,13 +116,11 @@ const CreatePostCrop = ({
             ? dataForm.studio.value
             : dataForm.onlyOneStudio,
           styles: dataForm.styles,
-          is_partner: dataForm.isPartner,
         }
       } else {
         formData = {
           description: dataForm.description,
           styles: dataForm.styles,
-          is_partner: dataForm.isPartner,
         }
       }
 
@@ -152,12 +150,12 @@ const CreatePostCrop = ({
         .then((response) => response.json())
         .then(async (fileImagekit) => {
           const pictureInfo = {
-            filePath: fileImagekit.filePath,
+            file_path: fileImagekit.filePath,
             size: fileImagekit.size,
-            fileId: fileImagekit.fileId,
+            file_id: fileImagekit.fileId,
             url: fileImagekit.url,
             name: fileImagekit.name,
-            thumbnailUrl: fileImagekit.url,
+            thumbnail: fileImagekit.thumbnailUrl,
           }
           try {
             toast.promise(
