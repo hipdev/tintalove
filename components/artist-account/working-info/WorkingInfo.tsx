@@ -30,7 +30,7 @@ const WorkingInfo = ({ uid, artist }) => {
   const router = useRouter()
 
   const { data: requests } = useSWR(
-    ['getArtistRequests', artist?.user_id],
+    ['getArtistRequests', artist?.id],
     getArtistRequests
   )
 
@@ -164,7 +164,7 @@ const WorkingInfo = ({ uid, artist }) => {
 
             {watchWorkAs == 'partner' && (
               <div className="mt-7">
-                {requests.length < 2 ? (
+                {requests?.length < 2 ? (
                   <>
                     <label className="text-sm mb-3 tracking-wide">
                       <span className="mb-3 flex">
@@ -222,7 +222,10 @@ const WorkingInfo = ({ uid, artist }) => {
                   </div>
                 )}
 
-                <WorkingRequests requests={requests || null} uid={uid} />
+                <WorkingRequests
+                  requests={requests || null}
+                  artistId={artist?.id}
+                />
                 {/* <StudiosList artistId={uid || null} />  */}
               </div>
             )}

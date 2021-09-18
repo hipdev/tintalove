@@ -476,7 +476,7 @@ export async function sendArtistWorkRequest(studio, artist) {
     .from('artists_requests')
     .select(`studio_id`)
     .eq('studio_id', studio.id)
-    .eq('user_id', artist.user_id)
+    .eq('artist_id', artist.id)
 
   if (error) {
     throw new Error(`Error obteniendo request: ${error.message}`)
@@ -491,6 +491,7 @@ export async function sendArtistWorkRequest(studio, artist) {
     const { error } = await supabase.from('artists_requests').insert(
       {
         studio_id: studio.id,
+        artist_id: artist.id,
         user_id: artist.user_id,
         status: 'PENDING',
       },
@@ -509,8 +510,8 @@ export async function getArtistRequests(_key, artistId) {
   if (artistId) {
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*, studios(*, studios_main_photos(url)), users(artists(*))')
-      .eq('user_id', artistId)
+      .select('*, studios(*, studios_main_photos(url)), artists(*)')
+      .eq('artist_id', artistId)
 
     if (error) {
       throw new Error(`Error con las solicitudes: ${error.message}`)

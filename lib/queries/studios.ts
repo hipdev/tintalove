@@ -536,60 +536,18 @@ export async function cancelArtistRequest(requestId) {
 }
 
 export async function acceptArtistRequest(request) {
-  const artistRequest = doc(collection(db, 'artists_requests'), request.id)
-  const artistRef = doc(collection(db, 'artists'), request.artist_id)
-  const studioRef = doc(collection(db, 'studios'), request.studio_id)
+  console.log(request, 'la request')
 
-  const q = query(
-    collection(db, 'studios_artists'),
-    where('artist_id', '==', request.artist_id),
-    where('studio_id', '==', request.studio_id)
-  )
+  // const { data: isArtist, error } = await supabase
+  // .from('studios_artists')
+  // .select('id')
+  // .eq('artist_id', request)
 
-  const querySnapshot = await getDocs(q)
+  // if (isArtist) {
 
-  if (querySnapshot.empty) {
-    const batch = writeBatch(db)
-    const newStudioArtist = doc(collection(db, 'studios_artists'))
-
-    batch.set(newStudioArtist, {
-      created_at: serverTimestamp(),
-      request_id: request.id,
-      studio_id: request.studio_id, // id from Algolia
-      artist_id: request.artist_id,
-      studio_name: request.studio_name,
-      studio_address: request.studio_address,
-      studio_picture: request.studio_picture,
-      artist_picture: request.artist_picture,
-      artist_name: request.artist_name,
-      artist_email: request.artist_email || null,
-      artist_phone: request.artist_phone || null,
-      is_active: true,
-    })
-
-    batch.set(
-      artistRef,
-      {
-        studios: arrayUnion(request.studio_id),
-      },
-      { merge: true }
-    )
-
-    batch.set(
-      studioRef,
-      {
-        artists: arrayUnion(request.artist_id),
-      },
-      { merge: true }
-    )
-    batch.set(artistRequest, { approval: 'APPROVED' }, { merge: true })
-
-    await batch.commit()
-
-    return true
-  } else {
-    throw new Error(`${request.artist_name} ya hace parte del estudio`)
-  }
+  // } else {
+  //   throw new Error(`${request.artist_name} ya hace parte del estudio`)
+  // }
 }
 
 // Artistas por estudio
