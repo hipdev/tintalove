@@ -509,10 +509,12 @@ export async function activateStudio(studioId) {
 
 export async function getRequestsByStudio(_key, studioId) {
   if (studioId) {
+    console.log(studioId)
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*, users(artists(*,artists_main_photos(url)))')
+      .select('*, artists:artist_id(*,artists_main_photos(url))') // hay multiples relaciones, para reducir ambiguedad se debe especificar el id
       .eq('studio_id', studioId)
+      .eq('status', 'PENDING')
 
     if (error) {
       throw new Error('Error obteniendo las requests')
@@ -535,19 +537,45 @@ export async function cancelArtistRequest(requestId) {
   }
 }
 
-export async function acceptArtistRequest(request) {
+export async function acceptArtistRequest(request, userId) {
   console.log(request, 'la request')
 
-  // const { data: isArtist, error } = await supabase
-  // .from('studios_artists')
-  // .select('id')
-  // .eq('artist_id', request)
+  const { data: isArtist, error } = await supabase
+    .from('studios_artists')
+    .select('id')
+    .eq('artist_id', request.artist_id)
+    .eq('studio_id', request.studio_id)
 
-  // if (isArtist) {
+  console.log(isArtist, 'es artista')
 
-  // } else {
-  //   throw new Error(`${request.artist_name} ya hace parte del estudio`)
-  // }
+  if (isArtist[0]) {
+    throw new Error('Ya hace parte del estudio')
+  } else {
+    const { error } = await supabase.from('studios_artists').insert({
+      studio_id: request.studio_id,
+      artist_id: request.artist_id,
+      user_id: request.user_id,
+      request_id: request.id,
+      accepted_by: userId,
+    })
+
+    if (error) {
+      throw new Error('Error añadiendo el artista')
+    } else {
+      await supabase
+        .from('artists_requests')
+        .update(
+          {
+            status: 'APPROVED',
+            updated_at: new Date(),
+          },
+          { returning: 'minimal' }
+        )
+        .eq('id', request.id)
+
+      return true
+    }
+  }
 }
 
 // Artistas por estudio

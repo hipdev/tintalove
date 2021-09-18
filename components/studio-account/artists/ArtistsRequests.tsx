@@ -15,7 +15,7 @@ import toast from 'react-hot-toast'
 import GetUsernameLink from 'components/common/GetUsernameLink'
 import { parseISO } from 'date-fns'
 
-const ArtistsRequests = ({ studio }) => {
+const ArtistsRequests = ({ studio, uid }) => {
   const { data: requests, mutate: mutateRequest } = useSWR(
     ['getRequestsByStudio', studio?.id],
     getRequestsByStudio
@@ -36,7 +36,7 @@ const ArtistsRequests = ({ studio }) => {
     })
   }
   const handleAcceptRequest = (request) => {
-    toast.promise(acceptArtistRequest(request), {
+    toast.promise(acceptArtistRequest(request, uid), {
       loading: 'Aceptando...',
       success: () => {
         mutateRequest()
@@ -64,13 +64,13 @@ const ArtistsRequests = ({ studio }) => {
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
                           <a
-                            href={`/${request?.users?.artists[0]?.username}`}
+                            href={`/${request?.artists?.username}`}
                             target="_blank"
                             rel="noreferrer"
                           >
                             <img
                               className="h-12 w-12 rounded-full"
-                              src={`${request?.users?.artists[0].artists_main_photos?.url}/tr:w-100,q-40`}
+                              src={`${request?.artists?.artists_main_photos?.url}/tr:w-100,q-40`}
                               alt=""
                             />
                           </a>
@@ -78,12 +78,12 @@ const ArtistsRequests = ({ studio }) => {
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
                             <a
-                              href={`/${request?.users?.artists[0]?.username}`}
+                              href={`/${request?.artists?.username}`}
                               target="_blank"
                               rel="noreferrer"
                             >
                               <span className="text-sm font-medium text-primary truncate">
-                                {request?.users?.artists[0]?.name}
+                                {request?.artists?.name}
                               </span>
                             </a>
 
@@ -94,7 +94,7 @@ const ArtistsRequests = ({ studio }) => {
                               />
                               <span className="truncate">
                                 {parsePhoneNumber(
-                                  request?.users?.artists[0]?.mobile.value
+                                  request?.artists?.mobile.value
                                 ).formatInternational()}
                               </span>
                             </p>
