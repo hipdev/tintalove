@@ -527,14 +527,16 @@ export async function getRequestsByStudio(_key, studioId) {
 }
 
 export async function cancelArtistRequest(requestId) {
-  try {
-    const artistRequest = doc(collection(db, 'artists_requests'), requestId)
-    await updateDoc(artistRequest, { approval: 'CANCELED' })
+  const { error } = await supabase
+    .from('artists_requests')
+    .update({ status: 'CANCELED', updated_at: new Date() })
+    .eq('id', requestId)
 
-    return true
-  } catch (error) {
-    throw new Error('Error eliminando la solicitud')
+  if (error) {
+    throw new Error('Error cancelando la solicitud')
   }
+
+  return true
 }
 
 export async function acceptArtistRequest(request, userId) {
@@ -596,43 +598,12 @@ export async function getArtistsByStudio(_key, studioId) {
   return null
 }
 
-export async function deleteArtistFromStudio(studioArtist) {
-  const studioArtistReq = doc(
-    collection(db, 'studios_artists'),
-    studioArtist.id
-  )
-  const artistRequest = doc(
-    collection(db, 'artists_requests'),
-    studioArtist.request_id
-  )
-  const artistRef = doc(collection(db, 'artists'), studioArtist.artist_id)
-  const studioRef = doc(collection(db, 'studios'), studioArtist.studio_id)
-
-  const batch = writeBatch(db)
-
-  batch.delete(studioArtistReq)
-  batch.set(
-    artistRef,
-    {
-      studios: arrayRemove(studioArtist.studio_id),
-    },
-    { merge: true }
-  )
-
-  batch.set(
-    studioRef,
-    {
-      artists: arrayRemove(studioArtist.artist_id),
-    },
-    { merge: true }
-  )
-  batch.set(
-    artistRequest,
-    { approval: 'CANCELED', fired_at: serverTimestamp() },
-    { merge: true }
-  )
-
-  await batch.commit()
+export async function deleteArtistFromStudio(studioArtistId, requestId) {
+  await supabase.from('studios_artists').delete().eq('id', studioArtistId)
+  await supabase
+    .from('artists_requests')
+    .update({ status: 'CANCELED', updated_at: new Date() })
+    .eq('id', requestId)
 
   return true
 }

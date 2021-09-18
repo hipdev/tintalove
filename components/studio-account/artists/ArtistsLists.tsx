@@ -19,16 +19,19 @@ const ArtistsLists = ({ studio }) => {
   console.log(artists, 'artistss')
 
   const handleDeleteArtistFromStudio = (studioArtist) => {
-    toast.promise(deleteArtistFromStudio(studioArtist), {
-      loading: 'Eliminando...',
-      success: () => {
-        mutate()
-        return 'Artista eliminado'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
+    toast.promise(
+      deleteArtistFromStudio(studioArtist.id, studioArtist.request_id),
+      {
+        loading: 'Eliminando...',
+        success: () => {
+          mutate()
+          return 'Artista eliminado'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      }
+    )
   }
 
   return (
