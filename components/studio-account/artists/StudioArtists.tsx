@@ -89,7 +89,7 @@ const StudioArtists = ({ uid, studioId, studioData }) => {
       </h1>
 
       <ArtistsRequests studio={studioData} uid={uid} />
-      {/* <ArtistsLists studio={studioData} /> */}
+      <ArtistsLists studio={studioData} />
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
