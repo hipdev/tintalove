@@ -115,7 +115,7 @@ const WorkingRequests = ({ requests, artistId }) => {
                                       aria-hidden="true"
                                     />
                                     <span className="text-red-500">
-                                      Cancelado
+                                      Solicitud rechazada
                                     </span>
                                   </>
                                 )}
