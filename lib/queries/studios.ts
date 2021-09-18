@@ -584,13 +584,13 @@ export async function getArtistsByStudio(_key, studioId) {
   if (studioId) {
     const { data: artists, error } = await supabase
       .from('studios_artists')
-      .select('*')
+      .select('*, artists:artist_id(*, artists_main_photos(url))')
       .eq('studio_id', studioId)
 
     if (error) {
       throw new Error('Error obteniendo las requests')
     }
-    return { artists }
+    return artists
   }
 
   return null
