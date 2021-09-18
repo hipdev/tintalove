@@ -7,14 +7,11 @@ import { getPostsInfo } from 'lib/queries/posts'
 import useSWR from 'swr'
 import PostItem from './PostItem'
 
-const PostsListAllMobile = ({ user, latLng }) => {
+const PostsListAllMobile = ({ user }) => {
   // const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } =
   //   useAllPostsMobile()
 
-  const { data } = useSWR(
-    latLng ? ['getPostsByCity', latLng] : ['getPostsInfo'],
-    latLng ? getPostsByCity : getPostsInfo
-  )
+  const { data } = useSWR(['getPostsInfo'], getPostsInfo)
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24 pb-14">

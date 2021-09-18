@@ -1,6 +1,8 @@
 import { Timestamp } from 'firebase/firestore/lite'
+import { ArtistTypes } from './artist'
 
 export type PostTypes = {
+  artists: ArtistTypes
   id: string
   artist_id: string
   is_active: boolean
@@ -13,7 +15,9 @@ export type PostTypes = {
   description: string
   displayName: string
   image: ProfilePicture
-  picture_size: PictureSize | string
+  photo_info: ProfilePicture
+  picture_size: PictureSize | string // eliminar luego de migración
+  photo_size: PictureSize | string
   styles: []
   username: string
   _geoloc: LatLng
@@ -23,6 +27,15 @@ export type PostTypes = {
 } | null
 
 type ProfilePicture = {
+  fileId: string
+  filePath: string
+  name: string
+  size: number
+  thumbnailUrl: string
+  url: string
+}
+
+type ProfilePicture2 = {
   fileId: string
   filePath: string
   name: string

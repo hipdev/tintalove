@@ -58,12 +58,12 @@ const CreatePostCrop = ({
     imgRef.current = img
   }, [])
 
-  // useEffect(() => {
-  //   if (success) {
-  //     const timer = setTimeout(() => router.push('/' + artist.username), 1000)
-  //     return () => clearTimeout(timer)
-  //   }
-  // }, [success])
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => router.push('/' + artist.username), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   const { data }: any = useSWR('/api/imagekit/auth', fetcher, {
     shouldRetryOnError: false,

@@ -18,7 +18,7 @@ const PostItemListed = ({
 }: {
   post: PostTypes
   user: UserState
-  mutatePost: any
+  mutatePost?: any
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 

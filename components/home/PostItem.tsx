@@ -3,16 +3,9 @@ import Link from 'next/link'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { PostTypes } from 'types/post'
 import { UserState } from 'types/user'
-import useSWR from 'swr'
 import PostItemListed from './PostItemListed'
-import { getPostDataById } from 'lib/queries/posts'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  const { data, mutate } = useSWR(
-    post ? ['get-post', post.id] : null,
-    getPostDataById
-  )
-
   // console.log(user.searching_city.city_name, 'la ruta')
 
   const url =
@@ -33,9 +26,9 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
         <a className="group ">
           <div
             className={
-              post.picture_size == 'portrait'
+              post.photo_size == 'portrait'
                 ? 'aspect-w-3 aspect-h-4 relative'
-                : post.picture_size == 'landscape'
+                : post.photo_size == 'landscape'
                 ? 'aspect-w-4 aspect-h-3 relative'
                 : 'aspect-w-1 aspect-h-1 relative'
             }
@@ -48,11 +41,11 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             <img
               alt={`Este es un tatuaje de: ${post.displayName}`}
               className="lazyload rounded-md  object-cover"
-              src={`${post?.image?.url}/tr:w-340,q-20`}
-              data-srcset={`${post?.image?.url}/tr:w-340,q-80 1x, 
-                ${post?.image?.url}/tr:w-246,q-85 4x, 
-                ${post?.image?.url}/tr:w-320,q-80 3x, 
-                ${post?.image?.url}/tr:w-245,q-90 4x
+              src={`${post?.photo_info?.url}/tr:w-340,q-20`}
+              data-srcset={`${post?.photo_info?.url}/tr:w-340,q-80 1x, 
+                ${post?.photo_info?.url}/tr:w-246,q-85 4x, 
+                ${post?.photo_info?.url}/tr:w-320,q-80 3x, 
+                ${post?.photo_info?.url}/tr:w-245,q-90 4x
               `}
             />
           </div>
@@ -60,9 +53,9 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
       </Link>
       <div className="flex justify-between mt-2">
         <div className="flex items-center space-x-2">
-          <Link href={`/${post.username}`}>
+          <Link href={`/${post.artists.username}`}>
             <a className="text-gray-400 text-sm hover:text-primary">
-              {post.displayName || 'Sin nombre'}
+              {post.artists.name || 'Sin nombre'}
             </a>
           </Link>
         </div>
@@ -76,8 +69,8 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
             </div>
           ) : null}
           <div className="flex items-center space-x-2 text-white">
-            {data?.post && <p>{data.post.counter_listed}</p>}
-            <PostItemListed user={user} post={post} mutatePost={mutate} />
+            {/* {data?.post && <p>{data.post.counter_listed}</p>} */}
+            <PostItemListed user={user} post={post} />
           </div>
         </div>
       </div>

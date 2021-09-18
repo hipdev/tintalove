@@ -2,13 +2,11 @@ import { useWindowSize } from 'hooks/useWindowSize'
 import PostsList from './PostsList'
 import { useUser } from 'hooks/useUser'
 
-const Home = ({ latLng }: { latLng?: any }) => {
+const Home = () => {
   const { user }: any = useUser()
   const size = useWindowSize()
 
-  return size?.width ? (
-    <PostsList size={size} user={user} latLng={latLng} />
-  ) : null
+  return size?.width ? <PostsList size={size} user={user} /> : null
 }
 
 export default Home
