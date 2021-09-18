@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
 import Image from 'next/image'
 import PostCallOptions from 'components/post/PostCallOptions'
-import useUserId from 'hooks/use-user-id'
+
 import useSWR from 'swr'
 import { getUserInfo } from 'lib/queries/users'
 import { useContext, useState } from 'react'
@@ -30,7 +30,7 @@ const loaderPost = ({ src, quality }: any) => {
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
   const [openModalPics, setOpenModalPics] = useState(false)
 
-  const { userId } = useUserId()
+  const userId = null // ojo aqui, esto toca arreglarlo
   const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const { openModal } = useContext(LoginContext)
