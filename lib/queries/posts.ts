@@ -26,21 +26,12 @@ import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
 
-const firebaseConfig = { projectId: 'tinta-love' }
-// firebase old 8 version
-
-declare global {
-  interface Window {
-    firebase: any
-  }
-}
-
 export async function createArtistPost(
   uid,
   infoPicture,
   dataForm,
   artist,
-  picture_size
+  photo_size
 ) {
   if (!dataForm?.description || dataForm?.styles.length < 0) {
     throw new Error('Te faltan los campos del formulario')
@@ -50,29 +41,28 @@ export async function createArtistPost(
   }
   const styles = dataForm.styles.map((style) => style.value)
 
-  await addDoc(collection(db, 'posts'), {
-    created_at: serverTimestamp(),
-    artist_id: uid,
-    image: infoPicture,
-    username: artist.username,
-    city_name: artist.city_name,
-    province: artist.province,
-    country: artist.country,
-    displayName: artist.displayName,
-    artist_picture: artist.profile_picture.url,
+  console.log(
+    uid,
+    infoPicture,
+    dataForm,
+    artist,
+    photo_size,
+    'todos los campos'
+  )
+
+  const { error } = await supabase.from('posts').insert({
+    created_by: uid,
+    photo_info: infoPicture,
+    ...dataForm,
     styles,
-    description: dataForm.description,
-    is_partner: dataForm.is_partner,
-    studio_id: dataForm?.studio_id || null,
-    picture_size,
-    _geoloc: artist._geoloc,
-    geohash: artist.geohash || artist.city_hash,
+    artist_id: artist.id,
+    photo_size,
     is_active: true,
   })
-    .then((doc) => {
-      return { doc: doc.id, status: true }
-    })
-    .catch((error) => console.log(error))
+
+  if (error) {
+    throw new Error(`Error creando el post: ${error.message}`)
+  }
 }
 
 export async function getPostsInfo(_key) {
@@ -254,20 +244,6 @@ export async function addComment(comment, postId, userData) {
         await updateDoc(postRef, {
           counter_comments: increment(1),
         })
-        // if (window.firebase) {
-        //   if (!window.firebase.apps.length) {
-        //     window.firebase.initializeApp(firebaseConfig)
-        //   } else {
-        //     window.firebase.app() // if already initialized, use that one
-        //   }
-        // }
-
-        // const counter = new Counter(
-        //   window.firebase.firestore().doc(`posts/${postId}`),
-        //   'counter_comments'
-        // )
-
-        // counter.incrementBy(1)
 
         return { commentId: docRef.id }
       })
@@ -309,18 +285,4 @@ export async function deletePostComment(commentId, postId) {
   await updateDoc(doc(db, `posts/${postId}`), {
     counter_comments: increment(-1),
   })
-
-  // if (window.firebase) {
-  //   if (!window.firebase.apps.length) {
-  //     window.firebase.initializeApp(firebaseConfig)
-  //   } else {
-  //     window.firebase.app() // if already initialized, use that one
-  //   }
-  // }
-  // const counter = new Counter(
-  //   window.firebase.firestore().doc(`posts/${postId}`),
-  //   'counter_comments'
-  // )
-
-  // counter.incrementBy(-1)
 }
