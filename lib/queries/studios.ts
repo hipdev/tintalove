@@ -4,15 +4,9 @@ import {
   getDoc,
   getFirestore,
   serverTimestamp,
-  updateDoc,
-  writeBatch,
   getDocs,
   QueryDocumentSnapshot,
   DocumentData,
-  query,
-  where,
-  arrayUnion,
-  arrayRemove,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
