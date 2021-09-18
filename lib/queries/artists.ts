@@ -534,19 +534,19 @@ export async function deleteArtistRequest(requestId) {
   }
 }
 
-export async function getStudiosByArtistId(_key, artistId) {
-  const q = query(
-    collection(db, 'studios_artists'),
-    where('artist_id', '==', artistId)
-  )
+export async function getStudiosByUserId(_key, userId) {
+  if (userId) {
+    const { data: studios, error } = await supabase
+      .from('studios_artists')
+      .select('*, studios:studio_id(*, studios_main_photos(url))')
+      .eq('user_id', userId)
 
-  const querySnapshot = await getDocs(q)
-  const studios: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return studios.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) {
+      throw new Error(`Error con las solicitudes: ${error.message}`)
+    }
 
-  return { studios }
+    return studios
+  }
 }
 
 export async function getUsernameArtist(_key, id) {

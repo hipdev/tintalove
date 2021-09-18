@@ -5,8 +5,6 @@ import SelectStudio from './SelectStudio'
 const WrapperSelectStudio = ({ state, artist, setErrorRequest }) => {
   const { data: studios } = useSWR(['getStudiosFilter'], getStudiosFilter)
 
-  console.log(studios, 'los estudios')
-
   if (!studios) return <span>...</span>
 
   return (
