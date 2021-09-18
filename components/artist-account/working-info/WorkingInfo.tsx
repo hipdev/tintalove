@@ -226,7 +226,7 @@ const WorkingInfo = ({ uid, artist }) => {
                   requests={requests || null}
                   artistId={artist?.id}
                 />
-                {/* <StudiosList artistId={uid || null} />  */}
+                <StudiosList uid={uid || null} />
               </div>
             )}
 

@@ -37,8 +37,6 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
             .ilike('name', `%${inputValue}%`)
             .limit(5)
 
-          console.log(data, 'la estamos melos, ahora por los estudios')
-
           setInputItems(data)
         }
       }, 1000),

@@ -8,8 +8,6 @@ const SelectStudioToPost = ({ artist, setStudio }) => {
     getMultipleStudiosInfo
   )
 
-  console.log(data, 'los estudios')
-
   const optionsStudios = data?.studios.map((studio: any) => {
     return { value: studio.id, label: studio.studio_name }
   })
