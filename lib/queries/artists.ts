@@ -510,8 +510,11 @@ export async function getArtistRequests(_key, artistId) {
   if (artistId) {
     const { data: requests, error } = await supabase
       .from('artists_requests')
-      .select('*, studios(*, studios_main_photos(url)), artists(*)')
+      .select(
+        '*, studios:studio_id(*, studios_main_photos(url)), artists:artist_id(*)'
+      )
       .eq('artist_id', artistId)
+      .not('status', 'eq', 'APPROVED')
 
     if (error) {
       throw new Error(`Error con las solicitudes: ${error.message}`)
