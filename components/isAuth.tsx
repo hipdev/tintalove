@@ -1,10 +1,11 @@
-import useUserId from 'hooks/use-user-id'
+
+import { useUser } from 'hooks/useUser'
 import Loading from './loading/loading'
 
 export default function IsAuth({ children }) {
-  const { userId } = useUserId()
+  const { user }: any = useUser()
 
-  if (userId) {
+  if (user) {
     return children
   } else {
     return (

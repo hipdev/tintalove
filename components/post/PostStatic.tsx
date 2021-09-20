@@ -1,15 +1,14 @@
 import Masonry from 'react-masonry-css'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import useSWR from 'swr'
+
 import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import PostPortrait from './PostPortrait'
 
 import PostMore from './PostMore'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
+
 import PostBottomFixed from './PostBottomFixed'
 import PostRelated from './PostRelated'
 
@@ -32,8 +31,6 @@ const PostStatic = ({
   overlayRef: any
   showUp: boolean
 }) => {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
 
   const breakpointColumnsObj = {
     default: 6,
