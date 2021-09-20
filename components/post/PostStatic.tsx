@@ -1,8 +1,6 @@
 import Masonry from 'react-masonry-css'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-
-import StickyBox from 'react-sticky-box'
 import { PostTypes } from 'types/post'
 import { ArtistTypes } from 'types/artist'
 import PostPortrait from './PostPortrait'

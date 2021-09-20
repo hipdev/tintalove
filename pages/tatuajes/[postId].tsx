@@ -1,5 +1,4 @@
 import Modal from 'react-modal'
-import Script from 'next/script'
 import Layout from 'components/layout/Layout'
 import { postsToJSON, postToJSON } from 'lib/firebase'
 import debounce from 'lodash.debounce'
@@ -42,14 +41,6 @@ export default function TattoosPage({
 
   return (
     <>
-      {/* <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"
-      />
-      <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"
-      /> */}
       {postData && artistData && (
         <>
           <div>
@@ -106,9 +97,11 @@ export default function TattoosPage({
 }
 
 export async function getStaticPaths() {
-  const postList = await getPostsIds()
+  const postsList = await getPostsIds()
 
-  const paths = postList.map((doc: any) => ({
+  console.log(postsList, 'lista de ids')
+
+  const paths = postsList.map((doc: any) => ({
     params: {
       postId: doc.id,
     },

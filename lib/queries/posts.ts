@@ -203,11 +203,7 @@ export async function getRelatedPosts(styles) {
 }
 
 export async function getPostsIds() {
-  const querySnapshot = await getDocs(collection(db, 'posts'))
-  const posts: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    posts.push({ id: doc.id })
-  )
+  const {data:posts} = await supabase.from('posts').select('id')
 
   return posts
 }
