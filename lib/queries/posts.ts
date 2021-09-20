@@ -203,23 +203,18 @@ export async function getRelatedPosts(styles) {
 }
 
 export async function getPostsIds() {
-  const {data:posts} = await supabase.from('posts').select('id')
+  const { data: posts } = await supabase.from('posts').select('id')
 
   return posts
 }
 
-export async function getPostDataById(key, postId) {
-  const docRef = doc(collection(db, 'posts'), postId)
-  const docSnap: DocumentSnapshot<PostTypes | DocumentData> = await getDoc(
-    docRef
-  )
+export async function getPostDataById(_key, postId) {
+  const { data: post } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('id', postId)
 
-  if (docSnap.exists()) {
-    const data: PostTypes | DocumentData = { ...docSnap.data(), id: docSnap.id }
-    return { post: data }
-  } else {
-    return { post: null }
-  }
+  return post
 }
 
 // Comments queries

@@ -116,7 +116,6 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }) => {
   let commentsData = null
   let postData = null
-  let artistData = null
   let morePostsArtist = null
   let relatedPosts = null
 
@@ -125,7 +124,9 @@ export const getStaticProps = async ({ params }) => {
   if (params.postId) {
     try {
       const dataPost: any = await getPostDataById('get-post', params.postId)
-      const dataArtist = await getArtistInfo('_', dataPost.post.artist_id)
+
+      console.log(dataPost, 'data post')
+
       const dataComments = await getPostComments(params.postId)
 
       const dataPostByArtist = await getMorePostFromArtist(
@@ -137,7 +138,7 @@ export const getStaticProps = async ({ params }) => {
       // console.log(dataComments, 'los comments')
 
       postData = postToJSON(dataPost?.post)
-      artistData = postToJSON(dataArtist.artist)
+
       commentsData = postsToJSON(dataComments.comments)
       morePostsArtist = postsToJSON(dataPostByArtist.posts)
       relatedPosts = postsToJSON(dataRelatedPosts.posts)
@@ -150,7 +151,6 @@ export const getStaticProps = async ({ params }) => {
     props: {
       postData,
       commentsData,
-      artistData,
       morePostsArtist,
       relatedPosts,
     },
