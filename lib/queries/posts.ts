@@ -206,7 +206,7 @@ export async function getPostsIds() {
 export async function getPostDataById(_key, postId) {
   const { data: post } = await supabase
     .from('posts')
-    .select('*')
+    .select('*, artists:artist_id(*)')
     .eq('id', postId)
     .single()
 
