@@ -256,20 +256,16 @@ export async function addComment(comment, postId, userData) {
 }
 
 export async function getPostComments(postId) {
-  const q = query(
-    collection(db, `posts/${postId}/comments`),
-    orderBy('created_at', 'desc'),
-    limit(15) // holi, tengo un hpta limite de 10, te jodiste :v
-  )
+  const { data: comments, error } = await supabase
+    .from('posts_comments')
+    .select('*')
+    .eq('post_id', postId)
 
-  const querySnapshot = await getDocs(q)
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
-  const comments: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    comments.push({ ...doc.data(), id: doc.id })
-  )
-
-  return { comments }
+  return comments
 }
 
 export async function deletePostComment(commentId, postId) {
