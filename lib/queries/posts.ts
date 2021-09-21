@@ -231,7 +231,14 @@ export async function addComment(comment, post_id, user) {
   if (error) {
     throw new Error(`Error: ${error.message}`)
   } else {
-    console.log(data, 'sumar comentario')
+    // Incrementar con supabase usando una función custom, mera chimba!!
+    let { data, error } = await supabase.rpc('inc_total_comments', {
+      row_id: post_id,
+    })
+
+    console.log(data, 'contador')
+
+    if (error) throw new Error(`Error: ${error.message}`)
   }
 }
 
