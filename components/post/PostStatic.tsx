@@ -7,8 +7,10 @@ import PostMore from './PostMore'
 import PostBottomFixed from './PostBottomFixed'
 import PostRelated from './PostRelated'
 import { useUser } from 'hooks/useUser'
+import { ArtistTypes } from 'types/artist'
 
 const PostStatic = ({
+  artistData,
   postData,
   commentsData,
   morePostsArtist,
@@ -18,6 +20,7 @@ const PostStatic = ({
   showUp,
 }: {
   postData: PostTypes
+  artistData: ArtistTypes
   commentsData: any
   morePostsArtist: any
   closeModal: any
@@ -25,8 +28,6 @@ const PostStatic = ({
   overlayRef: any
   showUp: boolean
 }) => {
-  const artistData = null
-
   const { user }: any = useUser()
 
   const breakpointColumnsObj = {
@@ -39,10 +40,16 @@ const PostStatic = ({
 
   return (
     <div className="w-full xl:container mx-auto mt-3 md:mt-10 mb-20">
-      <PostBottomFixed overlayRef={overlayRef} user={user} showUp={showUp} />
+      <PostBottomFixed
+        overlayRef={overlayRef}
+        user={user}
+        showUp={showUp}
+        artistData={artistData}
+      />
       {/* Picture, comments and card block */}
 
       <PostPortrait
+        artistData={artistData}
         user={user}
         postData={postData}
         commentsData={commentsData}

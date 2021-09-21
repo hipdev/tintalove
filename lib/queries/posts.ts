@@ -158,6 +158,7 @@ export async function getMorePostFromArtist(artistId, postId) {
     .select('*, artists:artist_id(name, username)')
     .eq('artist_id', artistId)
     .neq('id', postId)
+    .limit(4)
 
   if (error) {
     throw new Error(`Error: ${error.message}`)
@@ -204,11 +205,16 @@ export async function getPostsIds() {
 }
 
 export async function getPostDataById(_key, postId) {
-  const { data: post } = await supabase
+  console.log('hola')
+  const { data: post, error } = await supabase
     .from('posts')
-    .select('*, artists:artist_id(*)')
+    .select('*, artists:artist_id(*, artists_main_photos:main_photo_id(url)) ')
     .eq('id', postId)
     .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
 
   return post
 }

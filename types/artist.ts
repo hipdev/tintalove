@@ -21,7 +21,8 @@ export type ArtistTypes = {
   formatted_address?: string
   place_id?: string
   username?: string
-  profile_picture?: ProfilePicture
+  profile_picture?: ProfilePicture // remove after migration
+  artists_main_photos?: ProfilePicture // table
   uid?: string
   studio_id?: string
   studios?: []
