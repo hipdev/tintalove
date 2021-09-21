@@ -61,11 +61,11 @@ const PostComments = ({
           console.log(data, 'el comentario creado')
           setComments([
             {
-              displayName: user.displayName,
-              created_at: Date.now(),
+              displayName: user.name,
+              created_at: data.created_at,
               comment,
-              user_id: user.uid,
-              id: data.commentId,
+              user_id: user.id,
+              id: data.id,
               user_picture: user.photoUrl,
             },
             ...comments,
