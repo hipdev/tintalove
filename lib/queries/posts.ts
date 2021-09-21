@@ -222,11 +222,14 @@ export async function getPostDataById(_key, postId) {
 // Comments queries
 
 export async function addComment(comment, post_id, user) {
-  const { data, error } = await supabase.from('posts_comments').insert({
-    comment,
-    user_id: user.id,
-    post_id,
-  })
+  const { data: newComment, error } = await supabase
+    .from('posts_comments')
+    .insert({
+      comment,
+      user_id: user.id,
+      post_id,
+    })
+    .single()
 
   if (error) {
     throw new Error(`Error: ${error.message}`)
@@ -239,6 +242,8 @@ export async function addComment(comment, post_id, user) {
     console.log(data, 'contador')
 
     if (error) throw new Error(`Error: ${error.message}`)
+
+    return newComment
   }
 }
 
