@@ -11,19 +11,25 @@ import {
 } from 'lib/queries/posts'
 
 import { useRouter } from 'next/router'
-import { getArtistInfo } from 'lib/queries/artists'
 import PostModalContent from 'components/post/PostModalContent'
 import { useEffect, useRef, useState } from 'react'
 
 export default function TattoosPage({
   postData,
-  artistData,
   commentsData,
   morePostsArtist,
   relatedPosts,
 }) {
   const router = useRouter()
   const ref = useRef(null)
+
+  console.log(
+    postData,
+    commentsData,
+    morePostsArtist,
+    relatedPosts,
+    'todos los params'
+  )
 
   const [showUp, setShowUp] = useState(false)
 
@@ -41,7 +47,7 @@ export default function TattoosPage({
 
   return (
     <>
-      {postData && artistData && (
+      {postData && (
         <>
           <div>
             <Modal
@@ -74,7 +80,6 @@ export default function TattoosPage({
                 <Layout>
                   <PostModalContent
                     postData={postData}
-                    artistData={artistData}
                     commentsData={commentsData}
                     morePostsArtist={morePostsArtist}
                     relatedPosts={relatedPosts}
@@ -141,11 +146,13 @@ export const getStaticProps = async ({ params }) => {
 
       console.log(dataRelatedPosts, 'los post relacionados')
 
-      postData = postToJSON(dataPost?.post)
+      postData = dataPost
 
-      commentsData = postsToJSON(dataComments.comments)
-      morePostsArtist = postsToJSON(dataPostByArtist.posts)
-      relatedPosts = postsToJSON(dataRelatedPosts.posts)
+      console.log(postData, 'esto que ome')
+
+      commentsData = dataComments
+      morePostsArtist = dataPostByArtist
+      relatedPosts = dataRelatedPosts
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }

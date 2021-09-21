@@ -20,11 +20,10 @@ const PostPortrait = ({
   closeModal,
   user,
   postData,
-  artistData,
+
   commentsData,
 }: {
   postData: PostTypes
-  artistData: ArtistTypes
   commentsData: any
   user: UserState
   closeModal: any
@@ -34,6 +33,7 @@ const PostPortrait = ({
   const [totalComments, setTotalComments] = useState(
     postData.counter_comments || 0
   )
+  const artistData = null
 
   const [imageHeight, setImageHeight] = useState(null)
 

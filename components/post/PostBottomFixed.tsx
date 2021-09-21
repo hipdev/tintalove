@@ -15,17 +15,17 @@ const loaderImage = ({ src, quality }: any) => {
 }
 
 const PostBottomFixed = ({
-  artistData,
   overlayRef,
   user,
   showUp,
 }: {
-  artistData: ArtistTypes
   overlayRef: any
   user: UserState
   showUp: boolean
 }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
+
+  const artistData = null
 
   const goTop = () => {
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
@@ -50,22 +50,22 @@ const PostBottomFixed = ({
 
       <div className="flex justify-between 2xl:justify-around">
         <div className="flex items-center sm:hidden">
-          <Link href={`/${artistData.username}`}>
+          <Link href={`/${artistData?.username}`}>
             <a className="text-white font-semibold text-sm ">
-              {artistData.displayName} <br />
+              {artistData?.displayName} <br />
               <span className="text-gray-400 font-light">
-                {artistData.username}
+                {artistData?.username}
               </span>
             </a>
           </Link>
         </div>
         <div className=" items-center  hidden sm:flex">
           <div className="flex">
-            <Link href={`/${artistData.username}`}>
+            <Link href={`/${artistData?.username}`}>
               <a className="text-gn-500 ml-2 w-12 mr-3">
                 <Image
                   loader={loaderImage}
-                  src={artistData.profile_picture.url}
+                  src={artistData?.profile_picture.url}
                   alt="Artist photo"
                   width={48}
                   height={48}
@@ -78,15 +78,15 @@ const PostBottomFixed = ({
             <div className="leading-tight hidden sm:flex items-center ">
               <div>
                 <div className="flex items-center">
-                  <Link href={`/${artistData.username}`}>
+                  <Link href={`/${artistData?.username}`}>
                     <a className="text-white font-semibold text-xl ">
-                      {artistData.displayName}
+                      {artistData?.displayName}
                     </a>
                   </Link>
                 </div>
 
                 <h2 className="text-sm text-gray-400">
-                  {artistData.city_name}, {artistData.province}
+                  {artistData?.city_name}, {artistData?.province}
                 </h2>
               </div>
 
@@ -98,7 +98,7 @@ const PostBottomFixed = ({
         <div className="flex items-center">
           <div className="text-right mr-5 hidden sm:block">
             <h3 className="text-gray-400 w-48">CITAS DISPONIBLES EN</h3>
-            <span className="font-semibold">{artistData.available_label}</span>
+            <span className="font-semibold">{artistData?.available_label}</span>
           </div>
 
           {!user ? (

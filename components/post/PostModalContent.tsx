@@ -3,7 +3,6 @@ import PostStatic from 'components/post/PostStatic'
 
 const PostModalContent = ({
   postData,
-  artistData,
   commentsData,
   morePostsArtist,
   relatedPosts,
@@ -19,7 +18,6 @@ const PostModalContent = ({
     >
       <PostStatic
         postData={postData}
-        artistData={artistData}
         commentsData={commentsData}
         morePostsArtist={morePostsArtist}
         relatedPosts={relatedPosts}

@@ -26,7 +26,8 @@ const CreatePost = ({ artist, artistsStudios }) => {
 
   const hasTwoStudios = artistsStudios?.length == 2
   const isPartner = artist?.work_as == 'partner'
-  const onlyOneStudio = artistsStudios[0]?.studios.id || null
+  const onlyOneStudio =
+    (artistsStudios && artistsStudios[0]?.studios.id) || null
 
   console.log(onlyOneStudio, hasTwoStudios, isPartner, 'unicos')
 
