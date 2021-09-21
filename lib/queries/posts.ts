@@ -153,11 +153,15 @@ export async function getLastFourPostsByArtist(_key, artistId) {
 }
 
 export async function getMorePostFromArtist(artistId, postId) {
-  let { data: posts } = await supabase
+  let { data: posts, error } = await supabase
     .from('posts')
     .select('*, artists:artist_id(name, username)')
     .eq('artist_id', artistId)
     .neq('id', postId)
+
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
   return posts
 }
@@ -179,20 +183,18 @@ export async function getArtistPosts(_key, artistId) {
   return { posts }
 }
 
-export async function getRelatedPosts(styles) {
-  const q = query(
-    collection(db, 'posts'),
-    where('styles', 'array-contains-any', styles),
-    limit(8)
-  )
+export async function getRelatedPosts(styles, postId) {
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .contains('styles', styles) // Asi se filtra un array con Supabase
+    .neq('id', postId)
 
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
-  return { posts }
+  return posts
 }
 
 export async function getPostsIds() {
