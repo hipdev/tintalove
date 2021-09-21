@@ -221,39 +221,17 @@ export async function getPostDataById(_key, postId) {
 
 // Comments queries
 
-export async function addComment(comment, postId, userData) {
-  const postsRef = collection(db, `posts/${postId}/comments`)
-  const postRef = doc(db, `posts/${postId}`)
+export async function addComment(comment, post_id, user) {
+  const { data, error } = await supabase.from('posts_comments').insert({
+    comment,
+    user_id: user.id,
+    post_id,
+  })
 
-  // Initialize Firebase 8.
-
-  try {
-    const res = await addDoc(postsRef, {
-      comment,
-      created_at: serverTimestamp(),
-      displayName: userData.displayName,
-      user_picture: userData.photoUrl,
-      user_id: userData.uid,
-    })
-      .then(async (docRef) => {
-        await updateDoc(postRef, {
-          counter_comments: increment(1),
-        })
-
-        return { commentId: docRef.id }
-      })
-      .catch((error) => {
-        console.log(error, 'error creando el comentario')
-        return false
-      })
-
-    if (res) {
-      return res
-    } else {
-      throw new Error('Creando el comentario')
-    }
-  } catch (error) {
-    throw new Error(error)
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  } else {
+    console.log(data, 'sumar comentario')
   }
 }
 
