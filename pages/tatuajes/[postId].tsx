@@ -129,12 +129,13 @@ export const getStaticProps = async ({ params }) => {
 
       const dataComments = await getPostComments(params.postId)
 
-      console.log(dataComments, 'los comentarios')
-
       const dataPostByArtist = await getMorePostFromArtist(
-        dataPost.post.artist_id,
+        dataPost.artist_id,
         params.postId
       )
+
+      console.log(dataPostByArtist, 'data related posts by artist')
+
       const dataRelatedPosts = await getRelatedPosts(dataPost.post.styles)
 
       // console.log(dataComments, 'los comments')
