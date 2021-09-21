@@ -38,7 +38,7 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
           />
           <Image
             loader={loaderPost}
-            src={post?.image?.url}
+            src={post?.photo_info?.url}
             alt="Artist photo"
             layout="fill"
             // width={600}

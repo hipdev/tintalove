@@ -7,7 +7,6 @@ import { UserState } from 'types/user'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import PostCallOptions from './PostCallOptions'
-import { BsHeart, BsHeartFill } from 'react-icons/bs'
 import PostArtistFavorite from './PostArtistFavorite'
 
 const loaderImage = ({ src, quality }: any) => {
@@ -18,14 +17,20 @@ const PostBottomFixed = ({
   overlayRef,
   user,
   showUp,
+  artistData,
 }: {
   overlayRef: any
   user: UserState
   showUp: boolean
+  artistData: ArtistTypes
 }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
-  const artistData = null
+  console.log(
+    artistData,
+    artistData?.artists_main_photos.url,
+    'Artist Data aqui'
+  )
 
   const goTop = () => {
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
@@ -65,7 +70,7 @@ const PostBottomFixed = ({
               <a className="text-gn-500 ml-2 w-12 mr-3">
                 <Image
                   loader={loaderImage}
-                  src={artistData?.profile_picture.url}
+                  src={artistData?.artists_main_photos.url}
                   alt="Artist photo"
                   width={48}
                   height={48}
@@ -80,7 +85,7 @@ const PostBottomFixed = ({
                 <div className="flex items-center">
                   <Link href={`/${artistData?.username}`}>
                     <a className="text-white font-semibold text-xl ">
-                      {artistData?.displayName}
+                      {artistData?.name}
                     </a>
                   </Link>
                 </div>

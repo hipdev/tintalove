@@ -85,6 +85,7 @@ export default function TattoosPage({
                     relatedPosts={relatedPosts}
                     overlayRef={ref}
                     showUp={showUp}
+                    artistData={postData.artists}
                   />
                 </Layout>
               </div>

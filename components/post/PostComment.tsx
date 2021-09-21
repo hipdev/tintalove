@@ -1,4 +1,5 @@
 import { formatDistanceToNow } from 'date-fns'
+import { parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { deletePostComment } from 'lib/queries/posts'
 import { url_domain } from 'lib/utils'
@@ -16,7 +17,7 @@ const PostComment = ({
   // const daysGone = differenceInDays(comment.created_at, Date.now())
   // const minutesGone = differenceInMinutes(Date.now(), comment.created_at)
 
-  const distanceGone = formatDistanceToNow(comment.created_at, {
+  const distanceGone = formatDistanceToNow(parseISO(comment.created_at), {
     locale: es,
   }).replace('alrededor de', 'Hace')
 
