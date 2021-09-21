@@ -153,20 +153,13 @@ export async function getLastFourPostsByArtist(_key, artistId) {
 }
 
 export async function getMorePostFromArtist(artistId, postId) {
-  const q = query(
-    collection(db, 'posts'),
-    where('artist_id', '==', artistId),
-    where(documentId(), '!=', postId), // Asi podemos filtrar por el ID del documento, que chimbaaa!!!
-    limit(4)
-  )
+  let { data: posts } = await supabase
+    .from('posts')
+    .select('*, artists:artist_id(name, username)')
+    .eq('artist_id', artistId)
+    .neq('id', postId)
 
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { posts }
+  return posts
 }
 
 export async function getArtistPosts(_key, artistId) {
@@ -213,6 +206,7 @@ export async function getPostDataById(_key, postId) {
     .from('posts')
     .select('*')
     .eq('id', postId)
+    .single()
 
   return post
 }
