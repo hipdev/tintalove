@@ -573,24 +573,26 @@ export async function getUsernameArtist(_key, id) {
 }
 
 export async function addArtistToFavorites(artist_id, user_id) {
-  const q = query(
-    collection(db, 'fav_artists'),
-    where('artist_id', '==', artist_id),
-    where('user_id', '==', user_id)
-  )
+  const { data, error } = await supabase
+    .from('favorite_artists')
+    .select('id')
+    .eq('user_id', user_id)
+    .eq('artist_id', artist_id)
 
-  const querySnapshot = await getDocs(q)
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  }
 
-  if (querySnapshot.empty) {
-    await addDoc(collection(db, 'fav_artists'), {
-      created_at: serverTimestamp(),
-      artist_id,
-      user_id,
-    })
-
-    return true
-  } else {
+  if (data[0]) {
     throw new Error('Ya tienes este artista como favorito')
+  } else {
+    const { error } = await supabase
+      .from('favorite_artists')
+      .insert({ artist_id, user_id }, { returning: 'minimal' })
+
+    if (error) {
+      throw new Error(`Error : ${error.message}`)
+    }
   }
 }
 
@@ -601,22 +603,19 @@ export async function deleteFavoriteArtist(favId) {
 }
 
 export async function isArtistFavorite(_key, artist_id, user_id) {
-  const q = query(
-    collection(db, 'fav_artists'),
-    where('artist_id', '==', artist_id),
-    where('user_id', '==', user_id)
-  )
+  console.log(artist_id, user_id, 'params')
 
-  const querySnapshot = await getDocs(q)
+  if (artist_id && user_id) {
+    const { data, error } = await supabase
+      .from('favorite_artists')
+      .select('id')
+      .eq('user_id', user_id)
+      .eq('artist_id', artist_id)
 
-  if (querySnapshot.empty) {
-    return false
-  } else {
-    let artistFavId
-    querySnapshot.forEach((doc) => {
-      artistFavId = doc.id
-    })
+    if (error) {
+      throw new Error(`Error : ${error.message}`)
+    }
 
-    return artistFavId
+    return data[0]
   }
 }
