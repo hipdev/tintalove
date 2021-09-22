@@ -8,15 +8,14 @@ import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
 import Image from 'next/image'
 import PostCallOptions from 'components/post/PostCallOptions'
-
-import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import ArtistsPosts from './ArtistPosts'
 import { checkUrl } from 'lib/utils'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
 import { BsHeart } from 'react-icons/bs'
+import { agenda } from 'components/layout/header/availability'
+import { useUser } from 'hooks/useUser'
 
 type Props = {
   artistData: ArtistTypes
@@ -29,9 +28,7 @@ const loaderPost = ({ src, quality }: any) => {
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
   const [openModalPics, setOpenModalPics] = useState(false)
-
-  const userId = null // ojo aqui, esto toca arreglarlo
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
 
   const { openModal } = useContext(LoginContext)
 
@@ -42,7 +39,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
           openModal={openModalPics}
           setOpenModal={setOpenModalPics}
           pictures={artistPics}
-          profilePicture={artistData?.profile_picture?.url || null}
+          profilePicture={artistData?.artists_main_photos?.url || null}
         />
       )}
 
@@ -59,11 +56,11 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
               className="aspect-w-3 aspect-h-4 relative cursor-pointer"
               onClick={() => setOpenModalPics(true)}
             >
-              {artistData?.profile_picture?.url ? (
+              {artistData?.artists_main_photos?.url ? (
                 <Image
                   loader={loaderPost}
-                  src={artistData?.profile_picture?.url}
-                  alt={`Foto de perfil de ${artistData.displayName}`}
+                  src={artistData?.artists_main_photos?.url}
+                  alt={`Foto de perfil de ${artistData.name}`}
                   layout="fill" // el fill obliga a que se adapte al padre
                   // width={600}
                   // height={500}
@@ -83,11 +80,12 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
             <div className="relative bg-gr-800 bg-opacity-50 px-5 py-6 rounded-b-lg">
               <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-                {artistData?.displayName}
+                {artistData?.name}
               </h1>
               <div className="flex items-center gap-2 mb-4 lg:mb-0">
                 <h6 className="text-light-200 text-base lg:text-sm">
-                  {artistData?.city_name}, {artistData?.province}
+                  {artistData?.cities?.city_name},{' '}
+                  {artistData?.cities?.province}
                 </h6>
               </div>
 
@@ -138,7 +136,9 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   </span>
                   <p className="text-light-500 text-sm">
                     <span className="font-semibold">Disponibilidad: </span>{' '}
-                    {artistData?.available_label || 'Sin disponibilidad'}
+                    {(artistData?.availability_id &&
+                      agenda[artistData?.availability_id - 1].label) ||
+                      'Sin disponibilidad'}
                   </p>
                 </div>
 
@@ -152,8 +152,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                   </span>
                   <Link href={`/${artistData.username}/map`}>
                     <a className="text-light-500 text-sm hover:text-gn-500 text-left">
-                      {artistData?.dataLocation?.formatted_address ||
-                        'Sin dirección'}
+                      {artistData?.cities?.formatted_address || 'Sin dirección'}
                     </a>
                   </Link>
                 </div>
@@ -168,7 +167,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
                 </div>
               </div>
 
-              {!data?.user ? (
+              {!user ? (
                 <button
                   className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 w-full justify-center text-gray-200"
                   onClick={openModal}
@@ -211,7 +210,7 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
             </div>
             <div className="border-b-2 border-gray-500 w-full h-1 mb-5"></div>
 
-            <ArtistsPosts artistId={artistData?.artist_id} user={data?.user} />
+            <ArtistsPosts artistId={artistData?.artist_id} user={user} />
           </div>
         </div>
       </div>

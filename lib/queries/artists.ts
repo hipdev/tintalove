@@ -29,7 +29,7 @@ export async function userNameAvailable(username) {
 export async function getArtistDataByUsername(username) {
   const { data: artist, error } = await supabase
     .from('artists')
-    .select('*')
+    .select('*, artists_main_photos:main_photo_id(url), cities:city_id(*)')
     .eq('username', username)
 
   if (error) {

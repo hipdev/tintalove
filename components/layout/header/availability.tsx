@@ -128,4 +128,6 @@ const Availability = ({
   )
 }
 
+export { agenda }
+
 export default Availability
