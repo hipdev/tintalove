@@ -1,27 +1,21 @@
 import {
   collection,
   getFirestore,
-  serverTimestamp,
-  addDoc,
   getDocs,
   QueryDocumentSnapshot,
   doc,
-  getDoc,
   query,
   orderBy,
   limit,
   deleteDoc,
-  DocumentSnapshot,
-  DocumentData,
   where,
-  documentId,
   startAfter,
   updateDoc,
   increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
-// import { Counter } from './counter'
+
 import { PostTypes } from 'types/post'
 
 const db = getFirestore(firebaseApp)
@@ -250,8 +244,9 @@ export async function addComment(comment, post_id, user) {
 export async function getPostComments(postId) {
   const { data: comments, error } = await supabase
     .from('posts_comments')
-    .select('*, users:user_id(photo_url,photo_info)')
+    .select('*, users:user_id(photo_url,photo_info, full_name)')
     .eq('post_id', postId)
+    .order('created_at', { ascending: false }) // Así se ordena una consulta
 
   if (error) {
     throw new Error(`Error: ${error.message}`)

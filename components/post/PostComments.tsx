@@ -62,12 +62,12 @@ const PostComments = ({
           console.log(data, 'el comentario creado')
           setComments([
             {
-              displayName: user.name,
+              name: user.full_name,
               created_at: data.created_at,
               comment,
               user_id: user.id,
               id: data.id,
-              user_picture: user.photoUrl,
+              user_picture: user?.photo_info?.url || user.photo_url,
             },
             ...comments,
           ])
@@ -101,13 +101,14 @@ const PostComments = ({
               <img
                 // src="https://via.placeholder.com/45x45"
                 src={
-                  artistData?.artists_main_photos
-                    ? artistData?.artists_main_photos?.url +
+                  user?.photo_info
+                    ? user?.photo_info?.url +
                       '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
                     : user?.photo_url || '/unuser.png'
                 }
                 className="object-cover w-12 h-12 rounded-full overflow-hidden"
                 title="user-image"
+                alt="user image"
               />
             </a>
           </Link>

@@ -14,6 +14,7 @@ export type UserState =
       is_artist: boolean
       photoUrl: string // remove after migration
       photo_url: string
+      photo_info: ProfilePicture
       uid: string // remove after migration
       id: string
       studio_id: string
@@ -26,4 +27,13 @@ type City = {
   city_hash: string
   city_name: string
   province: string
+}
+
+type ProfilePicture = {
+  fileId: string
+  filePath: string
+  name: string
+  size: number
+  thumbnailUrl: string
+  url: string
 }
