@@ -1,25 +1,20 @@
 import ArtistProfile from 'components/artist/ArtistProfile'
 import Layout from 'components/layout/Layout'
-
-import { postsToJSON, postToJSON } from 'lib/firebase'
 import {
-  getArtistIdByUsername,
-  getArtistInfo,
+  getArtistDataByUsername,
   getArtistPictures,
   getUserNamesByArtists,
 } from 'lib/queries/artists'
 import { useRouter } from 'next/router'
 
-const UsernameArtistPage = ({ artistId, artistData, artistPics }: any) => {
+const UsernameArtistPage = ({ artistData, artistPics }: any) => {
   const router: any = useRouter()
 
   if (router.isFallback) {
     return 'Loading'
   }
 
-  if (!artistId) {
-    return <p>No existe ese artista</p>
-  }
+  console.log(artistData, 'el artista')
 
   return (
     <Layout>
@@ -32,6 +27,8 @@ export default UsernameArtistPage
 
 export async function getStaticPaths() {
   const usernamesList = await getUserNamesByArtists()
+
+  console.log(usernamesList, 'usuarios')
 
   const paths = usernamesList.map((doc: any) => ({
     params: {
@@ -52,22 +49,13 @@ export async function getStaticProps({ params }: any) {
 
   if (params.username) {
     try {
-      artistId = await getArtistIdByUsername(params.username)
+      artistData = await getArtistDataByUsername(params.username)
 
-      try {
-        const data = await getArtistInfo('_key', artistId)
-        const dataPics = await getArtistPictures('_', artistId)
-
-        artistData = postToJSON(data?.artist)
-        artistPics = postsToJSON(dataPics?.pictures)
-        // Si falla uno fallan todos por esta dentro del mismo trycatch
-      } catch (error) {
-        console.log('Error obteniendo la info del artista')
-      }
-    } catch (err) {
-      if (err.status !== 404) {
-        console.log('error!')
-      }
+      artistPics = await getArtistPictures('_', artistData.id)
+      console.log(artistPics, 'las fotos')
+      // Si falla uno fallan todos por esta dentro del mismo trycatch
+    } catch (error) {
+      console.log('Error obteniendo la info del artista')
     }
   }
 
