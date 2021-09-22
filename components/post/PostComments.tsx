@@ -90,7 +90,7 @@ const PostComments = ({
     }
   }
 
-  console.log(user, 'el user en comments', artistData?.artists_main_photos?.url)
+  console.log(commentsData, 'los comments')
 
   return (
     <div className="w-full">

@@ -46,8 +46,6 @@ const Availability = ({
     })
   }
 
-  console.log(agenda[artist?.availability_id - 1], 'el user en availability')
-
   return (
     <>
       {user && (
