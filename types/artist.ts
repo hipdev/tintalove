@@ -6,9 +6,10 @@ export type ArtistTypes = {
   artist_id?: string
   availability_id: number
   bio?: string
-  geohash?: string
+  geohash?: string // remove after migration
   city_name?: string // remove after migration
   cities: City
+  artists_places: Place
   country?: string
   country_code?: string
   province?: string // remove after migration
@@ -35,8 +36,9 @@ export type ArtistTypes = {
   instagram?: string
   telegram_user?: string
   work_as?: string
-  _geoloc?: AlgoliaGeolocation
-  _geoloc_marker?: AlgoliaGeolocation
+  own_studio_marker: [number, number]
+  _geoloc?: AlgoliaGeolocation // remove after migration
+  _geoloc_marker?: AlgoliaGeolocation // remove after migration
   available_label?: string
   dataLocation?: DataLocation
 } | null
@@ -73,4 +75,14 @@ type City = {
   formatted_address: string
   city_place_id: string
   coords: any
+  city_lat: number
+  city_lng: number
+}
+type Place = {
+  id: string
+  formatted_address: string
+  place_id: string
+  coords: any
+  lat: number
+  lng: number
 }
