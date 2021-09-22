@@ -12,6 +12,7 @@ const PostComments = ({
   postId,
   user,
   commentsData,
+  artistData,
   setTotalComments,
   totalComments,
   imageHeight,
@@ -89,6 +90,8 @@ const PostComments = ({
     }
   }
 
+  console.log(user, 'el user en comments', artistData?.artists_main_photos?.url)
+
   return (
     <div className="w-full">
       <div className="w-full flex flex-shrink mb-5">
@@ -98,9 +101,10 @@ const PostComments = ({
               <img
                 // src="https://via.placeholder.com/45x45"
                 src={
-                  user?.photoUrl
-                    ? `${user.photoUrl}`
-                    : 'https://via.placeholder.com/45x45'
+                  artistData?.artists_main_photos
+                    ? artistData?.artists_main_photos?.url +
+                      '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
+                    : user?.photo_url || '/unuser.png'
                 }
                 className="object-cover w-12 h-12 rounded-full overflow-hidden"
                 title="user-image"

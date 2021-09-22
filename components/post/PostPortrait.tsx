@@ -185,6 +185,7 @@ const PostPortrait = ({
             commentsData={commentsData}
             setTotalComments={setTotalComments}
             totalComments={totalComments}
+            artistData={artistData}
           />
         </div>
       </div>

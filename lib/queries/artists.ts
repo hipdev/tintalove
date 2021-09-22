@@ -45,7 +45,7 @@ export async function getArtistIdByUsername(username) {
 export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
-    .select('*')
+    .select('*, artists_main_photos:main_photo_id(url)')
     .eq('user_id', uid)
 
   return artist ? artist[0] : null
