@@ -22,6 +22,8 @@ const MorePhotos = ({ artist }) => {
     getArtistPictures
   )
 
+  console.log(dataPictures, 'las fotos')
+
   const handlePicture = async (e: any) => {
     e.preventDefault()
 
@@ -113,10 +115,10 @@ const MorePhotos = ({ artist }) => {
         />
       </label>
 
-      {dataPictures?.pictures?.length > 0 && (
+      {dataPictures?.length > 0 && (
         <MorePhotosList
           artist={artist}
-          pictures={dataPictures?.pictures}
+          pictures={dataPictures}
           mutatePictures={mutatePictures}
         />
       )}
