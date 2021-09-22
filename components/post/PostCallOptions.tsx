@@ -7,7 +7,7 @@ import { StudioTypes } from 'types/studio'
 
 const WhatsAppButton = ({ artistData, widthFull }) => (
   <a
-    href={`https://api.whatsapp.com/send?phone=${artistData.phone}`}
+    href={`https://api.whatsapp.com/send?phone=${artistData.mobile.value}`}
     target="_blank"
     rel="noreferrer"
     className={
@@ -23,12 +23,14 @@ const WhatsAppButton = ({ artistData, widthFull }) => (
 const DirectCallButton = ({ artistData, widthFull }) => {
   const [text, setText] = useState('Ver número')
 
-  const phoneNumber = parsePhoneNumber(artistData.phone).formatInternational()
+  const phoneNumber = parsePhoneNumber(
+    artistData.mobile.value
+  ).formatInternational()
 
   return (
     <>
       <a
-        href={`tel:${artistData.phone}`}
+        href={`tel:${artistData.mobile.value}`}
         target="_blank"
         rel="noreferrer"
         className={

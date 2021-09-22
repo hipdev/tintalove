@@ -1,15 +1,11 @@
 import { Loader } from '@googlemaps/js-api-loader'
-
 import StudioProfile from 'components/studio-profile/StudioProfile'
 import Layout from 'components/layout/Layout'
 
-import { postsToJSON, postToJSON } from 'lib/firebase'
-
 import {
-  getStudioIdByUsername,
   getUsernamesByStudios,
-  getStudioInfo,
   getStudioPictures,
+  getStudioDataByUsername,
 } from 'lib/queries/studios'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -20,7 +16,7 @@ const loader = new Loader({
   libraries: ['places'],
 })
 
-const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
+const UsernameStudioPage = ({ studioData, studioPictures }: any) => {
   const [loadMap, setLoadMap] = useState(false)
   const router: any = useRouter()
 
@@ -37,7 +33,7 @@ const UsernameStudioPage = ({ studioId, studioData, studioPictures }: any) => {
       console.log('error loading Google Maps API')
     })
 
-  if (!studioId) {
+  if (!studioData) {
     return (
       <div className="text-gray-300 flex flex-col justify-center items-center">
         <p className="text-4xl font-bold  text-center pt-20">
@@ -84,29 +80,17 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  let studioId = null
   let studioData = null
   let studioPictures = null
 
   if (params.username) {
     try {
-      studioId = await getStudioIdByUsername(params.username)
+      studioData = await getStudioDataByUsername(params.username)
 
-      if (studioId) {
-        try {
-          const studioInfo = await getStudioInfo('_', studioId)
-          const dataPics = await getStudioPictures('_', studioId)
-
-          studioData = postToJSON(studioInfo?.studio)
-          studioPictures = postsToJSON(dataPics?.pictures)
-        } catch (error) {
-          console.log('Error obteniendo la info del estudio')
-        }
-      }
-    } catch (err) {
-      if (err.status !== 404) {
-        console.log('error!')
-      }
+      console.log(studioData, 'el estudio')
+      studioPictures = await getStudioPictures('_', studioData.id)
+    } catch (error) {
+      console.log('Error obteniendo la info del estudio')
     }
   }
 
@@ -114,7 +98,6 @@ export async function getStaticProps({ params }: any) {
 
   return {
     props: {
-      studioId,
       studioData,
       studioPictures,
     },

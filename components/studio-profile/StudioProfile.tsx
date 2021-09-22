@@ -6,13 +6,11 @@ import { checkUrl } from 'lib/utils'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
 import PostCallOptions from 'components/post/PostCallOptions'
-import useUserId from 'hooks/use-user-id'
-import useSWR from 'swr'
-import { getUserInfo } from 'lib/queries/users'
 import ModalPictures from 'components/common/modal-pictures/ModalPictures'
 import ArtistsCard from './ArtistsCard'
 import { SiWaze } from 'react-icons/si'
 import Image from 'next/image'
+import { useUser } from 'hooks/useUser'
 
 type Props = {
   studioData: StudioTypes
@@ -29,8 +27,9 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   const [openModalPics, setOpenModalPics] = useState(false)
 
   const { openModal } = useContext(LoginContext)
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user } = useUser()
+
+  console.log(studioData, 'el estudio')
 
   if (!studioData?.is_active) {
     return (
@@ -84,24 +83,25 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
       >
         <div className="w-full bg-gr-800 flex flex-wrap md:flex-nowrap items-center justify-center md:justify-between p-5 pb-3 rounded-lg mb-8">
           <div className="flex items-center gap-2 mb-2">
-            {studioData?.profile_picture?.url && (
+            {studioData?.studios_main_photos?.url && (
               <img
-                src={`${studioData?.profile_picture?.url}/tr:pr-true,w-48,h-48,q-90`}
+                src={`${studioData?.studios_main_photos?.url}/tr:pr-true,w-48,h-48,q-90`}
                 alt="User photo"
                 className="w-14 h-14 object-cover rounded-md"
               />
             )}
             <div>
               <h1 className="text-white text-2xl font-semibold tracking-wide">
-                {studioData?.studio_name || 'Sin nombre'}
+                {studioData?.name || 'Sin nombre'}
               </h1>
               <p className="text-gray-400">
-                {studioData?.dataLocation?.formatted_address || 'Sin dirección'}
+                {studioData?.studios_places?.formatted_address ||
+                  'Sin dirección'}
               </p>
             </div>
           </div>
 
-          {!data?.user ? (
+          {!user ? (
             <button
               className="flex bg-gn-500 hover:bg-green-700 px-8 py-3 rounded-md font-semibold text-sm border border-gn-500 justify-center text-gray-200"
               onClick={openModal}
@@ -167,7 +167,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           <h1 className="text-gray-300 font-semibold mb-7 text-xl">
             Artistas del estudio
           </h1>
-          {studioData?.artists?.length > 0 ? (
+          {/* {studioData?.artists?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {studioData.artists.map((artistId) => (
                 <ArtistsCard key={artistId} artistId={artistId || ''} />
@@ -177,12 +177,12 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
             <p className="text-gray-400">
               Este estudio no tiene artistas vinculados
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative w-full rounded-md  pb-10 mt-10">
           <h1 className="mt-5 text-gray-300 text-xl font-semibold mb-4">
-            Ubicación de {studioData?.studio_name}
+            Ubicación de {studioData?.name}
           </h1>
           <div className="text-gray-400 mb-8 flex justify-between">
             <div className="mr-2">
@@ -190,7 +190,8 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                 <span className="hidden sm:inline-block font-semibold mr-2">
                   Dirección:
                 </span>
-                {studioData?.dataLocation?.formatted_address || 'Sin dirección'}
+                {studioData?.studios_places?.formatted_address ||
+                  'Sin dirección'}
               </p>
               <p className="text-sm sm:text-md ">
                 <span className="hidden sm:inline-block font-semibold mr-2">
@@ -202,9 +203,11 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
             <div className="grid grid-cols-2 gap-8 items-center">
               <a
                 href={`https://www.waze.com/ul?ll=${
-                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat
+                  studioData?.main_address_marker[0] ||
+                  studioData?.studios_places?.lat
                 },${
-                  studioData?._geoloc_marker?.lng || studioData?._geoloc.lng
+                  studioData?.main_address_marker[1] ||
+                  studioData?.studios_places.lng
                 }&navigate=yes&zoom=10`}
                 target="_blank"
                 rel="noreferrer"
@@ -218,9 +221,11 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               </a>
               <a
                 href={`https://maps.google.com/?q=${
-                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat
+                  studioData?.main_address_marker[0] ||
+                  studioData?.studios_places?.lat
                 },${
-                  studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng
+                  studioData?.main_address_marker[1] ||
+                  studioData?.studios_places.lng
                 }`}
                 target="_blank"
                 rel="noreferrer"
@@ -241,9 +246,11 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               mapContainerStyle={containerStyle}
               center={{
                 lat:
-                  studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat,
+                  studioData?.main_address_marker[0] ||
+                  studioData?.studios_places?.lat,
                 lng:
-                  studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng,
+                  studioData?.main_address_marker[1] ||
+                  studioData?.studios_places.lng,
               }}
               zoom={18}
               options={{
@@ -254,15 +261,17 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
               <Marker
                 position={{
                   lat:
-                    studioData?._geoloc_marker?.lat || studioData?._geoloc?.lat,
+                    studioData?.main_address_marker[0] ||
+                    studioData?.studios_places?.lat,
                   lng:
-                    studioData?._geoloc_marker?.lng || studioData?._geoloc?.lng,
+                    studioData?.main_address_marker[1] ||
+                    studioData?.studios_places.lng,
                 }}
                 icon={{
                   url: '/icon-black.png',
                 }}
                 label={{
-                  text: studioData?.studio_name,
+                  text: studioData?.name,
                   color: '#030308',
                   fontSize: '1.4rem',
                   fontWeight: '900',
