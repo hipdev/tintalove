@@ -4,7 +4,6 @@ import { UserState } from 'types/user'
 import { useContext } from 'react'
 import { LoginContext } from 'pages/_app'
 import Link from 'next/link'
-import { url_domain } from 'lib/utils'
 import { useUser } from 'hooks/useUser'
 import { ArtistTypes } from 'types/artist'
 import { StudioTypes } from 'types/studio'
@@ -25,7 +24,7 @@ const SubMenuHeader = ({
     signOut()
   }
 
-  const userImage = url_domain(user?.photo_url || null)
+  console.log(artist, 'el artista en header')
 
   return (
     <>
@@ -57,13 +56,12 @@ const SubMenuHeader = ({
                   <Menu.Button className="text-white flex items-center relative transition duration-150 ease-in-out outline-none focus:outline-none">
                     {/* <span className="mr-3">{user.displayName}</span> */}
                     <img
-                      className="w-12 h-12 rounded-full"
+                      className="w-12 h-12 rounded-full object-cover"
                       src={
-                        userImage == 'ik.imagekit.io'
-                          ? `${user?.photo_url}/tr:pr-true,c-at_max,f-auto,w-50,q-90`
-                          : userImage == 'lh3.googleusercontent.com'
-                          ? user?.photo_url
-                          : '/unuser.png'
+                        artist?.artists_main_photos
+                          ? artist?.artists_main_photos?.url +
+                            '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
+                          : user?.photo_url || '/unuser.png'
                       }
                       alt="user image"
                     />
