@@ -7,10 +7,11 @@ export type ArtistTypes = {
   availability_id: number
   bio?: string
   geohash?: string
-  city_name?: string
+  city_name?: string // remove after migration
+  cities: City
   country?: string
   country_code?: string
-  province?: string
+  province?: string // remove after migration
   phone?: string // remove after migration
   mobile?: MobileInfo
   contact_way?: string
@@ -63,4 +64,12 @@ type DataLocation = {
   geohash: string
   place_id: string
   _geoloc: AlgoliaGeolocation
+}
+
+type City = {
+  city_name: string
+  province: string
+  formatted_address: string
+  city_place_id: string
+  coords: any
 }
