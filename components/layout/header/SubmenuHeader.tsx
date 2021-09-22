@@ -24,8 +24,6 @@ const SubMenuHeader = ({
     signOut()
   }
 
-  console.log(user, 'el user header')
-
   return (
     <>
       {!user && (

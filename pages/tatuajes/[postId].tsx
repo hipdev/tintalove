@@ -23,14 +23,6 @@ export default function TattoosPage({
   const router = useRouter()
   const ref = useRef(null)
 
-  console.log(
-    postData,
-    commentsData,
-    morePostsArtist,
-    relatedPosts,
-    'todos los params'
-  )
-
   const [showUp, setShowUp] = useState(false)
 
   useEffect(() => {
