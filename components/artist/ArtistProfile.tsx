@@ -27,6 +27,8 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
 
   const { openModal } = useContext(LoginContext)
 
+  console.log(artistPics, 'fotos del artista')
+
   return (
     <>
       {openModalPics && (

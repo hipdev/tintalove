@@ -461,7 +461,7 @@ export async function getArtistPictures(key, artistId) {
     throw new Error(`Error: ${error.message}`)
   }
 
-  return { pictures }
+  return pictures
 }
 
 export async function deletePictureFromArtist(file_id, photoId) {
