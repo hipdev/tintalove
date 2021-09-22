@@ -22,6 +22,8 @@ const ArtistMap = ({ artistData }: Props) => {
 
   const ref = useRef()
 
+  console.log(artistData, 'la data en map')
+
   return (
     <>
       <Transition.Root show={true} as={Fragment}>
@@ -65,7 +67,7 @@ const ArtistMap = ({ artistData }: Props) => {
                     <IoMdCloseCircle />
                   </button>
                   <h1 className="mt-5 text-gray-300 text-2xl font-semibold mb-4">
-                    Ubicación de {artistData.displayName}
+                    Ubicación de {artistData.name}
                   </h1>
                   <div className="text-left text-gray-400 mb-8 flex justify-around">
                     <div className="mr-2">
@@ -73,7 +75,7 @@ const ArtistMap = ({ artistData }: Props) => {
                         <span className="hidden sm:inline-block font-semibold mr-2">
                           Dirección:
                         </span>
-                        {artistData.formatted_address}
+                        {artistData.artists_places.formatted_address}
                       </p>
                       <p className="text-sm sm:text-md ">
                         <span className="hidden sm:inline-block font-semibold mr-2">
@@ -86,11 +88,11 @@ const ArtistMap = ({ artistData }: Props) => {
                       <a
                         ref={ref}
                         href={`https://www.waze.com/ul?ll=${
-                          artistData._geoloc_marker.lat ||
-                          artistData._geoloc.lat
+                          artistData.own_studio_marker[0] ||
+                          artistData.artists_places.lat
                         },${
-                          artistData._geoloc_marker.lng ||
-                          artistData._geoloc.lng
+                          artistData.own_studio_marker[1] ||
+                          artistData.artists_places.lng
                         }&navigate=yes&zoom=10`}
                         target="_blank"
                         rel="noreferrer"
@@ -104,11 +106,11 @@ const ArtistMap = ({ artistData }: Props) => {
                       </a>
                       <a
                         href={`https://maps.google.com/?q=${
-                          artistData._geoloc_marker.lat ||
-                          artistData._geoloc.lat
+                          artistData.own_studio_marker[0] ||
+                          artistData.artists_places.lat
                         },${
-                          artistData._geoloc_marker.lng ||
-                          artistData._geoloc.lng
+                          artistData.own_studio_marker[1] ||
+                          artistData.artists_places.lng
                         }`}
                         target="_blank"
                         rel="noreferrer"
@@ -131,11 +133,11 @@ const ArtistMap = ({ artistData }: Props) => {
                       mapContainerStyle={containerStyle}
                       center={{
                         lat:
-                          artistData._geoloc_marker.lat ||
-                          artistData._geoloc.lat,
+                          artistData.own_studio_marker[0] ||
+                          artistData.artists_places.lat,
                         lng:
-                          artistData._geoloc_marker.lng ||
-                          artistData._geoloc.lng,
+                          artistData.own_studio_marker[1] ||
+                          artistData.artists_places.lng,
                       }}
                       zoom={18}
                       options={{
@@ -146,17 +148,17 @@ const ArtistMap = ({ artistData }: Props) => {
                       <Marker
                         position={{
                           lat:
-                            artistData._geoloc_marker.lat ||
-                            artistData._geoloc.lat,
+                            artistData.own_studio_marker[0] ||
+                            artistData.artists_places.lat,
                           lng:
-                            artistData._geoloc_marker.lng ||
-                            artistData._geoloc.lng,
+                            artistData.own_studio_marker[1] ||
+                            artistData.artists_places.lng,
                         }}
                         icon={{
                           url: '/icon-black.png',
                         }}
                         label={{
-                          text: artistData.displayName,
+                          text: artistData.name,
                           color: '#030308',
                           fontSize: '1.4rem',
                           fontWeight: '900',
