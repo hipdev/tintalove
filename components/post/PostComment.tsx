@@ -43,9 +43,12 @@ const PostComment = ({
       <div className="flex-shrink-0">
         <img
           src={
-            userImage == 'ik.imagekit.io'
-              ? `${comment.user_picture}/tr:pr-true,w-48,h-48,q-90`
-              : comment.user_picture
+            comment.users?.photo_info
+              ? comment.users?.photo_info?.url +
+                '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
+              : comment.users?.photo_url ||
+                comment.user_picture ||
+                '/unuser.png'
           }
           alt="User photo"
           className="rounded-full w-12 h-12 object-cover"
@@ -54,7 +57,7 @@ const PostComment = ({
       <div>
         <div className="flex items-end">
           <h4 className="text-gray-200 font-raleway font-semibold tracking-wide">
-            {comment.displayName}
+            {comment?.users?.full_name || comment.name}
           </h4>
           <p className="text-light-400 text-xs ml-2 mb-[3px]">{distanceGone}</p>
         </div>
