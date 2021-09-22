@@ -6,6 +6,7 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { updateArtistMainProfilePicture } from 'lib/queries/artists'
 import { AiOutlineClose } from 'react-icons/ai'
+import { useUser } from 'hooks/useUser'
 
 type Props = {
   artist: any
@@ -26,6 +27,8 @@ const PhotoCrop = ({
   setPicture,
 }: Props) => {
   const [loading, setLoading] = useState(false)
+
+  const { user, setUser } = useUser()
 
   const [crop, setCrop]: any = useState({
     aspect: 3 / 4,
@@ -127,6 +130,7 @@ const PhotoCrop = ({
                   setLoading(false)
                   setPicture(null)
                   mutate(['getArtistFullInfo', uid])
+                  setUser({ ...user, main_photo: dataPhoto })
 
                   return 'Foto actualizada 😉'
                 },

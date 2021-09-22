@@ -24,6 +24,8 @@ const SubMenuHeader = ({
     signOut()
   }
 
+  console.log(user, 'el user header')
+
   return (
     <>
       {!user && (
@@ -56,8 +58,8 @@ const SubMenuHeader = ({
                     <img
                       className="w-12 h-12 rounded-full object-cover"
                       src={
-                        artist?.artists_main_photos
-                          ? artist?.artists_main_photos?.url +
+                        user?.photo_info
+                          ? user?.photo_info?.url +
                             '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
                           : user?.photo_url || '/unuser.png'
                       }
