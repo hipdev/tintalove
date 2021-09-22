@@ -162,20 +162,16 @@ export async function getMorePostFromArtist(artistId, postId) {
 }
 
 export async function getArtistPosts(_key, artistId) {
-  const q = query(
-    collection(db, 'posts'),
-    where('artist_id', '==', artistId),
-    orderBy('created_at', 'desc'),
-    limit(15)
-  )
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('artist_id', artistId)
 
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
-  return { posts }
+  return posts
 }
 
 export async function getRelatedPosts(styles, postId) {
