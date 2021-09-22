@@ -26,15 +26,17 @@ export async function userNameAvailable(username) {
   }
 }
 
-export async function getArtistIdByUsername(username) {
-  const usernameRef = doc(db, `usernames/${username}`)
-  const queryRef = await getDoc(usernameRef)
+export async function getArtistDataByUsername(username) {
+  const { data: artist, error } = await supabase
+    .from('artists')
+    .select('*')
+    .eq('username', username)
 
-  if (queryRef.exists()) {
-    return queryRef.data().uid
-  } else {
-    return false
+  if (error) {
+    throw new Error(`Error obteniendo artista: ${error.message}`)
   }
+
+  return artist[0]
 }
 
 export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
@@ -65,9 +67,13 @@ export async function getArtistWizard(_key, uid) {
 }
 
 export async function getUserNamesByArtists() {
-  const querySnapshot = await getDocs(collection(db, 'usernames'))
-  const usernames: any = []
-  querySnapshot.forEach((doc: any) => usernames.push({ username: doc.id }))
+  const { data: usernames, error } = await supabase
+    .from('artists')
+    .select('username')
+
+  if (error) {
+    throw new Error(`Error obteniendo usernames: ${error.message}`)
+  }
 
   return usernames
 }
