@@ -6,7 +6,6 @@ import { RiRoadMapLine } from 'react-icons/ri'
 import { FiClock } from 'react-icons/fi'
 import Link from 'next/link'
 import { ArtistTypes } from 'types/artist'
-import Image from 'next/image'
 import PostCallOptions from 'components/post/PostCallOptions'
 import { useContext, useState } from 'react'
 import { LoginContext } from 'pages/_app'
@@ -20,10 +19,6 @@ import { useUser } from 'hooks/useUser'
 type Props = {
   artistData: ArtistTypes
   artistPics: any
-}
-
-const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,h-320,q-${quality || 75}`
 }
 
 const ArtistProfile = ({ artistData, artistPics }: Props) => {
@@ -57,17 +52,13 @@ const ArtistProfile = ({ artistData, artistPics }: Props) => {
               onClick={() => setOpenModalPics(true)}
             >
               {artistData?.artists_main_photos?.url ? (
-                <Image
-                  loader={loaderPost}
-                  src={artistData?.artists_main_photos?.url}
-                  alt={`Foto de perfil de ${artistData.name}`}
-                  layout="fill" // el fill obliga a que se adapte al padre
-                  // width={600}
-                  // height={500}
-                  // sizes="100%"
-                  loading="lazy"
-                  quality={100}
+                <img
                   className="w-full  object-cover"
+                  src={
+                    artistData?.artists_main_photos?.url +
+                    '/tr:pr-true,c-at_max,w-400,f-auto,q-90'
+                  }
+                  alt={`Foto de perfil de ${artistData.name}`}
                 />
               ) : (
                 <img
