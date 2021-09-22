@@ -261,15 +261,19 @@ export async function getStudiosInfo() {
   return { usernames_studios }
 }
 
-export async function getStudioIdByUsername(username) {
-  const usernameRef = doc(db, `usernames_studios/${username}`)
-  const queryRef = await getDoc(usernameRef)
+export async function getStudioDataByUsername(username) {
+  const { data: studio, error } = await supabase
+    .from('studios')
+    .select(
+      '*,studios_main_photos:main_photo_id(url), studios_places:main_address_id(*)'
+    )
+    .eq('username', username)
 
-  if (queryRef.exists()) {
-    return queryRef.data().studio_id
-  } else {
-    return false
+  if (error) {
+    throw new Error(`Error obteniendo estudio: ${error.message}`)
   }
+
+  return studio[0]
 }
 
 export async function updateStudioArtists(studioId, data, studioData) {
@@ -388,11 +392,13 @@ export async function updateStudioLocationMarker(
 }
 
 export async function getUsernamesByStudios() {
-  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
-  const usernames: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return usernames.push({ username: doc.id })
-  })
+  const { data: usernames, error } = await supabase
+    .from('studios')
+    .select('username')
+
+  if (error) {
+    throw new Error(`Error obteniendo usernames: ${error.message}`)
+  }
 
   return usernames
 }
