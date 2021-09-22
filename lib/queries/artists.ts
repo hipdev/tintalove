@@ -1,15 +1,10 @@
 import {
   collection,
-  addDoc,
   doc,
   getDoc,
   getFirestore,
-  serverTimestamp,
   getDocs,
   QueryDocumentSnapshot,
-  query,
-  where,
-  deleteDoc,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
@@ -597,14 +592,10 @@ export async function addArtistToFavorites(artist_id, user_id) {
 }
 
 export async function deleteFavoriteArtist(favId) {
-  const favArtistRef = doc(collection(db, 'fav_artists'), favId)
-
-  await deleteDoc(favArtistRef)
+  await supabase.from('favorite_artists').delete().eq('id', favId.id)
 }
 
 export async function isArtistFavorite(_key, artist_id, user_id) {
-  console.log(artist_id, user_id, 'params')
-
   if (artist_id && user_id) {
     const { data, error } = await supabase
       .from('favorite_artists')
