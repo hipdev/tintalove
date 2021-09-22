@@ -8,7 +8,6 @@ const loaderPost = ({ src, quality }: any) => {
 }
 
 const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  console.log(post, 'el post relacionado')
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
       ? '?loc=Colombia'

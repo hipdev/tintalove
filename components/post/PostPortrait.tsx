@@ -46,9 +46,6 @@ const PostPortrait = ({
     }
   }, [imageRef, router])
 
-  console.log(artistData, 'data Artist')
-  console.log(postData, 'data del post')
-
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between 2xl:justify-center">
       <div

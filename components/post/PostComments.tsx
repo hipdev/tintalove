@@ -90,8 +90,6 @@ const PostComments = ({
     }
   }
 
-  console.log(commentsData, 'los comments')
-
   return (
     <div className="w-full">
       <div className="w-full flex flex-shrink mb-5">
