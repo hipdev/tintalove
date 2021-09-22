@@ -14,8 +14,6 @@ const UsernameArtistPage = ({ artistData, artistPics }: any) => {
     return 'Loading'
   }
 
-  console.log(artistData, 'el artista')
-
   return (
     <Layout>
       <ArtistProfile artistData={artistData} artistPics={artistPics} />
@@ -27,9 +25,6 @@ export default UsernameArtistPage
 
 export async function getStaticPaths() {
   const usernamesList = await getUserNamesByArtists()
-
-  console.log(usernamesList, 'usuarios')
-
   const paths = usernamesList.map((doc: any) => ({
     params: {
       username: doc.username,
@@ -43,16 +38,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  let artistId = null
   let artistData = null
   let artistPics = null
 
   if (params.username) {
     try {
       artistData = await getArtistDataByUsername(params.username)
-
-      artistPics = await getArtistPictures('_', artistData.id)
-      console.log(artistPics, 'las fotos')
+      artistPics = await getArtistPictures('_', artistData.user_id)
       // Si falla uno fallan todos por esta dentro del mismo trycatch
     } catch (error) {
       console.log('Error obteniendo la info del artista')
@@ -63,7 +55,6 @@ export async function getStaticProps({ params }: any) {
 
   return {
     props: {
-      artistId,
       artistData,
       artistPics,
     },

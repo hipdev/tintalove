@@ -22,8 +22,6 @@ const MorePhotos = ({ artist }) => {
     getArtistPictures
   )
 
-  console.log(dataPictures, 'las fotos')
-
   const handlePicture = async (e: any) => {
     e.preventDefault()
 

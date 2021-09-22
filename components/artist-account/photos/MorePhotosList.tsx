@@ -22,8 +22,6 @@ const MorePhotosList = ({ artist, pictures, mutatePictures }) => {
     })
   }
 
-  console.log(pictures, 'fotos')
-
   return (
     <div className="grid grid-cols-3 gap-5">
       {pictures.map((pic) => (
