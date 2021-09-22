@@ -25,9 +25,9 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
         <div
           className={
             'mb-5 relative ' +
-            (post.picture_size == 'portrait'
+            (post.photo_size == 'portrait'
               ? 'aspect-w-3 aspect-h-4'
-              : post.picture_size == 'landscape'
+              : post.photo_size == 'landscape'
               ? 'aspect-w-4 aspect-h-3'
               : 'aspect-w-1 aspect-h-1')
           }
