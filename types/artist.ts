@@ -24,7 +24,8 @@ export type ArtistTypes = {
   username?: string
   profile_picture?: ProfilePicture // remove after migration
   artists_main_photos?: ProfilePicture // table
-  uid?: string
+  uid?: string // remove after migration
+  id?: string // remove after migration
   studio_id?: string
   studios?: []
   styles?: []
