@@ -24,8 +24,6 @@ const SubMenuHeader = ({
     signOut()
   }
 
-  console.log(artist, 'el artista en header')
-
   return (
     <>
       {!user && (

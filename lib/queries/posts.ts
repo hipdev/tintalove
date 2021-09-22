@@ -250,7 +250,7 @@ export async function addComment(comment, post_id, user) {
 export async function getPostComments(postId) {
   const { data: comments, error } = await supabase
     .from('posts_comments')
-    .select('*')
+    .select('*, users:user_id(photo_url,photo_info)')
     .eq('post_id', postId)
 
   if (error) {

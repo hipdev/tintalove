@@ -365,6 +365,18 @@ export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
         { returning: 'minimal' } // Así nos ahorramos un select
       )
       .eq('user_id', uid)
+
+    // Agregamos la foto a la tabla de usuarios
+    await supabase
+      .from('users')
+      .update(
+        {
+          photo_info: dataPhoto,
+          updated_at: new Date(),
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('id', uid)
   }
 
   if (!artist.main_photo_id && data) {
