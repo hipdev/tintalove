@@ -1,8 +1,10 @@
 import { Timestamp } from 'firebase/firestore/lite'
 import { ArtistTypes } from './artist'
+import { StudioTypes } from './studio'
 
 export type PostTypes = {
   artists: ArtistTypes
+  studios: StudioTypes
   id: string
   artist_id: string
   is_active: boolean

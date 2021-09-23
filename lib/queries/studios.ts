@@ -1,18 +1,4 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  serverTimestamp,
-  getDocs,
-  QueryDocumentSnapshot,
-  DocumentData,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
-import { StudioTypes } from 'types/studio'
-
-const db = getFirestore(firebaseApp)
 
 export async function userNameAvailableStudio(username) {
   let { data: artist } = await supabase
@@ -235,32 +221,6 @@ export async function getStudioIsActive(_key, user_id) {
   return null
 }
 
-export async function getStudioInfo(_key, studioId) {
-  const docRef = doc(collection(db, 'studios'), studioId)
-  const docSnap = await getDoc(docRef)
-
-  if (docSnap.exists()) {
-    const data: StudioTypes | DocumentData = {
-      ...docSnap.data(),
-      id: docSnap.id,
-    }
-
-    return { studio: data }
-  } else {
-    return { studio: null }
-  }
-}
-
-export async function getStudiosInfo() {
-  const querySnapshot = await getDocs(collection(db, 'usernames_studios'))
-  const usernames_studios: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    usernames_studios.push({ ...doc.data() })
-  )
-
-  return { usernames_studios }
-}
-
 export async function getStudioDataByUsername(username) {
   const { data: studio, error } = await supabase
     .from('studios')
@@ -282,7 +242,7 @@ export async function updateStudioArtists(studioId, data, studioData) {
   const dataForm = {
     times: data.times,
     styles,
-    updated_at: serverTimestamp(),
+    updated_at: new Date(),
   }
 
   const { error } = await supabase
@@ -608,28 +568,20 @@ export async function deleteArtistFromStudio(studioArtistId, requestId) {
   return true
 }
 
-export async function getMultipleStudiosInfo(_key, studiosIds) {
-  const studios = await Promise.all(
-    studiosIds.map(async (studioId) => {
-      const studioRef = doc(collection(db, 'studios'), studioId)
-      const docSnap = await getDoc(studioRef)
-      return { ...docSnap.data(), id: docSnap.id }
-    })
-  )
+export async function getMultipleStudiosInfo(_key, artist_id) {
+  if (artist_id) {
+    const { data: studios, error } = await supabase
+      .from('studios_artists')
+      .select('*, studios:studio_id(*)')
+      .eq('artist_id', artist_id)
 
-  return { studios }
-}
-
-export async function getUsernameStudio(_key, id) {
-  const usernameRef = doc(db, `studios/${id}`)
-  const queryRef = await getDoc(usernameRef)
-
-  if (queryRef.exists()) {
-    console.log('existe el estudio')
-    return queryRef.data().username
-  } else {
-    throw new Error('El estudio no existe')
+    if (error) {
+      throw new Error('Error obteniendo las requests')
+    }
+    return studios
   }
+
+  return null
 }
 
 /* Studios filters */

@@ -10,7 +10,6 @@ import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import PostGetStudioLink from './PostGetStudioLink'
 
 const loaderPost = ({ src, quality, width }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
@@ -36,6 +35,8 @@ const PostPortrait = ({
   )
 
   const [imageHeight, setImageHeight] = useState(null)
+
+  console.log(postData, 'post data')
 
   useEffect(() => {
     console.log('image ref')
@@ -118,10 +119,13 @@ const PostPortrait = ({
               {postData.styles.join(',  ')}
             </p>
             <p className="text-sm text-gray-400">
-              {postData.is_partner ? (
+              {postData.studio_id ? (
                 postData.studio_id && (
                   <>
-                    Realizado en: <PostGetStudioLink id={postData?.studio_id} />
+                    Realizado en:{' '}
+                    <Link href={`/studio/${postData?.studios.username}`}>
+                      <a className="text-primary">{postData?.studios.name}</a>
+                    </Link>
                   </>
                 )
               ) : (
