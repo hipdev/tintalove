@@ -130,20 +130,18 @@ export async function getAllPostsPaginatedMobile(_key, pageNumber, cursor) {
 }
 
 export async function getLastFourPostsByArtist(_key, artistId) {
-  const q = query(
-    collection(db, 'posts'),
-    where('is_active', '==', true),
-    where('artist_id', '==', artistId),
-    limit(4)
-  )
+  let { data: artistFourPosts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('is_active', true)
+    .eq('artist_id', artistId)
+    .limit(4)
 
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
-  return { posts }
+  return artistFourPosts
 }
 
 export async function getMorePostFromArtist(artistId, postId) {

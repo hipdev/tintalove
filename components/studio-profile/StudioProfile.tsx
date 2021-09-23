@@ -11,6 +11,8 @@ import ArtistsCard from './ArtistsCard'
 import { SiWaze } from 'react-icons/si'
 import Image from 'next/image'
 import { useUser } from 'hooks/useUser'
+import useSWR from 'swr'
+import { getArtistsByStudio } from 'lib/queries/studios'
 
 type Props = {
   studioData: StudioTypes
@@ -29,8 +31,12 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   const { openModal } = useContext(LoginContext)
   const { user } = useUser()
 
-  console.log(studioData, 'el estudio')
-  console.log(studioPictures, 'las fotos del estudio')
+  const { data: artists } = useSWR(
+    ['getArtistsByStudio', studioData.id],
+    getArtistsByStudio
+  )
+
+  console.log(artists, 'los artistas')
 
   if (!studioData?.is_active) {
     return (
@@ -50,7 +56,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           openModal={openModalPics}
           setOpenModal={setOpenModalPics}
           pictures={studioPictures}
-          profilePicture={studioData?.profile_picture?.url || null}
+          profilePicture={studioData?.studios_main_photos?.url || null}
         />
       )}
 
@@ -168,17 +174,17 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
           <h1 className="text-gray-300 font-semibold mb-7 text-xl">
             Artistas del estudio
           </h1>
-          {/* {studioData?.artists?.length > 0 ? (
+          {artists?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {studioData.artists.map((artistId) => (
-                <ArtistsCard key={artistId} artistId={artistId || ''} />
+              {artists.map((artist) => (
+                <ArtistsCard key={artist.id} artist={artist.artists || ''} />
               ))}
             </div>
           ) : (
             <p className="text-gray-400">
               Este estudio no tiene artistas vinculados
             </p>
-          )} */}
+          )}
         </div>
 
         <div className="relative w-full rounded-md  pb-10 mt-10">

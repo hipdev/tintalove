@@ -1,34 +1,36 @@
-import { getArtistInfo, getArtistPictures } from 'lib/queries/artists'
 import useSWR from 'swr'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import Link from 'next/link'
 import { getLastFourPostsByArtist } from 'lib/queries/posts'
+import { ArtistTypes } from 'types/artist'
+import { agenda } from 'components/layout/header/availability'
 
-const ArtistsCard = ({ artistId }: { artistId: string }) => {
-  const { data } = useSWR(['getArtistInfo', artistId], getArtistInfo)
+const ArtistsCard = ({ artist }: { artist: ArtistTypes }) => {
   const { data: artistPosts } = useSWR(
-    ['getLastFourPostsByArtist', artistId],
+    ['getLastFourPostsByArtist', artist.id],
     getLastFourPostsByArtist
   )
+
+  console.log(artist, artistPosts, 'esto que ome')
 
   return (
     <div className="w-full h-full bg-gr-800 p-5 rounded-md">
       <div className="flex justify-between">
         <div className="flex  gap-5">
-          <Link href={`/${data?.artist?.username}`}>
+          <Link href={`/${artist?.username}`}>
             <a className="bg-transparent w-24 sm:w-16 h-14 sm:h-16 rounded-xl">
               <img
                 className="object-cover rounded-md"
-                src={`${data?.artist?.profile_picture?.url}/tr:pr-true,w-70,h-70,q-90`}
+                src={`${artist?.artists_main_photos?.url}/tr:pr-true,w-70,h-70,q-90`}
                 alt=""
               />
             </a>
           </Link>
 
           <div>
-            <Link href={`/${data?.artist?.username}`}>
+            <Link href={`/${artist?.username}`}>
               <a className="text-xl font-semibold text-white tracking-wide capitalize">
-                {data?.artist?.username}
+                {artist?.username}
               </a>
             </Link>
             <div className="flex gap-4 justify-between mt-1">
@@ -36,7 +38,8 @@ const ArtistsCard = ({ artistId }: { artistId: string }) => {
                 <p className="text-gray-400 text-sm">
                   Disponibilidad:{' '}
                   <span className="text-green-500">
-                    {data?.artist?.available_label}
+                    {artist?.availability_id &&
+                      agenda[artist.availability_id - 1].label}
                   </span>
                 </p>
                 <span className="text-green-500 text-xl">
@@ -49,14 +52,14 @@ const ArtistsCard = ({ artistId }: { artistId: string }) => {
       </div>
       <p className="text-gray-400 mb-2 mt-3 truncate text-sm">
         <span>Estilos: </span>
-        {data?.artist?.styles ? (
-          data.artist.styles.join(', ')
+        {artist?.styles ? (
+          artist.styles.join(', ')
         ) : (
           <span>Ninguno registrado</span>
         )}
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 ">
-        {artistPosts?.posts?.map((post) => {
+        {artistPosts?.map((post) => {
           return (
             <Link href={`/tatuajes/${post.id}`} key={post.id}>
               <a className="bg-transparent w-full rounded-md overflow-hidden group relative">
@@ -67,7 +70,7 @@ const ArtistsCard = ({ artistId }: { artistId: string }) => {
                   className="absolute w-full h-full group-hover:z-10"
                 />
                 <img
-                  src={`${post?.image?.url}/tr:pr-true,w-220,h-190,q-90`}
+                  src={`${post?.photo_info?.url}/tr:pr-true,w-220,h-190,q-90`}
                   alt=""
                   className="h-44 w-full object-cover rounded-md relative"
                 />
