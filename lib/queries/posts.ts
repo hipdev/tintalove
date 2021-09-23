@@ -42,9 +42,30 @@ export async function createArtistPost(
 export async function getPostsInfo(_key) {
   let { data: posts } = await supabase
     .from('posts')
-    .select('*, artists:artist_id(name, username)')
+    .select('*, artists:artist_id(name, username, cities:city_id(city_name))')
 
   return posts
+}
+
+export async function getPostsInfoByCity(_key, cityName) {
+  if (cityName) {
+    console.log(cityName, 'la ciudad')
+
+    // Cambiar aquí luego por el city place id
+    let { data: posts, error } = await supabase
+      .from('posts')
+      .select('*, artists:artist_id(name, username, cities:city_id(city_name))')
+      .eq('city_place_id', 'ChIJBa0PuN8oRI4RVju1x_x8E0I')
+
+    console.log(posts, 'posts obtenidos')
+
+    if (error) {
+      throw new Error(`Error get posts: ${error.message}`)
+    }
+
+    return posts
+  }
+  return null
 }
 
 export async function getLastFourPostsByArtist(_key, artistId) {
@@ -111,7 +132,6 @@ export async function getPostsIds() {
 }
 
 export async function getPostDataById(_key, postId) {
-  console.log('hola')
   const { data: post, error } = await supabase
     .from('posts')
     .select(

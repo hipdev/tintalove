@@ -23,13 +23,13 @@ export async function getCities(key, country) {
 }
 
 export async function getCitiesPaths() {
-  const querySnapshot = await getDocs(collection(db, 'cities'))
-  const cities: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    cities.push({
-      id: doc.id,
-    })
-  )
+  const { data: cities, error } = await supabase
+    .from('cities')
+    .select('city_name')
+
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
   return cities
 }
