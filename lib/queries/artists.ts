@@ -1,9 +1,5 @@
-import { doc, getDoc, getFirestore } from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
 import { ArtistTypes } from 'types/artist'
-
-const db = getFirestore(firebaseApp)
 
 export async function userNameAvailable(username) {
   let { data: artist } = await supabase
@@ -543,17 +539,6 @@ export async function getStudiosByUserId(_key, userId) {
     }
 
     return studios
-  }
-}
-
-export async function getUsernameArtist(_key, id) {
-  const usernameRef = doc(db, `artists/${id}`)
-  const queryRef = await getDoc(usernameRef)
-
-  if (queryRef.exists()) {
-    return queryRef.data().username
-  } else {
-    throw new Error('El artista no existe')
   }
 }
 
