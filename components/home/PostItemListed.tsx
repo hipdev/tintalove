@@ -1,14 +1,12 @@
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useStateMachine } from 'little-state-machine'
-import { RiHeart3Fill, RiHeartLine } from 'react-icons/ri'
 import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
 import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
-import Script from 'next/script'
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 
 const PostItemListed = ({
@@ -20,19 +18,20 @@ const PostItemListed = ({
   user: UserState
   mutatePost?: any
 }) => {
+  console.log(user, 'el user en lista')
   const [isOpen, setIsOpen] = useState(false)
 
-  const { state, actions }: any = useStateMachine({
+  const { actions }: any = useStateMachine({
     lists,
   })
 
-  const { data, mutate } = useSWR(
-    user?.uid ? [post.id, user.uid] : null,
+  const { data: isListed, mutate } = useSWR(
+    user?.id ? ['isPostListed', post.id, user.id] : null,
     isPostListed
   )
 
   const handleList = () => {
-    if (!user && !user?.displayName) {
+    if (!user && !user?.full_name) {
       toast('Entra para crear listas 🤩')
     } else {
       actions.lists({
@@ -60,7 +59,7 @@ const PostItemListed = ({
               },
             }
           }, false)
-          mutate({ listed: false }, false)
+          // mutate({ listed: false }, false)
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -70,16 +69,10 @@ const PostItemListed = ({
     }
   }
 
+  console.log(isListed, 'listado?')
+
   return (
     <>
-      {/* <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"
-      />
-      <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"
-      /> */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -151,7 +144,7 @@ const PostItemListed = ({
         </Dialog>
       </Transition.Root>
 
-      {data?.listed ? (
+      {isListed ? (
         <span
           className="cursor-pointer text-xl hover:text-gray-500"
           onClick={() => setIsOpen(true)}

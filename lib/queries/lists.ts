@@ -9,19 +9,8 @@ import {
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
 import toast from 'react-hot-toast'
-// import { Counter } from './counter'
 
 const db = getFirestore(firebaseApp)
-
-const firebaseConfig = { projectId: 'tinta-love' }
-
-// firebase old 8 version
-
-declare global {
-  interface Window {
-    firebase: any
-  }
-}
 
 export async function createList(user, name) {
   const { data, error } = await supabase
@@ -30,7 +19,6 @@ export async function createList(user, name) {
     .select('*')
 
   if (error) {
-    console.log(error)
     toast.error(error.message)
   }
 
@@ -42,16 +30,19 @@ export async function createList(user, name) {
 export async function addPostToList(uid, post, listId) {
   return true
 }
-export async function isPostListed(postId, userId) {
-  const q = query(
-    collection(db, 'lists_items'),
-    where('user_id', '==', userId),
-    where('post_id', '==', postId)
-  )
 
-  const querySnapshotEmpty = await (await getDocs(q)).empty // is Empty == true
+export async function isPostListed(_key, postId, userId) {
+  let { data: isListed, error } = await supabase
+    .from('lists_items')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('post_id', postId)
 
-  return { listed: !querySnapshotEmpty }
+  if (error) {
+    toast.error(error.message)
+  }
+
+  return isListed.length > 0 ? true : false
 }
 
 export async function getUserLists(key, user_id) {
@@ -61,11 +52,10 @@ export async function getUserLists(key, user_id) {
     .eq('user_id', user_id)
 
   if (error) {
-    console.log(error)
     toast.error(error.message)
   }
 
-  return { lists }
+  return lists
 }
 
 export async function removePostFromList(postId, userId) {
@@ -102,11 +92,14 @@ export async function getUserListItems(key, list_id) {
   return { listItems, userList }
 }
 
-export async function getListImage(key, post_id) {
-  let { data: post } = await supabase
-    .from('posts')
-    .select('*')
-    .eq('id', post_id)
+export async function getListImage(key, listId) {
+  if (listId) {
+    const { data: listImage } = await supabase
+      .from('lists_items')
+      .select('*, posts(photo_info)')
+      .eq('list_id', listId)
+      .limit(1)
 
-  return { post }
+    return listImage
+  }
 }

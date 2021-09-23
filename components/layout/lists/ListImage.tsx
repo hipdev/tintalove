@@ -2,14 +2,14 @@ import { getListImage } from 'lib/queries/lists'
 import useSWR from 'swr'
 import Image from 'next/image'
 
-const ListImage = ({ postId }) => {
-  const { data }: any = useSWR(['getListImage', postId], getListImage)
+const ListImage = ({ listId }) => {
+  const { data: listImage } = useSWR(['getListImage', listId], getListImage)
 
-  // console.log(data, 'data list image')
+  console.log(listImage, 'data list image')
 
   return (
     <>
-      {!data?.post ? (
+      {listImage.length == 0 ? (
         <div className="p-8 bg-gray-400">
           <Image
             src="/box.png"
@@ -20,7 +20,7 @@ const ListImage = ({ postId }) => {
         </div>
       ) : (
         <img
-          src={`${data.post.post_image}/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
+          src={`${listImage[0]?.photo_info?.url}/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
           alt=""
           className="w-full h-full object-cover"
         />
