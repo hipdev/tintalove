@@ -1,101 +1,37 @@
-import { User } from 'firebase/auth'
-import {
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  setDoc,
-  serverTimestamp,
-  DocumentSnapshot,
-  updateDoc,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
-import { UserState } from 'types/user'
+import { supabase } from 'lib/supabase-client'
 
-const db = getFirestore(firebaseApp)
+// export async function updateUserSearchCity(uid, data) {
+//   const userRef = doc(collection(db, 'users'), uid)
 
-export async function createUser(user: User) {
-  const docRef = doc(collection(db, 'users'), user.uid)
-  const docSnap = await getDoc(docRef)
+//   const dataForm = {
+//     searching_city: {
+//       city_name: data.city_name,
+//       city_id: data.id,
+//       geohash: data.geohash,
+//       province: data.province,
+//       _geoloc: data._geoloc || null,
+//     },
+//     updated_at: serverTimestamp(),
+//   }
 
-  if (docSnap.exists()) {
-    return true
-  } else {
-    const userRef = doc(collection(db, 'users'), user.uid)
-    await setDoc(userRef, {
-      email: user.email,
-      displayName: user.displayName,
-      photoUrl: user.photoURL,
-      created_at: serverTimestamp(),
-    })
-    console.log('No such document!')
-    return true
-  }
-}
+//   const docSnap = await getDoc(userRef)
 
-export async function createPhoneUser(user: User, name: string) {
-  const docRef = doc(collection(db, 'users'), user.uid)
-  const docSnap = await getDoc(docRef)
+//   if (docSnap.exists()) {
+//     await updateDoc(userRef, dataForm)
 
-  if (docSnap.exists()) {
-    return true
-  } else {
-    const userRef = doc(collection(db, 'users'), user.uid)
-    await setDoc(userRef, {
-      displayName: name || 'Sin nombre',
-      phoneNumber: user.phoneNumber,
-      created_at: serverTimestamp(),
-    })
-    return true
-  }
-}
+//     return true
+//   } else {
+//     throw new Error('No estas registrado como usuario')
+//   }
+// }
 
-export async function getUserInfo(uid) {
-  const docRef = doc(collection(db, 'users'), uid)
-  const docSnap: DocumentSnapshot<UserState> = await getDoc(docRef)
+export async function updateUserName(uid, name) {
+  const { error } = await supabase
+    .from('users')
+    .update({ name, updated_at: new Date() })
+    .eq('id', uid)
 
-  if (docSnap.exists()) {
-    const data: UserState = { ...docSnap.data(), uid: docSnap.id }
-    return { user: data }
-  } else {
-    return null
-  }
-}
-
-export async function updateUserSearchCity(uid, data) {
-  const userRef = doc(collection(db, 'users'), uid)
-
-  const dataForm = {
-    searching_city: {
-      city_name: data.city_name,
-      city_id: data.id,
-      geohash: data.geohash,
-      province: data.province,
-      _geoloc: data._geoloc || null,
-    },
-    updated_at: serverTimestamp(),
-  }
-
-  const docSnap = await getDoc(userRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(userRef, dataForm)
-
-    return true
-  } else {
-    throw new Error('No estas registrado como usuario')
-  }
-}
-
-export async function updateUserName(uid, displayName) {
-  const userRef = doc(collection(db, 'users'), uid)
-  const docSnap: DocumentSnapshot<UserState> = await getDoc(userRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(userRef, { displayName })
-    return true
-  } else {
-    throw new Error('Este usuario no existe')
-    return false
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
   }
 }
