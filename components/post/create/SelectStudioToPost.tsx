@@ -3,13 +3,13 @@ import Select from 'react-select'
 import useSWR from 'swr'
 
 const SelectStudioToPost = ({ artist, setStudio }) => {
-  const { data } = useSWR(
-    ['getMultipleStudiosInfo', artist?.studios],
+  const { data: studios } = useSWR(
+    ['getMultipleStudiosInfo', artist?.id],
     getMultipleStudiosInfo
   )
 
-  const optionsStudios = data?.studios.map((studio: any) => {
-    return { value: studio.id, label: studio.studio_name }
+  const optionsStudios = studios.map((studio: any) => {
+    return { value: studio.id, label: studio.name }
   })
 
   return (

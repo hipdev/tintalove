@@ -3,7 +3,7 @@ import Select from 'react-select'
 import CreatePostPicture from './CreatePostPicture'
 import { BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
-import SelectStudioToPost from './SelectStudio'
+import SelectStudioToPost from './SelectStudioToPost'
 
 const CreatePost = ({ artist, artistsStudios }) => {
   const [description, setDescription] = useState('')

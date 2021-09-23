@@ -197,7 +197,7 @@ export async function getPostDataById(_key, postId) {
   const { data: post, error } = await supabase
     .from('posts')
     .select(
-      '*, artists:artist_id(*, artists_main_photos:main_photo_id(url), cities:city_id(city_name, province))'
+      '*, artists:artist_id(*, artists_main_photos:main_photo_id(url), cities:city_id(city_name, province)), studios:studio_id(username, name)'
     )
     .eq('id', postId)
     .single()
