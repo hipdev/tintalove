@@ -12,11 +12,9 @@ import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 const PostItemListed = ({
   post,
   user,
-  mutatePost,
 }: {
   post: PostTypes
   user: UserState
-  mutatePost?: any
 }) => {
   console.log(user, 'el user en lista')
   const [isOpen, setIsOpen] = useState(false)
@@ -38,7 +36,6 @@ const PostItemListed = ({
         post: post,
         listOpen: true,
         mutateListed: mutate,
-        mutatePost,
       })
     }
   }
@@ -51,14 +48,7 @@ const PostItemListed = ({
         loading: 'Eliminando de tu lista...',
         success: () => {
           setIsOpen(false)
-          mutatePost((data) => {
-            return {
-              post: {
-                ...data.post,
-                counter_listed: data.post.counter_listed - 1,
-              },
-            }
-          }, false)
+
           // mutate({ listed: false }, false)
           return 'Tattoo eliminado 😉'
         },
