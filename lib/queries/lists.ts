@@ -1,20 +1,10 @@
 import {
   collection,
   getFirestore,
-  serverTimestamp,
-  addDoc,
   getDocs,
   QueryDocumentSnapshot,
-  doc,
-  getDoc,
   query,
-  orderBy,
-  limit,
-  deleteDoc,
   where,
-  updateDoc,
-  writeBatch,
-  increment,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
