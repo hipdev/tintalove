@@ -1,5 +1,4 @@
 import Loading from 'components/loading/loading'
-import { getPostsByCity } from 'lib/queries/geo'
 import { getPostsInfo } from 'lib/queries/posts'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
@@ -8,8 +7,6 @@ import PostItem from './PostItem'
 const PostsListDesktop = ({ user }) => {
   // console.log(latLng, 'latitud y longitud')
   const { data: posts } = useSWR(['getPostsInfo'], getPostsInfo)
-
-  console.log(posts, 'los posts')
 
   const breakpointColumnsObj = {
     default: 6,

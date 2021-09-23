@@ -1,6 +1,5 @@
 import Modal from 'react-modal'
 import Layout from 'components/layout/Layout'
-import { postsToJSON, postToJSON } from 'lib/firebase'
 import debounce from 'lodash.debounce'
 import {
   getMorePostFromArtist,
@@ -97,8 +96,6 @@ export default function TattoosPage({
 export async function getStaticPaths() {
   const postsList = await getPostsIds()
 
-  console.log(postsList, 'lista de ids')
-
   const paths = postsList.map((doc: any) => ({
     params: {
       postId: doc.id,
@@ -123,8 +120,6 @@ export const getStaticProps = async ({ params }) => {
     try {
       const dataPost: any = await getPostDataById('get-post', params.postId)
 
-      console.log(dataPost, 'data post')
-
       const dataComments = await getPostComments(params.postId)
 
       const dataPostByArtist = await getMorePostFromArtist(
@@ -137,11 +132,7 @@ export const getStaticProps = async ({ params }) => {
         params.postId
       )
 
-      console.log(dataRelatedPosts, 'los post relacionados')
-
       postData = dataPost
-
-      console.log(postData, 'esto que ome')
 
       commentsData = dataComments
       morePostsArtist = dataPostByArtist
