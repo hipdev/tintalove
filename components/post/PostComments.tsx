@@ -187,7 +187,7 @@ const PostComments = ({
             <PostComment
               key={comment.id}
               comment={comment}
-              userId={user?.uid || null}
+              userId={user?.id || null}
               postId={postId}
               removeComment={removeComment}
               setTotalComments={setTotalComments}
