@@ -1,7 +1,6 @@
 import Compressor from 'compressorjs'
 import { useState } from 'react'
 import { HiOutlineCamera } from 'react-icons/hi'
-import { StudioTypes } from 'types/studio'
 import MorePhotos from './MorePhotos'
 import PhotoCrop from './PhotoCrop'
 

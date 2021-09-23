@@ -455,7 +455,7 @@ export async function getStudioPictures(key, studioId) {
     throw new Error(`Error: ${error.message}`)
   }
 
-  return { pictures }
+  return pictures
 }
 
 export async function addStudioPicture(studio_id, data) {

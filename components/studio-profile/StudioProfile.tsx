@@ -30,6 +30,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
   const { user } = useUser()
 
   console.log(studioData, 'el estudio')
+  console.log(studioPictures, 'las fotos del estudio')
 
   if (!studioData?.is_active) {
     return (

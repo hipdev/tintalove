@@ -83,10 +83,10 @@ const MorePhotos = ({ studio }) => {
         </div>
       )}
 
-      {dataPictures?.pictures?.length > 0 && (
+      {dataPictures?.length > 0 && (
         <MorePicturesList
           studio={studio}
-          pictures={dataPictures?.pictures}
+          pictures={dataPictures}
           mutatePictures={mutatePictures}
         />
       )}
