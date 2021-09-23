@@ -1,11 +1,4 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  getDocs,
-  QueryDocumentSnapshot,
-} from 'firebase/firestore/lite'
+import { doc, getDoc, getFirestore } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
 import { ArtistTypes } from 'types/artist'
@@ -78,17 +71,6 @@ export async function getUserNamesByArtists() {
   }
 
   return usernames
-}
-
-export async function getArtistsInfo() {
-  const querySnapshot = await getDocs(collection(db, 'artists'))
-  const artists: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    // console.log('consultando artistas', doc.data())
-    return artists.push({ ...doc.data() })
-  })
-
-  return { artists }
 }
 
 export async function getArtistsFilter(_key) {

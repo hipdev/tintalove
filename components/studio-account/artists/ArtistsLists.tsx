@@ -7,7 +7,6 @@ import useSWR from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import toast from 'react-hot-toast'
 import { IoMdCall } from 'react-icons/io'
-import GetUsernameLink from 'components/common/GetUsernameLink'
 import { parseISO } from 'date-fns'
 
 const ArtistsLists = ({ studio }) => {
