@@ -1,24 +1,4 @@
-import {
-  collection,
-  getFirestore,
-  getDocs,
-  QueryDocumentSnapshot,
-  doc,
-  query,
-  orderBy,
-  limit,
-  deleteDoc,
-  where,
-  startAfter,
-  updateDoc,
-  increment,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
-
-import { PostTypes } from 'types/post'
-
-const db = getFirestore(firebaseApp)
 
 export async function createArtistPost(
   uid,
@@ -65,68 +45,6 @@ export async function getPostsInfo(_key) {
     .select('*, artists:artist_id(name, username)')
 
   return posts
-}
-
-export async function getPostsInfoMobile(_key) {
-  const q = query(
-    collection(db, 'posts'),
-    where('is_active', '==', true),
-    orderBy('created_at', 'desc'),
-    limit(4)
-  )
-
-  const querySnapshot = await getDocs(q)
-  const posts: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return posts.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { posts }
-}
-
-export async function getAllPostsPaginatedMobile(_key, pageNumber, cursor) {
-  // console.log([_key, pageNumber, cursor], 'la key en pag OJOOOO')
-
-  if (pageNumber == 0) {
-    const posts: Array<any> = []
-
-    const q = query(
-      collection(db, 'posts'),
-      where('is_active', '==', true),
-      orderBy('created_at', 'desc'),
-      limit(2)
-    )
-
-    const querySnapshot = await getDocs(q)
-
-    const nextCursor = querySnapshot.docs[querySnapshot.docs.length - 1] // Cursor para página siguiente
-
-    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-      return posts.push({ ...doc.data(), id: doc.id })
-    })
-
-    return { posts, nextCursor }
-  } else {
-    const posts: Array<any> = []
-
-    const next = query(
-      collection(db, 'posts'),
-      where('is_active', '==', true),
-      orderBy('created_at', 'desc'),
-      startAfter(cursor), // Aquí va el cursor, es decir, último post de página anterior.
-      limit(2)
-    )
-
-    const querySnapshot = await getDocs(next)
-
-    const nextCursor = querySnapshot.docs[querySnapshot.docs.length - 1]
-
-    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-      return posts.push({ ...doc.data(), id: doc.id })
-    })
-
-    return { posts, nextCursor }
-  }
 }
 
 export async function getLastFourPostsByArtist(_key, artistId) {
@@ -251,10 +169,22 @@ export async function getPostComments(postId) {
   return comments
 }
 
-export async function deletePostComment(commentId, postId) {
-  await deleteDoc(doc(db, `posts/${postId}/comments`, commentId))
+export async function deletePostComment(commentId, post_id) {
+  const { error } = await supabase
+    .from('posts_comments')
+    .delete()
+    .eq('id', commentId)
 
-  await updateDoc(doc(db, `posts/${postId}`), {
-    counter_comments: increment(-1),
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  } else {
+    // Incrementar con supabase usando una función custom, mera chimba!!
+    let { error } = await supabase.rpc('dec_total_comments', {
+      post_id,
+    })
+
+    if (error) throw new Error(`Error: ${error.message}`)
+
+    return true
+  }
 }
