@@ -11,7 +11,6 @@ Modal.setAppElement('#__next')
 const UserLists = ({ user }) => {
   const [showCreate, setShowCreate] = useState(false)
 
-  console.log(user, 'user de Supabase')
   const {
     state: { list },
     actions,
@@ -59,7 +58,6 @@ const UserLists = ({ user }) => {
                 user={user}
                 userId={user?.id}
                 post={list?.post || 1}
-                setShowCreate={setShowCreate}
               />
             )}
           </>

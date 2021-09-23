@@ -9,10 +9,10 @@ import { VscClose } from 'react-icons/vsc'
 import ListImage from './ListImage'
 import { BsPlus } from 'react-icons/bs'
 
-const SelectList = ({ userId, post, user, setShowCreate }) => {
+const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
 
-  const { data } = useSWR(
+  const { data: userLists } = useSWR(
     userId ? ['getUserLists', userId] : null,
     getUserLists
   )
@@ -25,10 +25,10 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
   })
 
   useEffect(() => {
-    if (data?.lists.length < 1) {
+    if (userLists?.length < 1) {
       setShowForm(true)
     }
-  }, [data])
+  }, [userLists])
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
@@ -59,7 +59,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
     }
   }
 
-  if (!data) return <p className="text-gray-300"> Cargando listas...</p>
+  if (!userLists) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
     <div>
@@ -80,7 +80,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
       {showForm && <NoListForm user={user} setShowCreate={setShowForm} />}
 
       <div className="grid grid-cols-2 gap-6">
-        {data?.lists?.map((list) => {
+        {userLists?.map((list) => {
           return (
             <button
               onClick={() => {
@@ -90,10 +90,10 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
               key={list.id}
             >
               <div className="  rounded-lg overflow-hidden w-48 h-48">
-                <ListImage postId={list?.post_id} />
+                <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-                {list.list_name}
+                {list.name}
               </p>
             </button>
           )
