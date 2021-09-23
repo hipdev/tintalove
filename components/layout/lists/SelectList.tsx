@@ -32,19 +32,11 @@ const SelectList = ({ userId, post, user }) => {
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
-      console.log(list, 'la lista')
-      toast.promise(addPostToList(userId, post, listId), {
+      console.log(listId, post.id, userId, 'post a añadir')
+      toast.promise(addPostToList(userId, post.id, listId), {
         loading: 'Agregando tattoo...',
         success: (res) => {
-          list.mutateListed({ listed: true }, false)
-          list.mutatePost((data) => {
-            return {
-              post: {
-                ...data.post,
-                counter_listed: data.post.counter_listed + 1,
-              },
-            }
-          }, false)
+          list.mutateListed(true, false)
 
           actions.lists({ post: null, listOpen: false })
 

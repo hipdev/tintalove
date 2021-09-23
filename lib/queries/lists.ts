@@ -27,12 +27,20 @@ export async function createList(user, name) {
   return data
 }
 
-export async function addPostToList(uid, post, listId) {
+export async function addPostToList(user_id, post_id, list_id) {
+  const { error } = await supabase
+    .from('lists_items')
+    .insert({ list_id, post_id, user_id }, { returning: 'minimal' })
+
+  if (error) {
+    toast.error(error.message)
+  }
+
   return true
 }
 
 export async function isPostListed(_key, postId, userId) {
-  let { data: isListed, error } = await supabase
+  const { data: isListed, error } = await supabase
     .from('lists_items')
     .select('id')
     .eq('user_id', userId)
@@ -46,7 +54,7 @@ export async function isPostListed(_key, postId, userId) {
 }
 
 export async function getUserLists(key, user_id) {
-  let { data: lists, error } = await supabase
+  const { data: lists, error } = await supabase
     .from('lists')
     .select('*')
     .eq('user_id', user_id)
@@ -73,12 +81,12 @@ export async function getListsIds() {
 }
 
 export async function getUserListItems(key, list_id) {
-  let { data: listItems, error } = await supabase
+  const { data: listItems, error } = await supabase
     .from('lists_items')
     .select('*')
     .eq('list_id', list_id)
 
-  let { data: userList } = await supabase
+  const { data: userList } = await supabase
     .from('lists')
     .select('*')
     .eq('id', list_id)
@@ -102,4 +110,5 @@ export async function getListImage(key, listId) {
 
     return listImage
   }
+  return []
 }
