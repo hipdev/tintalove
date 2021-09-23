@@ -12,7 +12,6 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
-import GetUsernameLink from 'components/common/GetUsernameLink'
 import { parseISO } from 'date-fns'
 
 const ArtistsRequests = ({ studio, uid }) => {
