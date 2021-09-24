@@ -14,8 +14,6 @@ const ListPost = ({
   mutateList: any
   user: UserState
 }) => {
-  console.log(list, 'la lista')
-
   const removeFromList = async (postId) => {
     if (!user && !user?.displayName) {
       toast('Ups, está no es tu lista')

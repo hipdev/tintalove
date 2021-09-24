@@ -38,8 +38,6 @@ const ContactInfoStudio = ({ studioId, studioData }) => {
     },
   })
 
-  console.log(studioData, 'studioData')
-
   useEffect(() => {
     if (studioData) {
       let styles = []

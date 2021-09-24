@@ -16,7 +16,6 @@ const PostItemListed = ({
   post: PostTypes
   user: UserState
 }) => {
-  console.log(user, 'el user en lista')
   const [isOpen, setIsOpen] = useState(false)
 
   const { actions }: any = useStateMachine({
@@ -58,8 +57,6 @@ const PostItemListed = ({
       })
     }
   }
-
-  console.log(post, 'el post')
 
   return (
     <>

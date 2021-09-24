@@ -24,8 +24,6 @@ const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 const MainInfoForm = ({ uid, artist }) => {
   const { user, setUser }: any = useUser()
 
-  console.log(artist, 'el usuario')
-
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {

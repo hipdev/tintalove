@@ -10,8 +10,6 @@ export async function createList(user, name) {
     throw new Error(`Error : ${error.message}`)
   }
 
-  console.log(data, 'data inserted')
-
   return data
 }
 
@@ -61,8 +59,6 @@ export async function getUserLists(key, user_id) {
 }
 
 export async function removePostFromList(post_id, userId) {
-  console.log(post_id, userId, 'params')
-
   const { error } = await supabase
     .from('lists_items')
     .delete()

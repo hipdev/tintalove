@@ -17,8 +17,6 @@ export default function PictureInfoPage() {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
-  console.log(dataStudio, 'estudio')
-
   return (
     <LayoutStepsStudio uid={user.id} user={user}>
       <PhotosInfo

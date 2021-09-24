@@ -38,7 +38,6 @@ export const UserContextProvider = (props) => {
         .single()
 
       if (!getUserDetails.data) {
-        console.log(user, 'el usuario a insertar')
         const { data, error } = await supabase.from('users').insert({
           full_name: user.user_metadata.full_name,
           email: user.email,
@@ -46,7 +45,7 @@ export const UserContextProvider = (props) => {
           created_at: new Date(),
           id: user.id,
         })
-        console.log(data, 'user data inserted')
+
         setUserData(data[0] || null)
       } else {
         setUserData(getUserDetails.data)
@@ -76,7 +75,6 @@ export const UserContextProvider = (props) => {
     signIn: (options) => supabase.auth.signIn(options),
     signUp: (options) => supabase.auth.signUp(options),
     signOut: () => {
-      console.log('cerrando sesión')
       setUserData(null)
       return supabase.auth.signOut()
     },

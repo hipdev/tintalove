@@ -33,7 +33,7 @@ export function AutocompleteStudioItemSendRequest({
       },
     })
   }
-  // console.log(hit, components, 'esto que es')
+
   return (
     <button className="aa-ItemLink flex h-full" onClick={sendArtistRequest}>
       <div className="aa-ItemContent">

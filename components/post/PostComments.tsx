@@ -59,7 +59,6 @@ const PostComments = ({
       toast.promise(addComment(comment, postId, user), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
-          console.log(data, 'el comentario creado')
           setComments([
             {
               name: user.full_name,

@@ -15,15 +15,6 @@ export async function createArtistPost(
   }
   const styles = dataForm.styles.map((style) => style.value)
 
-  console.log(
-    uid,
-    infoPicture,
-    dataForm,
-    artist,
-    photo_size,
-    'todos los campos'
-  )
-
   const { error } = await supabase.from('posts').insert({
     created_by: uid,
     photo_info: infoPicture,
@@ -50,15 +41,11 @@ export async function getPostsInfo(_key) {
 
 export async function getPostsInfoByCity(_key, cityName) {
   if (cityName) {
-    console.log(cityName, 'la ciudad')
-
     // Cambiar aquí luego por el city place id
     let { data: posts, error } = await supabase
       .from('posts')
       .select('*, artists:artist_id(name, username, cities:city_id(city_name))')
       .eq('city_place_id', 'ChIJBa0PuN8oRI4RVju1x_x8E0I')
-
-    console.log(posts, 'posts obtenidos')
 
     if (error) {
       throw new Error(`Error get posts: ${error.message}`)
@@ -167,8 +154,6 @@ export async function addComment(comment, post_id, user) {
     let { data, error } = await supabase.rpc('inc_total_comments', {
       row_id: post_id,
     })
-
-    console.log(data, 'contador')
 
     if (error) throw new Error(`Error: ${error.message}`)
 

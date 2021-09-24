@@ -21,8 +21,6 @@ const ShowLists = ({ userId, setShowCreate }) => {
 
   if (!userLists) return <p className="text-gray-300"> Cargando listas...</p>
 
-  console.log(userLists, 'las listas en showlist')
-
   return (
     <div className="max-w-sm">
       <div className="flex mb-8 justify-between items-center">

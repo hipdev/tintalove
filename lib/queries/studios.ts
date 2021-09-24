@@ -68,8 +68,6 @@ export async function createStudio(uid, dataStudio, placeInfo, wizard) {
           studio_id: newStudio[0].id,
           user_id: uid,
         })
-
-      console.log(studioAdmin, 'studio admin')
     } else {
       throw new Error(`Error creando el estudio: ${error.message}`)
     }
@@ -96,8 +94,6 @@ export async function updateStudioGeneralInfo(
     .select('user_id')
     .eq('user_id', uid)
     .eq('studio_id', studioId)
-
-  console.log(data, 'verificando')
 
   if (!data[0]) {
     throw new Error('No tienes permiso para eso')
@@ -309,7 +305,6 @@ export async function updateStudioLocation(studioId, dataLocation) {
     main_address_id = address[0].place_id
   } else {
     // La ciudad no existe, entonces la creamos
-    console.log(dataLocation, 'location')
     const { data: newAddress } = await supabase
       .from('studios_places')
       .insert([dataLocation])
@@ -374,8 +369,6 @@ export async function updateStudioMainProfilePicture(
     updated_at: new Date(),
   })
 
-  console.log(data, 'la foto')
-
   if (data) {
     await supabase
       .from('studios')
@@ -419,7 +412,6 @@ export async function getStudioPictures(key, studioId) {
 }
 
 export async function addStudioPicture(studio_id, data) {
-  console.log(data, 'la data a ingresar')
   const { error } = await supabase.from('studios_photos').insert({
     ...data,
     studio_id,
@@ -469,7 +461,6 @@ export async function activateStudio(studioId) {
 
 export async function getRequestsByStudio(_key, studioId) {
   if (studioId) {
-    console.log(studioId)
     const { data: requests, error } = await supabase
       .from('artists_requests')
       .select('*, artists:artist_id(*,artists_main_photos(url))') // hay multiples relaciones, para reducir ambiguedad se debe especificar el id
@@ -500,15 +491,11 @@ export async function cancelArtistRequest(requestId) {
 }
 
 export async function acceptArtistRequest(request, userId) {
-  console.log(request, 'la request')
-
   const { data: isArtist, error } = await supabase
     .from('studios_artists')
     .select('id')
     .eq('artist_id', request.artist_id)
     .eq('studio_id', request.studio_id)
-
-  console.log(isArtist, 'es artista')
 
   if (isArtist[0]) {
     throw new Error('Ya hace parte del estudio')

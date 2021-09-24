@@ -171,8 +171,6 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       email: data.email,
     }
 
-    console.log(formData, 'datos a enviar')
-
     toast.promise(
       updateStudioGeneralInfo(
         studioId,

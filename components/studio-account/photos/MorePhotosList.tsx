@@ -9,8 +9,6 @@ const myLoader = ({ src, width, quality }) => {
 
 const MorePicturesList = ({ studio, pictures, mutatePictures }) => {
   const handleDelete = (fileId, pictureId) => {
-    console.log(fileId)
-
     toast.promise(deletePictureFromStudio(fileId, pictureId), {
       loading: 'Eliminando...',
       success: () => {
@@ -23,7 +21,7 @@ const MorePicturesList = ({ studio, pictures, mutatePictures }) => {
       },
     })
   }
-  console.log(pictures, 'fotos')
+
   return (
     <div className="grid grid-cols-2 gap-3 mb-10">
       {pictures.map((pic) => (

@@ -11,8 +11,6 @@ const ArtistsCard = ({ artist }: { artist: ArtistTypes }) => {
     getLastFourPostsByArtist
   )
 
-  console.log(artist, artistPosts, 'esto que ome')
-
   return (
     <div className="w-full h-full bg-gr-800 p-5 rounded-md">
       <div className="flex justify-between">

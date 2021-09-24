@@ -86,8 +86,6 @@ export async function getStaticProps({ params }: any) {
   if (params.username) {
     try {
       studioData = await getStudioDataByUsername(params.username)
-
-      console.log(studioData, 'el estudio')
       studioPictures = await getStudioPictures('_', studioData.id)
     } catch (error) {
       console.log('Error obteniendo la info del estudio')

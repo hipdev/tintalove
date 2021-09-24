@@ -106,7 +106,6 @@ const CreatePostCrop = ({
     }
 
     if (dataForm.description != '' && dataForm.styles.length > 0) {
-      console.log(dataForm, 'form data')
       let formData
 
       if (dataForm.isPartner) {
@@ -123,8 +122,6 @@ const CreatePostCrop = ({
           styles: dataForm.styles,
         }
       }
-
-      console.log(formData, 'la data a enviar')
 
       mutate('/api/imagekit/auth')
       if (!crop || !canvas) {

@@ -5,7 +5,6 @@ import useSWR from 'swr'
 import PostItem from './PostItem'
 
 const PostsListDesktop = ({ user }) => {
-  // console.log(latLng, 'latitud y longitud')
   const { data: posts } = useSWR(['getPostsInfo'], getPostsInfo)
 
   const breakpointColumnsObj = {

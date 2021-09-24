@@ -8,7 +8,6 @@ import toast from 'react-hot-toast'
 import { updateStudioLocation } from 'lib/queries/studios'
 
 const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
-  console.log(studioInfo, 'datica')
   const [placeholder, setPlaceholder] = useState('')
 
   const {

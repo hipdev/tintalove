@@ -12,13 +12,9 @@ const UserList = ({ listId, user }) => {
     getUserListItems
   )
 
-  // console.log(data, 'la data')
-
   if (!data?.listItems && !data?.userList) {
     return <Loading />
   }
-
-  console.log(data, 'las listas')
 
   const breakpointColumnsObj = {
     default: 6,

@@ -3,7 +3,7 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { SiGooglemaps, SiWaze } from 'react-icons/si'
+import { SiWaze } from 'react-icons/si'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
@@ -21,8 +21,6 @@ const ArtistMap = ({ artistData }: Props) => {
   const router = useRouter()
 
   const ref = useRef()
-
-  console.log(artistData, 'la data en map')
 
   return (
     <>
