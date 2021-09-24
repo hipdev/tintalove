@@ -73,6 +73,7 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
                   <img
                     src={`${pic.url}`}
                     className="w-full object-cover  max-h-80"
+                    alt="studio photo"
                   />
                 </div>
               )
