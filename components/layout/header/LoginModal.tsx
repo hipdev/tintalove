@@ -23,7 +23,6 @@ const LoginModal = () => {
       email,
     })
 
-    console.log(user, session, error, 'de supabase magik link')
     toast('Enviamos un link de acceso a tu correo', { duration: 5000 })
   }
 

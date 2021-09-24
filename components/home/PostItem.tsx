@@ -6,8 +6,6 @@ import { UserState } from 'types/user'
 import PostItemListed from './PostItemListed'
 
 const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
-  // console.log(user.searching_city.city_name, 'la ruta')
-
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
       ? '?loc=Colombia'

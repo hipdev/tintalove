@@ -36,10 +36,7 @@ const PostPortrait = ({
 
   const [imageHeight, setImageHeight] = useState(null)
 
-  console.log(postData, 'post data')
-
   useEffect(() => {
-    console.log('image ref')
     // console.log(imageRef.current.offsetHeight, 'imageRef')
     if (imageRef.current) {
       // esto es para calcular el alto de la foto

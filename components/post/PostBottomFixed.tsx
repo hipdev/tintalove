@@ -26,12 +26,6 @@ const PostBottomFixed = ({
 }) => {
   const { isOpen, setIsOpen, openModal } = useContext(LoginContext)
 
-  console.log(
-    artistData,
-    artistData?.artists_main_photos.url,
-    'Artist Data aqui'
-  )
-
   const goTop = () => {
     overlayRef.current.scrollTo({ top: 0, behavior: 'smooth' })
   }

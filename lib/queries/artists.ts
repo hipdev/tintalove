@@ -229,8 +229,6 @@ export async function updateArtistWorkingInfo(uid, dataArtist) {
     )
     .eq('user_id', uid)
 
-  console.log(data, error, 'que tal')
-
   await supabase
     .from('artists_wizard')
     .update({
@@ -333,8 +331,6 @@ export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
     updated_at: new Date(),
   })
 
-  console.log(data, 'la foto')
-
   if (data) {
     await supabase
       .from('artists')
@@ -418,7 +414,6 @@ export async function updateArtistUsername(uid, oldUsername, newUsername) {
 }
 
 export async function updateAvailability(uid, selected) {
-  console.log(selected, 'selected')
   const { error } = await supabase
     .from('artists')
     .update({ availability_id: selected.id })

@@ -15,8 +15,6 @@ const ArtistsLists = ({ studio }) => {
     getArtistsByStudio
   )
 
-  console.log(artists, 'artistss')
-
   const handleDeleteArtistFromStudio = (studioArtist) => {
     toast.promise(
       deleteArtistFromStudio(studioArtist.id, studioArtist.request_id),

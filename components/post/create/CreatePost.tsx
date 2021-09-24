@@ -20,16 +20,10 @@ const CreatePost = ({ artist, artistsStudios }) => {
     setStyles(styles)
   }
 
-  console.log(artistsStudios, 'artists studios')
-  console.log(artist, 'artista')
-  console.log(studio, 'studio Info')
-
   const hasTwoStudios = artistsStudios?.length == 2
   const isPartner = artist?.work_as == 'partner'
   const onlyOneStudio =
     (artistsStudios && artistsStudios[0]?.studios.id) || null
-
-  console.log(onlyOneStudio, hasTwoStudios, isPartner, 'unicos')
 
   return (
     <div className="bg-dark-800 pt-10 h-3/6 xl:h-screen overflow-auto">

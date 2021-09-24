@@ -20,8 +20,6 @@ const ArtistsRequests = ({ studio, uid }) => {
     getRequestsByStudio
   )
 
-  console.log(requests, 'requests')
-
   const handleDeleteRequest = (requestId) => {
     toast.promise(cancelArtistRequest(requestId), {
       loading: 'Eliminando...',

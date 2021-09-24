@@ -168,8 +168,6 @@ const GeneralInfo = ({ uid }) => {
       email: data.email,
     }
 
-    console.log(formData, placeInfo, uid, 'datos a enviar')
-
     toast.promise(createStudio(uid, formData, placeInfo, true), {
       loading: 'Creando estudio...',
       success: (data) => {

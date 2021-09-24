@@ -63,8 +63,6 @@ const StudioArtists = ({ uid, studioId, studioData }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    console.log(data, studioId, 'ok', studioData)
-
     toast.promise(updateStudioArtists(studioId, data, studioData), {
       loading: 'Actualizando...',
       success: () => {

@@ -32,8 +32,6 @@ export const getStaticProps = async ({ params }) => {
 
   if (params.location != 'Colombia') {
     postsLocation = await getPostsInfoByCity('_', params.location)
-
-    // console.log(postsLocation, 'los posts cuando no es colombia')
   } else {
     postsLocation = await getPostsInfo('_')
   }

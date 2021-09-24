@@ -36,8 +36,6 @@ const ProfileStudio = ({ studioData, studioPictures }: Props) => {
     getArtistsByStudio
   )
 
-  console.log(artists, 'los artistas')
-
   if (!studioData?.is_active) {
     return (
       <div className="bg-dark-800 h-screen">

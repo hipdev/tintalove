@@ -21,8 +21,6 @@ export default function MainInfoPage() {
     getStudioData
   )
 
-  console.log(dataStudio, 'el user')
-
   const [loadMap, setLoadMap] = useState(false)
 
   loader

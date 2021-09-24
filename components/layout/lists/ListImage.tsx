@@ -4,9 +4,6 @@ import Image from 'next/image'
 
 const ListImage = ({ listId }: any) => {
   const { data: listImage } = useSWR(['getListImage', listId], getListImage)
-
-  console.log(listImage, 'data list image')
-
   return (
     <>
       {listImage?.length == 0 ? (

@@ -29,7 +29,6 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
     itemToString: (item: any) => (item ? item.name : ''),
     onInputValueChange: useCallback(
       debounce(async ({ inputValue, selectedItem }) => {
-        console.log(inputValue, selectedItem, 'values')
         if (inputValue != '' && inputValue != selectedItem?.name) {
           const { data } = await supabase
             .from('studios')
@@ -44,8 +43,6 @@ const SelectStudio = ({ state, artist, setErrorRequest, studios }) => {
     ),
 
     onSelectedItemChange: ({ selectedItem }) => {
-      console.log(selectedItem, artist, 'item seleccionado')
-
       toast.promise(sendArtistWorkRequest(selectedItem, artist), {
         loading: 'Enviando...',
         success: () => {

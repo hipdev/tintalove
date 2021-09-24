@@ -17,8 +17,6 @@ const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 const MainInfo = ({ uid, email }) => {
   const { user, setUser }: any = useUser()
 
-  console.log(user, 'el usuario')
-
   const { register, setValue, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -150,14 +148,12 @@ const MainInfo = ({ uid, email }) => {
       email: data.email,
     }
 
-    console.log(artistData, placeInfo, 'data a enviar')
-
     toast
       .promise(createArtist(uid, artistData, placeInfo, true), {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
-          console.log(data, 'la data')
+
           setUser({ ...user, full_name: artistData.name })
           // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')

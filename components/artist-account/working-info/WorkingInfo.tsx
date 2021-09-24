@@ -34,8 +34,6 @@ const WorkingInfo = ({ uid, artist }) => {
     getArtistRequests
   )
 
-  console.log(requests, 'requests')
-
   const {
     register,
     setValue,

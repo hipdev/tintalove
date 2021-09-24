@@ -22,15 +22,12 @@ const MenuMobile = ({ user }: any) => {
     signOut()
   }
 
-  // console.log(isOpen, 'showIsOpen')
-
   return (
     <>
       <div className="flex items-center">
         <button
           type="button"
           onClick={() => {
-            console.log('aa')
             setOpenMobile(true)
           }}
           className="text-white text-3xl block md:hidden"

@@ -32,7 +32,7 @@ const ArtistsSendEmail = ({ studioInfo }: { studioInfo: StudioTypes }) => {
 
   const onSubmit = async (data) => {
     setLoading(true)
-    console.log(data, 'la data enviada')
+
     const options = {
       method: 'POST',
       body: JSON.stringify(data),
@@ -42,7 +42,7 @@ const ArtistsSendEmail = ({ studioInfo }: { studioInfo: StudioTypes }) => {
     }
 
     const res = await fetch('/api/emails/invitation-artist', options)
-    console.log(res, 'la res')
+
     if (res.status == 200) {
       reset()
       toast('💌 Notificación enviada a ' + data.artist_name)

@@ -51,8 +51,6 @@ const PostArtistFavorite = ({
     })
   }
 
-  console.log(favoriteId, 'datos favoritos')
-
   if (favoriteId) {
     return (
       <button
