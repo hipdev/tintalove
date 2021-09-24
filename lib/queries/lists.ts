@@ -1,13 +1,4 @@
-import {
-  collection,
-  getFirestore,
-  getDocs,
-  QueryDocumentSnapshot,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
-
-const db = getFirestore(firebaseApp)
 
 export async function createList(user, name) {
   const { data, error } = await supabase
@@ -89,16 +80,6 @@ export async function removePostFromList(post_id, userId) {
   }
 
   return true
-}
-
-export async function getListsIds() {
-  const querySnapshot = await getDocs(collection(db, 'lists'))
-  const lists: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    lists.push({ id: doc.id })
-  )
-
-  return lists
 }
 
 export async function getUserListItems(key, list_id) {
