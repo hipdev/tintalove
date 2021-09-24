@@ -7,15 +7,18 @@ import ListNotPublic from './NotPublic'
 
 const UserList = ({ listId, user }) => {
   // const { userList, userListItems, setUserListItems }: any = useUserList(listId)
-  const { data, mutate }: any = useSWR(['get-lists', listId], getUserListItems)
+  const { data, mutate }: any = useSWR(
+    user?.id ? ['getUserListItems', listId, user.id] : null,
+    getUserListItems
+  )
 
   // console.log(data, 'la data')
 
-  console.log(data, 'la data')
-
-  if (!data?.listItems) {
+  if (!data?.listItems && !data?.userList) {
     return <Loading />
   }
+
+  console.log(data, 'las listas')
 
   const breakpointColumnsObj = {
     default: 6,
@@ -25,16 +28,16 @@ const UserList = ({ listId, user }) => {
     500: 1,
   }
 
-  if (data?.userList.user_id != user?.id) {
+  if (data?.userList && data?.userList.user_id != user?.id) {
     return <ListNotPublic />
   }
 
   return (
     <div className="h-full lg:h-screen px-10 md:px-20 pt-12">
       <h2 className="mb-4 text-2xl font-semibold text-gray-300">
-        {data?.userList.name}
+        {data?.userList?.name}
         <span className="ml-3 font-medium">
-          ({data?.userList.total_items || 0}){' '}
+          ({data?.userList?.total_items || 0}){' '}
         </span>
       </h2>
       <Masonry
@@ -42,11 +45,11 @@ const UserList = ({ listId, user }) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {data?.listItems.length > 0 ? (
-          data?.listItems.map((post) => (
+        {data.listItems?.length > 0 ? (
+          data.listItems.map((list) => (
             <ListPost
-              key={post.id}
-              post={post}
+              key={list.id}
+              list={list}
               user={user}
               mutateList={mutate}
             />

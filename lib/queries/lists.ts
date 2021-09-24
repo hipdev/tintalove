@@ -3,12 +3,9 @@ import {
   getFirestore,
   getDocs,
   QueryDocumentSnapshot,
-  query,
-  where,
 } from 'firebase/firestore/lite'
 import firebaseApp from 'lib/firebase'
 import { supabase } from 'lib/supabase-client'
-import toast from 'react-hot-toast'
 
 const db = getFirestore(firebaseApp)
 
@@ -19,7 +16,7 @@ export async function createList(user, name) {
     .select('*')
 
   if (error) {
-    toast.error(error.message)
+    throw new Error(`Error : ${error.message}`)
   }
 
   console.log(data, 'data inserted')
@@ -33,7 +30,7 @@ export async function addPostToList(user_id, post_id, list_id) {
     .insert({ list_id, post_id, user_id }, { returning: 'minimal' })
 
   if (error) {
-    toast.error(error.message)
+    throw new Error(`Error : ${error.message}`)
   }
 
   return true
@@ -47,7 +44,7 @@ export async function isPostListed(_key, postId, userId) {
     .eq('post_id', postId)
 
   if (error) {
-    toast.error(error.message)
+    throw new Error(`Error : ${error.message}`)
   }
 
   return isListed.length > 0 ? true : false
@@ -60,13 +57,25 @@ export async function getUserLists(key, user_id) {
     .eq('user_id', user_id)
 
   if (error) {
-    toast.error(error.message)
+    throw new Error(`Error : ${error.message}`)
   }
 
   return lists
 }
 
 export async function removePostFromList(postId, userId) {
+  console.log(postId, userId, 'params')
+
+  const { error } = await supabase
+    .from('lists_items')
+    .delete()
+    .eq('post_id', postId)
+    .eq('user_id', userId)
+
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  }
+
   return true
 }
 
@@ -81,23 +90,25 @@ export async function getListsIds() {
 }
 
 export async function getUserListItems(key, list_id) {
-  const { data: listItems, error } = await supabase
-    .from('lists_items')
-    .select('*')
-    .eq('list_id', list_id)
+  if (list_id) {
+    const { data: listItems, error } = await supabase
+      .from('lists_items')
+      .select('id, posts:post_id(id, photo_info, artists:artist_id(name))')
+      .eq('list_id', list_id)
 
-  const { data: userList } = await supabase
-    .from('lists')
-    .select('*')
-    .eq('id', list_id)
-    .single() // con single no se devuelve un array con un único valor sino que devuelve un objeto
+    const { data: userList } = await supabase
+      .from('lists')
+      .select('*')
+      .eq('id', list_id)
+      .single() // con single no se devuelve un array con un único valor sino que devuelve un objeto
 
-  if (error) {
-    console.log(error)
-    toast.error(error.message)
+    if (error) {
+      throw new Error()
+    }
+
+    return { listItems, userList }
   }
-
-  return { listItems, userList }
+  return { listItems: null, userList: null }
 }
 
 export async function getListImage(key, listId) {

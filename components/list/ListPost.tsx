@@ -1,26 +1,26 @@
 import Link from 'next/link'
-
 import { RiHeart3Fill } from 'react-icons/ri'
 import toast from 'react-hot-toast'
-
 import { removePostFromList } from 'lib/queries/lists'
-import { PostList } from 'types/post-list'
 import { UserState } from 'types/user'
+import { PostTypes } from 'types/post'
 
 const ListPost = ({
-  post,
+  list,
   mutateList,
   user,
 }: {
-  post: PostList
+  list: { id: string; posts: PostTypes }
   mutateList: any
   user: UserState
 }) => {
-  const removeFromList = async () => {
+  console.log(list, 'la lista')
+
+  const removeFromList = async (postId) => {
     if (!user && !user?.displayName) {
       toast('Ups, está no es tu lista')
     } else {
-      toast.promise(removePostFromList(post.post_id, user.uid), {
+      toast.promise(removePostFromList(postId, user.id), {
         loading: 'Eliminando de tu lista...',
         success: () => {
           mutateList()
@@ -32,17 +32,15 @@ const ListPost = ({
       })
     }
   }
-  console.log(post, 'el post')
 
   return (
     <div>
-      <Link href={`/tatuajes/${post.post_id}`}>
+      <Link href={`/tatuajes/${list.posts.id}`}>
         <a>
           <img
-            // src="https://via.placeholder.com/309x234"
             src={
-              post?.post_image
-                ? `${post.post_image}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
+              list?.posts
+                ? `${list?.posts.photo_info.url}/tr:pr-true,c-at_max,f-auto,h-235,q-100`
                 : 'https://via.placeholder.com/309x234'
             }
             alt=""
@@ -54,12 +52,15 @@ const ListPost = ({
         <div className="flex items-center space-x-2">
           <span className="text-gray-300">Por: </span>
           <p className="text-white text-sm">
-            {post.post_artist_name || 'Sin nombre'}
+            {list?.posts.artists.name || 'Sin nombre'}
           </p>
         </div>
         <div className="flex space-x-5">
           <div className="flex items-center space-x-2 text-white">
-            <span className="cursor-pointer" onClick={removeFromList}>
+            <span
+              className="cursor-pointer"
+              onClick={() => removeFromList(list.posts.id)}
+            >
               <RiHeart3Fill />
             </span>
           </div>
