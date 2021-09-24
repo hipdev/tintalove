@@ -44,12 +44,12 @@ const PostItemListed = ({
       setIsOpen(false)
       toast('Ups, está no es tu lista')
     } else {
-      toast.promise(removePostFromList(post.id, user.uid), {
+      toast.promise(removePostFromList(post.id, user.id), {
         loading: 'Eliminando de tu lista...',
         success: () => {
           setIsOpen(false)
 
-          // mutate({ listed: false }, false)
+          mutate()
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -59,7 +59,7 @@ const PostItemListed = ({
     }
   }
 
-  console.log(isListed, 'listado?')
+  console.log(post, 'el post')
 
   return (
     <>
