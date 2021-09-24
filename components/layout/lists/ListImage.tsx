@@ -21,7 +21,7 @@ const ListImage = ({ listId }: any) => {
       ) : (
         <img
           src={`${
-            listImage && listImage[0]?.photo_info?.url
+            listImage && listImage[0]?.posts.photo_info?.url
           }/tr:pr-true,c-at_max,f-auto,w-150,q-90`}
           alt=""
           className="w-full h-full object-cover"

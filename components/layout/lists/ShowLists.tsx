@@ -15,11 +15,13 @@ const ShowLists = ({ userId, setShowCreate }) => {
     getUserLists
   )
 
-  const { state, actions }: any = useStateMachine({
+  const { actions }: any = useStateMachine({
     lists,
   })
 
   if (!userLists) return <p className="text-gray-300"> Cargando listas...</p>
+
+  console.log(userLists, 'las listas en showlist')
 
   return (
     <div className="max-w-sm">
@@ -44,7 +46,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
               key={list.id}
             >
               <div className="  rounded-lg overflow-hidden w-full h-28 sm:h-36 ">
-                <ListImage postId={list?.id} />
+                <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
                 {list.name}

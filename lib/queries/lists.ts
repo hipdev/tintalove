@@ -117,6 +117,7 @@ export async function getListImage(key, listId) {
       .from('lists_items')
       .select('*, posts(photo_info)')
       .eq('list_id', listId)
+      .order('created_at', { ascending: false })
       .limit(1)
 
     return listImage
