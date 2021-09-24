@@ -32,7 +32,6 @@ const SelectList = ({ userId, post, user }) => {
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
-      console.log(listId, post.id, userId, 'post a añadir')
       toast.promise(addPostToList(userId, post.id, listId), {
         loading: 'Agregando tattoo...',
         success: (res) => {
