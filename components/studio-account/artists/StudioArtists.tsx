@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 
 import ArtistsSendEmail from './ArtistsSendEmail'
 import ArtistsRequests from './ArtistsRequests'
-import useStudio from 'hooks/use-studio'
 import { updateStudioArtists } from 'lib/queries/studios'
 import ArtistsLists from './ArtistsLists'
 
@@ -17,12 +16,10 @@ const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const StudioArtists = ({ uid, studioId, hasStudio }) => {
+const StudioArtists = ({ uid, studioId, studioData }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
-
-  const { studio } = useStudio(studioId)
 
   const {
     register,
@@ -34,24 +31,24 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
     mode: 'onChange',
     defaultValues: {
       styles: [],
-      times: studio?.times || '',
+      times: studioData?.times || '',
     },
   })
 
   useEffect(() => {
-    if (studio) {
+    if (studioData) {
       let styles = []
-      if (studio.styles) {
-        styles = studio.styles.map((style) => ({
+      if (studioData.styles) {
+        styles = studioData.styles.map((style) => ({
           label: style,
           value: style,
         }))
       }
 
-      setValue('times', studio.times)
+      setValue('times', studioData.times)
       setValue('styles', styles)
     }
-  }, [studio])
+  }, [studioData])
 
   useEffect(() => {
     if (success) {
@@ -66,7 +63,7 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateStudioArtists(studioId, data, true), {
+    toast.promise(updateStudioArtists(studioId, data, studioData), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
@@ -89,16 +86,15 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
         Artistas
       </h1>
 
-      <ArtistsRequests studio={studio} />
-      <ArtistsLists studio={studio} />
+      <ArtistsRequests studio={studioData} uid={uid} />
+      <ArtistsLists studio={studioData} />
 
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-4">
             <label className="text-sm mb-3 tracking-wide">
               <span className="mb-3 block">
-                {' '}
-                ESTILOS QUE OFRECEN EN EL ESTUDIO{' '}
+                ESTILOS QUE OFRECEN EN EL ESTUDIO
               </span>
 
               <Controller
@@ -130,18 +126,18 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
                 placeholder="Ej. Lunes a viernes, de 10am - 7pm&#10;Sábados, Domingos y Festivos&#10;10:00am 1:00pm"
                 className="w-full input-primary resize-none"
               ></textarea>
-              {errors.times && <p>Esta campo es requerido</p>}
+              {errors.times && <p>Debes ingresar los horarios</p>}
             </label>
           </div>
         </div>
 
         <div className="flex justify-between">
-          {!hasStudio && (
+          {!studioData && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información general.
             </p>
           )}
-          {hasStudio ? (
+          {studioData ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"
@@ -159,7 +155,7 @@ const StudioArtists = ({ uid, studioId, hasStudio }) => {
         </div>
       </form>
 
-      <ArtistsSendEmail studioInfo={studio} />
+      <ArtistsSendEmail studioInfo={studioData} />
     </div>
   ) : null
 }

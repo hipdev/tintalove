@@ -1,15 +1,19 @@
 import SideMenuArtistSteps from 'components/layout-steps/SideMenuArtistSteps'
 import Image from 'next/image'
 import Link from 'next/link'
-import StepNav from './StepNav'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import HeadContainer from 'components/layout/head'
 import { UserState } from 'types/user'
 import SideMenuArtist from 'components/layout-steps/SideMenuArtist'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { VscMenu } from 'react-icons/vsc'
-import WrapperAvailability from 'components/layout/header/WrapperAvailability'
 import { Toaster } from 'react-hot-toast'
+import SubMenuHeader from 'components/layout/header/SubmenuHeader'
+import useSWR from 'swr'
+import { getArtistInfo } from 'lib/queries/artists'
+import Availability from 'components/layout/header/availability'
+import { getStudioIsActive } from 'lib/queries/studios'
+import { ArtistTypes } from 'types/artist'
 
 type Props = {
   uid?: string
@@ -19,6 +23,17 @@ type Props = {
 
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
+
+  const { data: artist }: any = useSWR(
+    uid ? ['getArtistInfo', uid] : null,
+    getArtistInfo
+  )
+
+  const { data: studio } = useSWR(
+    user?.id ? ['getStudioIsActive', uid] : null,
+    getStudioIsActive
+  )
+
   return (
     <div className="flex flex-wrap-reverse lg:flex-nowrap  h-auto min-h-screen  overflow-auto overflow-x-auto">
       <Toaster
@@ -44,17 +59,17 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
                 width={252}
                 height={49}
                 src="/short-logo.png"
-                alt="Picture of the author"
+                alt="Tinta Love logo"
               />
             </a>
           </Link>
         </div>
-        {user && user?.artist_active && (
+        {artist && artist?.is_active && (
           <SideMenuArtist username={user?.username || null} />
         )}
 
         {!user ||
-          (user && !user?.artist_active && <SideMenuArtistSteps uid={uid} />)}
+          (user && !artist?.is_active && <SideMenuArtistSteps uid={uid} />)}
       </div>
       <div className="w-full pl-7 sm:pl-7 2xl:pl-20 bg-dark-500">
         <header className="block sm:flex justify-between pt-6 pr-1 sm:pr-10 w-full ">
@@ -85,21 +100,35 @@ const LayoutStepsArtist = ({ children, uid, user }: Props) => {
               </Link>
             </div>
           </div>
-          <div className="flex w-full justify-end">
-            {user?.artist_active && (
-              <div className="mr-7 items-center hidden md:flex">
-                <WrapperAvailability user={user} />
-                <Link href="/post/new-post">
-                  <a className="text-white font-semibold tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-md flex items-center justify-center ml-3">
-                    <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
-                      <AiOutlineCamera />
-                    </span>
-                    <span className="hidden xl:block">PUBLICAR</span>
-                  </a>
-                </Link>
-              </div>
+          <div className="flex-grow justify-center xl:justify-end gap-5 py-4 md:py-0 ml-0 xl:ml-3 hidden sm:flex">
+            {user && artist?.is_active && (
+              <>
+                <Availability
+                  user={user}
+                  availability_id={artist?.availability_id}
+                  artist={artist}
+                />
+                <div className="flex">
+                  <button>
+                    <Link href="/post/new-post">
+                      <a className="text-white tracking-wide text-sm bg-primary py-3 hover:bg-primaryHover px-4 xl:px-7 rounded-lg flex items-center justify-center">
+                        <span className="pr-0 xl:pr-4 text-2xl block xl:hidden">
+                          <AiOutlineCamera />
+                        </span>
+                        <span className="hidden xl:block">PUBLICAR</span>
+                      </a>
+                    </Link>
+                  </button>
+                </div>
+              </>
             )}
-            <StepNav />
+            <div className="gap-3 ml-2 hidden sm:flex items-center flex-shrink-0">
+              <SubMenuHeader
+                user={user || null}
+                artist={artist}
+                studio={studio}
+              />
+            </div>
           </div>
         </header>
         <main className="mb-10">{children}</main>

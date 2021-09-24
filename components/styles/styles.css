@@ -1,0 +1,95 @@
+@tailwind base;
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write you own custom component styles here */
+.input-primary {
+  @apply text-gray-400 bg-transparent border border-light-900 p-2 py-3 rounded-md placeholder-light-900 outline-none;
+}
+.btn-primary {
+  @apply text-white bg-primary py-3 rounded-md hover:bg-primaryHover outline-none focus:outline-none;
+}
+
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url(/fonts/inter-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* Stop purging. */
+
+/* Your own custom utilities */
+*:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+
+@media (min-width: 640px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+td:not(:last-child) {
+  border-bottom: 0;
+}
+
+th:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.header-active nav {
+  box-shadow: 0px 1px 5px #000000;
+}
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -20px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 20px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  margin-bottom: 20px;
+}
+.ReactModal__Body--open {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.marker-position {
+  bottom: 2.4rem;
+  position: relative;
+}
+
+input,
+textarea,
+button,
+div,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@import './react-select.css';

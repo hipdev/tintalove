@@ -1,14 +1,12 @@
 import Layout from 'components/layout/Layout'
-import { postsToJSON } from 'lib/firebase'
-import { getPostsInfo } from 'lib/queries/posts'
 import Home from 'components/home/home'
-import { getCitiesPaths, getLatLngFromCityId } from 'lib/queries/general'
-import { getPostsByCity } from 'lib/queries/geo'
+import { getCitiesPaths } from 'lib/queries/general'
+import { getPostsInfo, getPostsInfoByCity } from 'lib/queries/posts'
 
-export default function TattoosPage({ latLng }) {
+export default function TattoosPage() {
   return (
     <Layout fixed>
-      <Home latLng={latLng} />
+      <Home />
     </Layout>
   )
 }
@@ -17,7 +15,7 @@ export async function getStaticPaths() {
   const citiesIds = await getCitiesPaths()
   const pathsLocations = citiesIds.map((doc: any) => ({
     params: {
-      location: doc.id,
+      location: doc.city_name,
     },
   }))
 
@@ -30,16 +28,17 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }) => {
-  let latnLng = null
+  let postsLocation = null
 
   if (params.location != 'Colombia') {
-    const { latLng } = await getLatLngFromCityId(params.location)
-    latnLng = latLng
+    postsLocation = await getPostsInfoByCity('_', params.location)
+  } else {
+    postsLocation = await getPostsInfo('_')
   }
 
   return {
     props: {
-      latLng: latnLng,
+      postsLocation,
     },
     revalidate: 20,
   }

@@ -1,26 +1,25 @@
-import useArtistWizardRealtime from 'hooks/realtime/use-artist-wizard'
-
-import { activateArtist } from 'lib/queries/artists'
-
+import { activateArtist, getArtistWizard } from 'lib/queries/artists'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
+import useSWR, { mutate } from 'swr'
 
 type Props = {
   uid?: string
 }
 
 const SideMenuArtistSteps = ({ uid }: Props) => {
-  const { artistWizard } = useArtistWizardRealtime(uid)
+  const { data: artistWizard } = useSWR(
+    uid ? ['getArtistWizard', uid] : null,
+    getArtistWizard
+  )
 
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
   const [path] = router.route.split('/').slice(-1) // get last item from pathName
-
-  console.log(artistWizard, 'steps')
 
   const steps = [
     artistWizard?.step_one,
@@ -58,20 +57,25 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
     setLoading(true)
 
     if (countReadySteps == 4) {
-      toast.promise(activateArtist(uid), {
-        loading: 'Guardando...',
-        success: (data) => {
-          setLoading(false)
-          // setTriggerAuth(Math.random()) // reload global user state data
-          // router.push('/artist/new/working-info')
+      toast.promise(
+        activateArtist(uid),
+        {
+          loading: 'Activando...',
+          success: (data) => {
+            setLoading(false)
+            // setTriggerAuth(Math.random()) // reload global user state data
+            // router.push('/artist/new/working-info')
+            mutate(['getArtistInfo', uid])
 
-          return 'Artista activado, serás redireccionado a tu perfil en unos segundos... 🥳'
+            return 'Artista activado, tienes nuevas funcionalidades disponibles 🥳'
+          },
+          error: (err) => {
+            setLoading(false)
+            return `${err.toString()}`
+          },
         },
-        error: (err) => {
-          setLoading(false)
-          return `${err.toString()}`
-        },
-      })
+        { duration: 10000 }
+      )
     } else {
       toast.error('Necesitas completar todos los pasos')
       setLoading(false)
@@ -217,20 +221,20 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
         </a>
       </Link>
 
-      <Link href="/artist/pictures-info">
+      <Link href="/artist/photos-info">
         <a className="block relative">
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
-                  path == 'pictures-info'
+                  path == 'photos-info'
                     ? 'border-primary ' + circle
                     : 'border-light-900 ' + circle
                 }
               >
                 <span
                   className={
-                    path == 'pictures-info' ? 'text-white' : 'text-light-900'
+                    path == 'photos-info' ? 'text-white' : 'text-light-900'
                   }
                 >
                   4
@@ -240,7 +244,7 @@ const SideMenuArtistSteps = ({ uid }: Props) => {
             <span className="ml-4 min-w-0 mt-1.5">
               <span
                 className={
-                  path == 'pictures-info'
+                  path == 'photos-info'
                     ? 'text-white ' + textWhite
                     : 'text-light-900 ' + textWhite
                 }

@@ -1,8 +1,6 @@
 import format from 'date-fns/format'
 import { es } from 'date-fns/locale'
-import { AiOutlineCheck, AiOutlineDelete } from 'react-icons/ai'
-import { MdCancel, MdCheckCircle, MdMail } from 'react-icons/md'
-import { GiCancel } from 'react-icons/gi'
+import { MdCancel, MdMail } from 'react-icons/md'
 import 'microtip/microtip.css'
 import {
   acceptArtistRequest,
@@ -14,15 +12,13 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import { BsPersonCheck } from 'react-icons/bs'
 import { FiHelpCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
-import GetUsernameLink from 'components/common/GetUsernameLink'
+import { parseISO } from 'date-fns'
 
-const ArtistsRequests = ({ studio }) => {
-  const { data, mutate: mutateRequest } = useSWR(
+const ArtistsRequests = ({ studio, uid }) => {
+  const { data: requests, mutate: mutateRequest } = useSWR(
     ['getRequestsByStudio', studio?.id],
     getRequestsByStudio
   )
-
-  console.log(data, 'requests')
 
   const handleDeleteRequest = (requestId) => {
     toast.promise(cancelArtistRequest(requestId), {
@@ -37,7 +33,7 @@ const ArtistsRequests = ({ studio }) => {
     })
   }
   const handleAcceptRequest = (request) => {
-    toast.promise(acceptArtistRequest(request), {
+    toast.promise(acceptArtistRequest(request, uid), {
       loading: 'Aceptando...',
       success: () => {
         mutateRequest()
@@ -56,36 +52,36 @@ const ArtistsRequests = ({ studio }) => {
 
       <div className="bg-dark-800 shadow  sm:rounded-sm mb-10 mt-2">
         <ul className="divide-y divide-gray-200">
-          {data?.requests?.map((request) => {
-            if (request.approval == 'PENDING') {
+          {requests?.length > 0 ? (
+            requests?.map((request) => {
               return (
                 <li key={request.id} className="block hover:bg-gray-900">
                   <div className="flex items-center px-4 py-3 sm:px-6">
                     <div className="min-w-0 flex-1 flex items-center">
                       <div className="flex-shrink-0">
-                        <GetUsernameLink
-                          id={request.artist_id}
-                          type="artist"
-                          target
+                        <a
+                          href={`/${request?.artists?.username}`}
+                          target="_blank"
+                          rel="noreferrer"
                         >
                           <img
                             className="h-12 w-12 rounded-full"
-                            src={request.artist_picture}
+                            src={`${request?.artists?.artists_main_photos?.url}/tr:w-100,q-40`}
                             alt=""
                           />
-                        </GetUsernameLink>
+                        </a>
                       </div>
                       <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                          <GetUsernameLink
-                            id={request.artist_id}
-                            type="artist"
-                            target
+                          <a
+                            href={`/${request?.artists?.username}`}
+                            target="_blank"
+                            rel="noreferrer"
                           >
                             <span className="text-sm font-medium text-primary truncate">
-                              {request.artist_name}
+                              {request?.artists?.name}
                             </span>
-                          </GetUsernameLink>
+                          </a>
 
                           <p className="mt-2 flex items-center text-sm text-gray-500">
                             <MdMail
@@ -94,7 +90,7 @@ const ArtistsRequests = ({ studio }) => {
                             />
                             <span className="truncate">
                               {parsePhoneNumber(
-                                request.artist_phone
+                                request?.artists?.mobile.value
                               ).formatInternational()}
                             </span>
                           </p>
@@ -105,13 +101,13 @@ const ArtistsRequests = ({ studio }) => {
                               Aplicó en{' '}
                               <time
                                 dateTime={format(
-                                  request?.created_at.toMillis(),
+                                  parseISO(request?.created_at),
                                   'yyyy'
                                 )}
                               >
                                 <span className="capitalize">
                                   {format(
-                                    request?.created_at.toMillis(),
+                                    parseISO(request?.created_at),
                                     'MMMM d, yyyy',
                                     { locale: es }
                                   )}
@@ -164,18 +160,10 @@ const ArtistsRequests = ({ studio }) => {
                   </div>
                 </li>
               )
-            } else {
-              return (
-                <p key="no-request" className="text-gray-300 p-4">
-                  Sin solicitudes actualmente.
-                </p>
-              )
-            }
-          })}
-
-          {data?.requests?.length < 1 && (
-            <p className="text-gray-300 p-4">
-              Aquí aparecerán los artistas que solicitarón unirse a tu estudio.
+            })
+          ) : (
+            <p key="no-request" className="text-gray-300 p-4">
+              Sin solicitudes actualmente.
             </p>
           )}
         </ul>

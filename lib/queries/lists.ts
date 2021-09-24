@@ -1,210 +1,115 @@
-import {
-  collection,
-  getFirestore,
-  serverTimestamp,
-  addDoc,
-  getDocs,
-  QueryDocumentSnapshot,
-  doc,
-  getDoc,
-  query,
-  orderBy,
-  limit,
-  deleteDoc,
-  where,
-  updateDoc,
-  writeBatch,
-  increment,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
-// import { Counter } from './counter'
+import { supabase } from 'lib/supabase-client'
 
-const db = getFirestore(firebaseApp)
+export async function createList(user, name) {
+  const { data, error } = await supabase
+    .from('lists')
+    .insert([{ user_id: user.id, name }])
+    .select('*')
 
-const firebaseConfig = { projectId: 'tinta-love' }
-
-// firebase old 8 version
-
-declare global {
-  interface Window {
-    firebase: any
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
   }
+
+  return data
 }
 
-export async function createList(user, list_name) {
-  const res = await addDoc(collection(db, 'lists'), {
-    created_at: serverTimestamp(),
-    user_id: user.uid,
-    user_name: user.displayName,
-    is_artist: user.is_artist || false,
-    list_name,
-  })
-    .then((doc) => {
-      return { doc: doc.id, status: true }
-    })
-    .catch((error) => console.log(error))
+export async function addPostToList(user_id, post_id, list_id) {
+  const { error } = await supabase
+    .from('lists_items')
+    .insert({ list_id, post_id, user_id }, { returning: 'minimal' })
 
-  return res
-}
-
-export async function addPostToList(uid, post, listId) {
-  try {
-    const batch = writeBatch(db)
-
-    const listRef = doc(collection(db, 'lists'), listId)
-    const listItemRef = doc(collection(db, 'lists_items'))
-    const postRef = doc(collection(db, 'posts'), post.id)
-
-    batch.set(listItemRef, {
-      created_at: serverTimestamp(),
-      user_id: uid,
-      list_id: listId,
-      post_id: post.id,
-      post_image: post.image.url,
-      post_picture_size: post.picture_size,
-      post_description: post.description,
-      post_artist_id: post.artist_id,
-      post_artist_name: post.displayName,
-      post_styles: post.styles,
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  } else {
+    const { error } = await supabase.rpc('inc_total_listed', {
+      post_id,
     })
 
-    batch.update(listRef, {
-      total_items: increment(1),
-    })
-
-    batch.update(postRef, {
-      counter_listed: increment(1), // Increment the normal way
-    })
-
-    batch.commit()
-
-    // if (window.firebase) {
-    //   if (!window.firebase.apps.length) {
-    //     window.firebase.initializeApp(firebaseConfig)
-    //   } else {
-    //     window.firebase.app() // if already initialized, use that one
-    //   }
-    // }
-
-    // const counter = new Counter(
-    //   window.firebase.firestore().doc(`posts/${post.id}`),
-    //   'counter_listed'
-    // )
-
-    // counter.incrementBy(1)
-
-    return { doc: listItemRef.id, status: true }
-  } catch (error) {
-    throw new Error(error)
+    if (error) throw new Error(`Error : ${error.message}`)
   }
-}
-export async function isPostListed(postId, userId) {
-  const q = query(
-    collection(db, 'lists_items'),
-    where('user_id', '==', userId),
-    where('post_id', '==', postId)
-  )
-
-  const querySnapshotEmpty = await (await getDocs(q)).empty // is Empty == true
-
-  return { listed: !querySnapshotEmpty }
-}
-
-export async function getUserLists(key, userId) {
-  const q = query(collection(db, 'lists'), where('user_id', '==', userId))
-
-  const querySnapshot = await getDocs(q)
-  const userLists: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return userLists.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { userLists }
-}
-
-export async function removePostFromList(postId, userId) {
-  const q = query(
-    collection(db, 'lists_items'),
-    where('user_id', '==', userId),
-    where('post_id', '==', postId)
-  )
-
-  const querySnapshot = await getDocs(q)
-  querySnapshot.forEach(async (listItem: QueryDocumentSnapshot) => {
-    const listRef = doc(collection(db, 'lists'), listItem.data().list_id)
-    const listItemRef = doc(collection(db, 'lists_items'), listItem.id)
-    const postRef = doc(collection(db, 'posts'), listItem.data().post_id)
-
-    const batch = writeBatch(db)
-    batch.update(listRef, { total_items: increment(-1) })
-    batch.delete(listItemRef)
-    batch.update(postRef, { counter_listed: increment(-1) }) // Increment the normal way
-
-    const res = await batch.commit()
-
-    console.log(res, ' res del batch')
-
-    // await deleteDoc(doc(db, 'lists_items', listItem.id))
-    // await updateDoc(doc(db, 'lists', listItem.data().list_id), {
-    //   total_items: increment(-1),
-    // })
-
-    // if (window.firebase) {
-    //   if (!window.firebase.apps.length) {
-    //     window.firebase.initializeApp(firebaseConfig)
-    //   } else {
-    //     window.firebase.app() // if already initialized, use that one
-    //   }
-    // }
-
-    // const counter = new Counter(
-    //   window.firebase.firestore().doc(`posts/${listItem.data().post_id}`),
-    //   'counter_listed'
-    // )
-
-    // counter.incrementBy(-1)
-  })
 
   return true
 }
 
-export async function getListsIds() {
-  const querySnapshot = await getDocs(collection(db, 'lists'))
-  const lists: any = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) =>
-    lists.push({ id: doc.id })
-  )
+export async function isPostListed(_key, postId, userId) {
+  const { data: isListed, error } = await supabase
+    .from('lists_items')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('post_id', postId)
+
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  }
+
+  return isListed.length > 0 ? true : false
+}
+
+export async function getUserLists(key, user_id) {
+  const { data: lists, error } = await supabase
+    .from('lists')
+    .select('*')
+    .eq('user_id', user_id)
+
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  }
 
   return lists
 }
 
-export async function getUserListItems(key, listId) {
-  const q = query(collection(db, 'lists_items'), where('list_id', '==', listId))
-  const listRef = doc(collection(db, 'lists'), listId)
+export async function removePostFromList(post_id, userId) {
+  const { error } = await supabase
+    .from('lists_items')
+    .delete()
+    .eq('post_id', post_id)
+    .eq('user_id', userId)
 
-  const docData = await getDoc(listRef)
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  } else {
+    const { error } = await supabase.rpc('dec_total_listed', {
+      post_id,
+    })
 
-  const querySnapshot = await getDocs(q)
-  const userListItems: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return userListItems.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) throw new Error(`Error : ${error.message}`)
+  }
 
-  return { userListItems, userList: docData.data() }
+  return true
+}
+
+export async function getUserListItems(key, list_id) {
+  if (list_id) {
+    const { data: listItems, error } = await supabase
+      .from('lists_items')
+      .select('id, posts:post_id(id, photo_info, artists:artist_id(name))')
+      .eq('list_id', list_id)
+
+    const { data: userList } = await supabase
+      .from('lists')
+      .select('*')
+      .eq('id', list_id)
+      .single() // con single no se devuelve un array con un único valor sino que devuelve un objeto
+
+    if (error) {
+      throw new Error()
+    }
+
+    return { listItems, userList }
+  }
+  return { listItems: null, userList: null }
 }
 
 export async function getListImage(key, listId) {
-  const q = query(
-    collection(db, 'lists_items'),
-    where('list_id', '==', listId),
-    limit(1)
-  )
+  if (listId) {
+    const { data: listImage } = await supabase
+      .from('lists_items')
+      .select('*, posts(photo_info)')
+      .eq('list_id', listId)
+      .order('created_at', { ascending: false })
+      .limit(1)
 
-  const querySnapshot = await getDocs(q)
-  const userListImage: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return userListImage.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { userListImage: userListImage[0] }
+    return listImage
+  }
+  return []
 }

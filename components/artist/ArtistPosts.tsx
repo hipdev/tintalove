@@ -18,7 +18,7 @@ const breakpointColumnsObj = {
 }
 
 const ArtistsPosts = ({ artistId, user }: Props) => {
-  const { data } = useSWR(['getArtistPosts', artistId], getArtistPosts)
+  const { data: posts } = useSWR(['getArtistPosts', artistId], getArtistPosts)
 
   return (
     <div>
@@ -27,18 +27,15 @@ const ArtistsPosts = ({ artistId, user }: Props) => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {data?.posts?.map((post) => (
+        {posts?.map((post) => (
           <PostMore post={post} user={user} key={post.id} />
         ))}
-        {data?.posts?.map((post) => (
-          <PostMore post={post} user={user} key={post.id} />
-        ))}
-        {data?.posts?.map((post) => (
+        {posts?.map((post) => (
           <PostMore post={post} user={user} key={post.id} />
         ))}
       </Masonry>
 
-      {data?.posts?.length == 0 && (
+      {posts?.length == 0 && (
         <div className="text-center text-3xl text-gray-300 font-bold mt-12">
           <h2>Sin publicaciones actualmente</h2>
         </div>

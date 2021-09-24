@@ -1,16 +1,11 @@
 import Loading from 'components/loading/loading'
-import { getPostsByCity } from 'lib/queries/geo'
 import { getPostsInfo } from 'lib/queries/posts'
 import Masonry from 'react-masonry-css'
 import useSWR from 'swr'
 import PostItem from './PostItem'
 
-const PostsListDesktop = ({ user, latLng }) => {
-  console.log(latLng, 'latitud y longitud')
-  const { data } = useSWR(
-    latLng ? ['getPostsByCity', latLng] : ['getPostsInfo'],
-    latLng ? getPostsByCity : getPostsInfo
-  )
+const PostsListDesktop = ({ user }) => {
+  const { data: posts } = useSWR(['getPostsInfo'], getPostsInfo)
 
   const breakpointColumnsObj = {
     default: 6,
@@ -20,7 +15,7 @@ const PostsListDesktop = ({ user, latLng }) => {
     500: 1,
   }
 
-  if (!data) return <Loading />
+  if (!posts) return <Loading />
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24">
@@ -30,36 +25,36 @@ const PostsListDesktop = ({ user, latLng }) => {
         columnClassName="my-masonry-grid_column"
       >
         {/* <div className="grid grid-cols-6 gap-6"> */}
-        {data.posts.length > 0 ? (
-          data.posts.map((post) => (
+        {posts?.length > 0 ? (
+          posts.map((post) => (
             <PostItem key={Math.random()} post={post} user={user} />
           ))
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
-        {data.posts.length > 0 ? (
-          data.posts.map((post) => (
+        {posts?.length > 0 ? (
+          posts.map((post) => (
             <PostItem key={Math.random()} post={post} user={user} />
           ))
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
-        {data.posts.length > 0 ? (
-          data.posts.map((post) => (
+        {posts?.length > 0 ? (
+          posts.map((post) => (
             <PostItem key={Math.random()} post={post} user={user} />
           ))
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
-        {data.posts.length > 0 ? (
-          data.posts.map((post) => (
+        {posts?.length > 0 ? (
+          posts.map((post) => (
             <PostItem key={Math.random()} post={post} user={user} />
           ))
         ) : (
           <p className="text-white bold text-2xl mb-10">Sin publicaciones</p>
         )}
-        {data.posts.length > 0 ? (
-          data.posts.map((post) => (
+        {posts?.length > 0 ? (
+          posts.map((post) => (
             <PostItem key={Math.random()} post={post} user={user} />
           ))
         ) : (

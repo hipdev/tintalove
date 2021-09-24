@@ -5,32 +5,32 @@ import tattooStyles from 'lib/tattoo-styles'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import useArtist from 'hooks/use-artist'
 import { getArtistRequests, updateArtistWorkingInfo } from 'lib/queries/artists'
 import { FiHelpCircle } from 'react-icons/fi'
 import 'microtip/microtip.css'
-import ArtistContactInfoLocation from 'components/artist-account/contact-info/ContactInfoLocation'
-import ArtistContactInfoMapStudio from '../contact-info/ContactInfoMap'
+import ArtistContactInfoLocation from 'components/artist-account/working-info/ContactInfoLocation'
+import ArtistContactInfoMapStudio from './ContactInfoMap'
 import SelectStudio from './SelectStudio'
 import WorkingRequests from './WorkingRequests'
 import useSWR from 'swr'
 import StudiosList from './StudiosList'
+import WrapperSelectStudio from './WrapperSelectStudio'
 
 const options = tattooStyles.map((style) => {
   return { value: style, label: style }
 })
 
-const WorkingInfo = ({ uid, isArtist }) => {
+const WorkingInfo = ({ uid, artist }) => {
   const [studioName, setStudioName] = useState()
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [errorRequest, setErrorRequest] = useState(false)
-  const { artist } = useArtist(uid)
+
   const router = useRouter()
 
-  const { data } = useSWR(
-    ['getArtistRequests', artist?.artist_id],
+  const { data: requests } = useSWR(
+    ['getArtistRequests', artist?.id],
     getArtistRequests
   )
 
@@ -78,7 +78,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    toast.promise(updateArtistWorkingInfo(uid, data, true), {
+    toast.promise(updateArtistWorkingInfo(uid, data), {
       loading: 'Actualizando...',
       success: () => {
         setLoading(false)
@@ -162,7 +162,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
             {watchWorkAs == 'partner' && (
               <div className="mt-7">
-                {data?.requests.length < 2 ? (
+                {requests?.length < 2 ? (
                   <>
                     <label className="text-sm mb-3 tracking-wide">
                       <span className="mb-3 flex">
@@ -182,7 +182,8 @@ const WorkingInfo = ({ uid, isArtist }) => {
                           completados, regresa aquí cuando estes listo
                         </p>
                       )}
-                      <SelectStudio
+
+                      <WrapperSelectStudio
                         state={{ studioName, setStudioName }}
                         artist={artist}
                         setErrorRequest={setErrorRequest}
@@ -219,8 +220,11 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   </div>
                 )}
 
-                <WorkingRequests requests={data?.requests || null} />
-                <StudiosList artistId={uid || null} />
+                <WorkingRequests
+                  requests={requests || null}
+                  artistId={artist?.id}
+                />
+                <StudiosList uid={uid || null} />
               </div>
             )}
 
@@ -230,16 +234,16 @@ const WorkingInfo = ({ uid, isArtist }) => {
                   htmlFor=""
                   className="block text-white text-sm  mb-2 tracking-wide"
                 >
-                  <span className="mb-2 block">UBICACIÓN DEL ESTUDIO</span>
+                  <span className="mb-2 block">UBICACIÓN DE TU ESTUDIO</span>
 
-                  {isArtist && (
+                  {artist && (
                     <ArtistContactInfoLocation
                       artistId={uid}
                       artistInfo={artist || null}
                       setLocation={setLocation}
                     />
                   )}
-                  {!isArtist && <p>Debes terminar el primer paso</p>}
+                  {!artist && <p>Debes terminar el primer paso</p>}
                 </label>
               </div>
             )}
@@ -247,7 +251,7 @@ const WorkingInfo = ({ uid, isArtist }) => {
 
           {location && watchWorkAs == 'freelance' && (
             <ArtistContactInfoMapStudio
-              studioId={uid}
+              artistId={uid}
               cityLocation={location}
             />
           )}
@@ -268,12 +272,12 @@ const WorkingInfo = ({ uid, isArtist }) => {
         </div>
 
         <div className="flex justify-between">
-          {!isArtist && (
+          {!artist && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
             </p>
           )}
-          {isArtist ? (
+          {artist ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"

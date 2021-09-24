@@ -10,8 +10,6 @@ const UserProfile = ({ user }: { user: UserState }) => {
     user?.displayName == 'Sin nombre' ? '' : user?.displayName
   )
   const [loading, setLoading] = useState(false)
-  console.log(user)
-
   const userImage = url_domain(user?.photoUrl || null)
 
   const handleName = () => {

@@ -1,7 +1,5 @@
 import Modal from 'react-modal'
-import Script from 'next/script'
 import Layout from 'components/layout/Layout'
-import { postsToJSON, postToJSON } from 'lib/firebase'
 import debounce from 'lodash.debounce'
 import {
   getMorePostFromArtist,
@@ -12,13 +10,11 @@ import {
 } from 'lib/queries/posts'
 
 import { useRouter } from 'next/router'
-import { getArtistInfo } from 'lib/queries/artists'
 import PostModalContent from 'components/post/PostModalContent'
 import { useEffect, useRef, useState } from 'react'
 
 export default function TattoosPage({
   postData,
-  artistData,
   commentsData,
   morePostsArtist,
   relatedPosts,
@@ -42,15 +38,7 @@ export default function TattoosPage({
 
   return (
     <>
-      {/* <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"
-      />
-      <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"
-      /> */}
-      {postData && artistData && (
+      {postData && (
         <>
           <div>
             <Modal
@@ -83,12 +71,12 @@ export default function TattoosPage({
                 <Layout>
                   <PostModalContent
                     postData={postData}
-                    artistData={artistData}
                     commentsData={commentsData}
                     morePostsArtist={morePostsArtist}
                     relatedPosts={relatedPosts}
                     overlayRef={ref}
                     showUp={showUp}
+                    artistData={postData.artists}
                   />
                 </Layout>
               </div>
@@ -106,9 +94,9 @@ export default function TattoosPage({
 }
 
 export async function getStaticPaths() {
-  const postList = await getPostsIds()
+  const postsList = await getPostsIds()
 
-  const paths = postList.map((doc: any) => ({
+  const paths = postsList.map((doc: any) => ({
     params: {
       postId: doc.id,
     },
@@ -123,7 +111,6 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }) => {
   let commentsData = null
   let postData = null
-  let artistData = null
   let morePostsArtist = null
   let relatedPosts = null
 
@@ -132,22 +119,24 @@ export const getStaticProps = async ({ params }) => {
   if (params.postId) {
     try {
       const dataPost: any = await getPostDataById('get-post', params.postId)
-      const dataArtist = await getArtistInfo('_', dataPost.post.artist_id)
+
       const dataComments = await getPostComments(params.postId)
 
       const dataPostByArtist = await getMorePostFromArtist(
-        dataPost.post.artist_id,
+        dataPost.artist_id,
         params.postId
       )
-      const dataRelatedPosts = await getRelatedPosts(dataPost.post.styles)
 
-      // console.log(dataComments, 'los comments')
+      const dataRelatedPosts = await getRelatedPosts(
+        dataPost.styles,
+        params.postId
+      )
 
-      postData = postToJSON(dataPost?.post)
-      artistData = postToJSON(dataArtist.artist)
-      commentsData = postsToJSON(dataComments.comments)
-      morePostsArtist = postsToJSON(dataPostByArtist.posts)
-      relatedPosts = postsToJSON(dataRelatedPosts.posts)
+      postData = dataPost
+
+      commentsData = dataComments
+      morePostsArtist = dataPostByArtist
+      relatedPosts = dataRelatedPosts
     } catch (error) {
       console.log(error, 'Error obteniendo la info')
     }
@@ -157,7 +146,6 @@ export const getStaticProps = async ({ params }) => {
     props: {
       postData,
       commentsData,
-      artistData,
       morePostsArtist,
       relatedPosts,
     },

@@ -25,7 +25,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      studio_name: studio.studio_name || '',
+      studio_name: studio.name || '',
       username: studio.username || '',
       bio: studio.bio,
       email: studio.email || '',
@@ -43,12 +43,11 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const [counter, setCounter] = useState(studio.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
     formatted_address: studio.formatted_address || '',
+    city_place_id: studio?.city_id || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
-
-  const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
 
@@ -99,7 +98,10 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     setValue('studio_name', capitalName)
 
@@ -124,15 +126,13 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
       setAvailableUserName(false)
     }
     setValue('username', nick)
-
-    setCustomNick(true)
   }
 
   const saveUsername = async () => {
     setLoading(true)
 
     const newUsername = getValues('username')
-    toast.promise(updateStudioUsername(studioId, studioUsername, newUsername), {
+    toast.promise(updateStudioUsername(studioId, newUsername), {
       loading: 'Actualizando usuario...',
       success: (data) => {
         setLoading(false)
@@ -167,27 +167,31 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
 
     let formData = {
       bio: data.bio,
-      studio_name: data.studio_name,
+      name: data.studio_name,
       email: data.email,
     }
-    if (placeInfo) formData = { ...placeInfo, ...formData }
 
-    toast.promise(updateStudioGeneralInfo(studioId, uid, formData), {
-      loading: 'Actualizando...',
-      success: (data) => {
-        setLoading(false)
-        setSuccess(true)
-        // setTriggerAuth(Math.random()) // reload global user state data
+    toast.promise(
+      updateStudioGeneralInfo(
+        studioId,
+        uid,
+        formData,
+        studio.city_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
+      ),
+      {
+        loading: 'Actualizando...',
+        success: (data) => {
+          setLoading(false)
+          setSuccess(true)
 
-        return 'Estudio actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
-
-    // setLoading(false)
+          return 'Estudio actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      }
+    )
   }
 
   return (
@@ -329,7 +333,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
               <input
                 type="email"
                 {...register('email')}
-                autoComplete="off"
+                autoComplete="chrome-off"
                 placeholder="Tu correo electrónico"
                 className="input-primary w-full"
                 required
@@ -338,7 +342,7 @@ const MainInfoForm = ({ studioId, studio, uid }) => {
           </div>
         </div>
 
-        {studio.studio_name != watchMultiple.studio_name ||
+        {studio.name != watchMultiple.studio_name ||
         studio.email != watchMultiple.email ||
         studio.formatted_address != placeInfo?.formatted_address ||
         studio.bio != watchMultiple.bio ? (

@@ -12,6 +12,7 @@ const PostComments = ({
   postId,
   user,
   commentsData,
+  artistData,
   setTotalComments,
   totalComments,
   imageHeight,
@@ -58,15 +59,14 @@ const PostComments = ({
       toast.promise(addComment(comment, postId, user), {
         loading: 'Enviando comentario...',
         success: (data: any) => {
-          console.log(data, 'el comentario creado')
           setComments([
             {
-              displayName: user.displayName,
-              created_at: Date.now(),
+              name: user.full_name,
+              created_at: data.created_at,
               comment,
-              user_id: user.uid,
-              id: data.commentId,
-              user_picture: user.photoUrl,
+              user_id: user.id,
+              id: data.id,
+              user_picture: user?.photo_info?.url || user.photo_url,
             },
             ...comments,
           ])
@@ -98,12 +98,14 @@ const PostComments = ({
               <img
                 // src="https://via.placeholder.com/45x45"
                 src={
-                  user?.photoUrl
-                    ? `${user.photoUrl}`
-                    : 'https://via.placeholder.com/45x45'
+                  user?.photo_info
+                    ? user?.photo_info?.url +
+                      '/tr:pr-true,c-at_max,f-auto,w-100,q-50'
+                    : user?.photo_url || '/unuser.png'
                 }
                 className="object-cover w-12 h-12 rounded-full overflow-hidden"
                 title="user-image"
+                alt="user image"
               />
             </a>
           </Link>
@@ -184,7 +186,7 @@ const PostComments = ({
             <PostComment
               key={comment.id}
               comment={comment}
-              userId={user?.uid || null}
+              userId={user?.id || null}
               postId={postId}
               removeComment={removeComment}
               setTotalComments={setTotalComments}

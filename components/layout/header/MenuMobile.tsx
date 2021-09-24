@@ -1,5 +1,3 @@
-import { signOut } from 'firebase/auth'
-import { auth } from 'lib/firebase'
 import { useContext } from 'react'
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
@@ -10,25 +8,19 @@ import { AiOutlineInstagram } from 'react-icons/ai'
 import { ImUser } from 'react-icons/im'
 import { LoginContext } from 'pages/_app'
 import { FaPencilAlt } from 'react-icons/fa'
-import { BiBuildingHouse } from 'react-icons/bi'
-import { RiBuilding2Line, RiBuilding4Line } from 'react-icons/ri'
+import { RiBuilding4Line } from 'react-icons/ri'
 import Link from 'next/link'
+import { useUser } from 'hooks/useUser'
 
 const MenuMobile = ({ user }: any) => {
   const [openMobile, setOpenMobile] = useState(false)
   const { isOpen, openModal } = useContext(LoginContext)
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        // actions.login(null)
-        //Debemos cerrar el modal porque al volver a quedar con el user vacio este se estaba mostrando
-        // setIsOpen(false)
-      })
-      .catch((error) => console.log(error, 'error cerrando sesión'))
-  }
+  const { signOut } = useUser()
 
-  console.log(isOpen, 'showIsOpen')
+  const handleLogout = () => {
+    signOut()
+  }
 
   return (
     <>
@@ -36,7 +28,6 @@ const MenuMobile = ({ user }: any) => {
         <button
           type="button"
           onClick={() => {
-            console.log('aa')
             setOpenMobile(true)
           }}
           className="text-white text-3xl block md:hidden"

@@ -9,12 +9,17 @@ import { useRouter } from 'next/router'
 
 const ShowLists = ({ userId, setShowCreate }) => {
   const router = useRouter()
-  const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
-  const { state, actions }: any = useStateMachine({
+
+  const { data: userLists } = useSWR(
+    userId ? ['getUserLists', userId] : null,
+    getUserLists
+  )
+
+  const { actions }: any = useStateMachine({
     lists,
   })
 
-  if (!data) return <p className="text-gray-300"> Cargando listas...</p>
+  if (!userLists) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
     <div className="max-w-sm">
@@ -28,7 +33,7 @@ const ShowLists = ({ userId, setShowCreate }) => {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-6">
-        {data?.userLists?.map((list) => {
+        {userLists?.map((list) => {
           return (
             <button
               onClick={() => {
@@ -42,13 +47,13 @@ const ShowLists = ({ userId, setShowCreate }) => {
                 <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-                {list.list_name}
+                {list.name}
               </p>
             </button>
           )
         })}
       </div>
-      {data?.userLists.length < 1 && (
+      {userLists?.length < 1 && (
         <div>
           <p className="text-gray-400">
             Sin colecciones,{' '}

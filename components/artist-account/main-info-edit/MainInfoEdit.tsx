@@ -1,9 +1,6 @@
-import useArtist from 'hooks/use-artist'
 import MainInfoForm from './MainInfoForm'
 
-const MainInfoEdit = ({ uid }) => {
-  const { artist } = useArtist(uid)
-
+const MainInfoEdit = ({ uid, artist }) => {
   return (
     <div className="w-full lg:w-4/5 mt-10 pr-7 sm:pr-14">
       <h1 className="text-white text-xl sm:text-2xl font-bold  sm:text-left tracking-wide mb-2">
@@ -14,7 +11,7 @@ const MainInfoEdit = ({ uid }) => {
         pasos aparecerá un botón mágico para activar tu perfil
       </p>
 
-      {artist?.displayName && <MainInfoForm uid={uid} artist={artist} />}
+      {artist?.name && <MainInfoForm uid={uid} artist={artist} />}
     </div>
   )
 }

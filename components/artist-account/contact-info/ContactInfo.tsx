@@ -1,4 +1,3 @@
-import useArtist from 'hooks/use-artist'
 import { updateArtistContactInfo } from 'lib/queries/artists'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -14,11 +13,11 @@ import { FaFacebookF, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { ArtistTypes } from 'types/artist'
 import { checkUrl } from 'lib/utils'
 
-const ContactInfo = ({ uid, isArtist }) => {
-  const [phone, setPhone]: any = useState({})
+const ContactInfo = ({ uid, artist }: { uid: string; artist: ArtistTypes }) => {
+  const [mobile, setPhone]: any = useState({})
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { artist }: { artist: ArtistTypes } = useArtist(uid)
+
   const router = useRouter()
 
   const {
@@ -27,7 +26,6 @@ const ContactInfo = ({ uid, isArtist }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -57,7 +55,10 @@ const ContactInfo = ({ uid, isArtist }) => {
 
       setValue('contact_way', artist.contact_way || null)
       setPhone(
-        { value: artist.phone, country_code: artist.country_code } || null
+        {
+          value: artist?.mobile?.value,
+          country_code: artist?.mobile?.country_code,
+        } || null
       )
       setValue('instagram', artist.instagram || null)
       setValue('facebook', artist.facebook || null)
@@ -68,7 +69,7 @@ const ContactInfo = ({ uid, isArtist }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => router.push('/artist/pictures-info'), 1000)
+      const timer = setTimeout(() => router.push('/artist/photos-info'), 1000)
       return () => clearTimeout(timer)
     }
   }, [success, router])
@@ -76,10 +77,10 @@ const ContactInfo = ({ uid, isArtist }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    const dataForm = { ...data, phone }
+    const dataForm = { ...data, mobile }
 
-    if (phone?.value) {
-      toast.promise(updateArtistContactInfo(uid, dataForm, true), {
+    if (mobile?.value && mobile.value.length > 9) {
+      toast.promise(updateArtistContactInfo(uid, dataForm, artist), {
         loading: 'Actualizando...',
         success: () => {
           setLoading(false)
@@ -93,7 +94,7 @@ const ContactInfo = ({ uid, isArtist }) => {
         },
       })
     } else {
-      toast.error('Debes agregar el teléfono')
+      toast.error('Debes agregar un celular')
     }
 
     setLoading(false)
@@ -141,7 +142,7 @@ const ContactInfo = ({ uid, isArtist }) => {
           </div>
           <div className="col-span-6 lg:col-span-4 xl:col-span-3">
             <label htmlFor="" className="block  text-sm mb-3 tracking-wide">
-              <span className="mb-3 block">NÚMERO</span>
+              <span className="mb-3 block">CELULAR</span>
 
               <PhoneInput
                 country={'co'}
@@ -181,7 +182,7 @@ const ContactInfo = ({ uid, isArtist }) => {
                     country_code: country.countryCode.toUpperCase(),
                   })
                 }}
-                value={phone.value}
+                value={mobile.value}
               />
             </label>
           </div>
@@ -345,10 +346,10 @@ const ContactInfo = ({ uid, isArtist }) => {
         </div>
 
         <div className="flex justify-between">
-          {!isArtist && (
+          {!artist && (
             <p>Primero debes guardar el Paso 1, Información Personal.</p>
           )}
-          {isArtist ? (
+          {artist ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5"

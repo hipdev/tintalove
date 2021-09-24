@@ -10,7 +10,6 @@ import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import PostGetStudioLink from './PostGetStudioLink'
 
 const loaderPost = ({ src, quality, width }: any) => {
   return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
@@ -38,16 +37,12 @@ const PostPortrait = ({
   const [imageHeight, setImageHeight] = useState(null)
 
   useEffect(() => {
-    console.log('image ref')
     // console.log(imageRef.current.offsetHeight, 'imageRef')
     if (imageRef.current) {
       // esto es para calcular el alto de la foto
       setImageHeight(imageRef.current.offsetHeight)
     }
   }, [imageRef, router])
-
-  console.log(artistData, 'data Artist')
-  console.log(postData, 'data del post')
 
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between 2xl:justify-center">
@@ -82,7 +77,7 @@ const PostPortrait = ({
           >
             <Image
               loader={loaderPost}
-              src={postData?.image?.url}
+              src={postData?.photo_info?.url}
               alt="Artist photo"
               layout="fill"
               // width={600}
@@ -121,10 +116,13 @@ const PostPortrait = ({
               {postData.styles.join(',  ')}
             </p>
             <p className="text-sm text-gray-400">
-              {postData.is_partner ? (
+              {postData.studio_id ? (
                 postData.studio_id && (
                   <>
-                    Realizado en: <PostGetStudioLink id={postData?.studio_id} />
+                    Realizado en:{' '}
+                    <Link href={`/studio/${postData?.studios.username}`}>
+                      <a className="text-primary">{postData?.studios.name}</a>
+                    </Link>
                   </>
                 )
               ) : (
@@ -185,6 +183,7 @@ const PostPortrait = ({
             commentsData={commentsData}
             setTotalComments={setTotalComments}
             totalComments={totalComments}
+            artistData={artistData}
           />
         </div>
       </div>

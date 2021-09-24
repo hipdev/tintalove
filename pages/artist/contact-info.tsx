@@ -1,21 +1,25 @@
+import useSWR from 'swr'
 import ContactInfo from 'components/artist-account/contact-info/ContactInfo'
 import IsAuth from 'components/isAuth'
 import LayoutStepsArtist from 'components/layout-steps/LayoutStepsArtist'
-import useUserId from 'hooks/use-user-id'
-import { getUserInfo } from 'lib/queries/users'
-import useSWR from 'swr'
+import { useUser } from 'hooks/useUser'
+import { getArtistFullInfo } from 'lib/queries/artists'
 
 export default function ContactInfoPage() {
-  const { userId } = useUserId()
-  const { data } = useSWR(userId ? userId : null, getUserInfo)
+  const { user }: any = useUser()
 
-  if (!data && !data?.user) {
+  const { data: artist } = useSWR(
+    user?.id ? ['getArtistFullInfo', user.id] : null,
+    getArtistFullInfo
+  )
+
+  if (!user && !artist) {
     return <IsAuth>Cargando data...</IsAuth>
   }
 
   return (
-    <LayoutStepsArtist uid={userId} user={data.user}>
-      <ContactInfo uid={data.user.uid || null} isArtist={data.user.is_artist} />
+    <LayoutStepsArtist uid={user.id} user={user}>
+      <ContactInfo uid={user.id || null} artist={artist} />
     </LayoutStepsArtist>
   )
 }

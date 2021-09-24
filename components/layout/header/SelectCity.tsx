@@ -1,13 +1,11 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { mutate } from 'swr'
-import { HiOutlineSelector } from 'react-icons/hi'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { TiLocationOutline } from 'react-icons/ti'
 import toast from 'react-hot-toast'
-import { updateUserSearchCity } from 'lib/queries/users'
+// import { updateUserSearchCity } from 'lib/queries/users'
 import { useRouter } from 'next/router'
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import { RiArrowDownSLine } from 'react-icons/ri'
 
 const SelectCity = ({ user, cities }) => {
@@ -23,23 +21,22 @@ const SelectCity = ({ user, cities }) => {
 
   const changeCity = (select) => {
     if (user) {
-      toast.promise(updateUserSearchCity(user.uid, select), {
-        loading: 'Cambiando...',
-        success: () => {
-          setSelected(select)
-          mutate(user.uid)
-          const url =
-            select.city_name == 'Todo Colombia'
-              ? '/location/Colombia'
-              : `/location/${select.id}`
-          router.push(url)
-
-          return 'Ciudad actualizada 😉'
-        },
-        error: (err) => {
-          return `${err.toString()}`
-        },
-      })
+      // toast.promise(updateUserSearchCity(user.uid, select), {
+      //   loading: 'Cambiando...',
+      //   success: () => {
+      //     setSelected(select)
+      //     mutate(user.uid)
+      //     const url =
+      //       select.city_name == 'Todo Colombia'
+      //         ? '/location/Colombia'
+      //         : `/location/${select.id}`
+      //     router.push(url)
+      //     return 'Ciudad actualizada 😉'
+      //   },
+      //   error: (err) => {
+      //     return `${err.toString()}`
+      //   },
+      // })
     } else {
       setSelected(select)
       router.push(`/location/${select.id}`)
@@ -83,7 +80,7 @@ const SelectCity = ({ user, cities }) => {
                 >
                   {cities.map((city) => (
                     <Listbox.Option
-                      key={city.geohash}
+                      key={city.id}
                       className={({ active }) =>
                         (active
                           ? 'text-gray-400 bg-gray-900'

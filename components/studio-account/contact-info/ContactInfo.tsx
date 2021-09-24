@@ -1,4 +1,3 @@
-import useStudio from 'hooks/use-studio'
 import { updateStudioContactInfo } from 'lib/queries/studios'
 import { checkUrl } from 'lib/utils'
 import Link from 'next/link'
@@ -14,13 +13,12 @@ import 'react-phone-input-2/lib/style.css'
 import ContactInfoLocation from './ContactInfoLocation'
 import ContactInfoMapStudio from './ContactInfoMap'
 
-const ContactInfoStudio = ({ studioId, hasStudio }) => {
-  const [phone, setPhone]: any = useState({})
+const ContactInfoStudio = ({ studioId, studioData }) => {
+  const [mobile, setPhone]: any = useState({})
   const [location, setLocation] = useState(null)
-  const [placeInfo, setPlaceInfo] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { studio } = useStudio(studioId)
+
   const router = useRouter()
 
   const {
@@ -40,33 +38,34 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
     },
   })
 
-  const regexUrl = new RegExp('^https?://[w-]+(.[w-]+)+[/#?]?.*$', 'gm')
-
   useEffect(() => {
-    if (studio) {
+    if (studioData) {
       let styles = []
-      if (studio.styles) {
-        styles = studio.styles.map((style) => ({
+      if (studioData.styles) {
+        styles = studioData.styles.map((style) => ({
           label: style,
           value: style,
         }))
       }
 
-      setValue('contact_way', studio.contact_way)
-      setValue('instagram', studio.instagram)
-      setValue('facebook', studio.facebook)
-      setValue('twitter', studio.twitter)
-      setValue('telegram_user', studio.telegram_user)
+      setValue('contact_way', studioData.contact_way)
+      setValue('instagram', studioData.instagram)
+      setValue('facebook', studioData.facebook)
+      setValue('twitter', studioData.twitter)
+      setValue('telegram_user', studioData.telegram_user)
       setPhone(
-        { value: studio.phone, country_code: studio.country_code } || null
+        {
+          value: studioData?.mobile?.value,
+          country_code: studioData?.mobile?.country_code,
+        } || null
       )
     }
-  }, [studio])
+  }, [studioData])
 
   useEffect(() => {
     if (success) {
       const timer = setTimeout(
-        () => router.push('/studio-account/pictures-info'),
+        () => router.push('/studio-account/photos-info'),
         1000
       )
       return () => clearTimeout(timer)
@@ -82,24 +81,25 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
   const onSubmit = (data) => {
     setLoading(true)
 
-    const dataForm = { ...data, phone }
+    const dataForm = { ...data, mobile }
 
-    console.log(dataForm, 'la data')
+    if (mobile?.value && mobile.value.length > 9) {
+      toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
+        loading: 'Actualizando...',
+        success: () => {
+          setLoading(false)
+          setSuccess(true)
 
-    toast.promise(updateStudioContactInfo(studioId, dataForm, true), {
-      loading: 'Actualizando...',
-      success: () => {
-        setLoading(false)
-        setSuccess(true)
-
-        return 'Estudio actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
-
+          return 'Estudio actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      })
+    } else {
+      toast.error('Debes agregar un celular')
+    }
     setLoading(false)
   }
 
@@ -171,20 +171,12 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                 }}
                 placeholder="Selecciona primero el país"
                 onChange={(value, country: any, e, formattedValue) => {
-                  console.log(
-                    value,
-                    country,
-                    e,
-                    formattedValue,
-                    'los valores del input'
-                  )
-
                   setPhone({
                     value: '+' + value,
                     country_code: country.countryCode.toUpperCase(),
                   })
                 }}
-                value={phone.value}
+                value={mobile.value}
               />
             </label>
           </div>
@@ -205,10 +197,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     },
                   })}
                 />
-                {(watchInstagram || studio?.instagram) && (
+                {(watchInstagram || studioData?.instagram) && (
                   <a
                     href={checkUrl(
-                      watchInstagram || studio?.instagram,
+                      watchInstagram || studioData?.instagram,
                       'https://instagram.com'
                     )}
                     target="_blank"
@@ -243,10 +235,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     },
                   })}
                 />
-                {(watchFacebook || studio?.facebook) && (
+                {(watchFacebook || studioData?.facebook) && (
                   <a
                     href={checkUrl(
-                      watchFacebook || studio?.facebook,
+                      watchFacebook || studioData?.facebook,
                       'https://facebook.com'
                     )}
                     target="_blank"
@@ -280,10 +272,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                   })}
                 />
 
-                {(watchTwitter || studio?.twitter) && (
+                {(watchTwitter || studioData?.twitter) && (
                   <a
                     href={checkUrl(
-                      watchTwitter || studio?.twitter,
+                      watchTwitter || studioData?.twitter,
                       'https://twitter.com'
                     )}
                     target="_blank"
@@ -301,7 +293,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
             </label>
           </div>
 
-          {(watchContactWay == 'telegram' || studio?.telegram_user) && (
+          {(watchContactWay == 'telegram' || studioData?.telegram_user) && (
             <div className="col-span-6 lg:col-span-4 xl:col-span-3">
               <label htmlFor="" className="block  text-sm  mb-3 tracking-wide">
                 <div className="flex">
@@ -327,10 +319,10 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
                     })}
                   />
 
-                  {(watchTelegram || studio?.telegram_user) && (
+                  {(watchTelegram || studioData?.telegram_user) && (
                     <a
                       href={checkUrl(
-                        watchTelegram || studio?.telegram_user,
+                        watchTelegram || studioData?.telegram_user,
                         'https://t.me'
                       )}
                       target="_blank"
@@ -359,7 +351,7 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
               {studioId && (
                 <ContactInfoLocation
                   studioId={studioId}
-                  studioInfo={studio || null}
+                  studioInfo={studioData || null}
                   setLocation={setLocation}
                 />
               )}
@@ -373,12 +365,12 @@ const ContactInfoStudio = ({ studioId, hasStudio }) => {
         )}
 
         <div className="flex justify-between mt-8">
-          {!hasStudio && (
+          {!studioData && (
             <p className="text-white">
               Primero debes guardar el Paso 1, Información Personal.
             </p>
           )}
-          {hasStudio ? (
+          {studioData ? (
             <button
               type="submit"
               className="block  btn-primary py-3 px-5 mb-10"

@@ -1,19 +1,21 @@
-import useStudioWizardRealtime from 'hooks/realtime/use-studio-wizard'
-import { activateStudio } from 'lib/queries/studios'
+import { activateStudio, getStudioWizard } from 'lib/queries/studios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsPersonCheck } from 'react-icons/bs'
-import { mutate } from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type Props = {
   uid?: string
   studioId?: string
 }
 
-const SideMenuStudioSteps = ({ studioId }: Props) => {
-  const { studioWizard } = useStudioWizardRealtime(studioId)
+const SideMenuStudioSteps = ({ studioId, uid }: Props) => {
+  const { data: studioWizard } = useSWR(
+    studioId ? ['getStudioWizard', studioId] : null,
+    getStudioWizard
+  )
 
   const [loading, setLoading] = useState(false)
 
@@ -64,8 +66,8 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
           // router.push('/artist/new/working-info')
 
           setTimeout(() => {
-            mutate(['getStudioInfo', studioId])
-          }, 2000)
+            mutate(['getStudioIsActive', uid])
+          }, 1500)
 
           return 'Estudio activado, ahora puedes invitar artistas 🥳'
         },
@@ -219,20 +221,20 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
         </a>
       </Link>
 
-      <Link href="/studio-account/pictures-info">
+      <Link href="/studio-account/photos-info">
         <a className="block relative">
           <div className="relative flex items-start">
             <span className="h-9 flex items-center">
               <span
                 className={
-                  path == 'pictures-info'
+                  path == 'photos-info'
                     ? 'border-primary ' + circle
                     : 'border-light-900 ' + circle
                 }
               >
                 <span
                   className={
-                    path == 'pictures-info' ? 'text-white' : 'text-light-900'
+                    path == 'photos-info' ? 'text-white' : 'text-light-900'
                   }
                 >
                   4
@@ -242,7 +244,7 @@ const SideMenuStudioSteps = ({ studioId }: Props) => {
             <span className="ml-4 min-w-0 mt-1.5">
               <span
                 className={
-                  path == 'pictures-info'
+                  path == 'photos-info'
                     ? 'text-white ' + textWhite
                     : 'text-light-900 ' + textWhite
                 }

@@ -1,7 +1,6 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
@@ -11,35 +10,34 @@ import MainInfoAvailable from './main-info-edit/MainInfoAvailable'
 import 'microtip/microtip.css'
 import MainInfoCity from './main-info-edit/MainInfoCity'
 import { createArtist, userNameAvailable } from 'lib/queries/artists'
+import { useUser } from 'hooks/useUser'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfo = ({ uid, email }) => {
-  const { register, setValue, getValues, handleSubmit, watch } = useForm({
+  const { user, setUser }: any = useUser()
+
+  const { register, setValue, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: {
       show: false,
       customNick: false,
       availableUsername: false,
       validUserName: false,
-      displayName: '',
+      name: '',
       email: email || '',
       username: '',
       bio: '',
     },
   })
 
-  const cityRef = useRef(null)
-
   const [loading, setLoading] = useState(false)
-  const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
-  const [validUserName, setValidUserName] = useState(false)
+  const [validUserName, setValidUserName] = useState(null)
 
-  const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
@@ -72,7 +70,7 @@ const MainInfo = ({ uid, email }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('displayName', name)
+        setValue('name', name.trim())
       }
     }, 3000),
     []
@@ -81,13 +79,15 @@ const MainInfo = ({ uid, email }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
-    setValue('displayName', capitalName)
-
-    const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
+    const formattedName = capitalName.replace(/\s\s+/g, ' ')
 
     updateName(formattedName)
+    setValue('name', formattedName)
 
     if (name != '' && !customNick) {
       setAvailableUserName(false)
@@ -106,10 +106,7 @@ const MainInfo = ({ uid, email }) => {
       }
 
       setValue('username', username)
-
-      setShow(true)
     }
-    if (name == '') setShow(false)
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +128,7 @@ const MainInfo = ({ uid, email }) => {
   }
 
   const onSubmit = async (data) => {
-    setLoading(true)
+    // setLoading(true)
     if (!placeInfo) {
       setLoading(false)
       toast('😓 Debes indicar una ciudad')
@@ -144,22 +141,20 @@ const MainInfo = ({ uid, email }) => {
       return
     }
 
-    const formData = {
-      displayName: data.displayName
-        .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
-        .replace(/\s\s+/g, ' ')
-        .trim(),
-      bio: data.bio.replace(/\s\s+/g, ' ').trim(),
+    const artistData = {
+      name: data.name,
+      bio: data.bio.trim(),
       username: data.username,
       email: data.email,
-      ...placeInfo,
     }
 
     toast
-      .promise(createArtist(uid, formData, true), {
+      .promise(createArtist(uid, artistData, placeInfo, true), {
         loading: 'Guardando...',
         success: (data) => {
           setLoading(false)
+
+          setUser({ ...user, full_name: artistData.name })
           // setTriggerAuth(Math.random()) // reload global user state data
           // router.push('/artist/new/working-info')
 
@@ -194,11 +189,12 @@ const MainInfo = ({ uid, email }) => {
               <label className="block text-white text-sm uppercase mb-2 tracking-wide">
                 <span className="mb-3 block">Nombre artístico</span>
                 <input
-                  {...register('displayName')}
+                  {...register('name')}
                   autoComplete="off"
                   placeholder="..."
                   className="input-primary w-full"
                   onChange={handleName}
+                  maxLength={23}
                   required
                 />
               </label>
@@ -296,7 +292,7 @@ const MainInfo = ({ uid, email }) => {
                 <input
                   type="email"
                   {...register('email')}
-                  autoComplete="off"
+                  autoComplete="chrome-off"
                   placeholder="Tu correo electrónico"
                   className="input-primary w-full"
                   required

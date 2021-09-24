@@ -4,7 +4,6 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete'
 import useOnclickOutside from 'react-cool-onclickoutside'
 import { useEffect, useState } from 'react'
-import { geohashForLocation } from 'geofire-common'
 import toast from 'react-hot-toast'
 import { updateStudioLocation } from 'lib/queries/studios'
 
@@ -28,18 +27,17 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
   })
 
   useEffect(() => {
-    if (studioInfo?.dataLocation) {
-      setPlaceholder(studioInfo?.dataLocation.formatted_address)
-      setLocation(
-        {
-          lat: studioInfo.dataMarker.marker_location[0],
-          lng: studioInfo.dataMarker.marker_location[1],
-        } || {
-          lat: studioInfo.dataLocation.coordinates.lat,
-          lng: studioInfo.dataLocation.coordinates.lng,
-        }
-      )
-      setValue(studioInfo.dataLocation.formatted_address)
+    if (studioInfo?.studios_places) {
+      setPlaceholder(studioInfo?.studios_places?.formatted_address)
+      setLocation({
+        lat: studioInfo.main_address_marker
+          ? studioInfo.main_address_marker[0]
+          : studioInfo?.studios_places.lat,
+        lng: studioInfo.main_address_marker
+          ? studioInfo.main_address_marker[1]
+          : studioInfo?.studios_places.lng,
+      })
+      setValue(studioInfo.studios_places.formatted_address)
     }
   }, [studioInfo])
 
@@ -69,17 +67,12 @@ const ContactInfoLocation = ({ setLocation, studioId, studioInfo }) => {
 
     setLocation({ lat, lng })
 
-    const geohash = geohashForLocation([lat, lng])
-
-    const fullAddress = results[0].formatted_address.split(',')
-    const city_name = fullAddress[0]
-
     const dataLocation = {
       place_id: results[0].place_id,
       formatted_address: results[0].formatted_address,
-      city_name,
-      coordinates: { lat, lng },
-      geohash,
+      coords: `${lat}, ${lng}`, // type point()
+      lat,
+      lng,
     }
 
     toast.promise(updateStudioLocation(studioId, dataLocation), {

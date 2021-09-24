@@ -26,3 +26,17 @@ Un total acumulado de 48 millones mensuales, nada mal para el primer año, ojala
 ## para algolia
 
 firebase functions:config:set algolia.app=JE20HAUJXG algolia.key=privatekey
+
+twitter api key:
+fDuiupt8Uq7gtEGzNkJ97iHW1
+
+twitter api secret key:
+jAzRNZF7TXz3UoE0m7mOC6ibNcxSrB8hwwyZm2tLK6HIBE8vWe
+
+twitter bearer token:
+AAAAAAAAAAAAAAAAAAAAAGTpSwEAAAAAfToggU%2BnpuRAhz3fyblH2Yx5XCs%3D1iuIdMXgbrjDNxYzLRMPTEHyMrw3k0cRZYCUOIQSrIgvPC6T21
+
+DigitalOcean droplet to test Postgresql
+
+Check connection:
+pg_isready -h 137.184.33.128 -p 5432

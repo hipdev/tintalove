@@ -1,45 +1,40 @@
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useStateMachine } from 'little-state-machine'
-import { RiHeart3Fill, RiHeartLine } from 'react-icons/ri'
 import { lists } from 'lib/actions'
 import { PostTypes } from 'types/post'
 import toast from 'react-hot-toast'
 import { isPostListed, removePostFromList } from 'lib/queries/lists'
 import { UserState } from 'types/user'
 import useSWR from 'swr'
-import Script from 'next/script'
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi'
 
 const PostItemListed = ({
   post,
   user,
-  mutatePost,
 }: {
   post: PostTypes
   user: UserState
-  mutatePost: any
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { state, actions }: any = useStateMachine({
+  const { actions }: any = useStateMachine({
     lists,
   })
 
-  const { data, mutate } = useSWR(
-    user?.uid ? [post.id, user.uid] : null,
+  const { data: isListed, mutate } = useSWR(
+    user?.id ? ['isPostListed', post.id, user.id] : null,
     isPostListed
   )
 
   const handleList = () => {
-    if (!user && !user?.displayName) {
+    if (!user && !user?.full_name) {
       toast('Entra para crear listas 🤩')
     } else {
       actions.lists({
         post: post,
         listOpen: true,
         mutateListed: mutate,
-        mutatePost,
       })
     }
   }
@@ -48,19 +43,12 @@ const PostItemListed = ({
       setIsOpen(false)
       toast('Ups, está no es tu lista')
     } else {
-      toast.promise(removePostFromList(post.id, user.uid), {
+      toast.promise(removePostFromList(post.id, user.id), {
         loading: 'Eliminando de tu lista...',
         success: () => {
           setIsOpen(false)
-          mutatePost((data) => {
-            return {
-              post: {
-                ...data.post,
-                counter_listed: data.post.counter_listed - 1,
-              },
-            }
-          }, false)
-          mutate({ listed: false }, false)
+
+          mutate()
           return 'Tattoo eliminado 😉'
         },
         error: (err) => {
@@ -72,14 +60,6 @@ const PostItemListed = ({
 
   return (
     <>
-      {/* <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"
-      />
-      <Script
-        strategy="lazyOnload"
-        src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"
-      /> */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -151,7 +131,7 @@ const PostItemListed = ({
         </Dialog>
       </Transition.Root>
 
-      {data?.listed ? (
+      {isListed ? (
         <span
           className="cursor-pointer text-xl hover:text-gray-500"
           onClick={() => setIsOpen(true)}

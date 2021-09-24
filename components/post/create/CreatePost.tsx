@@ -1,19 +1,16 @@
 import { useState } from 'react'
 import Select from 'react-select'
 import CreatePostPicture from './CreatePostPicture'
-import useArtist from 'hooks/use-artist'
 import { BsTablet, BsTabletLandscape } from 'react-icons/bs'
 import { CgDice1 } from 'react-icons/cg'
-import SelectStudioToPost from './SelectStudio'
+import SelectStudioToPost from './SelectStudioToPost'
 
-const CreatePost = ({ user }) => {
+const CreatePost = ({ artist, artistsStudios }) => {
   const [description, setDescription] = useState('')
   const [styles, setStyles] = useState([])
   const [studio, setStudio] = useState()
   const [withPicture, setWithPicture] = useState(false)
   const [pictureSize, setPictureSize] = useState('portrait')
-
-  const { artist } = useArtist(user.uid)
 
   const options = artist?.styles.map((style) => {
     return { value: style, label: style }
@@ -23,19 +20,17 @@ const CreatePost = ({ user }) => {
     setStyles(styles)
   }
 
-  console.log(artist?.studios?.length, 'artist Info')
-  console.log(studio, 'studio Info')
-
-  const hasTwoStudios = artist?.studios?.length == 2
+  const hasTwoStudios = artistsStudios?.length == 2
   const isPartner = artist?.work_as == 'partner'
-  const onlyOneStudio = (artist?.studios && artist?.studios[0]) || null
+  const onlyOneStudio =
+    (artistsStudios && artistsStudios[0]?.studios.id) || null
 
   return (
     <div className="bg-dark-800 pt-10 h-3/6 xl:h-screen overflow-auto">
       <div className="container mx-auto flex flex-col xl:flex-row w-4/5 pt-5 md:pt-12 px-0 md:px-10  relative pb-40 md:pb-12 xl:pb-0 mt-8">
         <div className="w-full xl:w-2/3 pr-0 xl:pr-10">
           <CreatePostPicture
-            uid={user.uid}
+            uid={artist.user_id}
             dataForm={{
               description,
               styles,

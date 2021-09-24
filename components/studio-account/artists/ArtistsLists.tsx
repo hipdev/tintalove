@@ -7,66 +7,67 @@ import useSWR from 'swr'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import toast from 'react-hot-toast'
 import { IoMdCall } from 'react-icons/io'
-import GetUsernameLink from 'components/common/GetUsernameLink'
+import { parseISO } from 'date-fns'
 
 const ArtistsLists = ({ studio }) => {
-  const { data, mutate } = useSWR(
+  const { data: artists, mutate } = useSWR(
     ['getArtistsByStudio', studio?.id],
     getArtistsByStudio
   )
 
-  console.log(data, 'artists')
-
   const handleDeleteArtistFromStudio = (studioArtist) => {
-    toast.promise(deleteArtistFromStudio(studioArtist), {
-      loading: 'Eliminando...',
-      success: () => {
-        mutate()
-        return 'Artista eliminado'
-      },
-      error: (err) => {
-        return `${err.toString()}`
-      },
-    })
+    toast.promise(
+      deleteArtistFromStudio(studioArtist.id, studioArtist.request_id),
+      {
+        loading: 'Eliminando...',
+        success: () => {
+          mutate()
+          return 'Artista eliminado'
+        },
+        error: (err) => {
+          return `${err.toString()}`
+        },
+      }
+    )
   }
 
   return (
     <>
-      {data?.artists.length > 0 ? (
+      {artists?.length > 0 ? (
         <>
           <h3 className="mt-4 text-sm">TUS ARTISTAS</h3>
 
           <div className="bg-dark-800 shadow  sm:rounded-md mb-10 mt-2 ">
             <ul className="divide-y divide-gray-200">
-              {data?.artists?.map((artist) => {
+              {artists?.map((artist) => {
                 return (
                   <li key={artist.id} className="block hover:bg-black ">
                     <div className="flex items-center px-4 py-3 sm:px-6">
                       <div className="min-w-0 flex-1 flex items-center">
                         <div className="flex-shrink-0">
-                          <GetUsernameLink
-                            id={artist.artist_id}
-                            type="artist"
-                            target
+                          <a
+                            href={`/${artist?.artists?.username}`}
+                            target="_blank"
+                            rel="noreferrer"
                           >
                             <img
                               className="h-12 w-12 rounded-full"
-                              src={artist.artist_picture}
+                              src={`${artist?.artists?.artists_main_photos?.url}/tr:w-100,q-40`}
                               alt=""
                             />
-                          </GetUsernameLink>
+                          </a>
                         </div>
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
-                            <GetUsernameLink
-                              id={artist.artist_id}
-                              type="artist"
-                              target
+                            <a
+                              href={`/${artist?.artists?.username}`}
+                              target="_blank"
+                              rel="noreferrer"
                             >
                               <span className="text-sm font-medium text-primary truncate">
-                                {artist.artist_name}
+                                {artist?.artists?.name}
                               </span>
-                            </GetUsernameLink>
+                            </a>
 
                             <p className="mt-2 flex items-center text-sm text-gray-500">
                               <IoMdCall
@@ -75,7 +76,7 @@ const ArtistsLists = ({ studio }) => {
                               />
                               <span className="truncate">
                                 {parsePhoneNumber(
-                                  artist.artist_phone
+                                  artist.artists.mobile.value
                                 ).formatInternational()}
                               </span>
                             </p>
@@ -86,13 +87,13 @@ const ArtistsLists = ({ studio }) => {
                                 Aceptado en{' '}
                                 <time
                                   dateTime={format(
-                                    artist?.created_at.toMillis(),
+                                    parseISO(artist?.created_at),
                                     'yyyy'
                                   )}
                                 >
                                   <span className="capitalize">
                                     {format(
-                                      artist?.created_at.toMillis(),
+                                      parseISO(artist?.created_at),
                                       'MMMM d, yyyy',
                                       { locale: es }
                                     )}

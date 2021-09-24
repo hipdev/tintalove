@@ -1,11 +1,8 @@
 import ArtistMap from 'components/artist/ArtistMap'
 import Layout from 'components/layout/Layout'
 import { Loader } from '@googlemaps/js-api-loader'
-
-import { postToJSON } from 'lib/firebase'
 import {
-  getArtistIdByUsername,
-  getArtistInfo,
+  getArtistDataByUsername,
   getUserNamesByArtists,
 } from 'lib/queries/artists'
 import { useRouter } from 'next/router'
@@ -16,7 +13,7 @@ const loader = new Loader({
   libraries: ['places'],
 })
 
-const UsernameArtistPage = ({ artistId, artistData }: any) => {
+const UsernameArtistPage = ({ artistData }: any) => {
   const [loadMap, setLoadMap] = useState(false)
   const router: any = useRouter()
 
@@ -32,10 +29,6 @@ const UsernameArtistPage = ({ artistId, artistData }: any) => {
     .catch((e) => {
       console.log('error loading Google Maps API')
     })
-
-  if (!artistId) {
-    return <p>No existe ese artista</p>
-  }
 
   return <Layout>{loadMap && <ArtistMap artistData={artistData} />}</Layout>
 }
@@ -58,25 +51,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  let artistId = null
   let artistData = null
 
   if (params.username) {
     try {
-      artistId = await getArtistIdByUsername(params.username)
-
-      try {
-        const data = await getArtistInfo('_key', artistId)
-
-        artistData = postToJSON(data?.artist)
-        // Si falla uno fallan todos por esta dentro del mismo trycatch
-      } catch (error) {
-        console.log('Error obteniendo la info del artista')
-      }
-    } catch (err) {
-      if (err.status !== 404) {
-        console.log('error!')
-      }
+      artistData = await getArtistDataByUsername(params.username)
+      // Si falla uno fallan todos por esta dentro del mismo trycatch
+    } catch (error) {
+      console.log('Error obteniendo la info del artista')
     }
   }
 
@@ -84,7 +66,6 @@ export async function getStaticProps({ params }: any) {
 
   return {
     props: {
-      artistId,
       artistData,
     },
     revalidate: 2,

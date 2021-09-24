@@ -1,9 +1,7 @@
 import debounce from 'lodash.debounce'
 import toast from 'react-hot-toast'
-
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiHelpCircle } from 'react-icons/fi'
-
 import { capitalizeAllWords } from 'lib/utils'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -19,7 +17,6 @@ const GeneralInfo = ({ uid }) => {
   const {
     register,
     setValue,
-    getValues,
     handleSubmit,
     watch,
     formState: { errors },
@@ -39,18 +36,14 @@ const GeneralInfo = ({ uid }) => {
 
   const watchUsername = watch('username')
 
-  const cityRef = useRef(null)
-
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [city, setCity] = useState(null)
   const [counter, setCounter] = useState(0)
   const [placeInfo, setPlaceInfo] = useState(null)
 
   const [availableUserName, setAvailableUserName] = useState(false)
   const [validUserName, setValidUserName] = useState(false)
 
-  const [show, setShow] = useState(false)
   const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
@@ -102,7 +95,10 @@ const GeneralInfo = ({ uid }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     setValue('studio_name', capitalName)
 
@@ -127,10 +123,7 @@ const GeneralInfo = ({ uid }) => {
       }
 
       setValue('username', username)
-
-      setShow(true)
     }
-    if (name == '') setShow(false)
   }
 
   const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,17 +159,16 @@ const GeneralInfo = ({ uid }) => {
     }
 
     const formData = {
-      studio_name: data.studio_name
+      name: data.studio_name
         .replace(/[^a-zA-Z0-9 ]/g, '') // clear spaces and only allow one space between words
         .replace(/\s\s+/g, ' ')
         .trim(),
       bio: data.bio.replace(/\s\s+/g, ' ').trim(),
       username: data.username,
       email: data.email,
-      ...placeInfo,
     }
 
-    toast.promise(createStudio(uid, formData, true), {
+    toast.promise(createStudio(uid, formData, placeInfo, true), {
       loading: 'Creando estudio...',
       success: (data) => {
         setLoading(false)
@@ -200,7 +192,8 @@ const GeneralInfo = ({ uid }) => {
         </h1>
         <p className="text-white mb-5 sm:mb-6 lg:mb-8">
           Gracias por ser parte de la familia Tinta Love, cuando llenes todos
-          los pasos aparecerá un botón mágico para activar tu perfil
+          los pasos aparecerá un botón mágico para activar el perfil del
+          estudio.
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-6 gap-6 tooltipBox">
@@ -220,28 +213,6 @@ const GeneralInfo = ({ uid }) => {
             <div className="col-span-6 md:col-span-3">
               <label className="block text-white text-sm  mb-2 tracking-wide">
                 <span className="mb-3 block">CIUDAD</span>
-
-                {/* <GooglePlacesAutocomplete
-                  apiKey="AIzaSyA5drETj_sJmO1kGEDEb7tXWzwJb05ipCY"
-                  debounce={500}
-                  apiOptions={{ region: 'CO', language: 'es' }}
-                  autocompletionRequest={{
-                    componentRestrictions: { country: ['CO'] },
-                    types: ['(cities)'],
-                  }}
-                  selectProps={{
-                    value: city,
-                    onChange: handleCity,
-                    placeholder: 'Escribe tu ciudad...',
-                    noOptionsMessage: () => 'Sin opciones',
-                    // defaultMenuIsOpen: true,
-                    // menuIsOpen: true,
-                    classNamePrefix: 'create_artist',
-                    // autoFocus: true,
-                    ref: cityRef,
-                  }}
-                /> */}
-
                 <GeneralInfoCity defaultValue="" setPlaceInfo={setPlaceInfo} />
               </label>
             </div>
@@ -342,7 +313,7 @@ const GeneralInfo = ({ uid }) => {
                 <input
                   type="email"
                   {...register('email')}
-                  autoComplete="off"
+                  autoComplete="chrome-off"
                   placeholder="Tu correo electrónico"
                   className="input-primary w-full"
                   required

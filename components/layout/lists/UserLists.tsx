@@ -52,13 +52,12 @@ const UserLists = ({ user }) => {
         {!showCreate && (
           <>
             {!list?.post ? (
-              <ShowLists userId={user?.uid} setShowCreate={setShowCreate} />
+              <ShowLists userId={user?.id} setShowCreate={setShowCreate} />
             ) : (
               <SelectList
                 user={user}
-                userId={user?.uid}
-                post={list?.post}
-                setShowCreate={setShowCreate}
+                userId={user?.id}
+                post={list?.post || 1}
               />
             )}
           </>

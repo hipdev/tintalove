@@ -16,17 +16,21 @@ import {
   updateArtistUsername,
   userNameAvailable,
 } from 'lib/queries/artists'
+import { mutate } from 'swr'
+import { useUser } from 'hooks/useUser'
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/
 
 const MainInfoForm = ({ uid, artist }) => {
+  const { user, setUser }: any = useUser()
+
   const { register, setValue, getValues, handleSubmit, watch } = useForm({
     mode: 'onChange',
     defaultValues: {
       customNick: false,
       availableUsername: true,
       validUserName: true,
-      displayName: artist.displayName || '',
+      name: artist.name || '',
       email: artist.email || '',
       username: artist.username || '',
       bio: artist.bio,
@@ -42,18 +46,12 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const [counter, setCounter] = useState(artist.bio.length || 0)
   const [placeInfo, setPlaceInfo] = useState({
-    formatted_address: artist.formatted_address || '',
-    geohash: artist.geohash || '',
-    province: artist.province || '',
-    _geoloc: artist._geoloc || '',
-    country: artist.country || '',
-    city_name: artist.city_name || '',
+    formatted_address: artist?.cities?.formatted_address || '',
+    city_place_id: artist?.city_id || '',
   })
 
   const [availableUserName, setAvailableUserName] = useState(true)
   const [validUserName, setValidUserName] = useState(true)
-
-  const [customNick, setCustomNick] = useState(false)
 
   const router = useRouter()
 
@@ -85,7 +83,7 @@ const MainInfoForm = ({ uid, artist }) => {
   const updateName = useCallback(
     debounce((name) => {
       if (name != '') {
-        setValue('displayName', name)
+        setValue('name', name)
       }
     }, 3000),
     []
@@ -94,15 +92,14 @@ const MainInfoForm = ({ uid, artist }) => {
   const handleName = (e) => {
     const name: string = e.target.value
 
-    const capitalName = capitalizeAllWords(name).replace(/[^a-zA-Z0-9 ]/g, '')
-
-    setValue('displayName', capitalName)
+    const capitalName = capitalizeAllWords(name).replace(
+      /[^a-zA-Z0-9,a-zA-Z\u00C0-\u024F ]/g, //Aceptar acentos latinos
+      ''
+    )
 
     const formattedName = capitalName.replace(/\s\s+/g, ' ').trim()
-
     updateName(formattedName)
-
-    setValue('displayName', capitalizeAllWords(name))
+    setValue('name', capitalizeAllWords(name))
   }
 
   const handleUserName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,8 +116,6 @@ const MainInfoForm = ({ uid, artist }) => {
       setAvailableUserName(false)
     }
     setValue('username', nick)
-
-    setCustomNick(true)
   }
 
   const saveUsername = async () => {
@@ -143,17 +138,13 @@ const MainInfoForm = ({ uid, artist }) => {
 
   const onSubmit = async (data) => {
     setLoading(true)
-    if (data.displayName == '' || data.bio == '') {
+    if (data.name == '' || data.bio == '') {
       setLoading(false)
       toast('Debes ingresar el nombre y la bio 😓')
       return
     }
 
-    if (
-      !placeInfo &&
-      data.displayName == artist.displayName &&
-      data.bio == artist.bio
-    ) {
+    if (!placeInfo && data.name == artist.name && data.bio == artist.bio) {
       cityRef.current.focus()
       setLoading(false)
       toast('😓 Debes indicar al menos una ciudad, nombre o biografía')
@@ -162,25 +153,31 @@ const MainInfoForm = ({ uid, artist }) => {
 
     let formData = {
       bio: data.bio,
-      displayName: data.displayName,
+      name: data.name,
       email: data.email,
     }
 
-    if (placeInfo) formData = { ...placeInfo, ...formData } // Aqui meto PlaceInfo cuando cambian la ciudad
-
-    toast.promise(updateArtistMainInfo(uid, formData), {
-      loading: 'Actualizando artista...',
-      success: (data) => {
-        setLoading(false)
-        // setTriggerAuth(Math.random()) // reload global user state data
-        router.push('/artist/working-info')
-        return 'Artista actualizado 😉'
-      },
-      error: (err) => {
-        setLoading(false)
-        return `${err.toString()}`
-      },
-    })
+    toast.promise(
+      updateArtistMainInfo(
+        uid,
+        formData,
+        artist.city_id != placeInfo.city_place_id ? placeInfo : null // Solo enviar la ciudad si cambia
+      ),
+      {
+        loading: 'Actualizando artista...',
+        success: () => {
+          setLoading(false)
+          mutate(['getArtistFullInfo', uid])
+          setUser({ ...user, full_name: formData.name }) // update user global object
+          router.push('/artist/working-info')
+          return 'Artista actualizado 😉'
+        },
+        error: (err) => {
+          setLoading(false)
+          return `${err.toString()}`
+        },
+      }
+    )
 
     // setLoading(false)
   }
@@ -193,7 +190,7 @@ const MainInfoForm = ({ uid, artist }) => {
             <label className="block text-white text-sm mb-2 tracking-wide">
               <span className="mb-3 block uppercase">Nombre artístico</span>
               <input
-                {...register('displayName')}
+                {...register('name')}
                 autoComplete="off"
                 placeholder="..."
                 className="input-primary w-full"
@@ -216,7 +213,7 @@ const MainInfoForm = ({ uid, artist }) => {
               </div>
 
               <MainInfoCity
-                defaultValue={artist.formatted_address || ''}
+                defaultValue={artist?.cities?.formatted_address || ''}
                 setPlaceInfo={setPlaceInfo}
               />
             </label>
@@ -326,7 +323,7 @@ const MainInfoForm = ({ uid, artist }) => {
               <input
                 type="email"
                 {...register('email')}
-                autoComplete="off"
+                autoComplete="chrome-off"
                 placeholder="Tu correo electrónico"
                 className="input-primary w-full"
                 required
@@ -335,9 +332,9 @@ const MainInfoForm = ({ uid, artist }) => {
           </div>
         </div>
 
-        {artist.displayName != watchMultiple.displayName ||
+        {artist.name != watchMultiple.name ||
         artist.email != watchMultiple.email ||
-        artist.formatted_address != placeInfo?.formatted_address ||
+        artist.cities.formatted_address != placeInfo?.formatted_address ||
         artist.bio != watchMultiple.bio ? (
           <div className="flex justify-end">
             <button

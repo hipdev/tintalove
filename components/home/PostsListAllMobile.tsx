@@ -1,16 +1,21 @@
-import Loading from 'components/loading/loading'
-import useAllPostsMobile from 'hooks/useAllPostsMobile'
-import Image from 'next/image'
-import InfiniteScroll from 'react-infinite-scroll-component'
+// import Loading from 'components/loading/loading'
+// import useAllPostsMobile from 'hooks/useAllPostsMobile'
+import { getPostsByCity } from 'lib/queries/geo'
+import { getPostsInfo } from 'lib/queries/posts'
+// import Image from 'next/image'
+// import InfiniteScroll from 'react-infinite-scroll-component'
+import useSWR from 'swr'
 import PostItem from './PostItem'
 
-const PostsListAllMobile = ({ user, latLng }) => {
-  const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } =
-    useAllPostsMobile()
+const PostsListAllMobile = ({ user }) => {
+  // const { posts, isLoadingInitialData, hasReachedEnd, size, setSize } =
+  //   useAllPostsMobile()
+
+  const { data: posts } = useSWR(['getPostsInfo'], getPostsInfo)
 
   return (
     <div className="px-5 sm:px-10 lg:px-20 pt-7 md:pt-24 pb-14">
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={posts.length}
         next={() => {
           // console.log('next')
@@ -34,7 +39,12 @@ const PostsListAllMobile = ({ user, latLng }) => {
             <PostItem key={post.id} post={post} user={user} />
           </div>
         ))}
-      </InfiniteScroll>
+      </InfiniteScroll> */}
+      {posts?.map((post: any) => (
+        <div key={post.id}>
+          <PostItem key={post.id} post={post} user={user} />
+        </div>
+      ))}
     </div>
   )
 }

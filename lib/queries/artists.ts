@@ -1,474 +1,451 @@
-var slugify = require('slugify')
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  getFirestore,
-  setDoc,
-  serverTimestamp,
-  updateDoc,
-  writeBatch,
-  getDocs,
-  QueryDocumentSnapshot,
-  query,
-  where,
-  deleteDoc,
-} from 'firebase/firestore/lite'
-import firebaseApp from 'lib/firebase'
+import { supabase } from 'lib/supabase-client'
 import { ArtistTypes } from 'types/artist'
 
-const db = getFirestore(firebaseApp)
-
 export async function userNameAvailable(username) {
-  const usernameRef = doc(db, `usernames/${username}`)
-  const queryRef = await getDoc(usernameRef)
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('username')
+    .eq('username', username)
 
-  if (queryRef.exists()) {
+  if (artist[0]) {
+    // check if exists a record
     return false
   } else {
     return true
   }
 }
 
-export async function getArtistIdByUsername(username) {
-  const usernameRef = doc(db, `usernames/${username}`)
-  const queryRef = await getDoc(usernameRef)
+export async function getArtistDataByUsername(username) {
+  const { data: artist, error } = await supabase
+    .from('artists')
+    .select(
+      '*, artists_main_photos:main_photo_id(url), cities:city_id(*), artists_places:own_studio_place_id(*)'
+    )
+    .eq('username', username)
 
-  if (queryRef.exists()) {
-    return queryRef.data().uid
-  } else {
-    return false
+  if (error) {
+    throw new Error(`Error obteniendo artista: ${error.message}`)
   }
+
+  return artist[0]
 }
 
-export async function getArtistInfo(
-  _key,
-  uid
-): Promise<{ artist: ArtistTypes }> {
-  const docRef = doc(collection(db, 'artists'), uid)
-  const docSnap = await getDoc(docRef)
+export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('*, artists_main_photos:main_photo_id(url)')
+    .eq('user_id', uid)
 
-  if (docSnap.exists()) {
-    return { artist: { ...docSnap.data(), artist_id: docSnap.id } }
-  } else {
-    return { artist: null }
-  }
+  return artist ? artist[0] : null
+}
+
+export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select(`*, cities ( * ), artists_places ( * ), artists_main_photos(url) `)
+    .eq('user_id', uid) // Debe existir una clave foránea o no funcionará esto
+
+  return artist ? artist[0] : null
+}
+
+export async function getArtistWizard(_key, uid) {
+  let { data: artistWizard } = await supabase
+    .from('artists_wizard')
+    .select('*')
+    .eq('id', uid)
+
+  return artistWizard ? artistWizard[0] : null
 }
 
 export async function getUserNamesByArtists() {
-  const querySnapshot = await getDocs(collection(db, 'usernames'))
-  const usernames: any = []
-  querySnapshot.forEach((doc: any) => usernames.push({ username: doc.id }))
+  const { data: usernames, error } = await supabase
+    .from('artists')
+    .select('username')
+
+  if (error) {
+    throw new Error(`Error obteniendo usernames: ${error.message}`)
+  }
 
   return usernames
 }
 
-export async function getArtistsInfo() {
-  const querySnapshot = await getDocs(collection(db, 'artists'))
-  const artists: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    // console.log('consultando artistas', doc.data())
-    return artists.push({ ...doc.data() })
-  })
+export async function getArtistsFilter(_key) {
+  const { data, error } = await supabase
+    .from('artists')
+    .select('name, user_id, username')
+    .limit(5)
 
-  return { artists }
+  if (error) {
+    throw new Error(`Error en filtro: ${error.message}`)
+  }
+
+  return data
 }
 
-export async function createArtist(uid, data, wizard) {
-  const cityId = slugify(data.city_name + '-' + data.province, '_')
+export async function createArtist(uid, dataArtist, placeInfo, wizard) {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('name')
+    .eq('user_id', uid)
 
-  const cityRef = doc(collection(db, 'cities'), cityId) // El hash es un valor único por ciudad
-  const usernameRef = doc(collection(db, 'usernames'), data.username)
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
+  if (artist[0]) {
+    throw new Error('Este usuario ya esta registrado como artista')
+  }
 
-  const userRef = doc(collection(db, 'users'), uid)
+  let { data: username } = await supabase
+    .from('artists')
+    .select('username')
+    .eq('username', dataArtist.username)
 
-  const citySnap = await getDoc(cityRef)
-  const usernameSnap = await getDoc(usernameRef)
-  const docSnap = await getDoc(artistRef)
-
-  if (usernameSnap.exists()) {
+  if (username[0]) {
     throw new Error('El nombre de usuario ya existe')
-  }
-  if (!citySnap.exists()) {
-    await setDoc(cityRef, {
-      geohash: data.geohash,
-      country: 'Colombia',
-      created_by: uid,
-      formatted_address: data.formatted_address,
-      province: data.province,
-      city_name: data.city_name,
-      _geoloc: data._geoloc,
-    })
-  }
-
-  if (docSnap.exists()) {
-    throw new Error('Ya estas registrado como artista')
   } else {
-    const batch = writeBatch(db)
+    let city_id = null // Para luego añadirlo al artista
 
-    batch.set(usernameRef, {
-      uid,
-    })
+    let { data: city } = await supabase
+      .from('cities')
+      .select('city_name, city_place_id')
+      .eq('city_place_id', placeInfo.city_place_id)
 
-    batch.set(artistRef, {
-      created_at: serverTimestamp(),
-      ...data,
-    })
+    if (city[0]) {
+      city_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('cities').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`, // es tipo point, se guardará asi --> (lat,lng)
+      })
 
-    batch.set(
-      userRef,
-      {
-        displayName: data.displayName.trim(),
-        is_artist: true,
-        username: data.username,
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
-
-    if (wizard) {
-      setDoc(artistWizardRef, { step_one: true }, { merge: true })
+      city_id = newCity[0].city_place_id
     }
 
-    return true
+    // Si todo esta bien hasta acá, creamos el artista:
+    const { data: newArtist } = await supabase.from('artists').insert({
+      ...dataArtist,
+      city_id,
+      user_id: uid,
+    })
+
+    //Actualizamos el nombre del usuario
+    await supabase
+      .from('users')
+      .update(
+        {
+          full_name: dataArtist.name,
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('id', uid)
+
+    if (wizard) {
+      await supabase.from('artists_wizard').insert({
+        id: uid,
+        step_one: true,
+      })
+    }
+
+    return newArtist
   }
 }
 
-export async function updateArtistMainInfo(uid, data) {
-  const cityId = slugify(data.city_name + '-' + data.province, '_')
+export async function updateArtistMainInfo(uid, dataArtist, placeInfo) {
+  let { data: artist } = await supabase
+    .from('artists')
+    .select('name')
+    .eq('user_id', uid)
 
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const cityRef = doc(collection(db, 'cities'), cityId)
-
-  const userRef = doc(collection(db, 'users'), uid)
-
-  const citySnap = await getDoc(cityRef)
-  const docSnap = await getDoc(artistRef)
-
-  if (!citySnap.exists()) {
-    await setDoc(cityRef, {
-      geohash: data.geohash,
-      country: 'Colombia',
-      created_by: uid,
-      formatted_address: data.formatted_address,
-      province: data.province,
-      _geoloc: data._geoloc,
-      city_name: data.city_name,
-    })
-  }
-
-  if (docSnap.exists()) {
-    const batch = writeBatch(db)
-
-    batch.set(
-      artistRef,
-      {
-        updated_at: serverTimestamp(),
-        ...data,
-      },
-      { merge: true }
-    )
-
-    batch.set(
-      userRef,
-      {
-        displayName: data.displayName.trim(),
-        updated_at: serverTimestamp(),
-      },
-      { merge: true }
-    )
-
-    await batch.commit()
-
-    return true
-  } else {
+  if (!artist[0]) {
     throw new Error('No estas registrado como artista')
   }
+
+  //Validación de la ciudad
+  let city_id = null // Para luego añadirlo al artista
+
+  if (placeInfo) {
+    // Sólo hacemos esto si el usuario cambia la ciudad
+    let { data: city } = await supabase
+      .from('cities')
+      .select('city_name, city_place_id')
+      .eq('city_place_id', placeInfo.city_place_id)
+
+    if (city[0]) {
+      city_id = city[0].city_place_id
+    } else {
+      // La ciudad no existe, entonces la creamos
+      const { data: newCity } = await supabase.from('cities').insert({
+        ...placeInfo,
+        coords: `${placeInfo.city_lat}, ${placeInfo.city_lng}`,
+      })
+
+      city_id = newCity[0].city_place_id
+    }
+  } else {
+    city_id = artist[0].city_id
+  }
+
+  //Actualizamos el artista
+  await supabase
+    .from('artists')
+    .update(
+      {
+        ...dataArtist,
+        city_id,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
+
+  //Actualizamos el usuario
+  await supabase
+    .from('users')
+    .update(
+      {
+        full_name: dataArtist.name,
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('id', uid)
+
+  return true
 }
 
-export async function updateArtistWorkingInfo(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
-
-  const styles = data.styles.map((style) => style.value)
+export async function updateArtistWorkingInfo(uid, dataArtist) {
+  const styles = dataArtist.styles.map((style) => style.value)
 
   const dataForm = {
-    times: data.times,
-    work_as: data.work_as,
+    times: dataArtist.times,
+    work_as: dataArtist.work_as,
     styles,
-    updated_at: serverTimestamp(),
+    updated_at: new Date(), // new Date().getTime() es igual, tiempo en milis
   }
 
-  const docSnap = await getDoc(artistRef)
+  const { data, error } = await supabase
+    .from('artists')
+    .update(
+      dataForm,
 
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_two: true })
-    }
+  await supabase
+    .from('artists_wizard')
+    .update({
+      step_two: true,
+    })
+    .eq('id', uid)
 
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
   }
 }
 
 // Location and map marker
 
 export async function updateArtistLocation(artistId, dataLocation) {
-  const artistRef = doc(collection(db, 'artists'), artistId)
+  //Validación de la ciudad
+  let own_studio_place_id = null // Para luego añadirlo al artista
 
-  const docSnap = await getDoc(artistRef)
+  // Sólo hacemos esto si el usuario cambia la ciudad
+  let { data: address } = await supabase
+    .from('artists_places')
+    .select('place_id')
+    .eq('place_id', dataLocation.place_id)
 
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      dataLocation,
-      updated_at: serverTimestamp(),
-    })
-
-    return true
+  if (address[0]) {
+    own_studio_place_id = address[0].place_id
   } else {
-    throw new Error('No estas registrado como artista')
+    // La ciudad no existe, entonces la creamos
+
+    const { data: newAddress } = await supabase
+      .from('artists_places')
+      .insert([dataLocation])
+
+    own_studio_place_id = newAddress[0].place_id
   }
-}
 
-export async function updateArtistLocationMarker(artistId, dataMarker) {
-  const artistRef = doc(collection(db, 'artists'), artistId)
-
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      dataMarker,
-      _geoloc_marker: {
-        lat: dataMarker.marker_location[0],
-        lng: dataMarker.marker_location[1],
+  //Actualizamos el artista
+  await supabase
+    .from('artists')
+    .update(
+      {
+        own_studio_place_id,
+        updated_at: new Date(),
       },
-      updated_at: serverTimestamp(),
-    })
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', artistId)
 
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
-export async function updateArtistContactInfo(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
+export async function updateArtistLocationMarker(artistId, own_studio_marker) {
+  //Actualizamos el artista
+  await supabase
+    .from('artists')
+    .update(
+      {
+        own_studio_marker,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', artistId)
 
-  const dataForm = {
-    contact_way: data.contact_way,
-    facebook: data.facebook || null,
-    instagram: data.instagram || null,
-    telegram_user: data.telegram_user || null,
-    phone: data.phone.value,
-    country_code: data.phone.country_code || 'CO',
-    twitter: data.twitter || null,
-    updated_at: serverTimestamp(),
-  }
-
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
-
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_three: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
-export async function updateArtistMainProfilePicture(uid, data, wizard) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const userRef = doc(collection(db, 'users'), uid)
-  const artistWizardRef = doc(collection(db, 'artists_wizard'), uid)
+export async function updateArtistContactInfo(uid, dataForm, artist) {
+  const { error } = await supabase
+    .from('artists')
+    .update(
+      {
+        ...dataForm,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-  // Dont delete pictures from Imagekit anymore
-  // const options = {
-  //   method: 'DELETE',
-  //   body: JSON.stringify({ data: { imageId } }),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // }
-
-  // if (update) {
-  //   await fetch('/api/profile/delete-image', options)
-  // }
-
-  const dataForm = {
-    profile_picture: data,
-    updated_at: serverTimestamp(),
+  if (!artist?.contact_way) {
+    await supabase
+      .from('artists_wizard')
+      .update({
+        step_three: true,
+      })
+      .eq('id', uid)
   }
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, dataForm)
-    await updateDoc(userRef, { photoUrl: data.url })
-
-    if (wizard) {
-      updateDoc(artistWizardRef, { step_four: true })
-    }
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
   }
+
+  return true
 }
 
-export async function addArtistPicture(uid, data) {
-  const artistRef = doc(collection(db, 'artists'), uid)
+export async function updateArtistMainProfilePicture(uid, dataPhoto, artist) {
+  const { data, error } = await supabase.from('artists_main_photos').insert({
+    ...dataPhoto,
+    user_id: uid,
+    updated_at: new Date(),
+  })
 
-  const dataForm = {
+  if (data) {
+    await supabase
+      .from('artists')
+      .update(
+        {
+          main_photo_id: data[0].id,
+          updated_at: new Date(),
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('user_id', uid)
+
+    // Agregamos la foto a la tabla de usuarios
+    await supabase
+      .from('users')
+      .update(
+        {
+          photo_info: dataPhoto,
+          updated_at: new Date(),
+        },
+        { returning: 'minimal' } // Así nos ahorramos un select
+      )
+      .eq('id', uid)
+  }
+
+  if (!artist.main_photo_id && data) {
+    await supabase
+      .from('artists_wizard')
+      .update({
+        step_four: true,
+      })
+      .eq('id', uid)
+  }
+
+  if (error) {
+    throw new Error(`Error actualizando el artista: ${error.message}`)
+  }
+
+  return true
+}
+
+export async function addArtistPicture(user_id, data) {
+  const { error } = await supabase.from('artists_photos').insert({
     ...data,
-    artist_id: uid,
-    created_at: serverTimestamp(),
+    user_id,
+  })
+
+  if (error) {
+    throw new Error(`Error creando la foto: ${error.message}`)
   }
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await addDoc(collection(db, 'artists_pics'), dataForm)
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function activateArtist(uid) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-  const usersRef = doc(collection(db, 'users'), uid)
+  await supabase
+    .from('artists')
+    .update(
+      {
+        is_active: true,
+        updated_at: new Date(),
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+    .eq('user_id', uid)
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, { artist_active: true })
-    await updateDoc(usersRef, { artist_active: true })
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function updateArtistUsername(uid, oldUsername, newUsername) {
-  const usernameRefOld = doc(collection(db, 'usernames'), oldUsername)
-  const usernameRefNew = doc(collection(db, 'usernames'), newUsername)
-  const artistRef = doc(collection(db, 'artists'), uid)
+  const { error } = await supabase
+    .from('artists')
+    .update({ username: newUsername })
+    .eq('user_id', uid)
 
-  const userRef = doc(collection(db, 'users'), uid)
-
-  const usernameSnap = await getDoc(usernameRefNew)
-  const userSnap = await getDoc(userRef)
-
-  if (usernameSnap.exists()) {
-    throw new Error('El nombre de usuario ya existe')
+  if (error) {
+    throw new Error('Ese usuario ya existe')
   }
-
-  if (!userSnap.exists()) {
-    throw new Error('Este usuario no existe')
-  }
-
-  const batch = writeBatch(db)
-
-  batch.delete(usernameRefOld)
-
-  batch.set(usernameRefNew, {
-    uid,
-  })
-
-  batch.set(
-    artistRef,
-    {
-      updated_at: serverTimestamp(),
-      username: newUsername,
-    },
-    { merge: true }
-  )
-
-  batch.set(
-    userRef,
-    {
-      username: newUsername,
-      updated_at: serverTimestamp(),
-    },
-    { merge: true }
-  )
-
-  await batch.commit()
 
   return true
 }
 
 export async function updateAvailability(uid, selected) {
-  const artistRef = doc(collection(db, 'artists'), uid)
+  const { error } = await supabase
+    .from('artists')
+    .update({ availability_id: selected.id })
+    .eq('user_id', uid)
 
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    await updateDoc(artistRef, {
-      available_id: selected.id,
-      available_label: selected.label,
-      available_updated: serverTimestamp(),
-    })
-
-    return true
-  } else {
-    throw new Error('No estas registrado como artista')
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
   }
-}
 
-export async function getArtistAvailability(key, uid) {
-  const artistRef = doc(collection(db, 'artists'), uid)
-
-  const docSnap = await getDoc(artistRef)
-
-  if (docSnap.exists()) {
-    return {
-      available_id: docSnap.data().available_id,
-      available_label: docSnap.data().available_label,
-    }
-  } else {
-    throw new Error('No estas registrado como artista')
-  }
+  return true
 }
 
 export async function getArtistPictures(key, artistId) {
-  const q = query(
-    collection(db, 'artists_pics'),
-    where('artist_id', '==', artistId)
-  )
+  let { data: pictures, error } = await supabase
+    .from('artists_photos')
+    .select('*')
+    .eq('user_id', artistId)
 
-  const querySnapshot = await getDocs(q)
-  const pictures: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return pictures.push({ ...doc.data(), id: doc.id })
-  })
+  if (error) {
+    throw new Error(`Error: ${error.message}`)
+  }
 
-  return { pictures }
+  return pictures
 }
 
-export async function deletePictureFromArtist(imageId, pictureId) {
+export async function deletePictureFromArtist(file_id, photoId) {
   try {
-    const artistPictureRef = doc(collection(db, 'artists_pics'), pictureId)
-    await deleteDoc(artistPictureRef)
+    await supabase.from('artists_photos').delete().eq('id', photoId)
 
     const options = {
       method: 'DELETE',
-      body: JSON.stringify({ imageId }),
+      body: JSON.stringify({ imageId: file_id }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -483,141 +460,123 @@ export async function deletePictureFromArtist(imageId, pictureId) {
 // Solicitudes de trabajo de artistas hacia estudios
 
 export async function sendArtistWorkRequest(studio, artist) {
-  const q = query(
-    collection(db, 'artists_requests'),
-    where('artist_id', '==', artist.artist_id),
-    where('studio_id', '==', studio.objectID)
-  )
+  const { data: request, error } = await supabase
+    .from('artists_requests')
+    .select(`studio_id`)
+    .eq('studio_id', studio.id)
+    .eq('artist_id', artist.id)
 
-  const querySnapshot = await getDocs(q)
+  if (error) {
+    throw new Error(`Error obteniendo request: ${error.message}`)
+  }
 
-  if (querySnapshot.empty) {
-    try {
-      await addDoc(collection(db, 'artists_requests'), {
-        created_at: serverTimestamp(),
-        studio_id: studio.objectID, // id from Algolia
-        artist_id: artist.artist_id,
-        studio_name: studio.studio_name,
-        studio_address:
-          studio.dataLocation.formatted_address || studio.formatted_address,
-        studio_picture: studio.profile_picture.url || null,
-        artist_picture: artist.profile_picture.url || null,
-        studio_email: studio.email || null,
-        artist_name: artist.displayName,
-        artist_email: artist.email || null,
-        artist_phone: artist.phone || null,
-        approval: 'PENDING',
-      })
-    } catch (error) {
-      console.log(error, 'el error')
-      throw new Error(
-        'Necesitas terminar todos los pasos primero, regresa aquí luego'
-      )
+  if (request[0]) {
+    throw {
+      name: 'exists',
+      message: `Ya enviaste una a ${studio.name}`,
+    }
+  } else {
+    const { error } = await supabase.from('artists_requests').insert(
+      {
+        studio_id: studio.id,
+        artist_id: artist.id,
+        user_id: artist.user_id,
+        status: 'PENDING',
+      },
+      { returning: 'minimal' } // Así nos ahorramos un select
+    )
+
+    if (error) {
+      throw new Error(`Error: ${error.message}`)
     }
 
     return true
-  } else {
-    throw new Error(`Ya enviaste una a ${studio.studio_name}`)
   }
 }
 
 export async function getArtistRequests(_key, artistId) {
-  const q = query(
-    collection(db, 'artists_requests'),
-    where('artist_id', '==', artistId)
-  )
+  if (artistId) {
+    const { data: requests, error } = await supabase
+      .from('artists_requests')
+      .select(
+        '*, studios:studio_id(*, studios_main_photos(url)), artists:artist_id(*)'
+      )
+      .eq('artist_id', artistId)
+      .not('status', 'eq', 'APPROVED')
 
-  const querySnapshot = await getDocs(q)
-  const requests: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return requests.push({ ...doc.data(), id: doc.id })
-  })
+    if (error) {
+      throw new Error(`Error con las solicitudes: ${error.message}`)
+    }
 
-  return { requests }
-}
-
-export async function deleteArtistRequest(requestId) {
-  try {
-    const artistRequest = doc(collection(db, 'artists_requests'), requestId)
-    await deleteDoc(artistRequest)
-
-    return true
-  } catch (error) {
-    throw new Error('Error eliminando la solicitud')
+    return requests
   }
 }
 
-export async function getStudiosByArtistId(_key, artistId) {
-  const q = query(
-    collection(db, 'studios_artists'),
-    where('artist_id', '==', artistId)
-  )
-
-  const querySnapshot = await getDocs(q)
-  const studios: Array<any> = []
-  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    return studios.push({ ...doc.data(), id: doc.id })
-  })
-
-  return { studios }
+export async function deleteArtistRequest(requestId) {
+  const { error } = await supabase
+    .from('artists_requests')
+    .delete()
+    .eq('id', requestId)
+  if (error) {
+    throw new Error(`Error eliminando: ${error.message}`)
+  }
 }
 
-export async function getUsernameArtist(_key, id) {
-  const usernameRef = doc(db, `artists/${id}`)
-  const queryRef = await getDoc(usernameRef)
+export async function getStudiosByUserId(_key, userId) {
+  if (userId) {
+    const { data: studios, error } = await supabase
+      .from('studios_artists')
+      .select('*, studios:studio_id(*, studios_main_photos(url))')
+      .eq('user_id', userId)
 
-  if (queryRef.exists()) {
-    return queryRef.data().username
-  } else {
-    throw new Error('El artista no existe')
+    if (error) {
+      throw new Error(`Error con las solicitudes: ${error.message}`)
+    }
+
+    return studios
   }
 }
 
 export async function addArtistToFavorites(artist_id, user_id) {
-  const q = query(
-    collection(db, 'fav_artists'),
-    where('artist_id', '==', artist_id),
-    where('user_id', '==', user_id)
-  )
+  const { data, error } = await supabase
+    .from('favorite_artists')
+    .select('id')
+    .eq('user_id', user_id)
+    .eq('artist_id', artist_id)
 
-  const querySnapshot = await getDocs(q)
+  if (error) {
+    throw new Error(`Error : ${error.message}`)
+  }
 
-  if (querySnapshot.empty) {
-    await addDoc(collection(db, 'fav_artists'), {
-      created_at: serverTimestamp(),
-      artist_id,
-      user_id,
-    })
-
-    return true
-  } else {
+  if (data[0]) {
     throw new Error('Ya tienes este artista como favorito')
+  } else {
+    const { error } = await supabase
+      .from('favorite_artists')
+      .insert({ artist_id, user_id }, { returning: 'minimal' })
+
+    if (error) {
+      throw new Error(`Error : ${error.message}`)
+    }
   }
 }
 
 export async function deleteFavoriteArtist(favId) {
-  const favArtistRef = doc(collection(db, 'fav_artists'), favId)
-
-  await deleteDoc(favArtistRef)
+  await supabase.from('favorite_artists').delete().eq('id', favId.id)
 }
 
 export async function isArtistFavorite(_key, artist_id, user_id) {
-  const q = query(
-    collection(db, 'fav_artists'),
-    where('artist_id', '==', artist_id),
-    where('user_id', '==', user_id)
-  )
+  if (artist_id && user_id) {
+    const { data, error } = await supabase
+      .from('favorite_artists')
+      .select('id')
+      .eq('user_id', user_id)
+      .eq('artist_id', artist_id)
 
-  const querySnapshot = await getDocs(q)
+    if (error) {
+      throw new Error(`Error : ${error.message}`)
+    }
 
-  if (querySnapshot.empty) {
-    return false
-  } else {
-    let artistFavId
-    querySnapshot.forEach((doc) => {
-      artistFavId = doc.id
-    })
-
-    return artistFavId
+    return data[0]
   }
 }

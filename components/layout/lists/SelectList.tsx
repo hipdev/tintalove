@@ -9,10 +9,13 @@ import { VscClose } from 'react-icons/vsc'
 import ListImage from './ListImage'
 import { BsPlus } from 'react-icons/bs'
 
-const SelectList = ({ userId, post, user, setShowCreate }) => {
+const SelectList = ({ userId, post, user }) => {
   const [showForm, setShowForm] = useState(false)
 
-  const { data } = useSWR(userId ? ['get-list', userId] : null, getUserLists)
+  const { data: userLists } = useSWR(
+    userId ? ['getUserLists', userId] : null,
+    getUserLists
+  )
 
   const {
     state: { list },
@@ -22,26 +25,17 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
   })
 
   useEffect(() => {
-    if (data?.userLists.length < 1) {
+    if (userLists?.length < 1) {
       setShowForm(true)
     }
-  }, [data])
+  }, [userLists])
 
   const savePostOnList = (listId) => {
     if (listId && userId && post) {
-      console.log(list, 'la lista')
-      toast.promise(addPostToList(userId, post, listId), {
+      toast.promise(addPostToList(userId, post.id, listId), {
         loading: 'Agregando tattoo...',
         success: (res) => {
-          list.mutateListed({ listed: true }, false)
-          list.mutatePost((data) => {
-            return {
-              post: {
-                ...data.post,
-                counter_listed: data.post.counter_listed + 1,
-              },
-            }
-          }, false)
+          list.mutateListed(true, false)
 
           actions.lists({ post: null, listOpen: false })
 
@@ -56,7 +50,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
     }
   }
 
-  if (!data) return <p className="text-gray-300"> Cargando listas...</p>
+  if (!userLists) return <p className="text-gray-300"> Cargando listas...</p>
 
   return (
     <div>
@@ -77,7 +71,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
       {showForm && <NoListForm user={user} setShowCreate={setShowForm} />}
 
       <div className="grid grid-cols-2 gap-6">
-        {data?.userLists?.map((list) => {
+        {userLists?.map((list) => {
           return (
             <button
               onClick={() => {
@@ -90,7 +84,7 @@ const SelectList = ({ userId, post, user, setShowCreate }) => {
                 <ListImage listId={list?.id} />
               </div>
               <p className="text-gray-400 mt-2 group-hover:text-gray-100">
-                {list.list_name}
+                {list.name}
               </p>
             </button>
           )

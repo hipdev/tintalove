@@ -106,7 +106,6 @@ const CreatePostCrop = ({
     }
 
     if (dataForm.description != '' && dataForm.styles.length > 0) {
-      console.log(dataForm, 'form data')
       let formData
 
       if (dataForm.isPartner) {
@@ -116,17 +115,13 @@ const CreatePostCrop = ({
             ? dataForm.studio.value
             : dataForm.onlyOneStudio,
           styles: dataForm.styles,
-          is_partner: dataForm.isPartner,
         }
       } else {
         formData = {
           description: dataForm.description,
           styles: dataForm.styles,
-          is_partner: dataForm.isPartner,
         }
       }
-
-      console.log(formData, 'la data a enviar')
 
       mutate('/api/imagekit/auth')
       if (!crop || !canvas) {
@@ -152,12 +147,12 @@ const CreatePostCrop = ({
         .then((response) => response.json())
         .then(async (fileImagekit) => {
           const pictureInfo = {
-            filePath: fileImagekit.filePath,
+            file_path: fileImagekit.filePath,
             size: fileImagekit.size,
-            fileId: fileImagekit.fileId,
+            file_id: fileImagekit.fileId,
             url: fileImagekit.url,
             name: fileImagekit.name,
-            thumbnailUrl: fileImagekit.url,
+            thumbnail: fileImagekit.thumbnailUrl,
           }
           try {
             toast.promise(

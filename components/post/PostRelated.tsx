@@ -1,17 +1,12 @@
 import Link from 'next/link'
 import { PostTypes } from 'types/post'
 import { UserState } from 'types/user'
-import Image from 'next/image'
-
-const loaderPost = ({ src, quality }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,h-290,q-${quality || 75}`
-}
 
 const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
       ? '?loc=Colombia'
-      : `?loc=${user?.searching_city?.city_id}`
+      : `?loc=${user?.searching_city}`
   return (
     <Link
       href={
@@ -27,16 +22,12 @@ const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
             style={{ boxShadow: 'rgb(0 0 0 / 87%) 0px 2px 92px 0px inset' }}
             className="absolute w-full h-full group-hover:z-10"
           />
-          <Image
-            loader={loaderPost}
-            src={post?.image?.url}
-            alt="Artist photo"
-            layout="fill"
-            // width={600}
-            // height={500}
-            sizes="100%"
-            quality={100}
+
+          <img
             className="w-full rounded-md  object-cover"
+            src={
+              post?.photo_info?.url + '/tr:pr-true,c-at_max,w-200,f-auto,q-90'
+            }
           />
         </div>
       </a>
