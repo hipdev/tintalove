@@ -31,6 +31,12 @@ export async function addPostToList(user_id, post_id, list_id) {
 
   if (error) {
     throw new Error(`Error : ${error.message}`)
+  } else {
+    const { error } = await supabase.rpc('inc_total_listed', {
+      post_id,
+    })
+
+    if (error) throw new Error(`Error : ${error.message}`)
   }
 
   return true
@@ -63,17 +69,23 @@ export async function getUserLists(key, user_id) {
   return lists
 }
 
-export async function removePostFromList(postId, userId) {
-  console.log(postId, userId, 'params')
+export async function removePostFromList(post_id, userId) {
+  console.log(post_id, userId, 'params')
 
   const { error } = await supabase
     .from('lists_items')
     .delete()
-    .eq('post_id', postId)
+    .eq('post_id', post_id)
     .eq('user_id', userId)
 
   if (error) {
     throw new Error(`Error : ${error.message}`)
+  } else {
+    const { error } = await supabase.rpc('dec_total_listed', {
+      post_id,
+    })
+
+    if (error) throw new Error(`Error : ${error.message}`)
   }
 
   return true
