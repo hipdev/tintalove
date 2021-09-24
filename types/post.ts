@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase/firestore/lite'
 import { ArtistTypes } from './artist'
 import { StudioTypes } from './studio'
 
@@ -13,7 +12,7 @@ export type PostTypes = {
   country: string
   counter_comments: number
   counter_listed: number
-  created_at: Timestamp
+  created_at: Date
   description: string
   displayName: string
   image: ProfilePicture

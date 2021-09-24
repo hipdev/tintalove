@@ -11,7 +11,7 @@ export default function PostCreatePage() {
 
   console.log(user, 'el usuario')
 
-  const { data: artist } = useSWR(
+  const { data: artist }: any = useSWR(
     user?.id ? ['getArtistFullInfo', user.id] : null,
     getArtistFullInfo
   )

@@ -17,7 +17,7 @@ import { getStudioIsActive } from 'lib/queries/studios'
 const Header = ({ user, fixed }: { user: UserState; fixed: boolean }) => {
   // const user = true
 
-  const { data: artist } = useSWR(
+  const { data: artist }: any = useSWR(
     user?.id ? ['getArtistInfo', user.id] : null,
     getArtistInfo
   )

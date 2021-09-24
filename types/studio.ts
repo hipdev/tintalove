@@ -1,13 +1,11 @@
-import { Timestamp } from 'firebase/firestore/lite'
-
 export type StudioTypes = {
   artists?: [any]
   bio?: string
   studios_main_photos: ProfilePicture
   phone?: string
   contact_way?: string
-  created_at?: Timestamp
-  updated_at?: Timestamp
+  created_at?: Date
+  updated_at?: Date
   name: string
   formatted_address?: string
   place_id?: string

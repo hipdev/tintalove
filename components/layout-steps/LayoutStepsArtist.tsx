@@ -13,6 +13,7 @@ import useSWR from 'swr'
 import { getArtistInfo } from 'lib/queries/artists'
 import Availability from 'components/layout/header/availability'
 import { getStudioIsActive } from 'lib/queries/studios'
+import { ArtistTypes } from 'types/artist'
 
 type Props = {
   uid?: string
@@ -23,7 +24,7 @@ type Props = {
 const LayoutStepsArtist = ({ children, uid, user }: Props) => {
   // if (!userState) return <span>Loading</span>
 
-  const { data: artist } = useSWR(
+  const { data: artist }: any = useSWR(
     uid ? ['getArtistInfo', uid] : null,
     getArtistInfo
   )

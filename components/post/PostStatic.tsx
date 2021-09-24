@@ -59,7 +59,7 @@ const PostStatic = ({
       <div className="border-t-2 border-b-2 border-light-800 py-5">
         <div className="flex flex-wrap justify-between sm:justify-between mb-5">
           <h1 className="text-white text-xl font-semibold font-raleway tracking-wide">
-            Más de {artistData?.displayName}
+            Más de {artistData?.name}
           </h1>
           <Link href={`/${postData.username}`}>
             <a className="flex items-center text-white font-raleway tracking-wide">

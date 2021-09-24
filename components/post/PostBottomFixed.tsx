@@ -57,7 +57,7 @@ const PostBottomFixed = ({
         <div className="flex items-center sm:hidden">
           <Link href={`/${artistData?.username}`}>
             <a className="text-white font-semibold text-sm ">
-              {artistData?.displayName} <br />
+              {artistData?.name} <br />
               <span className="text-gray-400 font-light">
                 {artistData?.username}
               </span>

@@ -3,5 +3,5 @@ export type PostList = {
   user_id: string
   list_id: string
   post_id: string
-  created_at: any
+  created_at: Date
 } | null
