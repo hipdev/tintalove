@@ -43,6 +43,7 @@ export async function getPostsInfo(_key) {
   let { data: posts } = await supabase
     .from('posts')
     .select('*, artists:artist_id(name, username, cities:city_id(city_name))')
+    .order('created_at', { ascending: false })
 
   return posts
 }
