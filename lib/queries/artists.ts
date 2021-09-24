@@ -42,7 +42,9 @@ export async function getArtistInfo(_key, uid): Promise<ArtistTypes> {
 export async function getArtistFullInfo(_key, uid): Promise<ArtistTypes> {
   let { data: artist } = await supabase
     .from('artists')
-    .select(`*, cities ( * ), artists_places ( * ), artists_main_photos(url) `)
+    .select(
+      `*, cities:city_id ( * ), artists_places:own_studio_place_id ( * ), artists_main_photos:main_photo_id(url) `
+    )
     .eq('user_id', uid) // Debe existir una clave foránea o no funcionará esto
 
   return artist ? artist[0] : null

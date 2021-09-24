@@ -35,6 +35,8 @@ export default function MainInfoPage() {
   if (!user) {
     return <IsAuth>Cargando data...</IsAuth>
   }
+
+  console.log(artist, 'la data')
   return (
     <>
       <LayoutStepsArtist uid={user.id} user={user}>
