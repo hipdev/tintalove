@@ -28,7 +28,7 @@ const LayoutStepsStudio = ({ children, uid, user }: Props) => {
     getStudioIsActive
   )
 
-  const { data: artist } = useSWR(
+  const { data: artist }: any = useSWR(
     uid ? ['getArtistInfo', uid] : null,
     getArtistInfo
   )

@@ -11,7 +11,7 @@ const PostItem = ({ post, user }: { post: PostTypes; user: UserState }) => {
   const url =
     user?.searching_city?.city_name == 'Todo Colombia'
       ? '?loc=Colombia'
-      : `?loc=${user?.searching_city?.city_id}`
+      : `?loc=${user?.searching_city}`
   return (
     <div className="mb-7 sm:mb-0">
       <Link

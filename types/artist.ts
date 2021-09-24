@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore/lite'
-
 export type ArtistTypes = {
   artist_id?: string
   availability_id: number
@@ -10,8 +8,8 @@ export type ArtistTypes = {
   country_code?: string
   mobile?: MobileInfo
   contact_way?: string
-  created_at?: Timestamp
-  updated_at?: Timestamp
+  created_at?: Date
+  updated_at?: Date
   name?: string
   formatted_address?: string
   place_id?: string
