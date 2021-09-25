@@ -28,6 +28,7 @@ const PostRelated = ({ post, user }: { post: PostTypes; user: UserState }) => {
             src={
               post?.photo_info?.url + '/tr:pr-true,c-at_max,w-450,f-auto,q-90'
             }
+            alt={post.description}
           />
         </div>
       </a>

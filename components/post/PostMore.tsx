@@ -35,8 +35,9 @@ const PostMore = ({ post, user }: { post: PostTypes; user: UserState }) => {
           <img
             className="w-full rounded-md  object-cover"
             src={
-              post?.photo_info?.url + '/tr:pr-true,c-at_max,w-200,f-auto,q-90'
+              post?.photo_info?.url + '/tr:pr-true,c-at_max,w-450,f-auto,q-90'
             }
+            alt={post.description}
           />
         </div>
       </a>
