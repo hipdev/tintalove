@@ -1,5 +1,4 @@
 import StickyBox from 'react-sticky-box'
-import Image from 'next/image'
 import { BsArrowLeft, BsHeart } from 'react-icons/bs'
 import PostsComments from './PostComments'
 import { PostTypes } from 'types/post'
@@ -10,10 +9,6 @@ import { BiShareAlt } from 'react-icons/bi'
 import { FiFlag } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-
-const loaderPost = ({ src, quality, width }: any) => {
-  return `${src}/tr:pr-true,c-at_max,f-auto,w-${width},q-${quality || 75}`
-}
 
 const PostPortrait = ({
   closeModal,
@@ -44,6 +39,8 @@ const PostPortrait = ({
     }
   }, [imageRef, router])
 
+  console.log(postData.photo_size, 'aqui')
+
   return (
     <div className="flex flex-col md:flex-row  xl:justify-between 2xl:justify-center">
       <div
@@ -53,29 +50,19 @@ const PostPortrait = ({
         }
       >
         <div className="mb-5 flex justify-center xl:justify-start ">
-          {/* <img
-          // src="https://via.placeholder.com/1100x621"
-          src={
-            postData?.image?.url
-              ? `${postData.image.url}/tr:pr-true,c-at_max,f-auto,q-100`
-              : 'https://via.placeholder.com/1100x621'
-          }
-          alt=""
-          className=" object-cover rounded-lg  md:max-w-lg lg:max-w-2xl"
-        /> */}
           {/* <div className="aspect-w-3 aspect-h-4 relative w-full h-448"> */}
           <div
             ref={imageRef}
             className={
-              'relative w-full mb-10 ' +
-              (postData.picture_size == 'portrait'
+              'relative w-full mb-10 items-start' +
+              (postData.photo_size == 'portrait'
                 ? 'aspect-w-3 aspect-h-4 '
-                : postData.picture_size == 'landscape'
+                : postData.photo_size == 'landscape'
                 ? 'aspect-w-4 aspect-h-3'
                 : 'aspect-w-1 aspect-h-1')
             }
           >
-            <Image
+            {/* <Image
               loader={loaderPost}
               src={postData?.photo_info?.url}
               alt="Artist photo"
@@ -84,7 +71,14 @@ const PostPortrait = ({
               // height={500}
               sizes="100%"
               quality={100}
-              className="w-full rounded-md  object-cover max-h-96"
+            /> */}
+            <img
+              className="w-full rounded-md  object-contain h-full"
+              src={
+                postData?.photo_info?.url +
+                '/tr:pr-true,c-at_max,w-850,f-auto,q-90'
+              }
+              alt={postData.description}
             />
           </div>
 
