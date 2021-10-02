@@ -3,7 +3,7 @@ import { createStore, StateMachineProvider } from 'little-state-machine'
 import { createContext } from 'react'
 import useLoginModal from 'hooks/useLoginModal'
 import { UserContextProvider } from 'hooks/useUser'
-import 'components/styles/styles.css' // <- applied everywhere in the NextJS application scope
+import 'components/styles/global.css' // <- applied everywhere in the NextJS application scope
 
 const LoginContext = createContext({
   isOpen: null,
