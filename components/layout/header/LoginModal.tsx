@@ -80,12 +80,14 @@ const LoginModal = () => {
               <input
                 type="email"
                 className="input-primary mt-2 mb-3 text-center"
-                placeholder="Entrar con correo"
+                placeholder="Correo"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
 
-              <button type="submit">Solo email</button>
+              <button className="hover:underline" type="submit">
+                Entrar con correo
+              </button>
             </form>
           </div>
 
