@@ -79,7 +79,8 @@ const LoginModal = () => {
             <form className="flex flex-col" onSubmit={handleMagicLink}>
               <input
                 type="email"
-                placeholder="email"
+                className="input-primary mt-2 mb-3 text-center"
+                placeholder="Entrar con correo"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
