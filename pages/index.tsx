@@ -1,10 +1,13 @@
+import { motion } from 'framer-motion'
 import Layout from 'components/layout/Layout'
 import Home from 'components/home/home'
 
 export default function IndexPage() {
   return (
-    <Layout fixed>
-      <Home />
-    </Layout>
+    <>
+      <Layout fixed>
+        <Home />
+      </Layout>
+    </>
   )
 }
