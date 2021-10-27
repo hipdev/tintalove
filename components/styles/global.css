@@ -13,6 +13,9 @@
 }
 
 @tailwind utilities;
+body {
+  overflow-x: hidden !important;
+}
 
 @font-face {
   font-family: 'Inter';
@@ -33,6 +36,9 @@
 }
 input:focus {
   outline: none;
+}
+#page-transition-container {
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {

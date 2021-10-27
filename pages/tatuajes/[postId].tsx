@@ -67,7 +67,7 @@ export default function TattoosPage({
               contentLabel="Post modal"
             >
               <div
-                className="overflow-y-auto fixed h-full w-full"
+                className="overflow-y-auto fixed h-full w-full overflow-x-hidden"
                 ref={ref}
                 onScroll={handleScroll}
               >
@@ -77,7 +77,7 @@ export default function TattoosPage({
                   initial={{ x: 300, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: -300, opacity: 0 }}
-                  id="post-page"
+                  id="page-transition-container"
                 >
                   <Layout>
                     <PostModalContent
