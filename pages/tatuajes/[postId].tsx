@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 import Modal from 'react-modal'
 import Layout from 'components/layout/Layout'
 import debounce from 'lodash.debounce'
@@ -12,6 +14,7 @@ import {
 import { useRouter } from 'next/router'
 import PostModalContent from 'components/post/PostModalContent'
 import { useEffect, useRef, useState } from 'react'
+import { spring } from 'pages/_app'
 
 export default function TattoosPage({
   postData,
@@ -68,17 +71,26 @@ export default function TattoosPage({
                 ref={ref}
                 onScroll={handleScroll}
               >
-                <Layout>
-                  <PostModalContent
-                    postData={postData}
-                    commentsData={commentsData}
-                    morePostsArtist={morePostsArtist}
-                    relatedPosts={relatedPosts}
-                    overlayRef={ref}
-                    showUp={showUp}
-                    artistData={postData.artists}
-                  />
-                </Layout>
+                <motion.div
+                  transition={spring}
+                  key={'PostPage'}
+                  initial={{ x: 300, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -300, opacity: 0 }}
+                  id="post-page"
+                >
+                  <Layout>
+                    <PostModalContent
+                      postData={postData}
+                      commentsData={commentsData}
+                      morePostsArtist={morePostsArtist}
+                      relatedPosts={relatedPosts}
+                      overlayRef={ref}
+                      showUp={showUp}
+                      artistData={postData.artists}
+                    />
+                  </Layout>
+                </motion.div>
               </div>
             </Modal>
           </div>

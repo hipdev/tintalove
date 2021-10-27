@@ -33,32 +33,26 @@ const LoginContext = createContext({
   openModal: null,
 })
 
+const spring = {
+  type: 'spring',
+  damping: 20,
+  stiffness: 100,
+  when: 'afterChildren',
+}
+export { spring }
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const { isOpen, setIsOpen, openModal } = useLoginModal()
-  const spring = {
-    type: 'spring',
-    damping: 20,
-    stiffness: 100,
-    when: 'afterChildren',
-  }
+
   createStore({})
 
   return (
     <UserContextProvider>
       <LoginContext.Provider value={{ isOpen, setIsOpen, openModal }}>
         <StateMachineProvider>
-          <AnimateSharedLayout>
-            <motion.div
-              transition={spring}
-              key={router.pathname}
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              id="page-transition-container"
-            >
-              <Component {...pageProps} />
-            </motion.div>
+          <AnimateSharedLayout type="crossfade">
+            <Component {...pageProps} key={router.route} />
           </AnimateSharedLayout>
         </StateMachineProvider>
       </LoginContext.Provider>
