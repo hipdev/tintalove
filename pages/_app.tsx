@@ -1,4 +1,3 @@
-import { motion, AnimateSharedLayout } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { createStore, StateMachineProvider } from 'little-state-machine'
@@ -13,14 +12,6 @@ const LoginContext = createContext({
   openModal: null,
 })
 
-const spring = {
-  type: 'spring',
-  damping: 20,
-  stiffness: 100,
-  when: 'afterChildren',
-}
-export { spring }
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const { isOpen, setIsOpen, openModal } = useLoginModal()
@@ -31,9 +22,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <UserContextProvider>
       <LoginContext.Provider value={{ isOpen, setIsOpen, openModal }}>
         <StateMachineProvider>
-          <AnimateSharedLayout type="crossfade">
-            <Component {...pageProps} key={router.route} />
-          </AnimateSharedLayout>
+          <Component {...pageProps} key={router.route} />
         </StateMachineProvider>
       </LoginContext.Provider>
     </UserContextProvider>
