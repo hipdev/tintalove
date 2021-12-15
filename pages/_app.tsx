@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const { isOpen, setIsOpen, openModal } = useLoginModal()
 
-  createStore({})
+  createStore({}, {})
 
   return (
     <UserContextProvider>
